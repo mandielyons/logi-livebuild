@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Caption="Geo Heat Map" ID="Maps.GeoHeatMap">
+  <DefaultRequestParams paramCommodity="All" />
+  <IncludeSharedElement DefinitionFile="_Layout.Shared" SharedElementID="shrHeader" />
+  <Body>
+    <ResponsiveRow>
+      <ResponsiveColumn>
+        <Division Class="panel panel-default" HtmlDiv="True" ID="panel">
+          <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
+            <Label Caption="Geo Heat Map" />
+          </Division>
+          <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+            <Division Class="form-inline" HtmlDiv="True" ID="gMap">
+              <InputSelectList Caption="Select Commodity:" Class="ThemeAlignLeft" DefaultValue="@Request.paramCommodity~" ID="paramCommodity" IncludeBlank="True" IncludeBlankCaption="All" IncludeBlankValue="All" OptionCaptionColumn="COMMODITYDESC" OptionValueColumn="COMMODITYCD">
+                <DataLayer ConnectionID="connMKC" ID="SQLDataLayer1" Source="Select Distinct   [GaugeAgTraxContracts].COMMODITYCD,&#xD;&#xA;[GaugeAgTraxContracts].COMMODITYDESC&#xD;&#xA;From [GaugeAgTraxContracts]" Type="SQL" />
+                <EventHandler DhtmlEvent="onChange">
+                  <Remark>
+                    <Action ElementID="divMap" ID="actRefresh" Type="RefreshElement" />
+                  </Remark>
+                  <Action ID="actReport" Type="Report">
+                    <Target Report="GeoHeatMap" Type="Report" />
+                  </Action>
+                </EventHandler>
+              </InputSelectList>
+              <Remark>
+                <IncludeHtml Html="&lt;style type=&quot;text/css&quot;&gt;&#xD;&#xA;	#pcslColorLegend,&#xD;&#xA;	#pcslColorLegend table,&#xD;&#xA;	#pcslColorLegend td{&#xD;&#xA;		width: 100%;&#xD;&#xA;	}&#xD;&#xA;&lt;/style&gt;" ID="FullWidthMap" />
+              </Remark>
+            </Division>
+            <Division HtmlDiv="True" ID="divMap">
+              <GoogleMap ConnectionID="GoogleMap" Height="600" ID="RegionMap" Width="800">
+                <GoogleMapPolygons BorderColor="white" BorderThickness="1" BorderTransparency="0" FillColor="@Data.ColorBalance~" FillTransparency="7" ID="polygons">
+                  <DataLayer CacheKey="myKey @Request.paramCommodity~" ExpirationTime="01:00" Type="Cached">
+                    <DataLayer Filename="zipcodes.kml" Type="KmlFile">
+                      <Join ID="join" JoinType="InnerJoin">
+                        <DataLayer ConnectionID="connMKC" Source="Select Distinct [GaugeAgTraxContracts].CUSTZIPCODE,&#xD;&#xA;  [GaugeAgTraxContracts].CUSTDESC,&#xD;&#xA;  Sum([GaugeAgTraxContracts].REMAINING_BU) As RemainBalance,&#xD;&#xA;  [GaugeAgTraxContracts].COMMODITYDESC&#xD;&#xA;From [GaugeAgTraxContracts]&#xD;&#xA;Where [GaugeAgTraxContracts].COMMODITYCD = '@Request.paramCommodity~' or '@Request.paramCommodity~' = 'All'&#xD;&#xA;Group By [GaugeAgTraxContracts].CUSTZIPCODE,&#xD;&#xA;  [GaugeAgTraxContracts].CUSTDESC,&#xD;&#xA;  [GaugeAgTraxContracts].COMMODITYDESC" Type="SQL" />
+                        <MatchCondition LeftDataColumn="name" RightDataColumn="CUSTZIPCODE" />
+                      </Join>
+                      <ColorSpectrumColumn DataColumn="RemainBalance" HighValueColor="red" ID="ColorBalance" LowValueColor="green" MediumValueColor="blue" />
+                    </DataLayer>
+                  </DataLayer>
+                  <PolygonColorSpectrumLegend Format="###,###,##0" ID="pcsl2" Location="Bottom" />
+                  <Action Type="MapMarkerInfo">
+                    <MapMarkerInfo>
+                      <Label Caption="Commodity: @Data.COMMODITYDESC~" />
+                      <LineBreak />
+                      <Label Caption="Zipcode: @Data.CUSTZIPCODE~" />
+                      <LineBreak />
+                      <Label Caption="Remain Balance: @Data.RemainBalance~" />
+                    </MapMarkerInfo>
+                  </Action>
+                </GoogleMapPolygons>
+                <GoogleMapInitialView GoogleMapZoomLevel="8" Latitude="38" Longitude="-98" />
+              </GoogleMap>
+            </Division>
+          </Division>
+        </Division>
+      </ResponsiveColumn>
+    </ResponsiveRow>
+  </Body>
+  <IncludeSharedElement DefinitionFile="_Layout.Shared" SharedElementID="shrFooter" />
+  <ideTestParams paramCommodity="" />
+</Report>

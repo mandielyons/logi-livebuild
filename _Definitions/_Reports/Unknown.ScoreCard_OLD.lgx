@@ -1,0 +1,340 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ID="Unknown.ScoreCard_OLD">
+  <Body Class="ThemeAlignCenter">
+    <Division Class="panel panel-default" HtmlDiv="True" ID="panel">
+      <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
+        <Label Caption="Customer Initiatives - 2015 MKC Balanced Scorecard" Class="ThemeAlignCenter" />
+      </Division>
+    </Division>
+    <ResponsiveRow>
+      <ResponsiveColumn>
+        <Division Class="panel panel-default" HtmlDiv="True" ID="panel">
+          <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
+            <Label Caption="Maximize Sales Performance">
+              <Action Display="Toggle" ElementID="popSales" Type="ShowElement" />
+            </Label>
+          </Division>
+          <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+            <ResponsiveRow Class="ThemeAlignCenter">
+              <ResponsiveColumn>
+                <Division ID="divSales">
+                  <Remark>
+                    <Gauge AlignmentHorizontal="Center" ArcBackgroundColor="DimGray" ArcInnerRadius="65%" ID="ArcGauge1" TickLabelFormat="mp" Type="Arc" Value="@Data.rdAggr-Complete-sum~">
+                      <Quicktip>
+                        <QuicktipRow Caption="Complete: " Value="@Data.rdAggr-Complete-sum~" />
+                      </Quicktip>
+                      <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Sales" ID="ExcelDataLayer1" Type="Excel">
+                        <AggregateColumn AggregateColumn="Complete" AggregateFunction="SUM" DataType="Number" ID="rdAggr-Complete-sum" />
+                      </DataLayer>
+                      <GaugeRange Color="#CC0000" RangeEndValue="30" />
+                      <GaugeRange Color="#F1C232" RangeEndValue="60" />
+                      <GaugeRange Color="#6AA84F" RangeEndValue="100" />
+                    </Gauge>
+                  </Remark>
+                  <Remark>
+                    <Gauge AlignmentHorizontal="Center" ID="BalloonBarGauge1" StartValue="0" TickLabelFormat="mp" Type="BalloonBar" Value="@Data.rdAggr-Complete-sum~">
+                      <Quicktip />
+                      <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Sales" ID="ExcelDataLayer8" Type="Excel">
+                        <AggregateColumn AggregateColumn="Complete" AggregateFunction="SUM" DataType="Number" ID="rdAggr-Complete-sum" />
+                      </DataLayer>
+                      <GaugeRange Color="#CC0000" RangeEndValue="30" />
+                      <GaugeRange Color="#F1C232" RangeEndValue="60" />
+                      <GaugeRange Color="#6AA84F" RangeEndValue="100" />
+                    </Gauge>
+                  </Remark>
+                  <Gauge BulletColor="LightSlateGray" CaptionColor="SaddleBrown" ChartHeight="80" ChartWidth="520" FontBold="False" FontName="Arial" FontSize="11" ID="BulletBar" MarkerColor="Black" MarkerValue="@Data.Column3~" Tooltip="@Data.Column3~" Type="BulletBar" Value="@Data.Column3~">
+                    <Remark>
+                      <Action Type="Report">
+                        <Target FrameID="NewWindow" Report="SubReports.SubReport_Scorecard1" Type="Report" />
+                      </Action>
+                    </Remark>
+                    <DataLayer ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Sales" Type="Excel" />
+                    <Remark>
+                      <DataLayer ID="dlGaugeData2XML" Type="XMLFile" XMLFile="GaugeData2.xml">
+                        <GroupFilter GroupColumn="SalesTotal">
+                          <GroupAggregateColumn AggregateColumn="UnitPrice" AggregateFunction="Sum" ID="gacUnitPrice" />
+                        </GroupFilter>
+                        <FormattedColumn DataColumn="gacUnitPrice" Format="Currency" ID="fmtUnitPrice" />
+                      </DataLayer>
+                    </Remark>
+                    <GaugeRange Color="#CC0000" RangeEndValue="30" />
+                    <GaugeRange Color="#F1C232" RangeEndValue="60" />
+                    <GaugeRange Color="#6AA84F" RangeEndValue="100" />
+                  </Gauge>
+                  <PopupPanel Caption="Sales Initiative Progress by Action " Draggable="False" Height="80" HeightScale="%" ID="popSales" PopupModal="True" PopupPanelLocation="Center" Width="80" WidthScale="%">
+                    <LineBreak />
+                    <ChartCanvas ChartHeight="500" ChartOrientation="SwapAxes" ChartWidth="800" ID="BarChartCanvas1">
+                      <Series ChartXDataColumn="Action" ChartYDataColumn="rdGrAggr-Progress-sum" Color="#FF0A0A" Type="Bar">
+                        <Quicktip>
+                          <QuicktipRow Caption="Action: " Value="@Chart.Action~" />
+                          <QuicktipRow Caption="Progress: " Value="@Chart.rdGrAggr-Progress-sum~" />
+                          <QuicktipRow Caption="Champion:" Value="@Chart.Champion~" />
+                        </Quicktip>
+                        <DataLabels Format="" />
+                      </Series>
+                      <ChartXAxis AxisCaption="Action" />
+                      <ChartYAxis AxisCaption="Progress" />
+                      <Resizer MinHeight="150" MinWidth="250" />
+                      <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Sales Actions" ID="ExcelDataLayer1" Type="Excel">
+                        <GroupFilter DataType="Text" GroupColumn="Action" KeepGroupedRows="False">
+                          <GroupAggregateColumn AggregateColumn="Progress" AggregateFunction="SUM" DataType="Number" ID="rdGrAggr-Progress-sum" />
+                        </GroupFilter>
+                        <SortFilter DataType="Number" SortColumn="rdGrAggr-Progress-sum" SortSequence="Ascending" />
+                        <RelevanceFilter DataColumn="rdGrAggr-Progress-sum" IrrelevanceLabel="Other" LabelColumn="Action" RelevanceType="NumberOfRows" RelevanceValue="0" />
+                      </DataLayer>
+                    </ChartCanvas>
+                  </PopupPanel>
+                </Division>
+              </ResponsiveColumn>
+            </ResponsiveRow>
+          </Division>
+        </Division>
+      </ResponsiveColumn>
+      <ResponsiveColumn>
+        <Division Class="panel panel-default" HtmlDiv="True" ID="panel">
+          <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
+            <Label Caption="Enhance Customer Experience">
+              <Action ElementID="popCustomer" Type="ShowElement" />
+            </Label>
+          </Division>
+          <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+            <ResponsiveRow>
+              <ResponsiveColumn>
+                <Remark>
+                  <Gauge AlignmentHorizontal="Center" ArcBackgroundColor="DimGray" ArcInnerRadius="65%" ID="ArcGauge2" StartValue="0" TickLabelFormat="mp" Type="Arc" Value="@Data.rdAggr-Complete-sum~">
+                    <Action Type="Report">
+                      <Target Report="SubReports.SubReport_Scorecard" Type="Report" />
+                    </Action>
+                    <Quicktip>
+                      <QuicktipRow Caption="Complete: " Value="@Data.rdAggr-Complete-sum~" />
+                    </Quicktip>
+                    <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Experience" ID="ExcelDataLayer2" Type="Excel">
+                      <AggregateColumn AggregateColumn="Complete" AggregateFunction="SUM" DataType="Number" ID="rdAggr-Complete-sum" />
+                    </DataLayer>
+                    <GaugeRange Color="#CC0000" RangeEndValue="30" />
+                    <GaugeRange Color="#F1C232" RangeEndValue="60" />
+                    <GaugeRange Color="#6AA84F" RangeEndValue="100" />
+                  </Gauge>
+                </Remark>
+                <Remark>
+                  <Gauge AlignmentHorizontal="Center" ID="BalloonBarGauge1" StartValue="0" TickLabelFormat="mp" Type="BalloonBar" Value="@Data.rdAggr-Complete-sum~">
+                    <Action Type="Report">
+                      <Target Report="SubReports.SubReport_Scorecard" Type="Report" />
+                    </Action>
+                    <Quicktip />
+                    <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Experience" ID="ExcelDataLayer8" Type="Excel">
+                      <AggregateColumn AggregateColumn="Complete" AggregateFunction="SUM" DataType="Number" ID="rdAggr-Complete-sum" />
+                    </DataLayer>
+                    <GaugeRange Color="#CC0000" RangeEndValue="30" />
+                    <GaugeRange Color="#F1C232" RangeEndValue="60" />
+                    <GaugeRange Color="#6AA84F" RangeEndValue="100" />
+                  </Gauge>
+                </Remark>
+                <Gauge BulletColor="LightSlateGray" CaptionColor="SaddleBrown" ChartHeight="80" ChartWidth="520" FontBold="False" FontName="Arial" FontSize="11" ID="BulletBar" MarkerColor="Black" MarkerValue="@Data.Column3~" Tooltip="@Data.Column3~" Type="BulletBar" Value="@Data.Column3~">
+                  <Action Type="Report">
+                    <Target FrameID="NewWindow" Report="SubReports.SubReport_Scorecard2" Type="Report" />
+                  </Action>
+                  <DataLayer ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Experience" Type="Excel" />
+                  <Remark>
+                    <DataLayer ID="dlGaugeData2XML" Type="XMLFile" XMLFile="GaugeData2.xml">
+                      <GroupFilter GroupColumn="SalesTotal">
+                        <GroupAggregateColumn AggregateColumn="UnitPrice" AggregateFunction="Sum" ID="gacUnitPrice" />
+                      </GroupFilter>
+                      <FormattedColumn DataColumn="gacUnitPrice" Format="Currency" ID="fmtUnitPrice" />
+                    </DataLayer>
+                  </Remark>
+                  <GaugeRange Color="#CC0000" RangeEndValue="30" />
+                  <GaugeRange Color="#F1C232" RangeEndValue="60" />
+                  <GaugeRange Color="#6AA84F" RangeEndValue="100" />
+                </Gauge>
+                <PopupPanel Draggable="False" Height="80" HeightScale="%" ID="popCustomer" PopupModal="True" PopupPanelLocation="Center" Width="80" WidthScale="%">
+                  <ChartCanvas ChartHeight="500" ChartOrientation="SwapAxes" ChartWidth="800" ID="BarChartCanvas1">
+                    <Series ChartXDataColumn="Action" ChartYDataColumn="rdGrAggr-Progress-sum" Color="#FF0A0A" Type="Bar">
+                      <Quicktip>
+                        <QuicktipRow Caption="Action: " Value="@Chart.Action~" />
+                        <QuicktipRow Caption="Progress: " Value="@Chart.rdGrAggr-Progress-sum~" />
+                        <QuicktipRow Caption="Champion:" Value="@Chart.Champion~" />
+                      </Quicktip>
+                      <DataLabels Format="" />
+                    </Series>
+                    <ChartXAxis AxisCaption="Action" />
+                    <ChartYAxis AxisCaption="Progress" />
+                    <Resizer MinHeight="150" MinWidth="250" />
+                    <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Experience Actions" ID="ExcelDataLayer1" Type="Excel">
+                      <GroupFilter DataType="Text" GroupColumn="Action" KeepGroupedRows="False">
+                        <GroupAggregateColumn AggregateColumn="Progress" AggregateFunction="SUM" DataType="Number" ID="rdGrAggr-Progress-sum" />
+                      </GroupFilter>
+                      <SortFilter DataType="Number" SortColumn="rdGrAggr-Progress-sum" SortSequence="Ascending" />
+                      <RelevanceFilter DataColumn="rdGrAggr-Progress-sum" IrrelevanceLabel="Other" LabelColumn="Action" RelevanceType="NumberOfRows" RelevanceValue="0" />
+                    </DataLayer>
+                  </ChartCanvas>
+                </PopupPanel>
+              </ResponsiveColumn>
+            </ResponsiveRow>
+          </Division>
+        </Division>
+      </ResponsiveColumn>
+    </ResponsiveRow>
+    <ResponsiveRow Class="ThemeAlignCenter">
+      <ResponsiveColumn>
+        <Division Class="panel panel-default" HtmlDiv="True" ID="panel">
+          <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
+            <Label Caption="Target Farmers Under 40YO">
+              <Action ElementID="popTarget" Type="ShowElement" />
+            </Label>
+          </Division>
+          <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+            <ResponsiveRow>
+              <ResponsiveColumn>
+                <Remark>
+                  <Gauge AlignmentHorizontal="Center" ArcBackgroundColor="DimGray" ArcInnerRadius="65%" ID="ArcGauge3" StartValue="0" TickLabelFormat="mp" Type="Arc" Value="@Data.rdAggr-Complete-sum~">
+                    <Quicktip>
+                      <QuicktipRow Caption="Complete: " Value="@Data.rdAggr-Complete-sum~" />
+                    </Quicktip>
+                    <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Target" ID="ExcelDataLayer3" Type="Excel">
+                      <AggregateColumn AggregateColumn="Complete" AggregateFunction="SUM" DataType="Number" ID="rdAggr-Complete-sum" />
+                    </DataLayer>
+                    <GaugeRange Color="#CC0000" RangeEndValue="30" />
+                    <GaugeRange Color="#F1C232" RangeEndValue="60" />
+                    <GaugeRange Color="#6AA84F" RangeEndValue="100" />
+                  </Gauge>
+                </Remark>
+                <Remark>
+                  <Gauge AlignmentHorizontal="Center" ID="BalloonBarGauge1" StartValue="0" TickLabelFormat="mp" Type="BalloonBar" Value="@Data.rdAggr-Complete-sum~">
+                    <Quicktip />
+                    <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Target" ID="ExcelDataLayer8" Type="Excel">
+                      <AggregateColumn AggregateColumn="Complete" AggregateFunction="SUM" DataType="Number" ID="rdAggr-Complete-sum" />
+                    </DataLayer>
+                    <GaugeRange Color="#CC0000" RangeEndValue="30" />
+                    <GaugeRange Color="#F1C232" RangeEndValue="60" />
+                    <GaugeRange Color="#6AA84F" RangeEndValue="100" />
+                  </Gauge>
+                </Remark>
+                <Gauge BulletColor="LightSlateGray" CaptionColor="SaddleBrown" ChartHeight="80" ChartWidth="520" FontBold="False" FontName="Arial" FontSize="11" ID="BulletBar" MarkerColor="Black" MarkerValue="@Data.Column3~" Tooltip="@Data.Column3~" Type="BulletBar" Value="@Data.Column3~">
+                  <Action Type="Report">
+                    <Target FrameID="NewWindow" Report="SubReports.SubReport_Scorecard3" Type="Report" />
+                  </Action>
+                  <DataLayer ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Target" Type="Excel" />
+                  <Remark>
+                    <DataLayer ID="dlGaugeData2XML" Type="XMLFile" XMLFile="GaugeData2.xml">
+                      <GroupFilter GroupColumn="SalesTotal">
+                        <GroupAggregateColumn AggregateColumn="UnitPrice" AggregateFunction="Sum" ID="gacUnitPrice" />
+                      </GroupFilter>
+                      <FormattedColumn DataColumn="gacUnitPrice" Format="Currency" ID="fmtUnitPrice" />
+                    </DataLayer>
+                  </Remark>
+                  <GaugeRange Color="#CC0000" RangeEndValue="30" />
+                  <GaugeRange Color="#F1C232" RangeEndValue="60" />
+                  <GaugeRange Color="#6AA84F" RangeEndValue="100" />
+                </Gauge>
+                <PopupPanel Draggable="False" Height="80" HeightScale="%" ID="popTarget" PopupModal="True" PopupPanelLocation="Center" Width="80" WidthScale="%">
+                  <ChartCanvas ChartHeight="500" ChartOrientation="SwapAxes" ChartWidth="800" ID="BarChartCanvas1">
+                    <Series ChartXDataColumn="Action" ChartYDataColumn="rdGrAggr-Progress-sum" Color="#FF0A0A" Type="Bar">
+                      <Quicktip>
+                        <QuicktipRow Caption="Action: " Value="@Chart.Action~" />
+                        <QuicktipRow Caption="Progress: " Value="@Chart.rdGrAggr-Progress-sum~" />
+                        <QuicktipRow Caption="Champion:" Value="@Chart.Champion~" />
+                      </Quicktip>
+                      <DataLabels Format="" />
+                    </Series>
+                    <ChartXAxis AxisCaption="Action" />
+                    <ChartYAxis AxisCaption="Progress" />
+                    <Resizer MinHeight="150" MinWidth="250" />
+                    <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Target Actions" ID="ExcelDataLayer1" Type="Excel">
+                      <GroupFilter DataType="Text" GroupColumn="Action" KeepGroupedRows="False">
+                        <GroupAggregateColumn AggregateColumn="Progress" AggregateFunction="SUM" DataType="Number" ID="rdGrAggr-Progress-sum" />
+                      </GroupFilter>
+                      <SortFilter DataType="Number" SortColumn="rdGrAggr-Progress-sum" SortSequence="Ascending" />
+                      <RelevanceFilter DataColumn="rdGrAggr-Progress-sum" IrrelevanceLabel="Other" LabelColumn="Action" RelevanceType="NumberOfRows" RelevanceValue="0" />
+                    </DataLayer>
+                  </ChartCanvas>
+                </PopupPanel>
+              </ResponsiveColumn>
+            </ResponsiveRow>
+          </Division>
+        </Division>
+      </ResponsiveColumn>
+      <ResponsiveColumn>
+        <Division Class="panel panel-default" HtmlDiv="True" ID="panel">
+          <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
+            <Label Caption="Enhance Precision Ag Strategy">
+              <Action Display="Toggle" ElementID="popPrecision" Type="ShowElement" />
+            </Label>
+          </Division>
+          <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+            <ResponsiveRow>
+              <ResponsiveColumn>
+                <Remark>
+                  <Gauge AlignmentHorizontal="Center" ArcBackgroundColor="DimGray" ArcInnerRadius="65%" ID="ArcGauge4" StartValue="0" TickLabelFormat="mp" Type="Arc" Value="@Data.rdAggr-Complete-sum~">
+                    <Quicktip>
+                      <QuicktipRow Caption="Complete: " Value="@Data.rdAggr-Complete-sum~" />
+                    </Quicktip>
+                    <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Precision" ID="ExcelDataLayer4" Type="Excel">
+                      <AggregateColumn AggregateColumn="Complete" AggregateFunction="SUM" DataType="Number" ID="rdAggr-Complete-sum" />
+                    </DataLayer>
+                    <GaugeRange Color="#CC0000" RangeEndValue="30" />
+                    <GaugeRange Color="#F1C232" RangeEndValue="60" />
+                    <GaugeRange Color="#6AA84F" RangeEndValue="100" />
+                  </Gauge>
+                </Remark>
+                <Remark>
+                  <Gauge AlignmentHorizontal="Center" ID="BalloonBarGauge1" StartValue="0" TickLabelFormat="mp" Type="BalloonBar" Value="@Data.rdAggr-Complete-sum~">
+                    <Quicktip>
+                      <QuicktipRow Caption="Complete: " Value="@Data.rdAggr-Complete-sum~" />
+                    </Quicktip>
+                    <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Precision" ID="ExcelDataLayer8" Type="Excel">
+                      <AggregateColumn AggregateColumn="Complete" AggregateFunction="SUM" DataType="Number" ID="rdAggr-Complete-sum" />
+                    </DataLayer>
+                    <GaugeRange Color="#CC0000" RangeEndValue="30" />
+                    <GaugeRange Color="#F1C232" RangeEndValue="60" />
+                    <GaugeRange Color="#6AA84F" RangeEndValue="100" />
+                  </Gauge>
+                </Remark>
+                <Gauge BulletColor="LightSlateGray" CaptionColor="SaddleBrown" ChartHeight="80" ChartWidth="520" FontBold="False" FontName="Arial" FontSize="11" ID="BulletBar" MarkerColor="Black" MarkerValue="@Data.Column3~" Tooltip="@Data.Column3~" Type="BulletBar" Value="@Data.Column3~">
+                  <Action Type="Report">
+                    <Target FrameID="NewWindow" Report="SubReports.SubReport_Scorecard4" Type="Report" />
+                  </Action>
+                  <DataLayer ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Precision" Type="Excel" />
+                  <Remark>
+                    <DataLayer ID="dlGaugeData2XML" Type="XMLFile" XMLFile="GaugeData2.xml">
+                      <GroupFilter GroupColumn="SalesTotal">
+                        <GroupAggregateColumn AggregateColumn="UnitPrice" AggregateFunction="Sum" ID="gacUnitPrice" />
+                      </GroupFilter>
+                      <FormattedColumn DataColumn="gacUnitPrice" Format="Currency" ID="fmtUnitPrice" />
+                    </DataLayer>
+                  </Remark>
+                  <GaugeRange Color="#CC0000" RangeEndValue="30" />
+                  <GaugeRange Color="#F1C232" RangeEndValue="60" />
+                  <GaugeRange Color="#6AA84F" RangeEndValue="100" />
+                </Gauge>
+                <PopupPanel Draggable="False" Height="80" HeightScale="px" ID="popPrecision" PopupModal="True" PopupPanelLocation="Center" Width="80" WidthScale="%">
+                  <ChartCanvas ChartHeight="500" ChartOrientation="SwapAxes" ChartWidth="800" ID="BarChartCanvas1">
+                    <Series ChartXDataColumn="Action" ChartYDataColumn="rdGrAggr-Progress-sum" Color="#FF0A0A" Type="Bar">
+                      <Quicktip>
+                        <QuicktipRow Caption="Action: " Value="@Chart.Action~" />
+                        <QuicktipRow Caption="Progress: " Value="@Chart.rdGrAggr-Progress-sum~" />
+                        <QuicktipRow Caption="Champion:" Value="@Chart.Champion~" />
+                      </Quicktip>
+                      <DataLabels Format="" />
+                    </Series>
+                    <ChartXAxis AxisCaption="Action" />
+                    <ChartYAxis AxisCaption="Progress" />
+                    <Resizer MinHeight="150" MinWidth="250" />
+                    <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Precision Actions" ID="ExcelDataLayer1" Type="Excel">
+                      <GroupFilter DataType="Text" GroupColumn="Action" KeepGroupedRows="False">
+                        <GroupAggregateColumn AggregateColumn="Progress" AggregateFunction="SUM" DataType="Number" ID="rdGrAggr-Progress-sum" />
+                      </GroupFilter>
+                      <SortFilter DataType="Number" SortColumn="rdGrAggr-Progress-sum" SortSequence="Ascending" />
+                      <RelevanceFilter DataColumn="rdGrAggr-Progress-sum" IrrelevanceLabel="Other" LabelColumn="Action" RelevanceType="NumberOfRows" RelevanceValue="0" />
+                    </DataLayer>
+                  </ChartCanvas>
+                </PopupPanel>
+              </ResponsiveColumn>
+            </ResponsiveRow>
+          </Division>
+        </Division>
+      </ResponsiveColumn>
+    </ResponsiveRow>
+  </Body>
+  <ideTestParams />
+</Report>

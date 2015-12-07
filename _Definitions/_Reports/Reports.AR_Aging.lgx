@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Caption="AR Aging" ID="Reports.AR_Aging">
+  <IncludeSharedElement DefinitionFile="_Layout.Shared" SharedElementID="shrHeader" />
+  <Body>
+    <ResponsiveRow>
+      <ResponsiveColumn>
+        <Division Class="panel panel-default" HtmlDiv="True" ID="panel">
+          <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
+            <Label Caption="Accounts Receivable Customer Aging" />
+          </Division>
+          <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+            <Chart BackgroundColor="LightGray" ChartDataColumn="Column1" ChartHeight="500" ChartLabelColumn="Aging" ChartLabelColumnDataType="Number" ChartTexture="RoundedEdge" ChartWidth="900" Colors="lightblue,limegreen,yellow,orange,red" D3="30" D3Angle="30" ExplodedWedgesColumn="Column1" ExternalLayoutLabelColor="0" ID="ARAgingPie" LabelLayout="SideLayout" LabelPointerColor="Black" LabelRoundedBorder="True" LabelShading="SoftLight" MaxLabelLength="20" PieChartType="Pie" PieRadius="150" ShowDataValues="True" ShowWaitIcon="True" Transparency="0" Type="Pie">
+              <DataLayer ConnectionID="connProdGP" ID="SQLDataLayer1" Source="select 'Current' Aging, SUM([Aging Bucket1]) FROM MKCGP.dbo.Customers &#xD;&#xA;union select '0-30', SUM([Aging Bucket2]) FROM MKCGP.dbo.Customers&#xD;&#xA;union select '31-60', SUM([Aging Bucket3]) FROM MKCGP.dbo.Customers&#xD;&#xA;union select '61-90', SUM([Aging Bucket4]) FROM MKCGP.dbo.Customers&#xD;&#xA;union select 'Over 90', SUM([Aging Bucket5]) FROM MKCGP.dbo.Customers&#xD;&#xA;" Type="SQL" />
+              <FormatData ChartLabelFormat="{label}: {percent}%" DecimalPoints="1" />
+              <FontLabel DecimalPoints="0" FontAngle="0" FontColor="Black" FontFilename="arial black" FontSize="12" TickMarks="False" />
+              <Resizer ID="ArAgingPie" />
+            </Chart>
+          </Division>
+          <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+            <DataTable AccessibleHeaders="True" AccessibleSummary="AnalysisGrid DataTable" ID="AgingBuckets" KeepScrollPosition="True" RememberSort="True" ResizableColumns="True" SortArrows="True" TableBorder="0">
+              <DataLayer ConnectionID="connProdGP" ID="SQLDataLayer2" Source="SELECT SUM([Customer Balance]) AS [Total] ,SUM([Aging Bucket1]) AS [Current] ,SUM([Aging Bucket2]) AS [Aged 0-30 Days] ,SUM([Aging Bucket3]) AS [Aged 31-60 Days] ,SUM([Aging Bucket4]) AS [Aged 61-90 Days] ,SUM([Aging Bucket5]) AS [Over 90 Days] FROM MKCGP.dbo.Customers&#xD;&#xA;" Type="SQL" />
+              <InteractivePaging CaptionType="Image" HideShowPrevNextCaptions="False" HideWhenOnePage="True" IDnotSupportedHere="pagingTableNumbered" Location="Top" PageRowCount="20" ShowPageNumber="Numbered" />
+              <DataTableColumn Header="Total" ID="colTotal">
+                <Label Caption="@Data.Total~" Format="Currency" ID="colTotal" />
+                <DataColumnSort DataColumn="Total" DataType="Number" />
+              </DataTableColumn>
+              <DataTableColumn Header="Current" ID="colCurrent">
+                <Label Caption="@Data.Current~" Format="Currency" ID="colCurrent" />
+                <DataColumnSort DataColumn="Current" DataType="Number" />
+              </DataTableColumn>
+              <DataTableColumn Header="Aged 0-30 Days" ID="colAged0-30Days">
+                <Label Caption="@Data.Aged 0-30 Days~" Format="Currency" ID="colAged0-30Days" />
+                <DataColumnSort DataColumn="Aged 0-30 Days" DataType="Number" />
+              </DataTableColumn>
+              <DataTableColumn Header="Aged 31-60 Days" ID="colAged31-60Days">
+                <Label Caption="@Data.Aged 31-60 Days~" Format="Currency" ID="colAged31-60Days" />
+                <DataColumnSort DataColumn="Aged 31-60 Days" DataType="Number" />
+              </DataTableColumn>
+              <DataTableColumn Header="Aged 61-90 Days" ID="colAged61-90Days">
+                <Label Caption="@Data.Aged 61-90 Days~" Format="Currency" ID="colAged61-90Days" />
+                <DataColumnSort DataColumn="Aged 61-90 Days" DataType="Number" />
+              </DataTableColumn>
+              <DataTableColumn Header="Over 90 Days" ID="colOver90Days">
+                <Label Caption="@Data.Over 90 Days~" Format="Currency" ID="colOver90Days" />
+                <DataColumnSort DataColumn="Over 90 Days" DataType="Number" />
+              </DataTableColumn>
+            </DataTable>
+          </Division>
+        </Division>
+      </ResponsiveColumn>
+    </ResponsiveRow>
+  </Body>
+  <IncludeSharedElement DefinitionFile="_Layout.Shared" SharedElementID="shrFooter" />
+  <ideTestParams />
+</Report>

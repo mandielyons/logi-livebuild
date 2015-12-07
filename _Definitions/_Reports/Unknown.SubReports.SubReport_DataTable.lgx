@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ID="Unknown.SubReports.SubReport_DataTable">
+  <Body>
+    <DataTable AccessibleHeaders="True" AccessibleSummary="AnalysisGrid DataTable" ID="DataTable1" KeepScrollPosition="True" RememberSort="True" ResizableColumns="True" SortArrows="True" TableBorder="0">
+      <DataLayer ConnectionID="connMKC" ID="SQLDataLayer1" Source="Select LOCNCODE,AttrType,AttrValue&#xD;&#xA;From [MapMKCLocations]&#xD;&#xA;Where LOCNCODE = '@Request.paramLocation~'" Type="SQL" />
+      <InteractivePaging CaptionType="Image" HideShowPrevNextCaptions="False" HideWhenOnePage="True" IDnotSupportedHere="pagingTableNumbered" Location="Top" PageRowCount="20" ShowPageNumber="Numbered" />
+      <DataTableColumn Header="Location Code" ID="colLOCNCODE">
+        <Label Caption="@Data.LOCNCODE~" ID="colLOCNCODE" />
+        <DataColumnSort DataColumn="LOCNCODE" DataType="Text" />
+      </DataTableColumn>
+      <DataTableColumn Header="Type" ID="colAttrType">
+        <Label Caption="@Data.AttrType~" ID="colAttrType" />
+        <DataColumnSort DataColumn="AttrType" DataType="Text" />
+      </DataTableColumn>
+      <DataTableColumn Header="Value" ID="colAttrValue">
+        <Label Caption="@Data.AttrValue~" ID="colAttrValue" />
+        <DataColumnSort DataColumn="AttrValue" DataType="Text" />
+      </DataTableColumn>
+    </DataTable>
+  </Body>
+  <ideTestParams paramLocation="" />
+</Report>

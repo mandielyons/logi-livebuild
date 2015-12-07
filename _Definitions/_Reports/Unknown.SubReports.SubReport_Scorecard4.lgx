@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ID="Unknown.SubReports.SubReport_Scorecard4">
+  <Body>
+    <ResponsiveRow>
+      <ResponsiveColumn>
+        <Division Class="panel panel-default" HtmlDiv="True" ID="panel">
+          <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
+            <Label Caption="Intiative Progress by Action " />
+          </Division>
+          <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+            <ChartCanvas ChartHeight="500" ChartOrientation="SwapAxes" ChartWidth="800" ID="BarChartCanvas1">
+              <Series ChartXDataColumn="Action" ChartYDataColumn="rdGrAggr-Progress-sum" Color="#FF0A0A" Type="Bar">
+                <Quicktip>
+                  <QuicktipRow Caption="Action: " Value="@Chart.Action~" />
+                  <QuicktipRow Caption="Progress: " Value="@Chart.rdGrAggr-Progress-sum~" />
+                  <QuicktipRow Caption="Champion:" Value="@Chart.Champion~" />
+                </Quicktip>
+                <DataLabels Format="" />
+              </Series>
+              <ChartXAxis AxisCaption="Action" />
+              <ChartYAxis AxisCaption="Progress" />
+              <Resizer MinHeight="150" MinWidth="250" />
+              <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Precision Actions" ID="ExcelDataLayer1" Type="Excel">
+                <GroupFilter DataType="Text" GroupColumn="Action" KeepGroupedRows="False">
+                  <GroupAggregateColumn AggregateColumn="Progress" AggregateFunction="SUM" DataType="Number" ID="rdGrAggr-Progress-sum" />
+                </GroupFilter>
+                <SortFilter DataType="Number" SortColumn="rdGrAggr-Progress-sum" SortSequence="Ascending" />
+                <RelevanceFilter DataColumn="rdGrAggr-Progress-sum" IrrelevanceLabel="Other" LabelColumn="Action" RelevanceType="NumberOfRows" RelevanceValue="0" />
+              </DataLayer>
+            </ChartCanvas>
+          </Division>
+        </Division>
+      </ResponsiveColumn>
+    </ResponsiveRow>
+  </Body>
+  <ideTestParams />
+</Report>

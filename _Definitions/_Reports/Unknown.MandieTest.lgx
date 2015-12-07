@@ -1,0 +1,1011 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ID="Unknown.MandieTest">
+  <Body>
+    <Division Class="panel panel-default" HtmlDiv="True" ID="panel">
+      <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
+        <Label Caption="2015 MKC Balanced Scorecard " />
+      </Division>
+    </Division>
+    <ResponsiveRow CollisionBehavior="Wrap">
+      <ResponsiveColumn>
+        <Division Class="panel panel-default" HtmlDiv="True" ID="panel">
+          <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
+            <Image Caption="piggy.png" Height="30" ID="imgPiggy" Width="30" />
+            <Label Caption=" Financial &amp; Growth" />
+          </Division>
+          <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+            <Gauge BackgroundColor="LightGray" BorderColor="DarkGray" ChartHeight="220" ChartWidth="220" D3Effects="True" ID="gaugeFinance" LowerBound="0" MinorTickFrequency="3" NeedleColor="Black" NeedleGaugeEnclosure="RoundGlass" NeedleGuageEnclosure="RoundGlass" NeedleRadius="60" NeedleThickness="1" StartAngle="105" TickColor="Black" TickCount="10" TickLabelColor="Black" TickLabelFontBold="False" TickLabelFontName="arial" TickLabelFontSize="10" TickLabelFormat="" TickLabelRadius="60" TickLength="7" TickRadius="72" TickThickness="3" Tooltip="Current Measure of Success: 80" TotalAngle="325" Type="Needle" UpperBound="100" Value="80">
+              <GaugeRing Color="LightSlateGray" ID="RingTickBkgnd" RingEndValue="100" RingRadius="75" RingStartValue="0" RingThickness="12" />
+              <Remark>
+                <GaugeLabel Caption="Financial &amp; Growth" Color="Black" FontBold="True" FontItalic="False" FontName="helvetica" FontSize="14" ID="Label1" Top="200" />
+              </Remark>
+              <GaugeRing Color="#CC0000" ID="RingRed" RingEndValue="30" RingRadius="40" RingStartValue="0" RingThickness="8" />
+              <GaugeRing Color="#F1C232" ID="RingYellow" RingEndValue="70" RingRadius="40" RingStartValue="30" RingThickness="8" />
+              <GaugeRing Color="#6AA84F" ID="RingGreen" RingEndValue="100" RingRadius="40" RingStartValue="70" RingThickness="8" />
+            </Gauge>
+            <Remark>
+              <Action ID="jsTabClick" Javascript="tabClickFinance();" ScriptFile="tabJScript.js" Type="Javascript" />
+            </Remark>
+          </Division>
+        </Division>
+      </ResponsiveColumn>
+      <ResponsiveColumn>
+        <Division Class="panel panel-default" HtmlDiv="True" ID="panel">
+          <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
+            <Image Caption="customer.jpg" Height="30" ID="imgCust" Width="30" />
+            <Label Caption=" Customer" />
+          </Division>
+          <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+            <Gauge BackgroundColor="LightGray" BorderColor="DarkGray" ChartHeight="220" ChartWidth="220" D3Effects="True" ID="gaugeCustomer" LowerBound="0" MinorTickFrequency="3" NeedleColor="Black" NeedleGaugeEnclosure="RoundGlass" NeedleGuageEnclosure="RoundGlass" NeedleRadius="60" NeedleThickness="1" StartAngle="105" TickColor="Black" TickCount="10" TickLabelColor="Black" TickLabelFontBold="False" TickLabelFontName="arial" TickLabelFontSize="10" TickLabelFormat="" TickLabelRadius="60" TickLength="7" TickRadius="72" TickThickness="3" Tooltip="Current Measure of Success: 40" TotalAngle="325" Type="Needle" UpperBound="100" Value="40">
+              <Remark>
+                <GaugeLabel Caption="Customer" Color="Black" FontBold="True" FontItalic="False" FontName="helvetica" FontSize="14" ID="Label1" Top="0" />
+              </Remark>
+              <GaugeRing Color="LightSlateGray" ID="RingTickBkgnd" RingEndValue="100" RingRadius="75" RingStartValue="0" RingThickness="12" />
+              <GaugeRing Color="#CC0000" ID="RingRed" RingEndValue="30" RingRadius="40" RingStartValue="0" RingThickness="8" />
+              <GaugeRing Color="#F1C232" ID="RingYellow" RingEndValue="70" RingRadius="40" RingStartValue="30" RingThickness="8" />
+              <GaugeRing Color="#6AA84F" ID="RingGreen" RingEndValue="100" RingRadius="40" RingStartValue="70" RingThickness="8" />
+            </Gauge>
+            <Remark>
+              <Action ID="jsTabClick" Javascript="tabClickCustomer();" ScriptFile="tabJScript.js" Type="Javascript" />
+            </Remark>
+          </Division>
+        </Division>
+      </ResponsiveColumn>
+      <ResponsiveColumn>
+        <Division Class="panel panel-default" HtmlDiv="True" ID="panel">
+          <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
+            <Image Caption="employees.png" Height="28" ID="imgEmployee" Width="28" />
+            <Label Caption=" Employee" />
+          </Division>
+          <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+            <Gauge BackgroundColor="LightGray" BorderColor="DarkGray" ChartHeight="220" ChartWidth="220" D3Effects="True" ID="gaugeEmployee" LowerBound="0" MinorTickFrequency="3" NeedleColor="Black" NeedleGaugeEnclosure="RoundGlass" NeedleGuageEnclosure="RoundGlass" NeedleRadius="60" NeedleThickness="1" StartAngle="105" TickColor="Black" TickCount="10" TickLabelColor="Black" TickLabelFontBold="False" TickLabelFontName="arial" TickLabelFontSize="10" TickLabelFormat="" TickLabelRadius="60" TickLength="7" TickRadius="72" TickThickness="3" Tooltip="Current Measure of Success: 55" TotalAngle="325" Type="Needle" UpperBound="100" Value="55">
+              <Remark>
+                <GaugeLabel Caption="Employee" Color="Black" FontBold="True" FontItalic="False" FontName="helvetica" FontSize="14" ID="Label1" Top="0" />
+              </Remark>
+              <GaugeRing Color="LightSlateGray" ID="RingTickBkgnd" RingEndValue="100" RingRadius="75" RingStartValue="0" RingThickness="12" />
+              <GaugeRing Color="#CC0000" ID="RingRed" RingEndValue="30" RingRadius="40" RingStartValue="0" RingThickness="8" />
+              <GaugeRing Color="#F1C232" ID="RingYellow" RingEndValue="70" RingRadius="40" RingStartValue="30" RingThickness="8" />
+              <GaugeRing Color="#6AA84F" ID="RingGreen" RingEndValue="100" RingRadius="40" RingStartValue="70" RingThickness="8" />
+            </Gauge>
+            <Remark>
+              <Action ID="jsTabClick" Javascript="tabClickEmployee();" ScriptFile="tabJScript.js" Type="Javascript" />
+            </Remark>
+          </Division>
+        </Division>
+      </ResponsiveColumn>
+      <ResponsiveColumn>
+        <Division Class="panel panel-default" HtmlDiv="True" ID="panel">
+          <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
+            <Image Caption="org.png" Height="28" ID="imgOrg" Width="28" />
+            <Label Caption=" Organizational Renewal" />
+          </Division>
+          <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+            <Gauge BackgroundColor="LightGray" BorderColor="DarkGray" ChartHeight="220" ChartWidth="220" D3Effects="True" ID="gaugeRenewal" LowerBound="0" MinorTickFrequency="3" NeedleColor="Black" NeedleGaugeEnclosure="RoundGlass" NeedleGuageEnclosure="RoundGlass" NeedleRadius="60" NeedleThickness="1" StartAngle="105" TickColor="Black" TickCount="10" TickLabelColor="Black" TickLabelFontBold="False" TickLabelFontName="arial" TickLabelFontSize="10" TickLabelFormat="" TickLabelRadius="60" TickLength="7" TickRadius="72" TickThickness="3" Tooltip="Current Measure of Success: 75" TotalAngle="325" Type="Needle" UpperBound="100" Value="75">
+              <Remark>
+                <GaugeLabel Caption="Organizational Renewal" Color="Black" FontBold="True" FontItalic="False" FontName="helvetica" FontSize="14" ID="Label1" Top="0" />
+              </Remark>
+              <GaugeRing Color="LightSlateGray" ID="RingTickBkgnd" RingEndValue="100" RingRadius="75" RingStartValue="0" RingThickness="12" />
+              <GaugeRing Color="#CC0000" ID="RingRed" RingEndValue="30" RingRadius="40" RingStartValue="0" RingThickness="8" />
+              <GaugeRing Color="#F1C232" ID="RingYellow" RingEndValue="70" RingRadius="40" RingStartValue="30" RingThickness="8" />
+              <GaugeRing Color="#6AA84F" ID="RingGreen" RingEndValue="100" RingRadius="40" RingStartValue="70" RingThickness="8" />
+            </Gauge>
+            <Remark>
+              <Action ID="jsTabClick" Javascript="tabClickRenewal();" ScriptFile="tabJScript.js" Type="Javascript" />
+            </Remark>
+          </Division>
+        </Division>
+      </ResponsiveColumn>
+    </ResponsiveRow>
+    <ResponsiveRow CollisionBehavior="Wrap">
+      <ResponsiveColumn>
+        <Tabs DefaultTab="tabCustomer" ID="tabPerspectives" TabbingStyle="Ajax" TabLocation="top">
+          <TabPanel Caption="Financial &amp; Growth" Class="ThemeTextPositive ThemeHeaderSmall" ID="tabFinance">
+            <ResponsiveRow>
+              <ResponsiveColumn Class="ThemeAlignRight" ColspanMediumScreen="12">
+                <Remark>
+                  <Button Caption="Show/Hide More Details..." Class="ThemeTextPositive ThemeBold" ID="btnActionsDetail1" Tooltip="Click to expand the Customer view">
+                    <Remark>
+                      <Action ElementID="divDetails,divCustDetails,divTargetDetails,divPrecisionDetails" ID="showCustomer" Type="ShowElement" />
+                    </Remark>
+                  </Button>
+                </Remark>
+                <ResponsiveRow>
+                  <ResponsiveColumn>
+                    <Division Class="ThemeClearfix" ID="divClear" />
+                    <Division Class="panel panel-default" HtmlDiv="True" ID="divPopups">
+                      <PopupPanel Caption="Maximize Sales Tasks Detail" Class="ThemeAlignLeft" Draggable="True" Height="30" HeightScale="%" ID="popSalesTasks" PopupModal="True" PopupPanelLocation="Center" Width="30" WidthScale="%">
+                        <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+                          <ResponsiveRow>
+                            <ResponsiveColumn>
+                              <DataTable ID="tblSalesActions">
+                                <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Sales Actions" ID="ExcelDataLayer2" Type="Excel" />
+                                <DataTableColumn Header="Task" ID="colAction">
+                                  <Label Caption="@Data.Action~" ID="lblAction" />
+                                  <DataColumnSort DataColumn="Action" />
+                                </DataTableColumn>
+                                <DataTableColumn Header="Progress" ID="colProgress">
+                                  <Label Caption="@Data.Progress~" ID="lblProgress" />
+                                  <DataColumnSort DataColumn="Progress" DataType="Number" />
+                                </DataTableColumn>
+                                <DataTableColumn Header="Owner" ID="colChampion">
+                                  <Label Caption="@Data.Champion~" ID="lblChampion" />
+                                  <DataColumnSort DataColumn="Champion" />
+                                </DataTableColumn>
+                              </DataTable>
+                            </ResponsiveColumn>
+                          </ResponsiveRow>
+                        </Division>
+                      </PopupPanel>
+                      <PopupPanel Caption="Enhance Customer Experience Tasks Detail" Class="ThemeAlignLeft" Draggable="True" Height="30" HeightScale="%" ID="popCustomerTasks" PopupModal="True" PopupPanelLocation="Center" Width="30" WidthScale="%">
+                        <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+                          <ResponsiveRow>
+                            <ResponsiveColumn>
+                              <DataTable ID="tblExperieneActions">
+                                <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Experience Actions" ID="ExcelDataLayer2" Type="Excel" />
+                                <DataTableColumn Header="Task" ID="colAction">
+                                  <Label Caption="@Data.Action~" ID="lblAction" />
+                                  <DataColumnSort DataColumn="Action" />
+                                </DataTableColumn>
+                                <DataTableColumn Header="Progress" ID="colProgress">
+                                  <Label Caption="@Data.Progress~" ID="lblProgress" />
+                                  <DataColumnSort DataColumn="Progress" DataType="Number" />
+                                </DataTableColumn>
+                                <DataTableColumn Header="Owner" ID="colChampion">
+                                  <Label Caption="@Data.Champion~" ID="lblChampion" />
+                                  <DataColumnSort DataColumn="Champion" />
+                                </DataTableColumn>
+                              </DataTable>
+                            </ResponsiveColumn>
+                          </ResponsiveRow>
+                        </Division>
+                      </PopupPanel>
+                      <PopupPanel Caption="Tasks Detail" Class="ThemeAlignLeft" Draggable="True" Height="30" HeightScale="%" ID="popTargetTasks" PopupModal="True" PopupPanelLocation="Center" Width="30" WidthScale="%">
+                        <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+                          <ResponsiveRow>
+                            <ResponsiveColumn>
+                              <DataTable ID="tblPrecisionTasks">
+                                <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Precision Actions" ID="ExcelDataLayer2" Type="Excel" />
+                                <DataTableColumn Header="Task" ID="colAction">
+                                  <Label Caption="@Data.Action~" ID="lblAction" />
+                                  <DataColumnSort DataColumn="Action" />
+                                </DataTableColumn>
+                                <DataTableColumn Header="Progress" ID="colProgress">
+                                  <Label Caption="@Data.Progress~" ID="lblProgress" />
+                                  <DataColumnSort DataColumn="Progress" DataType="Number" />
+                                </DataTableColumn>
+                                <DataTableColumn Header="Owner" ID="colChampion">
+                                  <Label Caption="@Data.Champion~" ID="lblChampion" />
+                                  <DataColumnSort DataColumn="Champion" />
+                                </DataTableColumn>
+                              </DataTable>
+                            </ResponsiveColumn>
+                          </ResponsiveRow>
+                        </Division>
+                      </PopupPanel>
+                      <PopupPanel Caption="Precision Ag Tasks Detail" Class="ThemeAlignLeft" Draggable="True" Height="30" HeightScale="%" ID="popPrecisionTasks" PopupModal="True" PopupPanelLocation="Center" Width="30" WidthScale="%">
+                        <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+                          <ResponsiveRow>
+                            <ResponsiveColumn>
+                              <DataTable ID="tblPrecisionTasks">
+                                <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Precision Actions" ID="ExcelDataLayer2" Type="Excel" />
+                                <DataTableColumn Header="Task" ID="colAction">
+                                  <Label Caption="@Data.Action~" ID="lblAction" />
+                                  <DataColumnSort DataColumn="Action" />
+                                </DataTableColumn>
+                                <DataTableColumn Header="Progress" ID="colProgress">
+                                  <Label Caption="@Data.Progress~" ID="lblProgress" />
+                                  <DataColumnSort DataColumn="Progress" DataType="Number" />
+                                </DataTableColumn>
+                                <DataTableColumn Header="Owner" ID="colChampion">
+                                  <Label Caption="@Data.Champion~" ID="lblChampion" />
+                                  <DataColumnSort DataColumn="Champion" />
+                                </DataTableColumn>
+                              </DataTable>
+                            </ResponsiveColumn>
+                          </ResponsiveRow>
+                        </Division>
+                      </PopupPanel>
+                    </Division>
+                  </ResponsiveColumn>
+                </ResponsiveRow>
+              </ResponsiveColumn>
+            </ResponsiveRow>
+            <ResponsiveRow>
+              <ResponsiveColumn>
+                <Division Class="panel panel-default" HtmlDiv="True" ID="divFinance">
+                  <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
+                    <Label Caption="Financial &amp; Growth Initiatives" Tooltip="Click for Detail Report">
+                      <Remark>
+                        <Action ElementID="divDetails,divCustDetails" ID="showSales" Type="ShowElement" />
+                      </Remark>
+                    </Label>
+                  </Division>
+                  <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+                    <ResponsiveRow>
+                      <ResponsiveColumn>
+                        <FieldsetBox Caption="Key Performance Indicators">
+                          <Label Caption="KPI 1:" />
+                          <InputSlider DefaultValue="0" ID="kpi1Slider" MaxValue="100" MinValue="0" SecondDefaultValue="10" TickCount="10" />
+                          <Button Caption="Save" ID="btnSave" />
+                        </FieldsetBox>
+                      </ResponsiveColumn>
+                      <ResponsiveColumn>
+                        <Gauge BulletColor="LightSlateGray" CaptionColor="SaddleBrown" ChartHeight="80" FontBold="False" FontName="Arial" FontSize="11" ID="BulletBar" MarkerColor="Black" MarkerValue="@Data.Column3~" Type="BulletBar" Value="@Data.Column3~">
+                          <Remark>
+                            <Action Type="Report">
+                              <Target FrameID="NewWindow" Report="SubReports.SubReport_Scorecard1" Type="Report" />
+                            </Action>
+                          </Remark>
+                          <DataLayer ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Sales" Type="Excel" />
+                          <Remark>
+                            <DataLayer ID="dlGaugeData2XML" Type="XMLFile" XMLFile="GaugeData2.xml">
+                              <GroupFilter GroupColumn="SalesTotal">
+                                <GroupAggregateColumn AggregateColumn="UnitPrice" AggregateFunction="Sum" ID="gacUnitPrice" />
+                              </GroupFilter>
+                              <FormattedColumn DataColumn="gacUnitPrice" Format="Currency" ID="fmtUnitPrice" />
+                            </DataLayer>
+                          </Remark>
+                          <GaugeRange Color="#CC0000" RangeEndValue="30" />
+                          <GaugeRange Color="#F1C232" RangeEndValue="60" />
+                          <GaugeRange Color="#6AA84F" RangeEndValue="100" />
+                          <Quicktip>
+                            <QuicktipRow Caption="Progress:" Value="@Data.Column3~" />
+                          </Quicktip>
+                        </Gauge>
+                      </ResponsiveColumn>
+                    </ResponsiveRow>
+                  </Division>
+                </Division>
+              </ResponsiveColumn>
+            </ResponsiveRow>
+          </TabPanel>
+          <TabPanel Caption="Customer" Class="ThemeTextPositive ThemeHeaderSmall" ID="tabCustomer">
+            <ResponsiveRow>
+              <ResponsiveColumn>
+                <Division Class="panel panel-default" HtmlDiv="True" ID="divMeasures">
+                  <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
+                    <Label Caption="Customer Measures" Tooltip="Click for Detail Report" />
+                  </Division>
+                  <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+                    <Rows>
+                      <Row>
+                        <Column>
+                          <Remark>
+                            <Chart ChartHeight="207" ChartTexture="CenterGradient" ChartWidth="185" Colors="Gray,LightGray,DimGray" D3="15" Type="Pie">
+                              <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Customer Measures" ID="ExcelDataLayer6" Type="Excel" />
+                            </Chart>
+                          </Remark>
+                          <Spaces Size="25" />
+                        </Column>
+                        <Column>
+                          <Label Caption="1. Execute a strategic/large customer strategy" Class="ThemeHeader" />
+                          <LineBreak />
+                          <LineBreak />
+                          <Label Caption="2. Enhance the customer experience" Class="ThemeHeader" />
+                          <LineBreak />
+                          <LineBreak />
+                          <Label Caption="3. Ease of doing business" Class="ThemeHeader" />
+                        </Column>
+                      </Row>
+                    </Rows>
+                  </Division>
+                </Division>
+              </ResponsiveColumn>
+            </ResponsiveRow>
+            <ResponsiveRow>
+              <ResponsiveColumn>
+                <Division Class="panel panel-default" HtmlDiv="True" ID="divTargets">
+                  <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
+                    <Label Caption="Customer Targets" Tooltip="Click for Detail Report" />
+                  </Division>
+                  <Division Class="panel-body" HtmlDiv="True" ID="panel-body" />
+                  <Rows>
+                    <Row>
+                      <Column Width="40" WidthScale="%">
+                        <Spaces Size="60" />
+                        <Image Caption="bullseye.png" Height="150" ID="imgBullseye" Width="150" />
+                      </Column>
+                      <Column Width="60" WidthScale="%">
+                        <DataTable AccessibleHeaders="True" AccessibleSummary="AnalysisGrid DataTable" ID="DataTable1" KeepScrollPosition="True" RememberSort="True" ResizableColumns="True" SortArrows="True" TableBorder="0">
+                          <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Customer Targets" ID="ExcelDataLayer4" Type="Excel" />
+                          <DataTableColumn ID="colTargetDesc">
+                            <Label Caption="@Data.Target Desc~" Class="ThemeHeaderSmall" ID="colTargetDesc" />
+                          </DataTableColumn>
+                        </DataTable>
+                      </Column>
+                    </Row>
+                  </Rows>
+                </Division>
+              </ResponsiveColumn>
+            </ResponsiveRow>
+            <ResponsiveRow>
+              <ResponsiveColumn>
+                <Division Class="panel panel-default" HtmlDiv="True" ID="divIntiatvies">
+                  <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
+                    <Label Caption="Customer Perspective Initiatives" />
+                  </Division>
+                </Division>
+              </ResponsiveColumn>
+            </ResponsiveRow>
+            <ResponsiveRow>
+              <ResponsiveColumn>
+                <Division Class="panel panel-default" HtmlDiv="True" ID="divCustomer">
+                  <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
+                    <Label Caption="Maximize Sales Performance" Tooltip="Click for Detail Report" />
+                    <Division Class="ThemeAlignRight" ID="divShowDetail">
+                      <Spaces Size="5" />
+                      <ToggleImage AltText="Show/Hide More Details..." Class="ThemeTextSmall" ElementID="divDetails" FalseImage="plus.png" Height="20" ID="showDetails" Tooltip="Show/Hide Action Details..." TrueImage="minus.png" Width="20" />
+                    </Division>
+                  </Division>
+                  <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+                    <ResponsiveRow>
+                      <ResponsiveColumn>
+                        <Gauge BulletColor="LightSlateGray" CaptionColor="SaddleBrown" ChartHeight="80" FontBold="False" FontName="Arial" FontSize="11" ID="BulletBar" MarkerColor="Black" MarkerValue="@Data.Column3~" Type="BulletBar" Value="@Data.Column3~">
+                          <Remark>
+                            <Action Type="Report">
+                              <Target FrameID="NewWindow" Report="SubReports.SubReport_Scorecard1" Type="Report" />
+                            </Action>
+                          </Remark>
+                          <DataLayer ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Sales" Type="Excel" />
+                          <Remark>
+                            <DataLayer ID="dlGaugeData2XML" Type="XMLFile" XMLFile="GaugeData2.xml">
+                              <GroupFilter GroupColumn="SalesTotal">
+                                <GroupAggregateColumn AggregateColumn="UnitPrice" AggregateFunction="Sum" ID="gacUnitPrice" />
+                              </GroupFilter>
+                              <FormattedColumn DataColumn="gacUnitPrice" Format="Currency" ID="fmtUnitPrice" />
+                            </DataLayer>
+                          </Remark>
+                          <GaugeRange Color="#CC0000" RangeEndValue="30" />
+                          <GaugeRange Color="#F1C232" RangeEndValue="60" />
+                          <GaugeRange Color="#6AA84F" RangeEndValue="100" />
+                          <Quicktip>
+                            <QuicktipRow Caption="Progress:" Value="@Data.Column3~" />
+                          </Quicktip>
+                        </Gauge>
+                      </ResponsiveColumn>
+                    </ResponsiveRow>
+                  </Division>
+                </Division>
+              </ResponsiveColumn>
+              <ResponsiveColumn>
+                <Division Class="panel panel-default" HtmlDiv="True" ID="panel">
+                  <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
+                    <Label Caption="Enhance Customer Experience" Tooltip="Click for Detail Report">
+                      <Remark>
+                        <Action ElementID="divDetails,divCustDetails" ID="showCustomer" Type="ShowElement" />
+                      </Remark>
+                    </Label>
+                    <Division Class="ThemeAlignRight" ID="divShowCust">
+                      <Spaces Size="5" />
+                      <ToggleImage AltText="Show/Hide More Details..." Class="ThemeTextSmall" ElementID="divCustDetails" FalseImage="plus.png" Height="20" ID="showCustDetails" Tooltip="Show/Hide Action Details..." TrueImage="minus.png" Width="20" />
+                    </Division>
+                  </Division>
+                  <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+                    <ResponsiveRow>
+                      <ResponsiveColumn>
+                        <Gauge BulletColor="LightSlateGray" CaptionColor="SaddleBrown" ChartHeight="80" FontBold="False" FontName="Arial" FontSize="11" ID="BulletBar" MarkerColor="Black" MarkerValue="@Data.Column3~" Type="BulletBar" Value="@Data.Column3~">
+                          <DataLayer ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Experience" Type="Excel" />
+                          <Remark>
+                            <DataLayer ID="dlGaugeData2XML" Type="XMLFile" XMLFile="GaugeData2.xml">
+                              <GroupFilter GroupColumn="SalesTotal">
+                                <GroupAggregateColumn AggregateColumn="UnitPrice" AggregateFunction="Sum" ID="gacUnitPrice" />
+                              </GroupFilter>
+                              <FormattedColumn DataColumn="gacUnitPrice" Format="Currency" ID="fmtUnitPrice" />
+                            </DataLayer>
+                          </Remark>
+                          <GaugeRange Color="#CC0000" RangeEndValue="30" />
+                          <GaugeRange Color="#F1C232" RangeEndValue="60" />
+                          <GaugeRange Color="#6AA84F" RangeEndValue="100" />
+                          <Quicktip>
+                            <QuicktipRow Caption="Progress:" Value="@Data.Column3~" />
+                          </Quicktip>
+                        </Gauge>
+                      </ResponsiveColumn>
+                    </ResponsiveRow>
+                  </Division>
+                </Division>
+              </ResponsiveColumn>
+            </ResponsiveRow>
+            <ResponsiveRow>
+              <ResponsiveColumn>
+                <Division ID="divDetails" ShowModes="None">
+                  <HR />
+                  <ChartCanvas AltText="@Chart.Action No~" BackgroundColor="AliceBlue" ChartCaption="Maximize Sales Performance" ChartHeight="450" ChartOrientation="SwapAxes" ChartWidth="500" ID="BarChartCanvas1">
+                    <Series ChartXDataColumn="Action No" ChartYDataColumn="rdGrAggr-Progress-sum" Color="LightSlateGray" Type="Bar">
+                      <DataLabels AlignmentHorizontal="Left" AlignmentVertical="Middle" Format="" />
+                      <Quicktip>
+                        <QuicktipRow Caption="% Progress:" Value="@Chart.Progress~" />
+                        <Remark>
+                          <QuicktipRow Caption="Champion:" Value="@Chart.Champion~" />
+                        </Remark>
+                        <Remark>
+                          <QuicktipRow Caption="Team:" Value="@Chart.Champion~" />
+                        </Remark>
+                      </Quicktip>
+                      <Action Type="Report">
+                        <Target FrameID="NewWindow" ID="rptScorecard1" Report="SubReports.SubReport_Scorecard1" Type="Report" />
+                      </Action>
+                    </Series>
+                    <ChartXAxis HideAxis="True" />
+                    <ChartYAxis AxisCaption="% Progress Per Action" />
+                    <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Sales Actions" ID="ExcelDataLayer1" Type="Excel">
+                      <GroupFilter DataType="Text" GroupColumn="Action" KeepGroupedRows="False">
+                        <GroupAggregateColumn AggregateColumn="Progress" AggregateFunction="SUM" DataType="Number" ID="rdGrAggr-Progress-sum" />
+                      </GroupFilter>
+                      <SortFilter DataType="Number" SortColumn="rdGrAggr-Progress-sum" SortSequence="Ascending" />
+                      <RelevanceFilter DataColumn="rdGrAggr-Progress-sum" IrrelevanceLabel="Other" LabelColumn="Action" RelevanceType="NumberOfRows" RelevanceValue="0" />
+                    </DataLayer>
+                  </ChartCanvas>
+                </Division>
+              </ResponsiveColumn>
+              <ResponsiveColumn>
+                <Division ID="divCustDetails" ShowModes="None">
+                  <HR />
+                  <ChartCanvas ChartCaption="Enhance Customer Experience" ChartHeight="450" ChartOrientation="SwapAxes" ChartWidth="500" ID="BarChartCanvas1">
+                    <Series ChartXDataColumn="Action No" ChartYDataColumn="rdGrAggr-Progress-sum" Color="LightSlateGray" Type="Bar">
+                      <DataLabels Format="" />
+                      <Quicktip>
+                        <QuicktipRow Caption="% Progress:" Value="@Chart.Progress~" />
+                        <Remark>
+                          <QuicktipRow Caption="Champion:" Value="@Chart.Champion~" />
+                        </Remark>
+                        <Remark>
+                          <QuicktipRow Caption="Team:" Value="@Chart.Champion~" />
+                        </Remark>
+                      </Quicktip>
+                      <Action Type="Report">
+                        <Target FrameID="NewWindow" ID="rptScorecard2" Report="SubReports.SubReport_Scorecard2" Type="Report" />
+                      </Action>
+                    </Series>
+                    <ChartXAxis HideAxis="True" />
+                    <ChartYAxis AxisCaption="% Progress Per Action" HideAxis="False" />
+                    <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Experience Actions" ID="ExcelDataLayer1" Type="Excel">
+                      <GroupFilter DataType="Text" GroupColumn="Action" KeepGroupedRows="False">
+                        <GroupAggregateColumn AggregateColumn="Progress" AggregateFunction="SUM" DataType="Number" ID="rdGrAggr-Progress-sum" />
+                      </GroupFilter>
+                      <SortFilter DataType="Number" SortColumn="rdGrAggr-Progress-sum" SortSequence="Ascending" />
+                      <RelevanceFilter DataColumn="rdGrAggr-Progress-sum" IrrelevanceLabel="Other" LabelColumn="Action" RelevanceType="NumberOfRows" RelevanceValue="0" />
+                    </DataLayer>
+                  </ChartCanvas>
+                </Division>
+              </ResponsiveColumn>
+            </ResponsiveRow>
+            <ResponsiveRow>
+              <ResponsiveColumn>
+                <Division Class="panel panel-default" HtmlDiv="True" ID="panel">
+                  <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
+                    <Label Caption="Target Farmers Under 40YO" Tooltip="Click for Detail Report">
+                      <Remark>
+                        <Action ElementID="popTarget" Type="ShowElement" />
+                      </Remark>
+                    </Label>
+                  </Division>
+                  <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+                    <ResponsiveRow>
+                      <ResponsiveColumn>
+                        <Gauge BulletColor="LightSlateGray" CaptionColor="SaddleBrown" ChartHeight="80" FontBold="False" FontName="Arial" FontSize="11" ID="BulletBar" MarkerColor="Black" MarkerValue="@Data.Column3~" Type="BulletBar" Value="@Data.Column3~">
+                          <DataLayer ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Target" Type="Excel" />
+                          <Remark>
+                            <DataLayer ID="dlGaugeData2XML" Type="XMLFile" XMLFile="GaugeData2.xml">
+                              <GroupFilter GroupColumn="SalesTotal">
+                                <GroupAggregateColumn AggregateColumn="UnitPrice" AggregateFunction="Sum" ID="gacUnitPrice" />
+                              </GroupFilter>
+                              <FormattedColumn DataColumn="gacUnitPrice" Format="Currency" ID="fmtUnitPrice" />
+                            </DataLayer>
+                          </Remark>
+                          <GaugeRange Color="#CC0000" RangeEndValue="30" />
+                          <GaugeRange Color="#F1C232" RangeEndValue="60" />
+                          <GaugeRange Color="#6AA84F" RangeEndValue="100" />
+                          <Quicktip>
+                            <QuicktipRow Caption="Progress:" Value="@Data.Column3~" />
+                          </Quicktip>
+                        </Gauge>
+                        <Division ID="divTargetDetails" ShowModes="None">
+                          <HR />
+                          <ResponsiveRow>
+                            <ResponsiveColumn>
+                              <ChartCanvas ChartCaption="Target Farmers Under 40YO" ChartHeight="400" ChartOrientation="SwapAxes" ChartWidth="450" ID="BarChartCanvas1">
+                                <Series ChartXDataColumn="Action No" ChartYDataColumn="rdGrAggr-Progress-sum" Color="LightSlateGray" Type="Bar">
+                                  <Quicktip>
+                                    <QuicktipRow Caption="Action:" Value="@Chart.Action~" />
+                                    <QuicktipRow Caption="Champion:" Value="@Chart.Champion~" />
+                                    <QuicktipRow Caption="Team:" Value="@Chart.Team~" />
+                                  </Quicktip>
+                                  <DataLabels Format="" />
+                                </Series>
+                                <ChartXAxis />
+                                <ChartYAxis AxisCaption="Progress By Action" />
+                                <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Target Actions" ID="ExcelDataLayer1" Type="Excel">
+                                  <GroupFilter DataType="Text" GroupColumn="Action" KeepGroupedRows="False">
+                                    <GroupAggregateColumn AggregateColumn="Progress" AggregateFunction="SUM" DataType="Number" ID="rdGrAggr-Progress-sum" />
+                                  </GroupFilter>
+                                  <SortFilter DataType="Number" SortColumn="rdGrAggr-Progress-sum" SortSequence="Ascending" />
+                                  <RelevanceFilter DataColumn="rdGrAggr-Progress-sum" IrrelevanceLabel="Other" LabelColumn="Action" RelevanceType="NumberOfRows" RelevanceValue="0" />
+                                </DataLayer>
+                              </ChartCanvas>
+                              <Label Caption="Show More Details...">
+                                <Action ElementID="popTargetTasks" ID="showTargetTasks" Type="ShowElement" />
+                              </Label>
+                            </ResponsiveColumn>
+                          </ResponsiveRow>
+                        </Division>
+                      </ResponsiveColumn>
+                    </ResponsiveRow>
+                  </Division>
+                </Division>
+              </ResponsiveColumn>
+              <ResponsiveColumn>
+                <Division Class="panel panel-default" HtmlDiv="True" ID="panel">
+                  <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
+                    <Label Caption="Enhance Precision Ag Strategy" Tooltip="Click for Detail Report" />
+                  </Division>
+                  <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+                    <ResponsiveRow>
+                      <ResponsiveColumn>
+                        <Gauge BulletColor="LightSlateGray" CaptionColor="SaddleBrown" ChartHeight="80" FontBold="False" FontName="Arial" FontSize="11" ID="BulletBar" MarkerColor="Black" MarkerValue="@Data.Column3~" Type="BulletBar" Value="@Data.Column3~">
+                          <Action Type="Report">
+                            <Target FrameID="NewWindow" Report="SubReports.SubReport_Scorecard4" Type="Report" />
+                          </Action>
+                          <DataLayer ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Precision" Type="Excel" />
+                          <Remark>
+                            <DataLayer ID="dlGaugeData2XML" Type="XMLFile" XMLFile="GaugeData2.xml">
+                              <GroupFilter GroupColumn="SalesTotal">
+                                <GroupAggregateColumn AggregateColumn="UnitPrice" AggregateFunction="Sum" ID="gacUnitPrice" />
+                              </GroupFilter>
+                              <FormattedColumn DataColumn="gacUnitPrice" Format="Currency" ID="fmtUnitPrice" />
+                            </DataLayer>
+                          </Remark>
+                          <GaugeRange Color="#CC0000" RangeEndValue="30" />
+                          <GaugeRange Color="#F1C232" RangeEndValue="60" />
+                          <GaugeRange Color="#6AA84F" RangeEndValue="100" />
+                          <Quicktip>
+                            <QuicktipRow Caption="Progress:" Value="@Data.Column3~" />
+                          </Quicktip>
+                        </Gauge>
+                        <Division ID="divPrecisionDetails" ShowModes="None">
+                          <HR />
+                          <ResponsiveRow>
+                            <ResponsiveColumn>
+                              <ChartCanvas ChartCaption="Enhance Precision Ag Strategy" ChartHeight="400" ChartOrientation="SwapAxes" ChartWidth="450" ID="BarChartCanvas1">
+                                <Series ChartXDataColumn="Action No" ChartYDataColumn="rdGrAggr-Progress-sum" Color="LightSlateGray" Type="Bar">
+                                  <Quicktip>
+                                    <QuicktipRow Caption="Action:" Value="@Chart.Action~" />
+                                    <QuicktipRow Caption="Champion:" Value="@Chart.Champion~" />
+                                    <QuicktipRow Caption="Team:" Value="@Chart.Team~" />
+                                  </Quicktip>
+                                  <DataLabels Format="" />
+                                </Series>
+                                <ChartXAxis />
+                                <ChartYAxis AxisCaption="Progress By Action" />
+                                <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Precision Actions" ID="ExcelDataLayer1" Type="Excel">
+                                  <GroupFilter DataType="Text" GroupColumn="Action" KeepGroupedRows="False">
+                                    <GroupAggregateColumn AggregateColumn="Progress" AggregateFunction="SUM" DataType="Number" ID="rdGrAggr-Progress-sum" />
+                                  </GroupFilter>
+                                  <SortFilter DataType="Number" SortColumn="rdGrAggr-Progress-sum" SortSequence="Ascending" />
+                                  <RelevanceFilter DataColumn="rdGrAggr-Progress-sum" IrrelevanceLabel="Other" LabelColumn="Action" RelevanceType="NumberOfRows" RelevanceValue="0" />
+                                </DataLayer>
+                              </ChartCanvas>
+                              <Label Caption="Show More Details..." Tooltip="Click here for task details...">
+                                <Action ElementID="popPrecisionTasks" ID="showPrecisionTasks" Type="ShowElement" />
+                              </Label>
+                            </ResponsiveColumn>
+                          </ResponsiveRow>
+                        </Division>
+                      </ResponsiveColumn>
+                    </ResponsiveRow>
+                  </Division>
+                </Division>
+              </ResponsiveColumn>
+            </ResponsiveRow>
+            <ResponsiveRow>
+              <ResponsiveColumn>
+                <Division Class="ThemeClearfix" ID="divClear" />
+                <Division Class="panel panel-default" HtmlDiv="True" ID="divPopups">
+                  <PopupPanel Caption="Maximize Sales Tasks Detail" Class="ThemeAlignLeft" Draggable="True" Height="30" HeightScale="%" ID="popSalesTasks" PopupModal="True" PopupPanelLocation="Center" Width="30" WidthScale="%">
+                    <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+                      <ResponsiveRow>
+                        <ResponsiveColumn>
+                          <DataTable ID="tblSalesActions">
+                            <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Sales Actions" ID="ExcelDataLayer2" Type="Excel" />
+                            <DataTableColumn Header="Task" ID="colAction">
+                              <Label Caption="@Data.Action~" ID="lblAction" />
+                              <DataColumnSort DataColumn="Action" />
+                            </DataTableColumn>
+                            <DataTableColumn Header="Progress" ID="colProgress">
+                              <Label Caption="@Data.Progress~" ID="lblProgress" />
+                              <DataColumnSort DataColumn="Progress" DataType="Number" />
+                            </DataTableColumn>
+                            <DataTableColumn Header="Owner" ID="colChampion">
+                              <Label Caption="@Data.Champion~" ID="lblChampion" />
+                              <DataColumnSort DataColumn="Champion" />
+                            </DataTableColumn>
+                          </DataTable>
+                        </ResponsiveColumn>
+                      </ResponsiveRow>
+                    </Division>
+                  </PopupPanel>
+                  <PopupPanel Caption="Enhance Customer Experience Tasks Detail" Class="ThemeAlignLeft" Draggable="True" Height="30" HeightScale="%" ID="popCustomerTasks" PopupModal="True" PopupPanelLocation="Center" Width="30" WidthScale="%">
+                    <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+                      <ResponsiveRow>
+                        <ResponsiveColumn>
+                          <DataTable ID="tblExperieneActions">
+                            <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Experience Actions" ID="ExcelDataLayer2" Type="Excel" />
+                            <DataTableColumn Header="Task" ID="colAction">
+                              <Label Caption="@Data.Action~" ID="lblAction" />
+                              <DataColumnSort DataColumn="Action" />
+                            </DataTableColumn>
+                            <DataTableColumn Header="Progress" ID="colProgress">
+                              <Label Caption="@Data.Progress~" ID="lblProgress" />
+                              <DataColumnSort DataColumn="Progress" DataType="Number" />
+                            </DataTableColumn>
+                            <DataTableColumn Header="Owner" ID="colChampion">
+                              <Label Caption="@Data.Champion~" ID="lblChampion" />
+                              <DataColumnSort DataColumn="Champion" />
+                            </DataTableColumn>
+                          </DataTable>
+                        </ResponsiveColumn>
+                      </ResponsiveRow>
+                    </Division>
+                  </PopupPanel>
+                  <PopupPanel Caption="Tasks Detail" Class="ThemeAlignLeft" Draggable="True" Height="30" HeightScale="%" ID="popTargetTasks" PopupModal="True" PopupPanelLocation="Center" Width="30" WidthScale="%">
+                    <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+                      <ResponsiveRow>
+                        <ResponsiveColumn>
+                          <DataTable ID="tblPrecisionTasks">
+                            <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Precision Actions" ID="ExcelDataLayer2" Type="Excel" />
+                            <DataTableColumn Header="Task" ID="colAction">
+                              <Label Caption="@Data.Action~" ID="lblAction" />
+                              <DataColumnSort DataColumn="Action" />
+                            </DataTableColumn>
+                            <DataTableColumn Header="Progress" ID="colProgress">
+                              <Label Caption="@Data.Progress~" ID="lblProgress" />
+                              <DataColumnSort DataColumn="Progress" DataType="Number" />
+                            </DataTableColumn>
+                            <DataTableColumn Header="Owner" ID="colChampion">
+                              <Label Caption="@Data.Champion~" ID="lblChampion" />
+                              <DataColumnSort DataColumn="Champion" />
+                            </DataTableColumn>
+                          </DataTable>
+                        </ResponsiveColumn>
+                      </ResponsiveRow>
+                    </Division>
+                  </PopupPanel>
+                  <PopupPanel Caption="Precision Ag Tasks Detail" Class="ThemeAlignLeft" Draggable="True" Height="30" HeightScale="%" ID="popPrecisionTasks" PopupModal="True" PopupPanelLocation="Center" Width="30" WidthScale="%">
+                    <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+                      <ResponsiveRow>
+                        <ResponsiveColumn>
+                          <DataTable ID="tblPrecisionTasks">
+                            <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Precision Actions" ID="ExcelDataLayer2" Type="Excel" />
+                            <DataTableColumn Header="Task" ID="colAction">
+                              <Label Caption="@Data.Action~" ID="lblAction" />
+                              <DataColumnSort DataColumn="Action" />
+                            </DataTableColumn>
+                            <DataTableColumn Header="Progress" ID="colProgress">
+                              <Label Caption="@Data.Progress~" ID="lblProgress" />
+                              <DataColumnSort DataColumn="Progress" DataType="Number" />
+                            </DataTableColumn>
+                            <DataTableColumn Header="Owner" ID="colChampion">
+                              <Label Caption="@Data.Champion~" ID="lblChampion" />
+                              <DataColumnSort DataColumn="Champion" />
+                            </DataTableColumn>
+                          </DataTable>
+                        </ResponsiveColumn>
+                      </ResponsiveRow>
+                    </Division>
+                  </PopupPanel>
+                </Division>
+              </ResponsiveColumn>
+            </ResponsiveRow>
+          </TabPanel>
+          <TabPanel Caption="Employee " Class="ThemeTextPositive ThemeHeaderSmall" ID="tabEmployee">
+            <ResponsiveRow>
+              <ResponsiveColumn Class="ThemeAlignRight" ColspanMediumScreen="12">
+                <Remark>
+                  <Button Caption="Show/Hide More Details..." Class="ThemeTextPositive ThemeBold" ID="btnActionsDetail2" Tooltip="Click to expand the Customer view">
+                    <Remark>
+                      <Action ElementID="divDetails,divCustDetails,divTargetDetails,divPrecisionDetails" ID="showCustomer" Type="ShowElement" />
+                    </Remark>
+                  </Button>
+                </Remark>
+                <ResponsiveRow>
+                  <ResponsiveColumn>
+                    <Division Class="ThemeClearfix" ID="divClear" />
+                    <Division Class="panel panel-default" HtmlDiv="True" ID="divPopups">
+                      <PopupPanel Caption="Maximize Sales Tasks Detail" Class="ThemeAlignLeft" Draggable="True" Height="30" HeightScale="%" ID="popSalesTasks" PopupModal="True" PopupPanelLocation="Center" Width="30" WidthScale="%">
+                        <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+                          <ResponsiveRow>
+                            <ResponsiveColumn>
+                              <DataTable ID="tblSalesActions">
+                                <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Sales Actions" ID="ExcelDataLayer2" Type="Excel" />
+                                <DataTableColumn Header="Task" ID="colAction">
+                                  <Label Caption="@Data.Action~" ID="lblAction" />
+                                  <DataColumnSort DataColumn="Action" />
+                                </DataTableColumn>
+                                <DataTableColumn Header="Progress" ID="colProgress">
+                                  <Label Caption="@Data.Progress~" ID="lblProgress" />
+                                  <DataColumnSort DataColumn="Progress" DataType="Number" />
+                                </DataTableColumn>
+                                <DataTableColumn Header="Owner" ID="colChampion">
+                                  <Label Caption="@Data.Champion~" ID="lblChampion" />
+                                  <DataColumnSort DataColumn="Champion" />
+                                </DataTableColumn>
+                              </DataTable>
+                            </ResponsiveColumn>
+                          </ResponsiveRow>
+                        </Division>
+                      </PopupPanel>
+                      <PopupPanel Caption="Enhance Customer Experience Tasks Detail" Class="ThemeAlignLeft" Draggable="True" Height="30" HeightScale="%" ID="popCustomerTasks" PopupModal="True" PopupPanelLocation="Center" Width="30" WidthScale="%">
+                        <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+                          <ResponsiveRow>
+                            <ResponsiveColumn>
+                              <DataTable ID="tblExperieneActions">
+                                <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Experience Actions" ID="ExcelDataLayer2" Type="Excel" />
+                                <DataTableColumn Header="Task" ID="colAction">
+                                  <Label Caption="@Data.Action~" ID="lblAction" />
+                                  <DataColumnSort DataColumn="Action" />
+                                </DataTableColumn>
+                                <DataTableColumn Header="Progress" ID="colProgress">
+                                  <Label Caption="@Data.Progress~" ID="lblProgress" />
+                                  <DataColumnSort DataColumn="Progress" DataType="Number" />
+                                </DataTableColumn>
+                                <DataTableColumn Header="Owner" ID="colChampion">
+                                  <Label Caption="@Data.Champion~" ID="lblChampion" />
+                                  <DataColumnSort DataColumn="Champion" />
+                                </DataTableColumn>
+                              </DataTable>
+                            </ResponsiveColumn>
+                          </ResponsiveRow>
+                        </Division>
+                      </PopupPanel>
+                      <PopupPanel Caption="Tasks Detail" Class="ThemeAlignLeft" Draggable="True" Height="30" HeightScale="%" ID="popTargetTasks" PopupModal="True" PopupPanelLocation="Center" Width="30" WidthScale="%">
+                        <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+                          <ResponsiveRow>
+                            <ResponsiveColumn>
+                              <DataTable ID="tblPrecisionTasks">
+                                <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Precision Actions" ID="ExcelDataLayer2" Type="Excel" />
+                                <DataTableColumn Header="Task" ID="colAction">
+                                  <Label Caption="@Data.Action~" ID="lblAction" />
+                                  <DataColumnSort DataColumn="Action" />
+                                </DataTableColumn>
+                                <DataTableColumn Header="Progress" ID="colProgress">
+                                  <Label Caption="@Data.Progress~" ID="lblProgress" />
+                                  <DataColumnSort DataColumn="Progress" DataType="Number" />
+                                </DataTableColumn>
+                                <DataTableColumn Header="Owner" ID="colChampion">
+                                  <Label Caption="@Data.Champion~" ID="lblChampion" />
+                                  <DataColumnSort DataColumn="Champion" />
+                                </DataTableColumn>
+                              </DataTable>
+                            </ResponsiveColumn>
+                          </ResponsiveRow>
+                        </Division>
+                      </PopupPanel>
+                      <PopupPanel Caption="Precision Ag Tasks Detail" Class="ThemeAlignLeft" Draggable="True" Height="30" HeightScale="%" ID="popPrecisionTasks" PopupModal="True" PopupPanelLocation="Center" Width="30" WidthScale="%">
+                        <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+                          <ResponsiveRow>
+                            <ResponsiveColumn>
+                              <DataTable ID="tblPrecisionTasks">
+                                <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Precision Actions" ID="ExcelDataLayer2" Type="Excel" />
+                                <DataTableColumn Header="Task" ID="colAction">
+                                  <Label Caption="@Data.Action~" ID="lblAction" />
+                                  <DataColumnSort DataColumn="Action" />
+                                </DataTableColumn>
+                                <DataTableColumn Header="Progress" ID="colProgress">
+                                  <Label Caption="@Data.Progress~" ID="lblProgress" />
+                                  <DataColumnSort DataColumn="Progress" DataType="Number" />
+                                </DataTableColumn>
+                                <DataTableColumn Header="Owner" ID="colChampion">
+                                  <Label Caption="@Data.Champion~" ID="lblChampion" />
+                                  <DataColumnSort DataColumn="Champion" />
+                                </DataTableColumn>
+                              </DataTable>
+                            </ResponsiveColumn>
+                          </ResponsiveRow>
+                        </Division>
+                      </PopupPanel>
+                    </Division>
+                  </ResponsiveColumn>
+                </ResponsiveRow>
+              </ResponsiveColumn>
+            </ResponsiveRow>
+            <ResponsiveRow>
+              <ResponsiveColumn>
+                <Division Class="panel panel-default" HtmlDiv="True" ID="divEmployee">
+                  <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
+                    <Label Caption="Employee Initiatives" Tooltip="Click for Detail Report">
+                      <Remark>
+                        <Action ElementID="divDetails,divCustDetails" ID="showSales" Type="ShowElement" />
+                      </Remark>
+                    </Label>
+                  </Division>
+                  <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+                    <ResponsiveRow>
+                      <ResponsiveColumn>
+                        <Gauge BulletColor="LightSlateGray" CaptionColor="SaddleBrown" ChartHeight="80" FontBold="False" FontName="Arial" FontSize="11" ID="BulletBar" MarkerColor="Black" MarkerValue="@Data.Column3~" Type="BulletBar" Value="@Data.Column3~">
+                          <Remark>
+                            <Action Type="Report">
+                              <Target FrameID="NewWindow" Report="SubReports.SubReport_Scorecard1" Type="Report" />
+                            </Action>
+                          </Remark>
+                          <DataLayer ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Sales" Type="Excel" />
+                          <Remark>
+                            <DataLayer ID="dlGaugeData2XML" Type="XMLFile" XMLFile="GaugeData2.xml">
+                              <GroupFilter GroupColumn="SalesTotal">
+                                <GroupAggregateColumn AggregateColumn="UnitPrice" AggregateFunction="Sum" ID="gacUnitPrice" />
+                              </GroupFilter>
+                              <FormattedColumn DataColumn="gacUnitPrice" Format="Currency" ID="fmtUnitPrice" />
+                            </DataLayer>
+                          </Remark>
+                          <GaugeRange Color="#CC0000" RangeEndValue="30" />
+                          <GaugeRange Color="#F1C232" RangeEndValue="60" />
+                          <GaugeRange Color="#6AA84F" RangeEndValue="100" />
+                          <Quicktip>
+                            <QuicktipRow Caption="Progress:" Value="@Data.Column3~" />
+                          </Quicktip>
+                        </Gauge>
+                      </ResponsiveColumn>
+                    </ResponsiveRow>
+                  </Division>
+                </Division>
+              </ResponsiveColumn>
+            </ResponsiveRow>
+          </TabPanel>
+          <TabPanel Caption="Organizational Renewal" Class="ThemeTextPositive ThemeHeaderSmall" ID="tabRenewal">
+            <ResponsiveRow>
+              <ResponsiveColumn Class="ThemeAlignRight" ColspanMediumScreen="12">
+                <Remark>
+                  <Button Caption="Show/Hide More Details..." Class="ThemeTextPositive ThemeBold" ID="btnActionsDetail3" Tooltip="Click to expand the Customer view">
+                    <Remark>
+                      <Action ElementID="divDetails,divCustDetails,divTargetDetails,divPrecisionDetails" ID="showCustomer" Type="ShowElement" />
+                    </Remark>
+                  </Button>
+                </Remark>
+                <ResponsiveRow>
+                  <ResponsiveColumn>
+                    <Division Class="ThemeClearfix" ID="divClear" />
+                    <Division Class="panel panel-default" HtmlDiv="True" ID="divPopups">
+                      <PopupPanel Caption="Maximize Sales Tasks Detail" Class="ThemeAlignLeft" Draggable="True" Height="30" HeightScale="%" ID="popSalesTasks" PopupModal="True" PopupPanelLocation="Center" Width="30" WidthScale="%">
+                        <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+                          <ResponsiveRow>
+                            <ResponsiveColumn>
+                              <DataTable ID="tblSalesActions">
+                                <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Sales Actions" ID="ExcelDataLayer2" Type="Excel" />
+                                <DataTableColumn Header="Task" ID="colAction">
+                                  <Label Caption="@Data.Action~" ID="lblAction" />
+                                  <DataColumnSort DataColumn="Action" />
+                                </DataTableColumn>
+                                <DataTableColumn Header="Progress" ID="colProgress">
+                                  <Label Caption="@Data.Progress~" ID="lblProgress" />
+                                  <DataColumnSort DataColumn="Progress" DataType="Number" />
+                                </DataTableColumn>
+                                <DataTableColumn Header="Owner" ID="colChampion">
+                                  <Label Caption="@Data.Champion~" ID="lblChampion" />
+                                  <DataColumnSort DataColumn="Champion" />
+                                </DataTableColumn>
+                              </DataTable>
+                            </ResponsiveColumn>
+                          </ResponsiveRow>
+                        </Division>
+                      </PopupPanel>
+                      <PopupPanel Caption="Enhance Customer Experience Tasks Detail" Class="ThemeAlignLeft" Draggable="True" Height="30" HeightScale="%" ID="popCustomerTasks" PopupModal="True" PopupPanelLocation="Center" Width="30" WidthScale="%">
+                        <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+                          <ResponsiveRow>
+                            <ResponsiveColumn>
+                              <DataTable ID="tblExperieneActions">
+                                <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Experience Actions" ID="ExcelDataLayer2" Type="Excel" />
+                                <DataTableColumn Header="Task" ID="colAction">
+                                  <Label Caption="@Data.Action~" ID="lblAction" />
+                                  <DataColumnSort DataColumn="Action" />
+                                </DataTableColumn>
+                                <DataTableColumn Header="Progress" ID="colProgress">
+                                  <Label Caption="@Data.Progress~" ID="lblProgress" />
+                                  <DataColumnSort DataColumn="Progress" DataType="Number" />
+                                </DataTableColumn>
+                                <DataTableColumn Header="Owner" ID="colChampion">
+                                  <Label Caption="@Data.Champion~" ID="lblChampion" />
+                                  <DataColumnSort DataColumn="Champion" />
+                                </DataTableColumn>
+                              </DataTable>
+                            </ResponsiveColumn>
+                          </ResponsiveRow>
+                        </Division>
+                      </PopupPanel>
+                      <PopupPanel Caption="Tasks Detail" Class="ThemeAlignLeft" Draggable="True" Height="30" HeightScale="%" ID="popTargetTasks" PopupModal="True" PopupPanelLocation="Center" Width="30" WidthScale="%">
+                        <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+                          <ResponsiveRow>
+                            <ResponsiveColumn>
+                              <DataTable ID="tblPrecisionTasks">
+                                <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Precision Actions" ID="ExcelDataLayer2" Type="Excel" />
+                                <DataTableColumn Header="Task" ID="colAction">
+                                  <Label Caption="@Data.Action~" ID="lblAction" />
+                                  <DataColumnSort DataColumn="Action" />
+                                </DataTableColumn>
+                                <DataTableColumn Header="Progress" ID="colProgress">
+                                  <Label Caption="@Data.Progress~" ID="lblProgress" />
+                                  <DataColumnSort DataColumn="Progress" DataType="Number" />
+                                </DataTableColumn>
+                                <DataTableColumn Header="Owner" ID="colChampion">
+                                  <Label Caption="@Data.Champion~" ID="lblChampion" />
+                                  <DataColumnSort DataColumn="Champion" />
+                                </DataTableColumn>
+                              </DataTable>
+                            </ResponsiveColumn>
+                          </ResponsiveRow>
+                        </Division>
+                      </PopupPanel>
+                      <PopupPanel Caption="Precision Ag Tasks Detail" Class="ThemeAlignLeft" Draggable="True" Height="30" HeightScale="%" ID="popPrecisionTasks" PopupModal="True" PopupPanelLocation="Center" Width="30" WidthScale="%">
+                        <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+                          <ResponsiveRow>
+                            <ResponsiveColumn>
+                              <DataTable ID="tblPrecisionTasks">
+                                <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Precision Actions" ID="ExcelDataLayer2" Type="Excel" />
+                                <DataTableColumn Header="Task" ID="colAction">
+                                  <Label Caption="@Data.Action~" ID="lblAction" />
+                                  <DataColumnSort DataColumn="Action" />
+                                </DataTableColumn>
+                                <DataTableColumn Header="Progress" ID="colProgress">
+                                  <Label Caption="@Data.Progress~" ID="lblProgress" />
+                                  <DataColumnSort DataColumn="Progress" DataType="Number" />
+                                </DataTableColumn>
+                                <DataTableColumn Header="Owner" ID="colChampion">
+                                  <Label Caption="@Data.Champion~" ID="lblChampion" />
+                                  <DataColumnSort DataColumn="Champion" />
+                                </DataTableColumn>
+                              </DataTable>
+                            </ResponsiveColumn>
+                          </ResponsiveRow>
+                        </Division>
+                      </PopupPanel>
+                    </Division>
+                  </ResponsiveColumn>
+                </ResponsiveRow>
+              </ResponsiveColumn>
+            </ResponsiveRow>
+            <ResponsiveRow>
+              <ResponsiveColumn>
+                <Division Class="panel panel-default" HtmlDiv="True" ID="divRenewal">
+                  <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
+                    <Label Caption="Organizational Renewal Initiatives" Tooltip="Click for Detail Report">
+                      <Remark>
+                        <Action ElementID="divDetails,divCustDetails" ID="showSales" Type="ShowElement" />
+                      </Remark>
+                    </Label>
+                  </Division>
+                  <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+                    <ResponsiveRow>
+                      <ResponsiveColumn>
+                        <Gauge BulletColor="LightSlateGray" CaptionColor="SaddleBrown" ChartHeight="80" FontBold="False" FontName="Arial" FontSize="11" ID="BulletBar" MarkerColor="Black" MarkerValue="@Data.Column3~" Type="BulletBar" Value="@Data.Column3~">
+                          <Remark>
+                            <Action Type="Report">
+                              <Target FrameID="NewWindow" Report="SubReports.SubReport_Scorecard1" Type="Report" />
+                            </Action>
+                          </Remark>
+                          <DataLayer ExcelFile="C:\Logi Installs\ScorecardData.xlsx" ExcelWorksheet="Sales" Type="Excel" />
+                          <Remark>
+                            <DataLayer ID="dlGaugeData2XML" Type="XMLFile" XMLFile="GaugeData2.xml">
+                              <GroupFilter GroupColumn="SalesTotal">
+                                <GroupAggregateColumn AggregateColumn="UnitPrice" AggregateFunction="Sum" ID="gacUnitPrice" />
+                              </GroupFilter>
+                              <FormattedColumn DataColumn="gacUnitPrice" Format="Currency" ID="fmtUnitPrice" />
+                            </DataLayer>
+                          </Remark>
+                          <GaugeRange Color="#CC0000" RangeEndValue="30" />
+                          <GaugeRange Color="#F1C232" RangeEndValue="60" />
+                          <GaugeRange Color="#6AA84F" RangeEndValue="100" />
+                          <Quicktip>
+                            <QuicktipRow Caption="Progress:" Value="@Data.Column3~" />
+                          </Quicktip>
+                        </Gauge>
+                      </ResponsiveColumn>
+                    </ResponsiveRow>
+                  </Division>
+                </Division>
+              </ResponsiveColumn>
+            </ResponsiveRow>
+          </TabPanel>
+        </Tabs>
+      </ResponsiveColumn>
+    </ResponsiveRow>
+  </Body>
+  <ideTestParams />
+</Report>

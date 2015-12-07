@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Caption="New Member Business" ID="Reports.NewMemberBusiness">
+  <Remark>
+    <LocalData>
+      <DataLayer ConnectionID="connProdGP" ID="SQLNewMemberBusiness" Source="SELECT &#xA;    LTRIM(RTRIM(PM.VENDORID)) AS VENDORID&#xA;  , LTRIM(RTRIM(ISNULL(RM.CUSTNMBR,''))) AS CUSTNMBR&#xA;  , LTRIM(RTRIM(PM.VENDNAME)) AS MemberDesc&#xA;  , LTRIM(RTRIM(PM.CITY)) + ' ' + LTRIM(RTRIM(PM.STATE)) AS MemberLocation&#xA;  , LTRIM(RTRIM(ISNULL(FM.CRM_AccountRepName,''))) AS FieldMarketer&#xA;  , LTRIM(RTRIM(MC.MemberClassID)) AS MemberClass&#xA;  , CASE PM.UPSZONE WHEN 'D' THEN 'Deceased' WHEN 'U' THEN 'Undeliverable' ELSE '' END AS AddressCd&#xA;  , CAST(MM.CreateDate as date) AS MemberCreateDate&#xA;  , ISNULL(R3.TTLSLLTD,0) AS MKCSalesAmt&#xA;  , ES.EquityAmt AS EquityAmt&#xA;FROM IRPGMemberMstr MM&#xA;  INNER JOIN IRPGMemberClassMstr MC ON MM.MemberClassKey=MC.MemberClassKey&#xA;  INNER JOIN PM00200 PM ON MM.VENDORID=PM.VENDORID&#xA;  LEFT OUTER JOIN PA00001 PA ON PM.VENDORID=PA.VENDORID&#xA;  LEFT OUTER JOIN RM00101 RM ON PA.CUSTNMBR=RM.CUSTNMBR&#xA;  LEFT OUTER JOIN RM00103 R3 ON RM.CUSTNMBR=R3.CUSTNMBR&#xA;  LEFT OUTER JOIN IRPGvMemberEquitySum ES ON MM.VENDORID=ES.VENDORID&#xA;  LEFT OUTER JOIN MKC_CRM_AccountRep FM ON PA.CUSTNMBR=FM.CUSTNMBR AND FM.CRM_DepartmentName='Agronomy' AND FM.CRM_RoleName='Field Marketer'&#xA;WHERE PM.VENDSTTS=1&#xA;  AND MM.CreateDate  BETWEEN '2015-08-01' AND '2015-12-31'&#xA;" Type="SQL" />
+    </LocalData>
+  </Remark>
+  <IncludeSharedElement DefinitionFile="_Layout.Shared" SharedElementID="shrHeader" />
+  <Body>
+    <ResponsiveRow>
+      <ResponsiveColumn>
+        <Division Class="panel panel-default" HtmlDiv="True" ID="panel">
+          <Division Class="panel-heading" ID="panel-heading">
+            <Label Caption="New Member Business" />
+          </Division>
+          <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+            <ChartCanvas ChartOrientation="Default" ID="BarChartCanvas1">
+              <Series BarThickness="20" ChartXDataColumn="MemberCreateMonth" ChartXDataColumnType="Text" ChartYDataColumn="rdGrAggr-MemberCount-sum" Color="Orange" Type="Bar">
+                <Quicktip>
+                  <QuicktipRow Caption="Month: " ID="CreateMonth" Value="@Chart.MemberCreateMonth~" />
+                  <QuicktipRow Caption="New Members: " Value="@Chart.rdGrAggr-MemberCount-sum~" />
+                </Quicktip>
+                <DataLabels Format="" LabelPlacement="Outside" />
+              </Series>
+              <ChartXAxis AxisType="Category" HideFirstLabel="False" HideLastLabel="False">
+                <AxisLabelStyle FontAngle="0" FontSize="8" FontWeight="Normal" />
+              </ChartXAxis>
+              <ChartYAxis HideFirstLabel="False" HideLastLabel="False" />
+              <DataLayer ConnectionID="connProdGP" ID="SQLDataLayer1" Source="Select Cast(Convert(varchar(6),MM.CreateDate,112) As int) As MemberDateSort,&#xD;&#xA;  Convert(varchar(3),MM.CreateDate,107) + '-' + Cast(DatePart(YEAR,&#xD;&#xA;  MM.CreateDate) As varchar(4)) As MemberCreateMonth,&#xD;&#xA;  Count(MM.VENDORID) As MemberCount,&#xD;&#xA;  Sum(IsNull(R3.TTLSLLTD, 0)) As MKCSalesAmt,&#xD;&#xA;  Sum(ES.EquityAmt) As EquityAmt&#xD;&#xA;From MKCGP..IRPGMemberMstr MM&#xD;&#xA;  Inner Join MKCGP..IRPGMemberClassMstr MC On MM.MemberClassKey =&#xD;&#xA;    MC.MemberClassKey&#xD;&#xA;  Inner Join MKCGP..PM00200 PM On MM.VENDORID = PM.VENDORID&#xD;&#xA;  Left Outer Join MKCGP..PA00001 PA On PM.VENDORID = PA.VENDORID&#xD;&#xA;  Left Outer Join MKCGP..RM00101 RM On PA.CUSTNMBR = RM.CUSTNMBR&#xD;&#xA;  Left Outer Join MKCGP..RM00103 R3 On RM.CUSTNMBR = R3.CUSTNMBR&#xD;&#xA;  Left Outer Join MKCGP..IRPGvMemberEquitySum ES On MM.VENDORID = ES.VENDORID&#xD;&#xA;  Left Outer Join MKCGP..MKC_CRM_AccountRep FM On PA.CUSTNMBR = FM.CUSTNMBR And&#xD;&#xA;    FM.CRM_DepartmentName = 'Agronomy' And FM.CRM_RoleName = 'Field Marketer'&#xD;&#xA;Where PM.VENDSTTS = 1 And MM.CreateDate Between '2015-03-01' And '2016-02-28'&#xD;&#xA;Group By Convert(varchar(3),MM.CreateDate,107) + '-' + Cast(DatePart(YEAR,&#xD;&#xA;  MM.CreateDate) As varchar(4)),&#xD;&#xA;  Convert(varchar(6),MM.CreateDate,112)" Type="SQL">
+                <GroupFilter DataType="Text" GroupColumn="MemberCreateMonth" KeepGroupedRows="False">
+                  <GroupAggregateColumn AggregateColumn="MemberCount" AggregateFunction="SUM" DataType="Number" ID="rdGrAggr-MemberCount-sum" />
+                </GroupFilter>
+                <SortFilter DataType="Number" SortColumn="MemberDateSort" SortSequence="Ascending" />
+                <RelevanceFilter DataColumn="rdGrAggr-MemberCount-sum" IrrelevanceLabel="Other" LabelColumn="MemberCreateMonth" RelevanceType="NumberOfRows" RelevanceValue="0" />
+              </DataLayer>
+            </ChartCanvas>
+          </Division>
+        </Division>
+      </ResponsiveColumn>
+      <ResponsiveColumn>
+        <Division>
+          <GoogleMap GoogleMapZoomControl="Small" Height="450" ID="LocationMap" MapScale="False" Width="600">
+            <GoogleMapMarkers ID="LocationMarker">
+              <DataLayer ConnectionID="connProdGP" ID="SQLDataMembers" Source="Select LTrim(RTrim(PM.VENDORID)) As VENDORID,&#xD;&#xA;  LTrim(RTrim(PM.VENDNAME)) As MemberDesc,&#xD;&#xA;  LTrim(RTrim(PM.ADDRESS2)) As GeoAddress,&#xD;&#xA;  LTrim(RTrim(PM.ADDRESS2)) + ' ' + LTrim(RTrim(PM.CITY)) + ' ' +&#xD;&#xA;  LTrim(RTrim(PM.STATE)) + ' ' + LTrim(RTrim(PM.ZIPCODE)) As GeoPlace,&#xD;&#xA;  LTrim(RTrim(PM.CITY)) + ' ' + LTrim(RTrim(PM.STATE)) As GeoCity,&#xD;&#xA;  LTrim(RTrim(PM.STATE)) As GeoProvinceState,&#xD;&#xA;  LTrim(RTrim(PM.ZIPCODE)) As GeoZipCode&#xD;&#xA;From MKCGP..IRPGMemberMstr MM&#xD;&#xA;  Inner Join MKCGP..PM00200 PM On MM.VENDORID = PM.VENDORID&#xD;&#xA;Where PM.VENDSTTS = 1 And MM.CreateDate Between '2015-03-01' And '2016-02-28'&#xD;&#xA;  And PM.STATE = 'KS'" Type="SQL">
+                <GeocodeColumns CityDataColumn="GeoCity" ID="MapPlaceData" PlaceDataColumn="GeoPlace" />
+              </DataLayer>
+              <Action Type="MapMarkerInfo">
+                <MapMarkerInfo>
+                  <Label Caption="@Data.MemberDesc~" />
+                  <LineBreak />
+                  <Label Caption="@Data.GeoCity~" />
+                </MapMarkerInfo>
+              </Action>
+            </GoogleMapMarkers>
+          </GoogleMap>
+        </Division>
+      </ResponsiveColumn>
+    </ResponsiveRow>
+    <ResponsiveRow>
+      <ResponsiveColumn>
+        <Division Class="panel panel-default" HtmlDiv="True" ID="panel">
+          <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
+            <Label Caption="New Member Business Detail" />
+          </Division>
+          <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+            <DataTable AccessibleHeaders="True" AccessibleSummary="AnalysisGrid DataTable" ID="MemberNewBusinessTable" KeepScrollPosition="True" RememberSort="True" ResizableColumns="True" SortArrows="True" TableBorder="0">
+              <DataLayer ConnectionID="connProdGP" ID="SQLNewBusiness" Source="Select LTrim(RTrim(PM.VENDORID)) As VENDORID,&#xD;&#xA;  LTrim(RTrim(IsNull(RM.CUSTNMBR, ''))) As CUSTNMBR,&#xD;&#xA;  LTrim(RTrim(PM.VENDNAME)) As MemberDesc,&#xD;&#xA;  LTrim(RTrim(PM.CITY)) + ' ' + LTrim(RTrim(PM.STATE)) As MemberLocation,&#xD;&#xA;  LTrim(RTrim(IsNull(FM.CRM_AccountRepName, ''))) As FieldMarketer,&#xD;&#xA;  LTrim(RTrim(MC.MemberClassID)) As MemberClass,&#xD;&#xA;  Case PM.UPSZONE When 'D' Then 'Deceased' When 'U' Then 'Undeliverable' Else ''&#xD;&#xA;  End As AddressCd,&#xD;&#xA;  Cast(MM.CreateDate As date) As MemberCreateDate,&#xD;&#xA;  Cast(Convert(varchar(6),MM.CreateDate,112) As int) As MemberCreateMonthSort,&#xD;&#xA;  IsNull(R3.TTLSLLTD, 0) As MKCSalesAmt,&#xD;&#xA;  ES.EquityAmt As EquityAmt&#xD;&#xA;From MKCGP..IRPGMemberMstr MM&#xD;&#xA;  Inner Join MKCGP..IRPGMemberClassMstr MC On MM.MemberClassKey =&#xD;&#xA;    MC.MemberClassKey&#xD;&#xA;  Inner Join MKCGP..PM00200 PM On MM.VENDORID = PM.VENDORID&#xD;&#xA;  Left Outer Join MKCGP..PA00001 PA On PM.VENDORID = PA.VENDORID&#xD;&#xA;  Left Outer Join MKCGP..RM00101 RM On PA.CUSTNMBR = RM.CUSTNMBR&#xD;&#xA;  Left Outer Join MKCGP..RM00103 R3 On RM.CUSTNMBR = R3.CUSTNMBR&#xD;&#xA;  Left Outer Join MKCGP..IRPGvMemberEquitySum ES On MM.VENDORID = ES.VENDORID&#xD;&#xA;  Left Outer Join MKCGP..MKC_CRM_AccountRep FM On PA.CUSTNMBR = FM.CUSTNMBR And&#xD;&#xA;    FM.CRM_DepartmentName = 'Agronomy' And FM.CRM_RoleName = 'Field Marketer'&#xD;&#xA;Where PM.VENDSTTS = 1 And MM.CreateDate Between '2015-03-01' And '2016-02-28'" Type="SQL" />
+              <InteractivePaging CaptionType="Image" HideShowPrevNextCaptions="False" HideWhenOnePage="True" IDnotSupportedHere="pagingTableNumbered" Location="Top" PageRowCount="20" ShowPageNumber="Numbered" />
+              <DataTableColumn Header="Vendor Code" ID="colVENDORID">
+                <Label Caption="@Data.VENDORID~" ID="colVENDORID" />
+                <DataColumnSort DataColumn="VENDORID" DataType="Text" />
+              </DataTableColumn>
+              <DataTableColumn Header="Customer Code" ID="colCUSTNMBR">
+                <Label Caption="@Data.CUSTNMBR~" ID="colCUSTNMBR" />
+                <DataColumnSort DataColumn="CUSTNMBR" DataType="Text" />
+              </DataTableColumn>
+              <DataTableColumn Header="Member Description" ID="colMemberDesc">
+                <Label Caption="@Data.MemberDesc~" ID="colMemberDesc" />
+                <DataColumnSort DataColumn="MemberDesc" DataType="Text" />
+              </DataTableColumn>
+              <DataTableColumn Header="Member Location" ID="colMemberLocation">
+                <Label Caption="@Data.MemberLocation~" ID="colMemberLocation" />
+                <DataColumnSort DataColumn="MemberLocation" DataType="Text" />
+              </DataTableColumn>
+              <DataTableColumn Header="Field Marketer" ID="colFieldMarketer">
+                <Label Caption="@Data.FieldMarketer~" ID="colFieldMarketer" />
+                <DataColumnSort DataColumn="FieldMarketer" DataType="Text" />
+              </DataTableColumn>
+              <DataTableColumn Header="Member Class" ID="colMemberClass">
+                <Label Caption="@Data.MemberClass~" ID="colMemberClass" />
+                <DataColumnSort DataColumn="MemberClass" DataType="Text" />
+              </DataTableColumn>
+              <DataTableColumn Header="Address Code" ID="colAddressCd">
+                <Label Caption="@Data.AddressCd~" ID="colAddressCd" />
+                <DataColumnSort DataColumn="AddressCd" DataType="Text" />
+              </DataTableColumn>
+              <DataTableColumn Header="Member Create Date" ID="colMemberCreateDate">
+                <Label Caption="@Data.MemberCreateDate~" Class="ThemeAlignRight" Format="Short Date" ID="colMemberCreateDate" />
+                <DataColumnSort DataColumn="MemberCreateDate" DataType="Date" />
+              </DataTableColumn>
+              <DataTableColumn Header="MKC Sales Amount" ID="colMKCSalesAmt">
+                <Label Caption="@Data.MKCSalesAmt~" Format="Currency" ID="colMKCSalesAmt" />
+                <DataColumnSort DataColumn="MKCSalesAmt" DataType="Number" FirstSortSequence="Descending" />
+              </DataTableColumn>
+              <DataTableColumn Header="Equity" ID="colEquityAmt">
+                <Label Caption="@Data.EquityAmt~" Class="ThemeAlignRight" Format="Currency" ID="colEquityAmt" />
+                <DataColumnSort DataColumn="EquityAmt" DataType="Number" />
+              </DataTableColumn>
+            </DataTable>
+          </Division>
+        </Division>
+      </ResponsiveColumn>
+    </ResponsiveRow>
+  </Body>
+  <IncludeSharedElement DefinitionFile="_Layout.Shared" SharedElementID="shrFooter" />
+  <ideTestParams />
+</Report>

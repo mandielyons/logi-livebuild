@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ID="Unknown.ScheduledReport">
+  <Body>
+    <ResponsiveRow>
+      <ResponsiveColumn>
+        <ChartCanvas ChartCaption="Sum of RemainBalance by COMMODITYDESC" ID="PieChartCanvas1">
+          <Series ChartLabelColumn="COMMODITYDESC" ChartYDataColumn="rdGrAggr-RemainBalance-sum" Type="Pie">
+            <Quicktip>
+              <QuicktipRow Caption="COMMODITYDESC: " Value="@Chart.COMMODITYDESC~" />
+              <QuicktipRow Caption="RemainBalance: " Value="@Chart.rdGrAggr-RemainBalance-sum~" />
+            </Quicktip>
+          </Series>
+          <RelevanceFilter IrrelevanceLabel="Other" RelevanceType="NumberOfRows" RelevanceValue="8" />
+          <DataLayer ConnectionID="connMKC" ID="SQLDataLayer2" Source="Select [GaugeAgTraxContracts].COMMODITYDESC,&#xD;&#xA;  Sum([GaugeAgTraxContracts].REMAINING_BU) As RemainBalance&#xD;&#xA;From [GaugeAgTraxContracts]&#xD;&#xA;Group By [GaugeAgTraxContracts].COMMODITYDESC" Type="SQL">
+            <GroupFilter DataType="Text" GroupColumn="COMMODITYDESC" KeepGroupedRows="False">
+              <GroupAggregateColumn AggregateColumn="RemainBalance" AggregateFunction="SUM" DataType="Number" ID="rdGrAggr-RemainBalance-sum" />
+            </GroupFilter>
+            <SortFilter DataType="Number" SortColumn="rdGrAggr-RemainBalance-sum" SortSequence="Descending" />
+          </DataLayer>
+        </ChartCanvas>
+      </ResponsiveColumn>
+      <ResponsiveColumn>
+        <DataTable AccessibleHeaders="True" AccessibleSummary="AnalysisGrid DataTable" ID="DataTable1" KeepScrollPosition="True" RememberSort="True" ResizableColumns="True" SortArrows="True" TableBorder="0">
+          <DataLayer ConnectionID="connMKC" ID="SQLDataLayer1" MaxRows="100" Source="Select [Gauge AgTrax Contracts].CUSTDESC,&#xD;&#xA;  [Gauge AgTrax Contracts].CUSTNMBR,&#xD;&#xA;  [Gauge AgTrax Contracts].CUSTSTATE,&#xD;&#xA;  [Gauge AgTrax Contracts].CUSTZIPCODE,&#xD;&#xA;  [Gauge AgTrax Contracts].ISSUED_BU,&#xD;&#xA;  [Gauge AgTrax Contracts].APPLIED_BU,&#xD;&#xA;  [Gauge AgTrax Contracts].REMAINING_BU&#xD;&#xA;From [Gauge AgTrax Contracts]" Type="SQL" />
+          <InteractivePaging CaptionType="Image" HideShowPrevNextCaptions="False" HideWhenOnePage="True" IDnotSupportedHere="pagingTableNumbered" Location="Top" PageRowCount="20" ShowPageNumber="Numbered" />
+          <DataTableColumn Header="CUSTDESC" ID="colCUSTDESC">
+            <Label Caption="@Data.CUSTDESC~" ID="colCUSTDESC" />
+            <DataColumnSort DataColumn="CUSTDESC" DataType="Text" />
+          </DataTableColumn>
+          <DataTableColumn Header="CUSTNMBR" ID="colCUSTNMBR">
+            <Label Caption="@Data.CUSTNMBR~" ID="colCUSTNMBR" />
+            <DataColumnSort DataColumn="CUSTNMBR" DataType="Text" />
+          </DataTableColumn>
+          <DataTableColumn Header="REMAINING_BU" ID="colREMAINING_BU">
+            <Label Caption="@Data.REMAINING_BU~" ID="colREMAINING_BU" />
+            <DataColumnSort DataColumn="REMAINING_BU" DataType="Number" />
+          </DataTableColumn>
+        </DataTable>
+      </ResponsiveColumn>
+    </ResponsiveRow>
+  </Body>
+  <ideTestParams />
+</Report>

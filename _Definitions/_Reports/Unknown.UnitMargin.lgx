@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ID="Unknown.UnitMargin">
+  <Body>
+    <AnalysisGrid AjaxPaging="True" DraggableColumns="True" ID="AnalysisGrid1" ShowPageNumber="True" SortArrows="True">
+      <DataLayer ConnectionID="connProdGP" ID="SQLDataLayer1" Source="Select Top 30 SOP30200.SOPTYPE As SOPTYPE,&#xD;&#xA;  LTrim(RTrim(SOP30200.SOPNUMBE)) As SOPNUMBE,&#xD;&#xA;  LTrim(RTrim(SOP30300.LNITMSEQ)) As SOPLINE,&#xD;&#xA;  LTrim(RTrim(SOP30200.DOCID)) As DOCTYPE,&#xD;&#xA;  SOP30200.DOCDATE,&#xD;&#xA;  SOP30300.ACTLSHIP,&#xD;&#xA;  SOP30200.POSTEDDT,&#xD;&#xA;  LTrim(RTrim(SOP30200.CUSTNMBR)) As CUSTNMBR,&#xD;&#xA;  LTrim(RTrim(SOP30200.CUSTNAME)) As CUSTNAME,&#xD;&#xA;  LTrim(RTrim(IV00101.ITMCLSCD)) As ITMCLSCD,&#xD;&#xA;  LTrim(RTrim(IV40400.ITMCLSDC)) As ITMCLSDC,&#xD;&#xA;  LTrim(RTrim(SOP30300.ITEMNMBR)) As ITEMNMBR,&#xD;&#xA;  LTrim(RTrim(IV00101.ITEMDESC)) As ITEMDESC,&#xD;&#xA;  LTrim(RTrim(SOP30300.UOFM)) As UOFM,&#xD;&#xA;  LTrim(RTrim(SOP30300.LOCNCODE)) As LOCNCODE,&#xD;&#xA;  Case SOP30200.SOPTYPE When 3 Then SOP30300.UNITCOST&#xD;&#xA;    When 4 Then SOP30300.UNITCOST * -1 End UNITCOST,&#xD;&#xA;  Case SOP30200.SOPTYPE When 3 Then SOP30300.UNITPRCE&#xD;&#xA;    When 4 Then SOP30300.UNITPRCE * -1 End UNITPRCE,&#xD;&#xA;  Case SOP30200.SOPTYPE When 3 Then SOP30300.XTNDPRCE&#xD;&#xA;    When 4 Then SOP30300.XTNDPRCE * -1 End XTNDPRCE,&#xD;&#xA;  Case SOP30200.SOPTYPE When 3 Then SOP30300.EXTDCOST&#xD;&#xA;    When 4 Then SOP30300.EXTDCOST * -1 End EXTDCOST,&#xD;&#xA;  Case SOP30200.SOPTYPE When 3 Then SOP30300.QUANTITY&#xD;&#xA;    When 4 Then SOP30300.QUANTITY * -1 End QUANTITY&#xD;&#xA;From MKCGP.dbo.SOP30200 SOP30200 With(NoLock)&#xD;&#xA;  Inner Join MKCGP.dbo.SOP30300 SOP30300 With(NoLock) On SOP30300.SOPTYPE =&#xD;&#xA;    SOP30200.SOPTYPE And SOP30300.SOPNUMBE = SOP30200.SOPNUMBE&#xD;&#xA;  Inner Join MKCGP.dbo.IV00101 IV00101 With(NoLock) On SOP30300.ITEMNMBR =&#xD;&#xA;    IV00101.ITEMNMBR&#xD;&#xA;  Inner Join MKCGP.dbo.IV40400 IV40400 With(NoLock) On IV00101.ITMCLSCD =&#xD;&#xA;    IV40400.ITMCLSCD&#xD;&#xA;Where SOP30200.SOPTYPE In (3, 4) And SOP30200.DOCDATE Between '2015-10-01' And&#xD;&#xA;  '2015-10-05' And SOP30200.VOIDSTTS = 0 And SOP30200.PSTGSTUS = 2 And&#xD;&#xA;  SOP30200.CUSTNMBR Not In ('CASH', 'CREDCAR') And IV00101.ITEMTYPE In (1, 5)" Type="SQL" />
+      <AnalysisGridColumn DataColumn="SOPTYPE" DataType="Number" Header="SOPTYPE" ID="colSOPTYPE" />
+      <AnalysisGridColumn DataColumn="SOPNUMBE" DataType="Text" Header="SOPNUMBE" ID="colSOPNUMBE" />
+      <AnalysisGridColumn DataColumn="SOPLINE" DataType="Text" Header="SOPLINE" ID="colSOPLINE" />
+      <AnalysisGridColumn DataColumn="DOCTYPE" DataType="Text" Header="DOCTYPE" ID="colDOCTYPE" />
+      <AnalysisGridColumn DataColumn="DOCDATE" DataType="Date" Format="Short Date" Header="DOCDATE" ID="colDOCDATE" />
+      <AnalysisGridColumn DataColumn="ACTLSHIP" DataType="Date" Format="Short Date" Header="ACTLSHIP" ID="colACTLSHIP" />
+      <AnalysisGridColumn DataColumn="POSTEDDT" DataType="Date" Format="Short Date" Header="POSTEDDT" ID="colPOSTEDDT" />
+      <AnalysisGridColumn DataColumn="CUSTNMBR" DataType="Text" Header="CUSTNMBR" ID="colCUSTNMBR" />
+      <AnalysisGridColumn DataColumn="CUSTNAME" DataType="Text" Header="CUSTNAME" ID="colCUSTNAME" />
+      <AnalysisGridColumn DataColumn="ITMCLSCD" DataType="Text" Header="ITMCLSCD" ID="colITMCLSCD" />
+      <AnalysisGridColumn DataColumn="ITMCLSDC" DataType="Text" Header="ITMCLSDC" ID="colITMCLSDC" />
+      <AnalysisGridColumn DataColumn="ITEMNMBR" DataType="Text" Header="ITEMNMBR" ID="colITEMNMBR" />
+      <AnalysisGridColumn DataColumn="ITEMDESC" DataType="Text" Header="ITEMDESC" ID="colITEMDESC" />
+      <AnalysisGridColumn DataColumn="UOFM" DataType="Text" Header="UOFM" ID="colUOFM" />
+      <AnalysisGridColumn DataColumn="LOCNCODE" DataType="Text" Header="LOCNCODE" ID="colLOCNCODE" />
+      <AnalysisGridColumn DataColumn="UNITCOST" DataType="Number" Header="UNITCOST" ID="colUNITCOST" />
+      <AnalysisGridColumn DataColumn="UNITPRCE" DataType="Number" Header="UNITPRCE" ID="colUNITPRCE" />
+      <AnalysisGridColumn DataColumn="XTNDPRCE" DataType="Number" Header="XTNDPRCE" ID="colXTNDPRCE" />
+      <AnalysisGridColumn DataColumn="EXTDCOST" DataType="Number" Header="EXTDCOST" ID="colEXTDCOST" />
+      <AnalysisGridColumn DataColumn="QUANTITY" DataType="Number" Header="QUANTITY" ID="colQUANTITY" />
+      <WaitPage />
+    </AnalysisGrid>
+  </Body>
+  <ideTestParams />
+</Report>

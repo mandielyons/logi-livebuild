@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ID="Unknown.Visualizations">
+  <DefaultRequestParams EmployeeID="1" Year="2007" />
+  <Body>
+    <ResponsiveRow CollisionBehavior="Overlap">
+      <ResponsiveColumn ColspanExtraSmallScreen="12" ColspanLargeScreen="3" ColspanMediumScreen="3" ColspanSmallScreen="12">
+        <Division Class="kpi kpi-green" HtmlDiv="True" ID="div-KPI">
+          <ResponsiveRow CollisionBehavior="Overlap">
+            <ResponsiveColumn ColspanExtraSmallScreen="12" ColspanLargeScreen="9" ColspanMediumScreen="9" ColspanSmallScreen="12">
+              <Label Caption="1921384" Class="kpi-value" Format="Currency" />
+              <Label Caption="Currency" Class="kpi-label" />
+            </ResponsiveColumn>
+            <ResponsiveColumn>
+              <Label Class="up-arrow" ID="kpi-icon" />
+            </ResponsiveColumn>
+          </ResponsiveRow>
+        </Division>
+      </ResponsiveColumn>
+      <ResponsiveColumn ColspanExtraSmallScreen="12" ColspanLargeScreen="3" ColspanMediumScreen="3" ColspanSmallScreen="12">
+        <Division Class="kpi kpi-red" HtmlDiv="True" ID="div-KPI">
+          <ResponsiveRow CollisionBehavior="Overlap">
+            <ResponsiveColumn ColspanExtraSmallScreen="12" ColspanLargeScreen="9" ColspanMediumScreen="9" ColspanSmallScreen="12">
+              <Label Caption=".15" Class="kpi-value" Format="##%" />
+              <Label Caption="Percentage" Class="kpi-label" />
+            </ResponsiveColumn>
+            <ResponsiveColumn>
+              <Label Class="down-arrow" ID="kpi-icon" />
+            </ResponsiveColumn>
+          </ResponsiveRow>
+        </Division>
+      </ResponsiveColumn>
+      <ResponsiveColumn ColspanExtraSmallScreen="12" ColspanLargeScreen="3" ColspanMediumScreen="3" ColspanSmallScreen="12">
+        <Division Class="kpi kpi-blue" HtmlDiv="True" ID="div-KPI">
+          <ResponsiveRow CollisionBehavior="Overlap">
+            <ResponsiveColumn ColspanExtraSmallScreen="12" ColspanLargeScreen="9" ColspanMediumScreen="9" ColspanSmallScreen="12">
+              <Label Caption="74914" Class="kpi-value" Format="###,###,##0" />
+              <Label Caption="Number" Class="kpi-label" />
+            </ResponsiveColumn>
+            <ResponsiveColumn>
+              <Label Class="check" ID="kpi-icon" />
+            </ResponsiveColumn>
+          </ResponsiveRow>
+        </Division>
+      </ResponsiveColumn>
+      <ResponsiveColumn ColspanExtraSmallScreen="12" ColspanLargeScreen="3" ColspanMediumScreen="3" ColspanSmallScreen="12">
+        <Division Class="kpi kpi-yellow" HtmlDiv="True" ID="div-KPI">
+          <ResponsiveRow CollisionBehavior="Overlap">
+            <ResponsiveColumn ColspanExtraSmallScreen="12" ColspanLargeScreen="9" ColspanMediumScreen="9" ColspanSmallScreen="12">
+              <Label Caption="@Date.Today~" Class="kpi-value" Format="Short Date" />
+              <Label Caption="Date" Class="kpi-label" />
+            </ResponsiveColumn>
+            <ResponsiveColumn>
+              <Label Class="warning" ID="kpi-icon" />
+            </ResponsiveColumn>
+          </ResponsiveRow>
+        </Division>
+      </ResponsiveColumn>
+    </ResponsiveRow>
+    <Division ID="KPI-refresh">
+      <ResponsiveRow>
+        <ResponsiveColumn ColspanExtraSmallScreen="12" ColspanLargeScreen="3" ColspanMediumScreen="3" ColspanSmallScreen="4">
+          <Division Class="well well-sm form-inline text-center" HtmlDiv="True" ID="divYearSelection">
+            <Label Caption="Reporting Year" For="Year" HtmlTag="LABEL" />
+            <Spaces Size="2" />
+            <InputSelectList DefaultValue="@Request.Year~" ID="Year" OptionCaptionColumn="Year" OptionValueColumn="Year">
+              <DataLayer ID="StaticDataLayer1" Type="Static">
+                <StaticDataRow Year="2006" />
+                <StaticDataRow Year="2007" />
+                <StaticDataRow Year="2008" />
+              </DataLayer>
+              <EventHandler DhtmlEvent="onchange">
+                <Action ElementID="KPI-refresh" ID="actRefresh" Type="RefreshElement" />
+              </EventHandler>
+            </InputSelectList>
+          </Division>
+          <Division Class="panel panel-default" HtmlDiv="True" ID="divGauge">
+            <Division Class="panel-heading clean text-center" HtmlDiv="True" ID="panel-heading">
+              <Label Caption="Total Sales By Year" />
+            </Division>
+            <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+              <Gauge StartValue="0" Type="Arc" Value="@Data.SubTotal~">
+                <DataLayer ConnectionID="Northwind" ID="YearlyTotals" Source="Select YEAR([Summary of Sales by Year].ShippedDate) as 'Year',&#xD;&#xA;  SUM([Summary of Sales by Year].Subtotal) as SubTotal&#xD;&#xA;From [Summary of Sales by Year]&#xD;&#xA;where YEAR([Summary of Sales by Year].ShippedDate) = '@Request.Year~'&#xD;&#xA;group by YEAR([Summary of Sales by Year].ShippedDate)&#xD;&#xA;order by 'Year' desc" Type="SQL" />
+                <GaugeRange Color="Red" RangeEndValue="200000" />
+                <GaugeRange Color="#ECD869" RangeEndValue="400000" />
+                <GaugeRange Color="#85E77C" RangeEndValue="700000" />
+              </Gauge>
+            </Division>
+          </Division>
+          <Division Class="panel panel-default" HtmlDiv="True" ID="divGauge">
+            <Division Class="panel-heading clean text-center" HtmlDiv="True" ID="panel-heading">
+              <Label Caption="Yearly Sales Totals by Rep" />
+            </Division>
+            <Division Class="panel-body form-inline text-center" HtmlDiv="True" ID="panel-body">
+              <Gauge ID="gaugeTotalEmployeeSales" StartValue="0" Type="Arc" Value="@Data.SubTotal~">
+                <DataLayer ConnectionID="Northwind" ID="EmployeeTotals" Source="Select Sum([Summary of Sales by Year].Subtotal) As SubTotal,&#xD;&#xA;  Year(Orders.OrderDate) As 'Year',&#xD;&#xA;  Employees.EmployeeID,&#xD;&#xA;  Employees.LastName,&#xD;&#xA;  Employees.FirstName,&#xD;&#xA;  Employees.Quota&#xD;&#xA;From [Summary of Sales by Year]&#xD;&#xA;  Inner Join Orders On [Summary of Sales by Year].OrderID = Orders.OrderID&#xD;&#xA;  Inner Join Employees On Employees.EmployeeID = Orders.EmployeeID&#xD;&#xA;Where Year(Orders.OrderDate) = '@Request.Year~' And Employees.EmployeeID =&#xD;&#xA;  '@Request.EmployeeID~'&#xD;&#xA;Group By Year(Orders.OrderDate),&#xD;&#xA;  Employees.EmployeeID,&#xD;&#xA;  Employees.LastName,&#xD;&#xA;  Employees.FirstName,&#xD;&#xA;  Employees.Quota" Type="SQL">
+                  <CalculatedColumn Formula="@Data.Quota~/3" ID="LowThreshold" />
+                  <CalculatedColumn Formula="@Data.Quota~/1.5" ID="MidThreshold" />
+                </DataLayer>
+                <GaugeRange Color="Red" RangeEndValue="@Data.LowThreshold~" />
+                <GaugeRange Color="#ECD869" RangeEndValue="@Data.MidThreshold~" />
+                <GaugeRange Color="#85E77C" RangeEndValue="@Data.Quota~" />
+              </Gauge>
+              <InputSelectList Class="input-sm" DefaultValue="@Request.EmployeeID~" ID="EmployeeID" OptionCaptionColumn="FullName" OptionValueColumn="EmployeeID">
+                <DataLayer ConnectionID="Northwind" ID="SQLDataLayer3" Source="Select Employees.EmployeeID,&#xD;&#xA;  Employees.LastName + ', ' + Employees.FirstName as FullName&#xD;&#xA;From Employees&#xD;&#xA;Where Employees.Title = 'Sales Representative'" Type="SQL" />
+                <EventHandler DhtmlEvent="onchange">
+                  <Action ElementID="gaugeTotalEmployeeSales" ID="actRefresh" Type="RefreshElement" />
+                </EventHandler>
+              </InputSelectList>
+            </Division>
+          </Division>
+        </ResponsiveColumn>
+        <ResponsiveColumn>
+          <Division Class="panel panel-default" HtmlDiv="True" ID="divSalesTrend">
+            <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
+              <Label Caption="@Request.Year~ Monthly Sales + Trend" />
+            </Division>
+            <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+              <ChartCanvas ID="SalesTrendByYear">
+                <DataLayer ConnectionID="Northwind" ID="YearlyTotals" Source="Select&#xD;&#xA;  [Summary of Sales by Year].ShippedDate,&#xD;&#xA;  SUM([Summary of Sales by Year].Subtotal) as SubTotal&#xD;&#xA;From [Summary of Sales by Year]&#xD;&#xA;Where Year([Summary of Sales by Year].ShippedDate) = '@Request.Year~'&#xD;&#xA;group by [Summary of Sales by Year].ShippedDate" Type="SQL">
+                  <TimePeriodColumn DataColumn="ShippedDate" ID="MonthName" TimePeriod="MonthName" />
+                  <TimePeriodColumn DataColumn="ShippedDate" ID="MonthInt" TimePeriod="Month" />
+                  <GroupFilter GroupColumn="MonthName">
+                    <GroupAggregateColumn AggregateColumn="SubTotal" AggregateFunction="SUM" ID="SumSubTotal" />
+                  </GroupFilter>
+                  <SortFilter DataType="Number" SortColumn="MonthInt" />
+                </DataLayer>
+                <Series ChartXDataColumn="MonthName" ChartYDataColumn="SumSubTotal" LegendLabel="@Request.Year~ Monthly Sales" Type="Bar">
+                  <Series Color="#555555" LegendLabel="Sales Trend" SeriesLineStyle="Dash" Transparency="4" Type="TrendLine" />
+                </Series>
+                <ChartYAxis>
+                  <AxisLabelStyle Format="Currency" />
+                </ChartYAxis>
+              </ChartCanvas>
+            </Division>
+          </Division>
+        </ResponsiveColumn>
+      </ResponsiveRow>
+    </Division>
+    <ResponsiveRow CollisionBehavior="Overlap">
+      <ResponsiveColumn>
+        <Division Class="panel panel-default" HtmlDiv="True" ID="panel">
+          <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
+            <Label Caption="Sum of Freight by Country" />
+          </Division>
+          <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+            <ChartCanvas ChartOrientation="Default" ID="BarChartCanvas2">
+              <Series ChartXDataColumn="ShipCountry" ChartYDataColumn="rdGrAggr-sumFreight-sum" Type="Bar">
+                <Quicktip>
+                  <QuicktipRow Caption="ShipCountry: " Value="@Chart.ShipCountry~" />
+                  <QuicktipRow Caption="sumFreight: " Value="@Chart.rdGrAggr-sumFreight-sum~" />
+                </Quicktip>
+              </Series>
+              <ChartXAxis AxisCaption="Country" />
+              <ChartYAxis AxisCaption="Freight" />
+              <DataLayer ConnectionID="Northwind" ID="SQLDataLayer1" Source="Select Orders.ShipCountry,&#xD;&#xA;  Sum(Orders.Freight) As sumFreight&#xD;&#xA;From Orders&#xD;&#xA;Where Year(Orders.OrderDate) = '@Request.Year~'&#xD;&#xA;Group By Orders.ShipCountry" Type="SQL">
+                <GroupFilter DataType="Text" GroupColumn="ShipCountry" KeepGroupedRows="False">
+                  <GroupAggregateColumn AggregateColumn="sumFreight" AggregateFunction="SUM" DataType="Number" ID="rdGrAggr-sumFreight-sum" />
+                </GroupFilter>
+                <SortFilter DataType="Number" SortColumn="rdGrAggr-sumFreight-sum" SortSequence="Ascending" />
+                <RelevanceFilter DataColumn="rdGrAggr-sumFreight-sum" IrrelevanceLabel="Other" LabelColumn="ShipCountry" RelevanceType="NumberOfRows" RelevanceValue="0" />
+              </DataLayer>
+            </ChartCanvas>
+          </Division>
+        </Division>
+      </ResponsiveColumn>
+      <ResponsiveColumn>
+        <Division Class="panel panel-default" HtmlDiv="True" ID="panel">
+          <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
+            <Label Caption="Total Invoices by Sales Rep" />
+          </Division>
+          <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+            <ChartCanvas ID="PieChartCanvas1">
+              <DataLayer ConnectionID="Northwind" ID="SQLDataLayer2" Source="Select Invoices.Salesperson,&#xD;&#xA;  Count(Invoices.OrderID)&#xD;&#xA;From Invoices&#xD;&#xA;WHERE YEAR(Invoices.OrderDate) = '@Request.Year~'&#xD;&#xA;Group By Invoices.Salesperson" Type="SQL">
+                <GroupFilter DataType="Text" GroupColumn="Salesperson" KeepGroupedRows="False">
+                  <GroupAggregateColumn AggregateColumn="Column1" AggregateFunction="SUM" DataType="Number" ID="rdGrAggr-Column1-sum" />
+                </GroupFilter>
+                <SortFilter DataType="Number" SortColumn="rdGrAggr-Column1-sum" SortSequence="Descending" />
+                <RelevanceFilter DataColumn="rdGrAggr-Column1-sum" IrrelevanceLabel="Other" LabelColumn="Salesperson" RelevanceType="NumberOfRows" RelevanceValue="0" />
+              </DataLayer>
+              <Series ChartLabelColumn="Salesperson" ChartYDataColumn="rdGrAggr-Column1-sum" DonutHoleSize="60%" LabelLocation="Legend" ShowDataValues="True" Type="Pie">
+                <Quicktip>
+                  <QuicktipRow Caption="Salesperson: " Value="@Chart.Salesperson~" />
+                  <QuicktipRow Caption="Column1: " Value="@Chart.rdGrAggr-Column1-sum~" />
+                </Quicktip>
+              </Series>
+              <ChartCanvasLegend />
+            </ChartCanvas>
+          </Division>
+        </Division>
+      </ResponsiveColumn>
+    </ResponsiveRow>
+  </Body>
+  <ideTestParams EmployeeID="" Year="" />
+</Report>

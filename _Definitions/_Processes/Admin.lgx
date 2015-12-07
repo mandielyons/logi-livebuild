@@ -1,0 +1,308 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Process
+	ID="Admin"
+	>
+	<Task
+		ID="tskManageUser"
+		>
+		<Procedure
+			Expression="&quot;@Request.actionType~&quot;==&quot;Add&quot;"
+			ID="AddUser"
+			Type="If"
+			>
+			<Procedure
+				ConnectionID="connLogiDB"
+				HandleQuotesInTokens="True"
+				ID="procAddUserSQL"
+				SqlCommand="INSERT INTO USERS 
+(
+USERNAME
+,PASSWORD
+,EMAIL
+,ACTIVE
+)
+VALUES 
+(
+@iptUsername
+,@iptPassword
+,@iptEmail
+,1
+)
+"
+				SqlReturnType="RowsAffected"
+				Type="SQL"
+				>
+				<SqlParameters>
+					<SqlParameter
+						ID="iptUsername"
+						SqlParamType="dt-200"
+						Value="@Request.iptUsername~"
+					/>
+					<SqlParameter
+						ID="iptPassword"
+						SqlParamType="dt-200"
+						Value="@Request.iptPassword~"
+					/>
+					<SqlParameter
+						ID="iptEmail"
+						SqlParamType="dt-200"
+						Value="@Request.iptEmail~"
+					/>
+				</SqlParameters>
+			</Procedure>
+			<Procedure
+				Expression="@Procedure.procAddUserSQL.RowsAffected~ &gt; 0"
+				ID="exit-success"
+				Type="If"
+				>
+				<Response
+					Type="Report"
+					>
+					<Target
+						Report="Admin.UserManagement"
+						Type="Report"
+						>
+						<WaitPage/>
+					</Target>
+					<LinkParams
+						respMessage="User, @Request.iptUsername~, Successfully Added"
+						showResponse="True"
+					/>
+				</Response>
+			</Procedure>
+			<Procedure
+				Expression="@Procedure.procAddUserSQL.RowsAffected~ = 0"
+				ID="exit-failure"
+				Type="If"
+				>
+				<Response
+					Type="Report"
+					>
+					<Target
+						Report="Admin.UserManagement"
+						Type="Report"
+						>
+						<WaitPage/>
+					</Target>
+					<LinkParams
+						respMessage="User, @Request.iptUsername~, UNSUCCESSFULLY Added"
+						showResponse="True"
+					/>
+				</Response>
+			</Procedure>
+		</Procedure>
+		<Procedure
+			Expression="&quot;@Request.actionType~&quot;==&quot;Edit&quot;"
+			ID="EditUser"
+			Type="If"
+			>
+			<Procedure
+				ConnectionID="connLogiDB"
+				HandleQuotesInTokens="True"
+				ID="procEditUserSQL"
+				SqlCommand="UPDATE USERS
+SET
+PASSWORD = @iptPassword
+,EMAIL = @iptEmail
+WHERE USERNAME = @iptUsername"
+				SqlReturnType="RowsAffected"
+				Type="SQL"
+				>
+				<SqlParameters>
+					<SqlParameter
+						ID="iptUsername"
+						SqlParamType="dt-200"
+						Value="@Request.iptUsername~"
+					/>
+					<SqlParameter
+						ID="iptPassword"
+						SqlParamType="dt-200"
+						Value="@Request.iptPassword~"
+					/>
+					<SqlParameter
+						ID="iptEmail"
+						SqlParamType="dt-200"
+						Value="@Request.iptEmail~"
+					/>
+				</SqlParameters>
+			</Procedure>
+			<Procedure
+				Expression="@Procedure.procEditUserSQL.RowsAffected~ &gt; 0"
+				ID="exit-success"
+				Type="If"
+				>
+				<Response
+					Type="Report"
+					>
+					<Target
+						Report="Admin.UserManagement"
+						Type="Report"
+						>
+						<WaitPage/>
+					</Target>
+					<LinkParams
+						respMessage="User, @Request.iptUsername~, Successfully Edited"
+						showResponse="True"
+					/>
+				</Response>
+			</Procedure>
+			<Procedure
+				Expression="@Procedure.procEditUserSQL.RowsAffected~ = 0"
+				ID="exit-failure"
+				Type="If"
+				>
+				<Response
+					Type="Report"
+					>
+					<Target
+						Report="Admin.UserManagement"
+						Type="Report"
+						>
+						<WaitPage/>
+					</Target>
+					<LinkParams
+						respMessage="User, @Request.iptUsername~, UNSUCCESSFULLY Edited"
+						showResponse="True"
+					/>
+				</Response>
+			</Procedure>
+		</Procedure>
+		<Procedure
+			Expression="&quot;@Request.actionType~&quot;==&quot;Activate&quot;"
+			ID="ActivateUser"
+			Type="If"
+			>
+			<Procedure
+				ConnectionID="connLogiDB"
+				HandleQuotesInTokens="True"
+				ID="procActivateUserSQL"
+				SqlCommand="UPDATE USERS
+SET ACTIVE = 1
+WHERE USERNAME = @iptUsername
+"
+				SqlReturnType="RowsAffected"
+				Type="SQL"
+				>
+				<SqlParameters>
+					<SqlParameter
+						ID="iptUsername"
+						SqlParamType="dt-200"
+						Value="@Request.iptUsername~"
+					/>
+				</SqlParameters>
+			</Procedure>
+			<Procedure
+				Expression="@Procedure.procActivateUserSQL.RowsAffected~ &gt; 0"
+				ID="exit-success"
+				Type="If"
+				>
+				<Response
+					Type="Report"
+					>
+					<Target
+						Report="Admin.UserManagement"
+						Type="Report"
+						>
+						<WaitPage/>
+					</Target>
+					<LinkParams
+						respMessage="User, @Request.iptUsername~, Successfully Activated"
+						showResponse="True"
+					/>
+				</Response>
+			</Procedure>
+			<Procedure
+				Expression="@Procedure.procActivateUserSQL.RowsAffected~ = 0"
+				ID="exit-failure"
+				Type="If"
+				>
+				<Response
+					Type="Report"
+					>
+					<Target
+						Report="Admin.UserManagement"
+						Type="Report"
+						>
+						<WaitPage/>
+					</Target>
+					<LinkParams
+						respMessage="User, @Request.iptUsername~, UNSUCCESSFULLY Activated"
+						showResponse="True"
+					/>
+				</Response>
+			</Procedure>
+		</Procedure>
+		<Procedure
+			Expression="&quot;@Request.actionType~&quot;==&quot;Inactivate&quot;"
+			ID="InactivateUser"
+			Type="If"
+			>
+			<Procedure
+				ConnectionID="connLogiDB"
+				HandleQuotesInTokens="True"
+				ID="procInactivateUserSQL"
+				SqlCommand="UPDATE USERS
+SET ACTIVE = 0
+WHERE USERNAME = @iptUsername
+"
+				SqlReturnType="RowsAffected"
+				Type="SQL"
+				>
+				<SqlParameters>
+					<SqlParameter
+						ID="iptUsername"
+						SqlParamType="dt-200"
+						Value="@Request.iptUsername~"
+					/>
+				</SqlParameters>
+			</Procedure>
+			<Procedure
+				Expression="@Procedure.procInactivateUserSQL.RowsAffected~ &gt; 0"
+				ID="exit-success"
+				Type="If"
+				>
+				<Response
+					Type="Report"
+					>
+					<Target
+						Report="Admin.UserManagement"
+						Type="Report"
+						>
+						<WaitPage/>
+					</Target>
+					<LinkParams
+						respMessage="User, @Request.iptUsername~, Successfully Inactivated"
+						showResponse="True"
+					/>
+				</Response>
+			</Procedure>
+			<Procedure
+				Expression="@Procedure.procInactivateUserSQL.RowsAffected~ = 0"
+				ID="exit-failure"
+				Type="If"
+				>
+				<Response
+					Type="Report"
+					>
+					<Target
+						Report="Admin.UserManagement"
+						Type="Report"
+						>
+						<WaitPage/>
+					</Target>
+					<LinkParams
+						respMessage="User, @Request.iptUsername~, UNSUCCESSFULLY Inactivated"
+						showResponse="True"
+					/>
+				</Response>
+			</Procedure>
+		</Procedure>
+	</Task>
+	<ideTestParams
+		actionType=""
+		iptEmail=""
+		iptPassword=""
+		iptUsername=""
+		rdTaskID=""
+	/>
+</Process>

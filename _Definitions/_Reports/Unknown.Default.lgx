@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ID="Unknown.Default">
+  <Body>
+    <Label Caption="Aric's Test App" />
+    <Label Caption="Roles &amp; Rights: @Function.UserRoles~ - @Function.UserRights~" HtmlTag="h1" />
+    <IncludeScript ID="srid-Admin" IncludedScript="$(function(){&#xD;&#xA;	var roles = &quot;@Function.UserRoles~&quot;.split(&quot;,&quot;);&#xD;&#xA;	console.log(roles);&#xD;&#xA;	if(roles.indexOf(&quot;Admin&quot;)==-1){&#xD;&#xA;		$(&quot;.srid-Admin&quot;).remove();&#xD;&#xA;	}&#xD;&#xA;});" />
+  </Body>
+  <ideTestParams />
+</Report>

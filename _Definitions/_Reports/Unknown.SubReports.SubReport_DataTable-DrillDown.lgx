@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ID="Unknown.SubReports.SubReport_DataTable-DrillDown">
+  <Body>
+    <DataTable AccessibleHeaders="True" AccessibleSummary="DataTable" ID="DataTable1" KeepScrollPosition="True" RememberSort="True" ResizableColumns="True" SortArrows="True" TableBorder="0">
+      <DataLayer ConnectionID="connMKC" ID="SQLDataLayer3" Source="Select [GaugeAgTraxContracts].CUSTDESC,&#xD;&#xA;  [GaugeAgTraxContracts].CUSTNMBR,&#xD;&#xA;  [GaugeAgTraxContracts].CUSTADDR1,&#xD;&#xA;  [GaugeAgTraxContracts].CUSTCITY,&#xD;&#xA;  [GaugeAgTraxContracts].CUSTSTATE,&#xD;&#xA;  [GaugeAgTraxContracts].CUSTZIPCODE,&#xD;&#xA;  [GaugeAgTraxContracts].CONTRACTNMBR,&#xD;&#xA;  [GaugeAgTraxContracts].CONTRACTDT,&#xD;&#xA;  [GaugeAgTraxContracts].DPRPOSITION,&#xD;&#xA;  [GaugeAgTraxContracts].DPRDESC,&#xD;&#xA;  [GaugeAgTraxContracts].LOCNMBR,&#xD;&#xA;  [GaugeAgTraxContracts].LOCDESC,&#xD;&#xA;  [GaugeAgTraxContracts].COMMODITYCD,&#xD;&#xA;  [GaugeAgTraxContracts].COMMODITYDESC,&#xD;&#xA;  [GaugeAgTraxContracts].ISSUED_LBS,&#xD;&#xA;  [GaugeAgTraxContracts].APPLIED_LBS,&#xD;&#xA;  [GaugeAgTraxContracts].ADJUSTED_LBS,&#xD;&#xA;  [GaugeAgTraxContracts].SUB_CONT_LBS,&#xD;&#xA;  [GaugeAgTraxContracts].REMAINING_LBS,&#xD;&#xA;  [GaugeAgTraxContracts].ISSUED_BU,&#xD;&#xA;  [GaugeAgTraxContracts].APPLIED_BU,&#xD;&#xA;  [GaugeAgTraxContracts].ADJUSTED_BU,&#xD;&#xA;  [GaugeAgTraxContracts].SUB_CONT_LBS/56 AS SUB_CONT_BU,&#xD;&#xA;  [GaugeAgTraxContracts].REMAINING_BU&#xD;&#xA;From [GaugeAgTraxContracts]&#xD;&#xA;Where [GaugeAgTraxContracts].CONTRACTNMBR LIKE '@Request.paramContract~'+'.%' Or '@Request.paramContract~' = 'ALL'&#xD;&#xA;Order by [GaugeAgTraxContracts].CONTRACTNMBR" Type="SQL">
+        <SortFilter DataType="Text" ID="SortContractNumber" SortColumn="CONTRACTNMBR" SortSequence="Ascending" />
+      </DataLayer>
+      <InteractivePaging CaptionType="Image" HideShowPrevNextCaptions="False" HideWhenOnePage="True" IDnotSupportedHere="pagingTableNumbered" Location="Top" PageRowCount="20" ShowPageNumber="Numbered" />
+      <DataTableColumn Header="Contract" ID="colCONTRACTNMBR">
+        <Label Caption="@Data.CONTRACTNMBR~" ID="colCONTRACTNMBR" />
+        <DataColumnSort DataColumn="CONTRACTNMBR" DataType="Text" />
+      </DataTableColumn>
+      <DataTableColumn Header="Customer" ID="colCUSTDESC">
+        <Label Caption="@Data.CUSTDESC~" ID="colCUSTDESC" />
+        <DataColumnSort DataColumn="CUSTDESC" DataType="Text" />
+      </DataTableColumn>
+      <DataTableColumn Header="Account" ID="colCUSTNMBR">
+        <Label Caption="@Data.CUSTNMBR~" ID="colCUSTNMBR" />
+        <DataColumnSort DataColumn="CUSTNMBR" DataType="Text" />
+      </DataTableColumn>
+      <DataTableColumn Header="Date" ID="colCONTRACTDT">
+        <Label Caption="@Data.CONTRACTDT~" Format="Short Date" ID="colCONTRACTDT" />
+        <DataColumnSort DataColumn="CONTRACTDT" DataType="Text" />
+      </DataTableColumn>
+      <DataTableColumn Header="DPR" ID="colDPRPOSITION">
+        <Label Caption="@Data.DPRPOSITION~" ID="colDPRPOSITION" />
+        <DataColumnSort DataColumn="DPRPOSITION" DataType="Text" />
+      </DataTableColumn>
+      <DataTableColumn Header="Branch" ID="colLOCNMBR">
+        <Label Caption="@Data.LOCNMBR~" ID="colLOCNMBR" />
+        <DataColumnSort DataColumn="LOCNMBR" DataType="Text" />
+      </DataTableColumn>
+      <DataTableColumn Header="Location" ID="colLOCDESC">
+        <Label Caption="@Data.LOCDESC~" ID="colLOCDESC" />
+        <DataColumnSort DataColumn="LOCDESC" DataType="Text" />
+      </DataTableColumn>
+      <DataTableColumn Header="Code" ID="colCOMMODITYCD">
+        <Label Caption="@Data.COMMODITYCD~" ID="colCOMMODITYCD" />
+        <DataColumnSort DataColumn="COMMODITYCD" DataType="Text" />
+      </DataTableColumn>
+      <DataTableColumn Header="Commodity" ID="colCOMMODITYDESC">
+        <Label Caption="@Data.COMMODITYDESC~" ID="colCOMMODITYDESC" />
+        <DataColumnSort DataColumn="COMMODITYDESC" DataType="Text" />
+      </DataTableColumn>
+      <DataTableColumn Header="Issued LBS" ID="colISSUED_LBS">
+        <Label Caption="@Data.ISSUED_LBS~" ID="colISSUED_LBS" />
+        <DataColumnSort DataColumn="ISSUED_LBS" DataType="Number" />
+      </DataTableColumn>
+      <DataTableColumn Header="Remaining LBS" ID="colREMAINING_LBS">
+        <Label Caption="@Data.REMAINING_LBS~" ID="colREMAINING_LBS" />
+        <DataColumnSort DataColumn="REMAINING_LBS" DataType="Number" />
+      </DataTableColumn>
+      <DataTableColumn Header="Remaining Bushekls" ID="colREMAINING_BU">
+        <Label Caption="@Data.REMAINING_BU~" Format="###,###,##0" ID="colREMAINING_BU" />
+        <DataColumnSort DataColumn="REMAINING_BU" DataType="Number" />
+      </DataTableColumn>
+    </DataTable>
+  </Body>
+  <ideTestParams paramContract="ALL" />
+</Report>
