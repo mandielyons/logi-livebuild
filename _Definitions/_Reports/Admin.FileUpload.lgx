@@ -1,30 +1,72 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report ID="Admin.FileUpload">
-  <Body>
-    <ResponsiveRow>
-      <ResponsiveColumn>
-        <Division Class="panel panel-default" HtmlDiv="True" ID="panel-upload">
-          <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
-            <Label Caption="Data File Upload" />
-          </Division>
-          <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
-            <ResponsiveRow>
-              <ResponsiveColumn>
-                <InputFileUpload Caption="File to Upload:" ID="inputFileName" InputSize="80" Tooltip="Click &quot;Browse&quot; to find file">
-                  <Validation Type="Required" />
-                </InputFileUpload>
-                <LineBreak />
-                <LineBreak />
-                <Button Caption="Save" ID="btnSubmit" Tooltip="Save the uploaded file.">
-                  <Action ConfirmMessage="Success" ID="procSaveFile" Process="Tasks" TaskID="taskSaveUploadFile" Type="Process" Validate="True">
-                    <WaitPage />
-                  </Action>
-                </Button>
-              </ResponsiveColumn>
-            </ResponsiveRow>
-          </Division>
-        </Division>
-      </ResponsiveColumn>
-    </ResponsiveRow>
-  </Body>
+<Report
+	ID="Admin.FileUpload"
+	>
+	<DefaultRequestParams
+		StatusMsg=""
+	/>
+	<Body>
+		<ResponsiveRow>
+			<ResponsiveColumn>
+				<Division
+					Class="panel panel-default"
+					HtmlDiv="True"
+					ID="panel-upload"
+					>
+					<Division
+						Class="panel-heading"
+						HtmlDiv="True"
+						ID="panel-heading"
+						>
+						<Label
+							Caption="Data File Upload"
+						/>
+					</Division>
+					<Division
+						Class="panel-body"
+						HtmlDiv="True"
+						ID="panel-body"
+						>
+						<ResponsiveRow>
+							<ResponsiveColumn>
+								<Label/>
+							</ResponsiveColumn>
+						</ResponsiveRow>
+						<ResponsiveRow>
+							<ResponsiveColumn>
+								<InputFileUpload
+									Caption="File to Upload:"
+									ID="inputFileName"
+									InputSize="80"
+									Tooltip="Click &quot;Browse&quot; to find file"
+									>
+									<Validation
+										Type="Required"
+									/>
+								</InputFileUpload>
+								<LineBreak/>
+								<LineBreak/>
+								<Button
+									Caption="Save"
+									ID="btnSubmit"
+									Tooltip="Save the uploaded file."
+									>
+									<Action
+										ConfirmMessage="Are you sure you want to upload this file?"
+										ID="procSaveFile"
+										Process="FileTasks"
+										TaskID="taskSaveUploadFile"
+										Type="Process"
+										Validate="True"
+										>
+										<WaitPage/>
+									</Action>
+								</Button>
+							</ResponsiveColumn>
+						</ResponsiveRow>
+					</Division>
+				</Division>
+			</ResponsiveColumn>
+		</ResponsiveRow>
+	</Body>
 </Report>
