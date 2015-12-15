@@ -86,101 +86,184 @@
 			Type="LDAP"
 		/>
 	</Connections>
-	<Security
-		AuthenticationSource="Standard"
-		CacheRights="Session"
-		SecurityEnabled="True"
-		>
-		<Note
-			Note="*** Layered Security for TMA/TMA LLC and Other Coop Users ***
+	<Remark>
+		<Security
+			AuthenticationSource="Standard"
+			CacheRights="Session"
+			SecurityEnabled="True"
+			>
+			<Note
+				Note="*** Layered Security for TMA/TMA LLC and Other Coop Users ***
 "
-			>
-			<Note
-				Note="1. Check rdUsername and rdPassword against AD"
-			/>
-			<Note
-				Note="2. Fall back and check against local database "
-			/>
-		</Note>
-		<AuthenticationRule
-			UsernameDataColumn="USERNAME"
-			>
-			<DataLayer
-				ConnectionID="mkcLDAP"
-				ID="dlLdapAuth"
-				LdapPassword="@Request.rdPassword~"
-				LdapUserDnSource="SELECT ADsPath FROM &apos;DC=midkscoop,DC=lan&apos; WHERE SamAccountName=&apos;@Request.rdUserName~&apos; and objectClass=&apos;person&apos;"
-				Type="LdapAuthentication"
 				>
 				<Note
-					Note="*** queries LDAP directory for users first ***"
+					Note="1. Check rdUsername and rdPassword against AD"
 				/>
-			</DataLayer>
-			<DataLayer
-				ConnectionID="connLogiDB"
-				HandleQuotesInTokens="True"
-				ID="dlLogiDbAuth"
-				Source="SELECT USERNAME
+				<Note
+					Note="2. Fall back and check against local database "
+				/>
+			</Note>
+			<AuthenticationRule
+				UsernameDataColumn="USERNAME"
+				>
+				<DataLayer
+					ConnectionID="mkcLDAP"
+					ID="dlLdapAuth"
+					LdapPassword="@Request.rdPassword~"
+					LdapUserDnSource="SELECT ADsPath FROM &apos;DC=midkscoop,DC=lan&apos; WHERE SamAccountName=&apos;@Request.rdUserName~&apos; and objectClass=&apos;person&apos;"
+					Type="LdapAuthentication"
+					>
+					<Note
+						Note="*** queries LDAP directory for users first ***"
+					/>
+				</DataLayer>
+				<DataLayer
+					ConnectionID="connLogiDB"
+					HandleQuotesInTokens="True"
+					ID="dlLogiDbAuth"
+					Source="SELECT USERNAME
 FROM USERS
 WHERE 
 ACTIVE = 1
 AND USERNAME = @iptUsername
 AND PASSWORD = @iptPassword
 "
-				Type="SQL"
-				>
-				<Note
-					Note="*** queries Logi DB for users second ***"
-				/>
-				<Note
-					Note="*** in theory, member could be a part of both groups ***"
+					Type="SQL"
 					>
 					<Note
-						Note="*** they will be given both roles ***"
+						Note="*** queries Logi DB for users second ***"
 					/>
 					<Note
-						Note="*** username MUST be unique b/w the systems UNLESS it belongs to the same physical user***"
+						Note="*** in theory, member could be a part of both groups ***"
 						>
 						<Note
-							Note="*** security module built in Logi should ideally check against AD for username when creating new users ***"
+							Note="*** they will be given both roles ***"
+						/>
+						<Note
+							Note="*** username MUST be unique b/w the systems UNLESS it belongs to the same physical user***"
 							>
 							<Note
-								Note="*** doesn&apos;t prevent a user from being created in AD, however, w/ matching username ***"
-							/>
+								Note="*** security module built in Logi should ideally check against AD for username when creating new users ***"
+								>
+								<Note
+									Note="*** doesn&apos;t prevent a user from being created in AD, however, w/ matching username ***"
+								/>
+							</Note>
 						</Note>
 					</Note>
-				</Note>
-				<SqlParameters>
-					<SqlParameter
-						ID="iptUsername"
-						SqlParamType="dt-200"
-						Value="@Request.rdUsername~"
-					/>
-					<SqlParameter
-						ID="iptPassword"
-						SqlParamType="dt-200"
-						Value="@Request.rdPassword~"
-					/>
-				</SqlParameters>
-			</DataLayer>
-		</AuthenticationRule>
-		<UserRoles
-			ID="UserRoles"
-			RolesDataColumn="memberOf"
-			>
-			<DataLayer
-				ConnectionID="mkcLDAP"
-				ID="dlLdapRoles"
-				LdapSource="SELECT memberOf, sAMAccountName, title, name, userPrincipalName, ADsPath, DisplayName, givenName, sn, mail FROM &apos;DC=midkscoop,DC=lan&apos; WHERE SamAccountName=&apos;@Function.UserName~&apos; and objectClass=&apos;person&apos;"
-				Type="Ldap"
+					<SqlParameters>
+						<SqlParameter
+							ID="iptUsername"
+							SqlParamType="dt-200"
+							Value="@Request.rdUsername~"
+						/>
+						<SqlParameter
+							ID="iptPassword"
+							SqlParamType="dt-200"
+							Value="@Request.rdPassword~"
+						/>
+					</SqlParameters>
+				</DataLayer>
+			</AuthenticationRule>
+			<UserRoles
+				ID="UserRoles"
+				RolesDataColumn="memberOf"
 				>
-				<CalculatedColumn
-					Formula="&quot;@Data.memberOf~&quot;.substring(3,&quot;@Data.memberOf~&quot;.indexOf(&quot;,&quot;))"
-					ID="memberOf"
-				/>
-				<Join
-					ID="joinLogiDbRoles"
-					JoinType="Union"
+				<DataLayer
+					ConnectionID="mkcLDAP"
+					ID="dlLdapRoles"
+					LdapSource="SELECT memberOf, sAMAccountName, title, name, userPrincipalName, ADsPath, DisplayName, givenName, sn, mail FROM &apos;DC=midkscoop,DC=lan&apos; WHERE SamAccountName=&apos;@Function.UserName~&apos; and objectClass=&apos;person&apos;"
+					Type="Ldap"
+					>
+					<CalculatedColumn
+						Formula="&quot;@Data.memberOf~&quot;.substring(3,&quot;@Data.memberOf~&quot;.indexOf(&quot;,&quot;))"
+						ID="memberOf"
+					/>
+					<Join
+						ID="joinLogiDbRoles"
+						JoinType="Union"
+						>
+						<DataLayer
+							ConnectionID="connLogiDB"
+							HandleQuotesInTokens="True"
+							ID="dlLogiDbRoles"
+							Source="SELECT USERNAME
+FROM USERS
+WHERE 
+ACTIVE = 1
+AND USERNAME = @iptUsername"
+							Type="SQL"
+							>
+							<SqlParameters>
+								<SqlParameter
+									ID="iptUsername"
+									SqlParamType="dt-200"
+									Value="@Function.UserName~"
+								/>
+							</SqlParameters>
+							<CalculatedColumn
+								Formula="&quot;OC&quot;"
+								ID="memberOf"
+							/>
+						</DataLayer>
+					</Join>
+				</DataLayer>
+			</UserRoles>
+			<Rights>
+				<Remark>
+					<RightsFromRoles/>
+				</Remark>
+				<Remark>
+					<RightsFromDataLayer
+						RightsDataColumn="cRight"
+						>
+						<Note
+							Note="*** this is incomplete ***"
+							>
+							<Note
+								Note="*** would need to calculate cRight from the memberOf data column ***"
+							/>
+						</Note>
+						<DataLayer
+							ConnectionID="mkcLDAP"
+							ID="dlLdapRights"
+							LdapSource="SELECT memberOf, sAMAccountName, title, name, userPrincipalName, ADsPath, DisplayName, givenName, sn, mail FROM &apos;DC=midkscoop,DC=lan&apos; WHERE SamAccountName=&apos;@Function.UserName~&apos; and objectClass=&apos;person&apos;"
+							Type="Ldap"
+							>
+							<Join
+								ID="joinLogiDbRights"
+								JoinType="Union"
+								>
+								<DataLayer
+									ConnectionID="connLogiDB"
+									HandleQuotesInTokens="True"
+									ID="dlLogiDbRoles"
+									Source="SELECT USERNAME
+FROM USERS
+WHERE 
+ACTIVE = 1
+AND USERNAME = @iptUsername"
+									Type="SQL"
+									>
+									<SqlParameters>
+										<SqlParameter
+											ID="iptUsername"
+											SqlParamType="dt-200"
+											Value="@Function.UserName~"
+										/>
+									</SqlParameters>
+									<CalculatedColumn
+										Formula="&quot;OC&quot;"
+										ID="cRight"
+									/>
+								</DataLayer>
+							</Join>
+						</DataLayer>
+					</RightsFromDataLayer>
+				</Remark>
+				<RightFromRole
+					ID="OC"
+					RolesDataColumn="cRole"
 					>
 					<DataLayer
 						ConnectionID="connLogiDB"
@@ -202,152 +285,71 @@ AND USERNAME = @iptUsername"
 						</SqlParameters>
 						<CalculatedColumn
 							Formula="&quot;OC&quot;"
-							ID="memberOf"
+							ID="cRole"
 						/>
 					</DataLayer>
-				</Join>
-			</DataLayer>
-		</UserRoles>
-		<Rights>
-			<Remark>
-				<RightsFromRoles/>
-			</Remark>
-			<Remark>
-				<RightsFromDataLayer
-					RightsDataColumn="cRight"
+				</RightFromRole>
+				<RightFromRole
+					ID="MKC"
+					RolesDataColumn="cRole"
 					>
-					<Note
-						Note="*** this is incomplete ***"
+					<DataLayer
+						CacheKey="dlcLdapUserRights"
+						ExpirationTimeSpan="00:05"
+						ID="dlcLdapUserRights"
+						Type="Cached"
 						>
 						<Note
-							Note="*** would need to calculate cRight from the memberOf data column ***"
+							Note="*** BRIEFLY caching to improve performance ***"
 						/>
-					</Note>
-					<DataLayer
-						ConnectionID="mkcLDAP"
-						ID="dlLdapRights"
-						LdapSource="SELECT memberOf, sAMAccountName, title, name, userPrincipalName, ADsPath, DisplayName, givenName, sn, mail FROM &apos;DC=midkscoop,DC=lan&apos; WHERE SamAccountName=&apos;@Function.UserName~&apos; and objectClass=&apos;person&apos;"
-						Type="Ldap"
-						>
-						<Join
-							ID="joinLogiDbRights"
-							JoinType="Union"
-							>
-							<DataLayer
-								ConnectionID="connLogiDB"
-								HandleQuotesInTokens="True"
-								ID="dlLogiDbRoles"
-								Source="SELECT USERNAME
-FROM USERS
-WHERE 
-ACTIVE = 1
-AND USERNAME = @iptUsername"
-								Type="SQL"
-								>
-								<SqlParameters>
-									<SqlParameter
-										ID="iptUsername"
-										SqlParamType="dt-200"
-										Value="@Function.UserName~"
-									/>
-								</SqlParameters>
-								<CalculatedColumn
-									Formula="&quot;OC&quot;"
-									ID="cRight"
-								/>
-							</DataLayer>
-						</Join>
+						<DataLayer
+							ConnectionID="mkcLDAP"
+							ID="dlLdapRights"
+							LdapSource="SELECT memberOf, sAMAccountName, title, name, userPrincipalName, ADsPath, DisplayName, givenName, sn, mail FROM &apos;DC=midkscoop,DC=lan&apos; WHERE SamAccountName=&apos;@Function.UserName~&apos; and objectClass=&apos;person&apos;"
+							Type="Ldap"
+						/>
+						<ConditionFilter
+							Condition="&quot;@Data.memberOf~&quot;.indexOf(&quot;MKC Dashboard&quot;)!=&quot;-1&quot;"
+							ID="fMKC"
+						/>
+						<CalculatedColumn
+							Formula="&quot;MKC Dashboard&quot;"
+							ID="cRole"
+						/>
 					</DataLayer>
-				</RightsFromDataLayer>
-			</Remark>
-			<RightFromRole
-				ID="OC"
-				RolesDataColumn="cRole"
-				>
-				<DataLayer
-					ConnectionID="connLogiDB"
-					HandleQuotesInTokens="True"
-					ID="dlLogiDbRoles"
-					Source="SELECT USERNAME
-FROM USERS
-WHERE 
-ACTIVE = 1
-AND USERNAME = @iptUsername"
-					Type="SQL"
+				</RightFromRole>
+				<RightFromRole
+					ID="TMA"
+					RolesDataColumn="cRole"
 					>
-					<SqlParameters>
-						<SqlParameter
-							ID="iptUsername"
-							SqlParamType="dt-200"
-							Value="@Function.UserName~"
+					<DataLayer
+						CacheKey="dlcLdapUserRights"
+						ExpirationTimeSpan="00:05"
+						ID="dlcLdapUserRights"
+						Type="Cached"
+						>
+						<Note
+							Note="*** BRIEFLY caching to improve performance ***"
 						/>
-					</SqlParameters>
-					<CalculatedColumn
-						Formula="&quot;OC&quot;"
-						ID="cRole"
-					/>
-				</DataLayer>
-			</RightFromRole>
-			<RightFromRole
-				ID="MKC"
-				RolesDataColumn="cRole"
-				>
-				<DataLayer
-					CacheKey="dlcLdapUserRights"
-					ExpirationTimeSpan="00:05"
-					ID="dlcLdapUserRights"
-					Type="Cached"
-					>
-					<Note
-						Note="*** BRIEFLY caching to improve performance ***"
-					/>
-					<DataLayer
-						ConnectionID="mkcLDAP"
-						ID="dlLdapRights"
-						LdapSource="SELECT memberOf, sAMAccountName, title, name, userPrincipalName, ADsPath, DisplayName, givenName, sn, mail FROM &apos;DC=midkscoop,DC=lan&apos; WHERE SamAccountName=&apos;@Function.UserName~&apos; and objectClass=&apos;person&apos;"
-						Type="Ldap"
-					/>
-					<ConditionFilter
-						Condition="&quot;@Data.memberOf~&quot;.indexOf(&quot;MKC Dashboard&quot;)!=&quot;-1&quot;"
-						ID="fMKC"
-					/>
-					<CalculatedColumn
-						Formula="&quot;MKC Dashboard&quot;"
-						ID="cRole"
-					/>
-				</DataLayer>
-			</RightFromRole>
-			<RightFromRole
-				ID="TMA"
-				RolesDataColumn="cRole"
-				>
-				<DataLayer
-					CacheKey="dlcLdapUserRights"
-					ExpirationTimeSpan="00:05"
-					ID="dlcLdapUserRights"
-					Type="Cached"
-					>
-					<Note
-						Note="*** BRIEFLY caching to improve performance ***"
-					/>
-					<DataLayer
-						ConnectionID="mkcLDAP"
-						ID="dlLdapRights"
-						LdapSource="SELECT memberOf, sAMAccountName, title, name, userPrincipalName, ADsPath, DisplayName, givenName, sn, mail FROM &apos;DC=midkscoop,DC=lan&apos; WHERE SamAccountName=&apos;@Function.UserName~&apos; and objectClass=&apos;person&apos;"
-						Type="Ldap"
-					/>
-					<ConditionFilter
-						Condition="&quot;@Data.memberOf~&quot;.indexOf(&quot;TMA Dashboard&quot;)!=&quot;-1&quot;"
-						ID="fTMA"
-					/>
-					<CalculatedColumn
-						Formula="&quot;TMA Dashboard&quot;"
-						ID="cRole"
-					/>
-				</DataLayer>
-			</RightFromRole>
-		</Rights>
-	</Security>
+						<DataLayer
+							ConnectionID="mkcLDAP"
+							ID="dlLdapRights"
+							LdapSource="SELECT memberOf, sAMAccountName, title, name, userPrincipalName, ADsPath, DisplayName, givenName, sn, mail FROM &apos;DC=midkscoop,DC=lan&apos; WHERE SamAccountName=&apos;@Function.UserName~&apos; and objectClass=&apos;person&apos;"
+							Type="Ldap"
+						/>
+						<ConditionFilter
+							Condition="&quot;@Data.memberOf~&quot;.indexOf(&quot;TMA Dashboard&quot;)!=&quot;-1&quot;"
+							ID="fTMA"
+						/>
+						<CalculatedColumn
+							Formula="&quot;TMA Dashboard&quot;"
+							ID="cRole"
+						/>
+					</DataLayer>
+				</RightFromRole>
+			</Rights>
+		</Security>
+	</Remark>
 	<Remark>
 		<Security
 			AuthenticationClientAddresses="127.0.0.1,::1"
@@ -362,9 +364,5 @@ AND USERNAME = @iptUsername"
 			</Rights>
 		</Security>
 	</Remark>
-	<ideTestParams
-		rdPassword=""
-		rdUsername=""
-		rdUserName=""
-	/>
+	<ideTestParams/>
 </Setting>

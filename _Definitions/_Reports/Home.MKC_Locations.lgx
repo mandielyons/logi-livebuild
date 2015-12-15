@@ -203,6 +203,10 @@ From MapMKCLocations"
 													Type="Report"
 													>
 													<Target
+														FrameID="NewWindow"
+														ID="targetFinancials"
+														Report="Home.Financials"
+														RequestForwarding="True"
 														Type="Report"
 														>
 														<WaitPage/>
