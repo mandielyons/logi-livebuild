@@ -1,365 +1,1051 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report ID="Home.MKCReport">
-  <DefaultRequestParams paramCust="CHS INC" />
-  <LocalData>
-    <DataLayer ConnectionID="connProdGP" ID="SQLWheat" Source="Select IV.DESCRIPTION As COMMODITYDESC,&#xD;&#xA;  Sum((CM.ISSUED_LBS - CM.APPLIED_LBS + CM.ADJUSTED_LBS - CM.SUB_CONT_LBS) /&#xD;&#xA;  UOM.STANDARD_UNITS_LBS) As RemainBalanceWheat&#xD;&#xA;From CA_CONTRACT_MASTER As CM&#xD;&#xA;  Join CA_COMMODITY_MASTER As IV On CM.COMMODITY_CODE = IV.COMMODITY_CODE&#xD;&#xA;  Join IV_UNIT_OF_MEASURE As UOM On IV.UOM_BUSHELS = UOM.UNIT_OF_MEASURE&#xD;&#xA;Where CM.CONTRACT_STATUS = 'O' And CM.COMMODITY_CODE = '01'&#xD;&#xA;Group By IV.DESCRIPTION" Type="SQL" />
-  </LocalData>
-  <LocalData>
-    <DataLayer ConnectionID="connProdGP" ID="SQLSoybean" Source="Select IV.DESCRIPTION As COMMODITYDESC,&#xD;&#xA;  Sum((CM.ISSUED_LBS - CM.APPLIED_LBS + CM.ADJUSTED_LBS - CM.SUB_CONT_LBS) /&#xD;&#xA;  UOM.STANDARD_UNITS_LBS) As RemainBalanceSoybean&#xD;&#xA;From CA_CONTRACT_MASTER As CM&#xD;&#xA;  Join CA_COMMODITY_MASTER As IV On CM.COMMODITY_CODE = IV.COMMODITY_CODE&#xD;&#xA;  Join IV_UNIT_OF_MEASURE As UOM On IV.UOM_BUSHELS = UOM.UNIT_OF_MEASURE&#xD;&#xA;Where CM.CONTRACT_STATUS = 'O' And CM.COMMODITY_CODE = '03'&#xD;&#xA;Group By IV.DESCRIPTION" Type="SQL" />
-  </LocalData>
-  <LocalData>
-    <DataLayer ConnectionID="connProdGP" ID="SQLCorn" Source="Select IV.DESCRIPTION As COMMODITYDESC,&#xD;&#xA;  Sum((CM.ISSUED_LBS - CM.APPLIED_LBS + CM.ADJUSTED_LBS - CM.SUB_CONT_LBS) /&#xD;&#xA;  UOM.STANDARD_UNITS_LBS) As RemainBalanceCorn&#xD;&#xA;From CA_CONTRACT_MASTER As CM&#xD;&#xA;  Join CA_COMMODITY_MASTER As IV On CM.COMMODITY_CODE = IV.COMMODITY_CODE&#xD;&#xA;  Join IV_UNIT_OF_MEASURE As UOM On IV.UOM_BUSHELS = UOM.UNIT_OF_MEASURE&#xD;&#xA;Where CM.CONTRACT_STATUS = 'O' And CM.COMMODITY_CODE = '04'&#xD;&#xA;Group By IV.DESCRIPTION" Type="SQL" />
-  </LocalData>
-  <LocalData>
-    <DataLayer ConnectionID="connProdGP" ID="SQLMilo" Source="Select IV.DESCRIPTION As COMMODITYDESC,&#xD;&#xA;  Sum((CM.ISSUED_LBS - CM.APPLIED_LBS + CM.ADJUSTED_LBS - CM.SUB_CONT_LBS) /&#xD;&#xA;  UOM.STANDARD_UNITS_LBS) As RemainBalanceMilo&#xD;&#xA;From CA_CONTRACT_MASTER As CM&#xD;&#xA;  Join CA_COMMODITY_MASTER As IV On CM.COMMODITY_CODE = IV.COMMODITY_CODE&#xD;&#xA;  Join IV_UNIT_OF_MEASURE As UOM On IV.UOM_BUSHELS = UOM.UNIT_OF_MEASURE&#xD;&#xA;Where CM.CONTRACT_STATUS = 'O' And CM.COMMODITY_CODE = '02'&#xD;&#xA;Group By IV.DESCRIPTION" Type="SQL" />
-  </LocalData>
-  <LocalData>
-    <DataLayer ConnectionID="connMKC" ID="lContractsOvershipped" Source="Select SUBSTRING(GaugeAgTraxContracts.CONTRACTNMBR,1,CHARINDEX('.',GaugeAgTraxContracts.CONTRACTNMBR)-1) CONTRACTNMBR,&#xD;&#xA;  Sum(GaugeAgTraxContracts.REMAINING_BU) As REMAINING_BU,&#xD;&#xA;  GaugeAgTraxContracts.COMMODITYDESC&#xD;&#xA;From GaugeAgTraxContracts&#xD;&#xA;Where GaugeAgTraxContracts.REMAINING_BU &lt; 0&#xD;&#xA;Group By SUBSTRING(GaugeAgTraxContracts.CONTRACTNMBR,1,CHARINDEX('.',GaugeAgTraxContracts.CONTRACTNMBR)-1),&#xD;&#xA;  GaugeAgTraxContracts.COMMODITYDESC&#xD;&#xA;Order By REMAINING_BU&#xD;&#xA;" Type="SQL">
-      <DataLayerLink ID="linkContractsOvershipped" />
-    </DataLayer>
-  </LocalData>
-  <IncludeSharedElement DefinitionFile="_Layout.Shared" SharedElementID="shrHeader" />
-  <DefaultRequestParams paramContract="@Local.CONTRACTNMBR~" />
-  <Body>
-    <ResponsiveRow CollisionBehavior="Overlap" SecurityRightID="Admin">
-      <ResponsiveColumn ColspanExtraSmallScreen="12" ColspanLargeScreen="3" ColspanMediumScreen="3" ColspanSmallScreen="12">
-        <Division Class="kpi kpi-green" HtmlDiv="True" ID="div-KPI">
-          <ResponsiveRow CollisionBehavior="Overlap">
-            <ResponsiveColumn ColspanExtraSmallScreen="12" ColspanLargeScreen="9" ColspanMediumScreen="9" ColspanSmallScreen="12">
-              <Label Caption="@Local.RemainBalanceWheat~" Class="kpi-value" Format="###,###,##0" Tooltip="Remaining Contract Bushels" />
-              <Label Caption="BU Wheat" Class="kpi-label" />
-            </ResponsiveColumn>
-            <ResponsiveColumn>
-              <Remark>
-                <Label Class="up-arrow" ID="kpi-icon" />
-              </Remark>
-              <Image Caption="wheat.png" Height="40" ID="imgWheat" Width="40" />
-              <Label />
-            </ResponsiveColumn>
-          </ResponsiveRow>
-        </Division>
-      </ResponsiveColumn>
-      <ResponsiveColumn ColspanExtraSmallScreen="12" ColspanLargeScreen="3" ColspanMediumScreen="3" ColspanSmallScreen="12">
-        <Division Class="kpi kpi-red" HtmlDiv="True" ID="div-KPI">
-          <ResponsiveRow CollisionBehavior="Overlap">
-            <ResponsiveColumn ColspanExtraSmallScreen="12" ColspanLargeScreen="9" ColspanMediumScreen="9" ColspanSmallScreen="12">
-              <Label Caption="@Local.RemainBalanceSoybean~" Class="kpi-value" Format="###,###,##0" Tooltip="Remaining Contract Bushels" />
-              <Label Caption="BU Soybean" Class="kpi-label" />
-            </ResponsiveColumn>
-            <ResponsiveColumn>
-              <Remark>
-                <Label Class="down-arrow" ID="kpi-icon" />
-              </Remark>
-              <Image Caption="soybean.png" Height="40" ID="imgSoybean" Width="40" />
-              <Label />
-            </ResponsiveColumn>
-          </ResponsiveRow>
-        </Division>
-      </ResponsiveColumn>
-      <ResponsiveColumn ColspanExtraSmallScreen="12" ColspanLargeScreen="3" ColspanMediumScreen="3" ColspanSmallScreen="12">
-        <Division Class="kpi kpi-blue" HtmlDiv="True" ID="div-KPI">
-          <ResponsiveRow CollisionBehavior="Overlap">
-            <ResponsiveColumn ColspanExtraSmallScreen="12" ColspanLargeScreen="9" ColspanMediumScreen="9" ColspanSmallScreen="12">
-              <Label Caption="@Local.RemainBalanceCorn~" Class="kpi-value" Format="###,###,##0" Tooltip="Remaining Contract Bushels" />
-              <Label Caption="BU Corn" Class="kpi-label" />
-            </ResponsiveColumn>
-            <ResponsiveColumn>
-              <Remark>
-                <Label Class="up-arrow" ID="kpi-icon" />
-              </Remark>
-              <Image Caption="corn.png" Height="40" ID="imgCorn" Width="40" />
-              <Label />
-            </ResponsiveColumn>
-          </ResponsiveRow>
-        </Division>
-      </ResponsiveColumn>
-      <ResponsiveColumn ColspanExtraSmallScreen="12" ColspanLargeScreen="3" ColspanMediumScreen="3" ColspanSmallScreen="12">
-        <Division Class="kpi kpi-yellow" HtmlDiv="True" ID="div-KPI">
-          <ResponsiveRow CollisionBehavior="Overlap">
-            <ResponsiveColumn ColspanExtraSmallScreen="12" ColspanLargeScreen="9" ColspanMediumScreen="9" ColspanSmallScreen="12">
-              <Label Caption="@Local.RemainBalanceMilo~" Class="kpi-value" Format="###,###,##0" Tooltip="Remaining Contract Bushels" />
-              <Label Caption="BU Milo" Class="kpi-label" />
-            </ResponsiveColumn>
-            <ResponsiveColumn>
-              <Image Caption="milo.png" Height="50" ID="imgMilo" Width="50" />
-              <Label Class="down-arrow" />
-            </ResponsiveColumn>
-          </ResponsiveRow>
-        </Division>
-      </ResponsiveColumn>
-    </ResponsiveRow>
-    <ResponsiveRow CollisionBehavior="Overlap">
-      <ResponsiveColumn>
-        <Division Class="panel panel-default" HtmlDiv="True" ID="panel">
-          <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
-            <Image Caption="warning.png" Class="fa fa-warning fa-2x text-danger" Height="28" ID="imgWarning" Width="28" />
-            <Label Caption=" Contracts Overshipped" />
-          </Division>
-          <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
-            <Remark>
-              <ChartCanvas ChartOrientation="SwapAxes" ID="BarChartCanvas1">
-                <Series ChartXDataColumn="CUSTDESC" ChartYDataColumn="rdGrAggr-RemainBalance-sum" Color="Orange" Type="Bar">
-                  <Quicktip>
-                    <QuicktipRow Caption="CUSTOMER:" Value="@Chart.CUSTDESC~" />
-                    <QuicktipRow Caption="REMAINING BALANCE: " Value="@Chart.rdGrAggr-RemainBalance-sum~" />
-                  </Quicktip>
-                  <Action ElementID="KPI-table" ID="actRefresh" Type="RefreshElement">
-                    <LinkParams paramCust="@Chart.CUSTDESC~" />
-                  </Action>
-                </Series>
-                <ChartXAxis AxisCaption="CUSTOMER">
-                  <AxisLabelStyle FontAngle="40" />
-                </ChartXAxis>
-                <ChartYAxis AxisCaption="REMAINING BALANCE" />
-                <DataLayer ConnectionID="connMKC" ID="SQLDataLayer3" Source="Select [GaugeAgTraxContracts].CUSTDESC,&#xD;&#xA;  Sum([GaugeAgTraxContracts].REMAINING_BU) As RemainBalance&#xD;&#xA;From [GaugeAgTraxContracts]&#xD;&#xA;Group By [GaugeAgTraxContracts].CUSTDESC" Type="SQL">
-                  <GroupFilter DataType="Text" GroupColumn="CUSTDESC" KeepGroupedRows="False">
-                    <GroupAggregateColumn AggregateColumn="RemainBalance" AggregateFunction="SUM" DataType="Number" ID="rdGrAggr-RemainBalance-sum" />
-                  </GroupFilter>
-                  <SortFilter DataType="Number" SortColumn="rdGrAggr-RemainBalance-sum" SortSequence="Ascending" />
-                  <RelevanceFilter DataColumn="rdGrAggr-RemainBalance-sum" RelevanceType="NumberOfRows" RelevanceValue="5" />
-                </DataLayer>
-              </ChartCanvas>
-            </Remark>
-            <DataTable AccessibleHeaders="True" AjaxPaging="True" ID="Contracts" SortArrows="True">
-              <DataLayer ID="dllContractsOvershipped" LinkedDataLayerID="linkContractsOvershipped" Type="Linked" />
-              <InteractivePaging CaptionType="Text" HideShowPrevNextCaptions="True" HideWhenOnePage="True" Location="Top" PageRowCount="5" ShowPageNumber="True" />
-              <DataTableColumn Header="Contract" ID="colCONTRACTNMBR">
-                <Label Caption="@Data.CONTRACTNMBR~" ID="lblCONTRACTNMBR">
-                  <Remark>
-                    <Action ID="actReportDT" Type="Report">
-                      <Target Report="DataTable-DrillDown" RequestForwarding="True" Type="Report" />
-                      <LinkParams paramContract="@Data.CONTRACTNMBR~" />
-                    </Action>
-                  </Remark>
-                  <Remark>
-                    <Action ElementID="popSubContracts" ID="showSubContracts" Type="ShowElement" />
-                  </Remark>
-                  <Action ElementID="Contracts,SubContracts" ID="refSubContracts" Type="RefreshElement">
-                    <LinkParams paramContract="@Data.CONTRACTNMBR~" />
-                  </Action>
-                </Label>
-                <DataColumnSort DataColumn="CONTRACTNMBR" />
-                <ConditionalClass Class="selected-row" Condition="&quot;@Request.paramContract~&quot;==&quot;@Data.CONTRACTNMBR~&quot;" ID="ccSelected" />
-              </DataTableColumn>
-              <Remark>
-                <DataTableColumn Header="Location" ID="colLOCDESC">
-                  <Label Caption="@Data.LOCDESC~" ID="lblLOCDESC" />
-                  <DataColumnSort DataColumn="LOCDESC" />
-                  <ConditionalClass Class="selected-row" Condition="&quot;@Request.paramContract~&quot;==&quot;@Data.CONTRACTNMBR~&quot;" ID="ccSelected" />
-                </DataTableColumn>
-              </Remark>
-              <DataTableColumn Header="Commodity" ID="colCOMMODITYDESC">
-                <Label Caption="@Data.COMMODITYDESC~" ID="lblCOMMODITYDESC" />
-                <DataColumnSort DataColumn="COMMODITYDESC" />
-                <ConditionalClass Class="selected-row" Condition="&quot;@Request.paramContract~&quot;==&quot;@Data.CONTRACTNMBR~&quot;" ID="ccSelected" />
-              </DataTableColumn>
-              <DataTableColumn Header="Remaining BU" ID="colREMAINING_BU">
-                <Label Caption="@Data.REMAINING_BU~" Format="###,###,##0" ID="lblREMAINING_BU" />
-                <DataColumnSort DataColumn="REMAINING_BU" DataType="Number" />
-                <ConditionalClass Class="selected-row" Condition="&quot;@Request.paramContract~&quot;==&quot;@Data.CONTRACTNMBR~&quot;" ID="ccSelected" />
-              </DataTableColumn>
-              <DataTableColumn ID="colKPI">
-                <Label ID="KPI">
-                  <ConditionalClass Class="fa fa-arrow-up fa-2x text-success" Condition="@Data.REMAINING_BU~&gt; 1000" />
-                  <ConditionalClass Class="fa fa-arrow-down fa-2x text-danger" Condition="@Data.REMAINING_BU~&lt;= 1000" />
-                </Label>
-                <ConditionalClass Class="selected-row" Condition="&quot;@Request.paramContract~&quot;==&quot;@Data.CONTRACTNMBR~&quot;" ID="ccSelected" />
-              </DataTableColumn>
-            </DataTable>
-          </Division>
-        </Division>
-      </ResponsiveColumn>
-      <ResponsiveColumn>
-        <Division Class="panel panel-default" HtmlDiv="True" ID="panel">
-          <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
-            <Image Caption="ContractSignature24x24.png" Height="24" ID="imgContractSig" Width="24" />
-            <Spaces SecurityRightID="subSpace" Size="2" />
-            <Label Caption=" Contracts Balance Performance" />
-            <Spaces SecurityRightID="subSpace" Size="5" />
-            <Label Caption=" " Class="fa fa-refresh text-success, ThemeAlignRight">
-              <Action ID="actionReport" Type="Report">
-                <Target Report="Home.MKCReport" Type="Report" />
-              </Action>
-            </Label>
-          </Division>
-          <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
-            <DataTable AccessibleHeaders="True" AccessibleSummary="DataTable" ID="SubContracts" KeepScrollPosition="True" RememberSort="True" ResizableColumns="True" SortArrows="True" TableBorder="0">
-              <DataLayer ConnectionID="connMKC" ID="dlSubContracts" Source="Select [GaugeAgTraxContracts].CUSTDESC,&#xD;&#xA;  [GaugeAgTraxContracts].CUSTNMBR,&#xD;&#xA;  [GaugeAgTraxContracts].CUSTADDR1,&#xD;&#xA;  [GaugeAgTraxContracts].CUSTCITY,&#xD;&#xA;  [GaugeAgTraxContracts].CUSTSTATE,&#xD;&#xA;  [GaugeAgTraxContracts].CUSTZIPCODE,&#xD;&#xA;  [GaugeAgTraxContracts].CONTRACTNMBR,&#xD;&#xA;  [GaugeAgTraxContracts].CONTRACTDT,&#xD;&#xA;  [GaugeAgTraxContracts].DPRPOSITION,&#xD;&#xA;  [GaugeAgTraxContracts].DPRDESC,&#xD;&#xA;  [GaugeAgTraxContracts].LOCNMBR,&#xD;&#xA;  [GaugeAgTraxContracts].LOCDESC,&#xD;&#xA;  [GaugeAgTraxContracts].COMMODITYCD,&#xD;&#xA;  [GaugeAgTraxContracts].COMMODITYDESC,&#xD;&#xA;  [GaugeAgTraxContracts].ISSUED_LBS,&#xD;&#xA;  [GaugeAgTraxContracts].APPLIED_LBS,&#xD;&#xA;  [GaugeAgTraxContracts].ADJUSTED_LBS,&#xD;&#xA;  [GaugeAgTraxContracts].SUB_CONT_LBS,&#xD;&#xA;  [GaugeAgTraxContracts].REMAINING_LBS,&#xD;&#xA;  [GaugeAgTraxContracts].ISSUED_BU,&#xD;&#xA;  [GaugeAgTraxContracts].APPLIED_BU,&#xD;&#xA;  [GaugeAgTraxContracts].ADJUSTED_BU,&#xD;&#xA;  [GaugeAgTraxContracts].SUB_CONT_LBS/56 AS SUB_CONT_BU,&#xD;&#xA;  [GaugeAgTraxContracts].REMAINING_BU&#xD;&#xA;From [GaugeAgTraxContracts]&#xD;&#xA;Where [GaugeAgTraxContracts].CONTRACTNMBR LIKE '@Request.paramContract~'+'.%' Or '@Request.paramContract~' = 'ALL' &#xD;&#xA;Order by [GaugeAgTraxContracts].CONTRACTNMBR" Type="SQL">
-                <SortFilter DataType="Text" ID="SortContractNumber" SortColumn="CONTRACTNMBR" SortSequence="Ascending" />
-              </DataLayer>
-              <InteractivePaging CaptionType="Image" Class="ThemeHeaderSmaller" HideShowPrevNextCaptions="False" HideWhenOnePage="True" IDnotSupportedHere="pagingTableNumbered" Location="Top" PageRowCount="15" ShowPageNumber="Numbered" />
-              <DataTableColumn Header="Contract" ID="colCONTRACTNMBR">
-                <Label Caption="@Data.CONTRACTNMBR~" ID="colCONTRACTNMBR">
-                  <Remark>
-                    <Action ID="actReportDT" Type="Report">
-                      <Target Report="DataTable-DrillDown" RequestForwarding="True" Type="Report" />
-                      <LinkParams paramContract="@Data.CONTRACTNMBR~" />
-                    </Action>
-                  </Remark>
-                  <Action ID="rptContractsAll" Type="Report">
-                    <Target FrameID="NewWindow" Report="DataTable-DrillDown" RequestForwarding="True" Type="Report" />
-                    <LinkParams paramContract="@Request.paramContract~" />
-                  </Action>
-                </Label>
-                <DataColumnSort DataColumn="CONTRACTNMBR" DataType="Text" />
-              </DataTableColumn>
-              <Remark>
-                <DataTableColumn Header="Customer" ID="colCUSTDESC">
-                  <Label Caption="@Data.CUSTDESC~" ID="colCUSTDESC" />
-                  <DataColumnSort DataColumn="CUSTDESC" DataType="Text" />
-                </DataTableColumn>
-              </Remark>
-              <Remark>
-                <DataTableColumn Header="Account" ID="colCUSTNMBR">
-                  <Label Caption="@Data.CUSTNMBR~" ID="colCUSTNMBR" />
-                  <DataColumnSort DataColumn="CUSTNMBR" DataType="Text" />
-                </DataTableColumn>
-              </Remark>
-              <Remark>
-                <DataTableColumn Header="Date" ID="colCONTRACTDT">
-                  <Label Caption="@Data.CONTRACTDT~" Format="Short Date" ID="colCONTRACTDT" />
-                  <DataColumnSort DataColumn="CONTRACTDT" DataType="Text" />
-                </DataTableColumn>
-              </Remark>
-              <Remark>
-                <DataTableColumn Header="DPR" ID="colDPRPOSITION">
-                  <Label Caption="@Data.DPRPOSITION~" ID="colDPRPOSITION" />
-                  <DataColumnSort DataColumn="DPRPOSITION" DataType="Text" />
-                </DataTableColumn>
-              </Remark>
-              <Remark>
-                <DataTableColumn Header="Branch" ID="colLOCNMBR">
-                  <Label Caption="@Data.LOCNMBR~" ID="colLOCNMBR" />
-                  <DataColumnSort DataColumn="LOCNMBR" DataType="Text" />
-                </DataTableColumn>
-              </Remark>
-              <DataTableColumn Header="Location" ID="colLOCDESC">
-                <Label Caption="@Data.LOCDESC~" ID="colLOCDESC" />
-                <DataColumnSort DataColumn="LOCDESC" DataType="Text" />
-              </DataTableColumn>
-              <Remark>
-                <DataTableColumn Header="Code" ID="colCOMMODITYCD">
-                  <Label Caption="@Data.COMMODITYCD~" ID="colCOMMODITYCD" />
-                  <DataColumnSort DataColumn="COMMODITYCD" DataType="Text" />
-                </DataTableColumn>
-              </Remark>
-              <DataTableColumn Header="Commodity" ID="colCOMMODITYDESC">
-                <Label Caption="@Data.COMMODITYDESC~" ID="colCOMMODITYDESC" />
-                <DataColumnSort DataColumn="COMMODITYDESC" DataType="Text" />
-              </DataTableColumn>
-              <Remark>
-                <DataTableColumn Header="Issued LBS" ID="colISSUED_LBS">
-                  <Label Caption="@Data.ISSUED_LBS~" ID="colISSUED_LBS" />
-                  <DataColumnSort DataColumn="ISSUED_LBS" DataType="Number" />
-                </DataTableColumn>
-              </Remark>
-              <Remark>
-                <DataTableColumn Header="Remaining LBS" ID="colREMAINING_LBS">
-                  <Label Caption="@Data.REMAINING_LBS~" ID="colREMAINING_LBS" />
-                  <DataColumnSort DataColumn="REMAINING_LBS" DataType="Number" />
-                </DataTableColumn>
-              </Remark>
-              <DataTableColumn Header="Remaining BU" ID="colREMAINING_BU">
-                <Label Caption="@Data.REMAINING_BU~" Format="###,###,##0" ID="colREMAINING_BU" />
-                <DataColumnSort DataColumn="REMAINING_BU" DataType="Number" />
-              </DataTableColumn>
-              <DataTableColumn ID="colKPI">
-                <Label ID="KPI">
-                  <ConditionalClass Class="fa fa-arrow-up fa-2x text-success" Condition="@Data.REMAINING_BU~&gt; 1000" />
-                  <ConditionalClass Class="fa fa-arrow-down fa-2x text-danger" Condition="@Data.REMAINING_BU~&lt; 0" />
-                  <ConditionalClass Class="fa fa-minus fa-2x text-warning" Condition="@Data.REMAINING_BU~  &lt;= 1000" />
-                </Label>
-              </DataTableColumn>
-            </DataTable>
-          </Division>
-          <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
-            <Remark>
-              <ChartCanvas ID="PieChartCanvas1">
-                <DataLayer ConnectionID="Northwind" ID="SQLDataLayer2" Source="Select Invoices.Salesperson,&#xD;&#xA;  Count(Invoices.OrderID)&#xD;&#xA;From Invoices&#xD;&#xA;WHERE YEAR(Invoices.OrderDate) = '@Request.Year~'&#xD;&#xA;Group By Invoices.Salesperson" Type="SQL">
-                  <GroupFilter DataType="Text" GroupColumn="Salesperson" KeepGroupedRows="False">
-                    <GroupAggregateColumn AggregateColumn="Column1" AggregateFunction="SUM" DataType="Number" ID="rdGrAggr-Column1-sum" />
-                  </GroupFilter>
-                  <SortFilter DataType="Number" SortColumn="rdGrAggr-Column1-sum" SortSequence="Descending" />
-                  <RelevanceFilter DataColumn="rdGrAggr-Column1-sum" IrrelevanceLabel="Other" LabelColumn="Salesperson" RelevanceType="NumberOfRows" RelevanceValue="0" />
-                </DataLayer>
-                <Series ChartLabelColumn="Salesperson" ChartYDataColumn="rdGrAggr-Column1-sum" DonutHoleSize="60%" LabelLocation="Legend" ShowDataValues="True" Type="Pie">
-                  <Quicktip>
-                    <QuicktipRow Caption="Salesperson: " Value="@Chart.Salesperson~" />
-                    <QuicktipRow Caption="Column1: " Value="@Chart.rdGrAggr-Column1-sum~" />
-                  </Quicktip>
-                </Series>
-                <ChartCanvasLegend />
-              </ChartCanvas>
-            </Remark>
-            <PopupPanel Height="50" HeightScale="%" ID="popSubContracts" PopupPanelLocation="Mouse" Width="50" WidthScale="%">
-              <Division ID="divSubContracts">
-                <DataTable AccessibleHeaders="True" AjaxPaging="True" ID="KPI-table" SortArrows="True">
-                  <Remark>
-                    <InteractivePaging CaptionType="Text" HideShowPrevNextCaptions="True" HideWhenOnePage="True" Location="Top" PageRowCount="20" ShowPageNumber="True" />
-                  </Remark>
-                  <DataLayer ConnectionID="connMKC" ID="SQLDataLayer4" Source="Select CONTRACTNMBR,&#xD;&#xA;  Sum(REMAINING_BU) As REMAINING_BU&#xD;&#xA;From [GaugeAgTraxContracts]&#xD;&#xA;/* Where [GaugeAgTraxContracts].CUSTDESC = '@Request.paramCust~' Or '@Request.paramCust~' = 'All' */&#xD;&#xA;Group By CONTRACTNMBR&#xD;&#xA;HAVING SUM(REMAINING_BU) NOT BETWEEN 0 AND 999&#xD;&#xA;Order By REMAINING_BU ASC&#xD;&#xA;" Type="SQL" />
-                  <DataTableColumn Header="CONTRACT NO" ID="colCONTRACTNMBR">
-                    <Label Caption="@Data.CONTRACTNMBR~" ID="lblCONTRACTNMBR" />
-                    <DataColumnSort DataColumn="CONTRACTNMBR" />
-                    <Remark>
-                      <Action ID="rptContractsAll" Type="Report">
-                        <Target Report="DataTable-DrillDown" RequestForwarding="True" Type="Report" />
-                        <LinkParams paramContract="@Request.paramContract~" />
-                      </Action>
-                    </Remark>
-                  </DataTableColumn>
-                  <DataTableColumn Header="REMAINING BUSHELS" ID="colREMAINING_BU">
-                    <Label Caption="@Data.REMAINING_BU~" Format="###,###,##0" ID="lblREMAINING_BU" />
-                    <DataColumnSort DataColumn="REMAINING_BU" DataType="Number" />
-                  </DataTableColumn>
-                  <DataTableColumn ID="colKPI">
-                    <Label ID="KPI">
-                      <ConditionalClass Class="fa fa-arrow-up fa-2x text-success" Condition="@Data.REMAINING_BU~&gt; 0" />
-                      <ConditionalClass Class="fa fa-arrow-down fa-2x text-danger" Condition="@Data.REMAINING_BU~&lt;= 1000" />
-                    </Label>
-                  </DataTableColumn>
-                </DataTable>
-              </Division>
-            </PopupPanel>
-          </Division>
-        </Division>
-      </ResponsiveColumn>
-    </ResponsiveRow>
-    <ResponsiveRow CollisionBehavior="Overlap">
-      <ResponsiveColumn>
-        <Division Class="panel panel-default" HtmlDiv="True" ID="panel">
-          <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
-            <Image Caption="calendar.png" Height="30" Width="30" />
-            <Label Caption=" Customer Receipts By Commodity (YTD)" />
-          </Division>
-          <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
-            <ChartCanvas ChartHeight="300" ID="BarChartCanvas2">
-              <Series ChartXDataColumn="COMMODITY" ChartYDataColumn="BU_YTD" Color="DarkOrange" Type="Bar">
-                <Quicktip>
-                  <QuicktipRow Caption="Commodity: " Value="@Chart.COMMODITY~" />
-                  <QuicktipRow Caption="BU YTD: " Format="###,###,##0.00" Value="@Chart.BU_YTD~" />
-                </Quicktip>
-              </Series>
-              <ChartXAxis AxisCaption="COMMODITY">
-                <AxisLabelStyle FontAngle="0" />
-              </ChartXAxis>
-              <ChartYAxis AxisCaption="BUSHELS YTD" />
-              <DataLayer ConnectionID="connProdGP" ID="sqlReceipts" Source="Select IV.DESCRIPTION COMMODITY,&#xD;&#xA;  Sum(PB.LBS_LIVE / UOM.STANDARD_UNITS_LBS) As BU_YTD&#xD;&#xA;From Agtrax_TMA..CA_POSITION_BALANCE PB&#xD;&#xA;  Join Agtrax_TMA..CA_COMMODITY_MASTER IV On PB.COMMODITY_CODE =&#xD;&#xA;    IV.COMMODITY_CODE&#xD;&#xA;  Join Agtrax_TMA..IV_BRANCH_MASTER BM On PB.BRANCH_NUMBER = BM.BRANCH_NUMBER&#xD;&#xA;  Join Agtrax_TMA..IV_UNIT_OF_MEASURE UOM On IV.UOM_BUSHELS =&#xD;&#xA;    UOM.UNIT_OF_MEASURE&#xD;&#xA;  Join Agtrax_TMA..CA_POSITION_MASTER PM On PB.DPR_POSITION = PM.DPR_POSITION&#xD;&#xA;Where PB.DPR_POSITION = 10 And PB.LBS_LIVE &lt;&gt; 0 And PB.COMMODITY_CODE In ('01',&#xD;&#xA;  '02', '03', '04')&#xD;&#xA;Group By IV.DESCRIPTION" Type="SQL" />
-              <Remark>
-                <DataLayer ColumnNamesRow="1" ExcelFile="C:\Logi Installs\AgTraxFallReceipts20151005.xlsx" ExcelWorksheet="FALL_RECEIPTS_TOTAL" ID="ExcelDataLayer3" Type="Excel">
-                  <GroupFilter DataType="Text" GroupColumn="COMMODITY" KeepGroupedRows="False">
-                    <GroupAggregateColumn AggregateColumn="LOCCD" AggregateFunction="SUM" DataType="Number" ID="rdGrAggr-LOCCD-sum" />
-                  </GroupFilter>
-                  <SortFilter DataType="Number" SortColumn="rdGrAggr-LOCCD-sum" SortSequence="Ascending" />
-                  <RelevanceFilter DataColumn="rdGrAggr-LOCCD-sum" IrrelevanceLabel="Other" LabelColumn="COMMODITY" RelevanceType="NumberOfRows" RelevanceValue="0" />
-                </DataLayer>
-              </Remark>
-            </ChartCanvas>
-          </Division>
-        </Division>
-      </ResponsiveColumn>
-    </ResponsiveRow>
-  </Body>
-  <IncludeSharedElement DefinitionFile="_Layout.Shared" SharedElementID="shrFooter" />
-  <ideTestParams paramContract="ALL" paramCust="" />
+<Report
+	ID="Home.MKCReport"
+	>
+	<DefaultRequestParams
+		paramCust="CHS INC"
+	/>
+	<LocalData>
+		<DataLayer
+			ConnectionID="connProdGP"
+			ID="SQLWheat"
+			Source="Select IV.DESCRIPTION As COMMODITYDESC,
+  Sum((CM.ISSUED_LBS - CM.APPLIED_LBS + CM.ADJUSTED_LBS - CM.SUB_CONT_LBS) /
+  UOM.STANDARD_UNITS_LBS) As RemainBalanceWheat
+From CA_CONTRACT_MASTER As CM
+  Join CA_COMMODITY_MASTER As IV On CM.COMMODITY_CODE = IV.COMMODITY_CODE
+  Join IV_UNIT_OF_MEASURE As UOM On IV.UOM_BUSHELS = UOM.UNIT_OF_MEASURE
+Where CM.CONTRACT_STATUS = &apos;O&apos; And CM.COMMODITY_CODE = &apos;01&apos;
+Group By IV.DESCRIPTION"
+			Type="SQL"
+		/>
+	</LocalData>
+	<LocalData>
+		<DataLayer
+			ConnectionID="connProdGP"
+			ID="SQLSoybean"
+			Source="Select IV.DESCRIPTION As COMMODITYDESC,
+  Sum((CM.ISSUED_LBS - CM.APPLIED_LBS + CM.ADJUSTED_LBS - CM.SUB_CONT_LBS) /
+  UOM.STANDARD_UNITS_LBS) As RemainBalanceSoybean
+From CA_CONTRACT_MASTER As CM
+  Join CA_COMMODITY_MASTER As IV On CM.COMMODITY_CODE = IV.COMMODITY_CODE
+  Join IV_UNIT_OF_MEASURE As UOM On IV.UOM_BUSHELS = UOM.UNIT_OF_MEASURE
+Where CM.CONTRACT_STATUS = &apos;O&apos; And CM.COMMODITY_CODE = &apos;03&apos;
+Group By IV.DESCRIPTION"
+			Type="SQL"
+		/>
+	</LocalData>
+	<LocalData>
+		<DataLayer
+			ConnectionID="connProdGP"
+			ID="SQLCorn"
+			Source="Select IV.DESCRIPTION As COMMODITYDESC,
+  Sum((CM.ISSUED_LBS - CM.APPLIED_LBS + CM.ADJUSTED_LBS - CM.SUB_CONT_LBS) /
+  UOM.STANDARD_UNITS_LBS) As RemainBalanceCorn
+From CA_CONTRACT_MASTER As CM
+  Join CA_COMMODITY_MASTER As IV On CM.COMMODITY_CODE = IV.COMMODITY_CODE
+  Join IV_UNIT_OF_MEASURE As UOM On IV.UOM_BUSHELS = UOM.UNIT_OF_MEASURE
+Where CM.CONTRACT_STATUS = &apos;O&apos; And CM.COMMODITY_CODE = &apos;04&apos;
+Group By IV.DESCRIPTION"
+			Type="SQL"
+		/>
+	</LocalData>
+	<LocalData>
+		<DataLayer
+			ConnectionID="connProdGP"
+			ID="SQLMilo"
+			Source="Select IV.DESCRIPTION As COMMODITYDESC,
+  Sum((CM.ISSUED_LBS - CM.APPLIED_LBS + CM.ADJUSTED_LBS - CM.SUB_CONT_LBS) /
+  UOM.STANDARD_UNITS_LBS) As RemainBalanceMilo
+From CA_CONTRACT_MASTER As CM
+  Join CA_COMMODITY_MASTER As IV On CM.COMMODITY_CODE = IV.COMMODITY_CODE
+  Join IV_UNIT_OF_MEASURE As UOM On IV.UOM_BUSHELS = UOM.UNIT_OF_MEASURE
+Where CM.CONTRACT_STATUS = &apos;O&apos; And CM.COMMODITY_CODE = &apos;02&apos;
+Group By IV.DESCRIPTION"
+			Type="SQL"
+		/>
+	</LocalData>
+	<LocalData>
+		<DataLayer
+			ConnectionID="connProdGP"
+			ID="lContractsOvershipped"
+			Source="SELECT 
+    SUBSTRING(LTRIM(RTRIM(CT.CONTRACT_NUMBER)),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM(CT.CONTRACT_NUMBER)))-1) AS CONTRACTNMBR
+  , LTRIM(RTRIM(IV.[DESCRIPTION])) AS [COMMODITYDESC]
+  , SUM((CT.ISSUED_LBS-CT.APPLIED_LBS+ADJUSTED_LBS-SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS) AS [REMAINING_BU]
+FROM AgTrax_Staging..CA_CONTRACT_MASTER CT 
+  INNER JOIN AgTrax_Staging..AR_CUSTOMER_MASTER_TMA CM ON CT.CUSTOMER=CM.CUSTOMER
+  LEFT OUTER JOIN AgTrax_Staging..CA_COMMODITY_MASTER IV ON CT.COMMODITY_CODE=IV.COMMODITY_CODE
+  LEFT OUTER JOIN AgTrax_Staging..IV_UNIT_OF_MEASURE UM ON IV.UOM_BUSHELS=UM.UNIT_OF_MEASURE
+WHERE CT.CONTRACT_STATUS=&apos;O&apos;
+GROUP BY 
+    SUBSTRING(LTRIM(RTRIM(CT.CONTRACT_NUMBER)),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM(CT.CONTRACT_NUMBER)))-1)
+  , LTRIM(RTRIM(IV.[DESCRIPTION]))
+HAVING SUM((CT.ISSUED_LBS-CT.APPLIED_LBS+ADJUSTED_LBS-SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS)&lt;0
+ORDER BY [REMAINING_BU]
+"
+			Type="SQL"
+			>
+			<DataLayerLink
+				ID="linkContractsOvershipped"
+			/>
+		</DataLayer>
+	</LocalData>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrHeader"
+	/>
+	<DefaultRequestParams
+		paramContract="@Local.CONTRACTNMBR~"
+	/>
+	<Body>
+		<ResponsiveRow
+			CollisionBehavior="Overlap"
+			SecurityRightID="Admin"
+			>
+			<ResponsiveColumn
+				ColspanExtraSmallScreen="12"
+				ColspanLargeScreen="3"
+				ColspanMediumScreen="3"
+				ColspanSmallScreen="12"
+				>
+				<Division
+					Class="kpi kpi-green"
+					HtmlDiv="True"
+					ID="div-KPI"
+					>
+					<ResponsiveRow
+						CollisionBehavior="Overlap"
+						>
+						<ResponsiveColumn
+							ColspanExtraSmallScreen="12"
+							ColspanLargeScreen="9"
+							ColspanMediumScreen="9"
+							ColspanSmallScreen="12"
+							>
+							<Label
+								Caption="@Local.RemainBalanceWheat~"
+								Class="kpi-value"
+								Format="###,###,##0"
+								Tooltip="Remaining Contract Bushels"
+							/>
+							<Label
+								Caption="BU Wheat"
+								Class="kpi-label"
+							/>
+						</ResponsiveColumn>
+						<ResponsiveColumn>
+							<Remark>
+								<Label
+									Class="up-arrow"
+									ID="kpi-icon"
+								/>
+							</Remark>
+							<Image
+								Caption="wheat.png"
+								Height="40"
+								ID="imgWheat"
+								Width="40"
+							/>
+							<Label/>
+						</ResponsiveColumn>
+					</ResponsiveRow>
+				</Division>
+			</ResponsiveColumn>
+			<ResponsiveColumn
+				ColspanExtraSmallScreen="12"
+				ColspanLargeScreen="3"
+				ColspanMediumScreen="3"
+				ColspanSmallScreen="12"
+				>
+				<Division
+					Class="kpi kpi-red"
+					HtmlDiv="True"
+					ID="div-KPI"
+					>
+					<ResponsiveRow
+						CollisionBehavior="Overlap"
+						>
+						<ResponsiveColumn
+							ColspanExtraSmallScreen="12"
+							ColspanLargeScreen="9"
+							ColspanMediumScreen="9"
+							ColspanSmallScreen="12"
+							>
+							<Label
+								Caption="@Local.RemainBalanceSoybean~"
+								Class="kpi-value"
+								Format="###,###,##0"
+								Tooltip="Remaining Contract Bushels"
+							/>
+							<Label
+								Caption="BU Soybean"
+								Class="kpi-label"
+							/>
+						</ResponsiveColumn>
+						<ResponsiveColumn>
+							<Remark>
+								<Label
+									Class="down-arrow"
+									ID="kpi-icon"
+								/>
+							</Remark>
+							<Image
+								Caption="soybean.png"
+								Height="40"
+								ID="imgSoybean"
+								Width="40"
+							/>
+							<Label/>
+						</ResponsiveColumn>
+					</ResponsiveRow>
+				</Division>
+			</ResponsiveColumn>
+			<ResponsiveColumn
+				ColspanExtraSmallScreen="12"
+				ColspanLargeScreen="3"
+				ColspanMediumScreen="3"
+				ColspanSmallScreen="12"
+				>
+				<Division
+					Class="kpi kpi-blue"
+					HtmlDiv="True"
+					ID="div-KPI"
+					>
+					<ResponsiveRow
+						CollisionBehavior="Overlap"
+						>
+						<ResponsiveColumn
+							ColspanExtraSmallScreen="12"
+							ColspanLargeScreen="9"
+							ColspanMediumScreen="9"
+							ColspanSmallScreen="12"
+							>
+							<Label
+								Caption="@Local.RemainBalanceCorn~"
+								Class="kpi-value"
+								Format="###,###,##0"
+								Tooltip="Remaining Contract Bushels"
+							/>
+							<Label
+								Caption="BU Corn"
+								Class="kpi-label"
+							/>
+						</ResponsiveColumn>
+						<ResponsiveColumn>
+							<Remark>
+								<Label
+									Class="up-arrow"
+									ID="kpi-icon"
+								/>
+							</Remark>
+							<Image
+								Caption="corn.png"
+								Height="40"
+								ID="imgCorn"
+								Width="40"
+							/>
+							<Label/>
+						</ResponsiveColumn>
+					</ResponsiveRow>
+				</Division>
+			</ResponsiveColumn>
+			<ResponsiveColumn
+				ColspanExtraSmallScreen="12"
+				ColspanLargeScreen="3"
+				ColspanMediumScreen="3"
+				ColspanSmallScreen="12"
+				>
+				<Division
+					Class="kpi kpi-yellow"
+					HtmlDiv="True"
+					ID="div-KPI"
+					>
+					<ResponsiveRow
+						CollisionBehavior="Overlap"
+						>
+						<ResponsiveColumn
+							ColspanExtraSmallScreen="12"
+							ColspanLargeScreen="9"
+							ColspanMediumScreen="9"
+							ColspanSmallScreen="12"
+							>
+							<Label
+								Caption="@Local.RemainBalanceMilo~"
+								Class="kpi-value"
+								Format="###,###,##0"
+								Tooltip="Remaining Contract Bushels"
+							/>
+							<Label
+								Caption="BU Milo"
+								Class="kpi-label"
+							/>
+						</ResponsiveColumn>
+						<ResponsiveColumn>
+							<Image
+								Caption="milo.png"
+								Height="50"
+								ID="imgMilo"
+								Width="50"
+							/>
+							<Label
+								Class="down-arrow"
+							/>
+						</ResponsiveColumn>
+					</ResponsiveRow>
+				</Division>
+			</ResponsiveColumn>
+		</ResponsiveRow>
+		<ResponsiveRow
+			CollisionBehavior="Overlap"
+			>
+			<ResponsiveColumn>
+				<Division
+					Class="panel panel-default"
+					HtmlDiv="True"
+					ID="panel"
+					>
+					<Division
+						Class="panel-heading"
+						HtmlDiv="True"
+						ID="panel-heading"
+						>
+						<Image
+							Caption="warning.png"
+							Class="fa fa-warning fa-2x text-danger"
+							Height="28"
+							ID="imgWarning"
+							Width="28"
+						/>
+						<Label
+							Caption=" Contracts Overshipped"
+						/>
+					</Division>
+					<Division
+						Class="panel-body"
+						HtmlDiv="True"
+						ID="panel-body"
+						>
+						<Remark>
+							<ChartCanvas
+								ChartOrientation="SwapAxes"
+								ID="BarChartCanvas1"
+								>
+								<Series
+									ChartXDataColumn="CUSTDESC"
+									ChartYDataColumn="rdGrAggr-RemainBalance-sum"
+									Color="Orange"
+									Type="Bar"
+									>
+									<Quicktip>
+										<QuicktipRow
+											Caption="CUSTOMER:"
+											Value="@Chart.CUSTDESC~"
+										/>
+										<QuicktipRow
+											Caption="REMAINING BALANCE: "
+											Value="@Chart.rdGrAggr-RemainBalance-sum~"
+										/>
+									</Quicktip>
+									<Action
+										ElementID="KPI-table"
+										ID="actRefresh"
+										Type="RefreshElement"
+										>
+										<LinkParams
+											paramCust="@Chart.CUSTDESC~"
+										/>
+									</Action>
+								</Series>
+								<ChartXAxis
+									AxisCaption="CUSTOMER"
+									>
+									<AxisLabelStyle
+										FontAngle="40"
+									/>
+								</ChartXAxis>
+								<ChartYAxis
+									AxisCaption="REMAINING BALANCE"
+								/>
+								<DataLayer
+									ConnectionID="connMKC"
+									ID="SQLDataLayer3"
+									Source="Select [GaugeAgTraxContracts].CUSTDESC,
+  Sum([GaugeAgTraxContracts].REMAINING_BU) As RemainBalance
+From [GaugeAgTraxContracts]
+Group By [GaugeAgTraxContracts].CUSTDESC"
+									Type="SQL"
+									>
+									<GroupFilter
+										DataType="Text"
+										GroupColumn="CUSTDESC"
+										KeepGroupedRows="False"
+										>
+										<GroupAggregateColumn
+											AggregateColumn="RemainBalance"
+											AggregateFunction="SUM"
+											DataType="Number"
+											ID="rdGrAggr-RemainBalance-sum"
+										/>
+									</GroupFilter>
+									<SortFilter
+										DataType="Number"
+										SortColumn="rdGrAggr-RemainBalance-sum"
+										SortSequence="Ascending"
+									/>
+									<RelevanceFilter
+										DataColumn="rdGrAggr-RemainBalance-sum"
+										RelevanceType="NumberOfRows"
+										RelevanceValue="5"
+									/>
+								</DataLayer>
+							</ChartCanvas>
+						</Remark>
+						<DataTable
+							AccessibleHeaders="True"
+							AjaxPaging="True"
+							ID="Contracts"
+							SortArrows="True"
+							>
+							<DataLayer
+								ID="dllContractsOvershipped"
+								LinkedDataLayerID="linkContractsOvershipped"
+								Type="Linked"
+							/>
+							<InteractivePaging
+								CaptionType="Text"
+								HideShowPrevNextCaptions="True"
+								HideWhenOnePage="True"
+								Location="Top"
+								PageRowCount="5"
+								ShowPageNumber="True"
+							/>
+							<DataTableColumn
+								Header="Contract"
+								ID="colCONTRACTNMBR"
+								>
+								<Label
+									Caption="@Data.CONTRACTNMBR~"
+									ID="lblCONTRACTNMBR"
+									>
+									<Remark>
+										<Action
+											ID="actReportDT"
+											Type="Report"
+											>
+											<Target
+												Report="DataTable-DrillDown"
+												RequestForwarding="True"
+												Type="Report"
+											/>
+											<LinkParams
+												paramContract="@Data.CONTRACTNMBR~"
+											/>
+										</Action>
+									</Remark>
+									<Remark>
+										<Action
+											ElementID="popSubContracts"
+											ID="showSubContracts"
+											Type="ShowElement"
+										/>
+									</Remark>
+									<Action
+										ElementID="Contracts, SubContracts"
+										ID="refSubContracts"
+										Type="RefreshElement"
+										>
+										<LinkParams
+											paramContract="@Data.CONTRACTNMBR~"
+										/>
+									</Action>
+								</Label>
+								<DataColumnSort
+									DataColumn="CONTRACTNMBR"
+								/>
+								<ConditionalClass
+									Class="selected-row"
+									Condition="&quot;@Request.paramContract~&quot;==&quot;@Data.CONTRACTNMBR~&quot;"
+									ID="ccSelected"
+								/>
+							</DataTableColumn>
+							<Remark>
+								<DataTableColumn
+									Header="Location"
+									ID="colLOCDESC"
+									>
+									<Label
+										Caption="@Data.LOCDESC~"
+										ID="lblLOCDESC"
+									/>
+									<DataColumnSort
+										DataColumn="LOCDESC"
+									/>
+									<ConditionalClass
+										Class="selected-row"
+										Condition="&quot;@Request.paramContract~&quot;==&quot;@Data.CONTRACTNMBR~&quot;"
+										ID="ccSelected"
+									/>
+								</DataTableColumn>
+							</Remark>
+							<DataTableColumn
+								Header="Commodity"
+								ID="colCOMMODITYDESC"
+								>
+								<Label
+									Caption="@Data.COMMODITYDESC~"
+									ID="lblCOMMODITYDESC"
+								/>
+								<DataColumnSort
+									DataColumn="COMMODITYDESC"
+								/>
+								<ConditionalClass
+									Class="selected-row"
+									Condition="&quot;@Request.paramContract~&quot;==&quot;@Data.CONTRACTNMBR~&quot;"
+									ID="ccSelected"
+								/>
+							</DataTableColumn>
+							<DataTableColumn
+								Header="Remaining BU"
+								ID="colREMAINING_BU"
+								>
+								<Label
+									Caption="@Data.REMAINING_BU~"
+									Format="###,###,##0"
+									ID="lblREMAINING_BU"
+								/>
+								<DataColumnSort
+									DataColumn="REMAINING_BU"
+									DataType="Number"
+								/>
+								<ConditionalClass
+									Class="selected-row"
+									Condition="&quot;@Request.paramContract~&quot;==&quot;@Data.CONTRACTNMBR~&quot;"
+									ID="ccSelected"
+								/>
+							</DataTableColumn>
+							<DataTableColumn
+								ID="colKPI"
+								>
+								<Label
+									ID="KPI"
+									>
+									<ConditionalClass
+										Class="fa fa-arrow-up fa-2x text-success"
+										Condition="@Data.REMAINING_BU~&gt; 1000"
+									/>
+									<ConditionalClass
+										Class="fa fa-arrow-down fa-2x text-danger"
+										Condition="@Data.REMAINING_BU~&lt;= 1000"
+									/>
+								</Label>
+								<ConditionalClass
+									Class="selected-row"
+									Condition="&quot;@Request.paramContract~&quot;==&quot;@Data.CONTRACTNMBR~&quot;"
+									ID="ccSelected"
+								/>
+							</DataTableColumn>
+						</DataTable>
+					</Division>
+				</Division>
+			</ResponsiveColumn>
+			<ResponsiveColumn>
+				<Division
+					Class="panel panel-default"
+					HtmlDiv="True"
+					ID="panel"
+					>
+					<Division
+						Class="panel-heading"
+						HtmlDiv="True"
+						ID="panel-heading"
+						>
+						<Image
+							Caption="ContractSignature24x24.png"
+							Height="24"
+							ID="imgContractSig"
+							Width="24"
+						/>
+						<Spaces
+							SecurityRightID="subSpace"
+							Size="2"
+						/>
+						<Label
+							Caption=" Contracts Balance Performance"
+						/>
+						<Spaces
+							SecurityRightID="subSpace"
+							Size="5"
+						/>
+						<Label
+							Caption=" "
+							Class="fa fa-refresh text-success, ThemeAlignRight"
+							>
+							<Action
+								ID="actionReport"
+								Type="Report"
+								>
+								<Target
+									Report="Home.MKCReport"
+									Type="Report"
+								/>
+							</Action>
+						</Label>
+					</Division>
+					<Division
+						Class="panel-body"
+						HtmlDiv="True"
+						ID="panel-body"
+						>
+						<DataTable
+							AccessibleHeaders="True"
+							AccessibleSummary="DataTable"
+							ID="SubContracts"
+							KeepScrollPosition="True"
+							RememberSort="True"
+							ResizableColumns="True"
+							SortArrows="True"
+							TableBorder="0"
+							>
+							<DataLayer
+								ConnectionID="connProdGP"
+								ID="dlSubContracts"
+								Source="SELECT 
+    LTRIM(RTRIM(CM.NAME)) [CUSTDESC]
+  , LTRIM(RTRIM(CT.CUSTOMER)) [CUSTNMBR]
+  , LTRIM(RTRIM(CM.ADDRESS_LINE_1)) [CUSTADDR1]
+  , LTRIM(RTRIM(CM.CITY)) [CUSTCITY]
+  , LTRIM(RTRIM(CM.[STATE])) [CUSTSTATE]
+  , LTRIM(RTRIM(CM.ZIP_CODE)) [CUSTZIPCODE]
+  , SUBSTRING(LTRIM(RTRIM(CT.CONTRACT_NUMBER)),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM(CT.CONTRACT_NUMBER)))-1) AS MAINCONTRACT
+  , SUBSTRING(LTRIM(RTRIM(CT.CONTRACT_NUMBER)),CHARINDEX(&apos;.&apos;,LTRIM(RTRIM(CT.CONTRACT_NUMBER)))+1,3) AS SUBCONTRACT
+  , LTRIM(RTRIM(CT.CONTRACT_NUMBER)) [CONTRACTNMBR]
+  , CT.ISSUED_DATE [CONTRACTDT]
+  , LTRIM(RTRIM(CT.DPR_POSITION)) [DPRPOSITION]
+  , LTRIM(RTRIM(PM.[DESCRIPTION])) [DPRDESC]
+  , LTRIM(RTRIM(CT.BRANCH_NUMBER)) [LOCNMBR]
+  , LTRIM(RTRIM(BM.BRANCH_NAME)) [LOCDESC]
+  , LTRIM(RTRIM(CT.COMMODITY_CODE)) [COMMODITYCD]
+  , LTRIM(RTRIM(IV.[DESCRIPTION])) [COMMODITYDESC]
+  , CT.ISSUED_LBS, CT.APPLIED_LBS, CT.ADJUSTED_LBS, CT.SUB_CONT_LBS
+  , (CT.ISSUED_LBS-CT.APPLIED_LBS+ADJUSTED_LBS-SUB_CONT_LBS) [REMAINING_LBS]
+  , CT.ISSUED_LBS/UM.STANDARD_UNITS_LBS [ISSUED_BU]
+  , CT.APPLIED_LBS/UM.STANDARD_UNITS_LBS [APPLIED_BU]
+  , CT.ADJUSTED_LBS/UM.STANDARD_UNITS_LBS [ADJUSTED_BU]
+  , CT.SUB_CONT_LBS/UM.STANDARD_UNITS_LBS [SUB_CONT_BU]
+  , (CT.ISSUED_LBS-CT.APPLIED_LBS+ADJUSTED_LBS-SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS [REMAINING_BU]
+FROM AgTrax_Staging..CA_CONTRACT_MASTER CT 
+  INNER JOIN AgTrax_Staging..AR_CUSTOMER_MASTER_TMA CM ON CT.CUSTOMER=CM.CUSTOMER
+  LEFT OUTER JOIN AgTrax_Staging..CA_COMMODITY_MASTER IV ON CT.COMMODITY_CODE=IV.COMMODITY_CODE
+  LEFT OUTER JOIN AgTrax_Staging..IV_UNIT_OF_MEASURE UM ON IV.UOM_BUSHELS=UM.UNIT_OF_MEASURE
+  LEFT OUTER JOIN AgTrax_Staging..CA_POSITION_MASTER PM ON CT.DPR_POSITION=PM.DPR_POSITION
+  LEFT OUTER JOIN AgTrax_Staging..IV_BRANCH_MASTER BM ON CT.BRANCH_NUMBER=BM.BRANCH_NUMBER
+WHERE CT.CONTRACT_NUMBER LIKE &apos;@Request.paramContract~&apos;+&apos;.%&apos;
+  AND CT.CONTRACT_STATUS=&apos;O&apos;
+ORDER BY [CONTRACTNMBR]
+"
+								Type="SQL"
+								>
+								<SortFilter
+									DataType="Text"
+									ID="SortContractNumber"
+									SortColumn="CONTRACTNMBR"
+									SortSequence="Ascending"
+								/>
+							</DataLayer>
+							<InteractivePaging
+								CaptionType="Image"
+								Class="ThemeHeaderSmaller"
+								HideShowPrevNextCaptions="False"
+								HideWhenOnePage="True"
+								IDnotSupportedHere="pagingTableNumbered"
+								Location="Top"
+								PageRowCount="15"
+								ShowPageNumber="Numbered"
+							/>
+							<DataTableColumn
+								Header="Contract"
+								ID="colCONTRACTNMBR"
+								>
+								<Label
+									Caption="@Data.CONTRACTNMBR~"
+									ID="colCONTRACTNMBR"
+									>
+									<Action
+										ID="rptContractsAll"
+										Type="Report"
+										>
+										<Target
+											FrameID="NewWindow"
+											Report="DataTable-DrillDown"
+											RequestForwarding="True"
+											Type="Report"
+										/>
+										<LinkParams
+											paramContract="@Request.paramContract~"
+										/>
+									</Action>
+								</Label>
+								<DataColumnSort
+									DataColumn="CONTRACTNMBR"
+									DataType="Text"
+								/>
+							</DataTableColumn>
+							<DataTableColumn
+								Header="Location"
+								ID="colLOCDESC"
+								>
+								<Label
+									Caption="@Data.LOCDESC~"
+									ID="colLOCDESC"
+								/>
+								<DataColumnSort
+									DataColumn="LOCDESC"
+									DataType="Text"
+								/>
+							</DataTableColumn>
+							<DataTableColumn
+								Header="Commodity"
+								ID="colCOMMODITYDESC"
+								>
+								<Label
+									Caption="@Data.COMMODITYDESC~"
+									ID="colCOMMODITYDESC"
+								/>
+								<DataColumnSort
+									DataColumn="COMMODITYDESC"
+									DataType="Text"
+								/>
+							</DataTableColumn>
+							<DataTableColumn
+								Header="Remaining BU"
+								ID="colREMAINING_BU"
+								>
+								<Label
+									Caption="@Data.REMAINING_BU~"
+									Format="###,###,##0"
+									ID="colREMAINING_BU"
+								/>
+								<DataColumnSort
+									DataColumn="REMAINING_BU"
+									DataType="Number"
+								/>
+							</DataTableColumn>
+							<DataTableColumn
+								ID="colKPI"
+								>
+								<Label
+									ID="KPI"
+									>
+									<ConditionalClass
+										Class="fa fa-arrow-up fa-2x text-success"
+										Condition="@Data.REMAINING_BU~&gt; 1000"
+									/>
+									<ConditionalClass
+										Class="fa fa-arrow-down fa-2x text-danger"
+										Condition="@Data.REMAINING_BU~&lt; 0"
+									/>
+									<ConditionalClass
+										Class="fa fa-minus fa-2x text-warning"
+										Condition="@Data.REMAINING_BU~  &lt;= 1000"
+									/>
+								</Label>
+							</DataTableColumn>
+						</DataTable>
+					</Division>
+					<Division
+						Class="panel-body"
+						HtmlDiv="True"
+						ID="panel-body"
+						>
+						<Remark>
+							<ChartCanvas
+								ID="PieChartCanvas1"
+								>
+								<DataLayer
+									ConnectionID="Northwind"
+									ID="SQLDataLayer2"
+									Source="Select Invoices.Salesperson,
+  Count(Invoices.OrderID)
+From Invoices
+WHERE YEAR(Invoices.OrderDate) = &apos;@Request.Year~&apos;
+Group By Invoices.Salesperson"
+									Type="SQL"
+									>
+									<GroupFilter
+										DataType="Text"
+										GroupColumn="Salesperson"
+										KeepGroupedRows="False"
+										>
+										<GroupAggregateColumn
+											AggregateColumn="Column1"
+											AggregateFunction="SUM"
+											DataType="Number"
+											ID="rdGrAggr-Column1-sum"
+										/>
+									</GroupFilter>
+									<SortFilter
+										DataType="Number"
+										SortColumn="rdGrAggr-Column1-sum"
+										SortSequence="Descending"
+									/>
+									<RelevanceFilter
+										DataColumn="rdGrAggr-Column1-sum"
+										IrrelevanceLabel="Other"
+										LabelColumn="Salesperson"
+										RelevanceType="NumberOfRows"
+										RelevanceValue="0"
+									/>
+								</DataLayer>
+								<Series
+									ChartLabelColumn="Salesperson"
+									ChartYDataColumn="rdGrAggr-Column1-sum"
+									DonutHoleSize="60%"
+									LabelLocation="Legend"
+									ShowDataValues="True"
+									Type="Pie"
+									>
+									<Quicktip>
+										<QuicktipRow
+											Caption="Salesperson: "
+											Value="@Chart.Salesperson~"
+										/>
+										<QuicktipRow
+											Caption="Column1: "
+											Value="@Chart.rdGrAggr-Column1-sum~"
+										/>
+									</Quicktip>
+								</Series>
+								<ChartCanvasLegend/>
+							</ChartCanvas>
+						</Remark>
+						<PopupPanel
+							Height="50"
+							HeightScale="%"
+							ID="popSubContracts"
+							PopupPanelLocation="Mouse"
+							Width="50"
+							WidthScale="%"
+							>
+							<Division
+								ID="divSubContracts"
+								>
+								<DataTable
+									AccessibleHeaders="True"
+									AjaxPaging="True"
+									ID="KPI-table"
+									SortArrows="True"
+									>
+									<Remark>
+										<InteractivePaging
+											CaptionType="Text"
+											HideShowPrevNextCaptions="True"
+											HideWhenOnePage="True"
+											Location="Top"
+											PageRowCount="20"
+											ShowPageNumber="True"
+										/>
+									</Remark>
+									<DataLayer
+										ConnectionID="connMKC"
+										ID="SQLDataLayer4"
+										Source="Select CONTRACTNMBR,
+  Sum(REMAINING_BU) As REMAINING_BU
+From [GaugeAgTraxContracts]
+/* Where [GaugeAgTraxContracts].CUSTDESC = &apos;@Request.paramCust~&apos; Or &apos;@Request.paramCust~&apos; = &apos;All&apos; */
+Group By CONTRACTNMBR
+HAVING SUM(REMAINING_BU) NOT BETWEEN 0 AND 999
+Order By REMAINING_BU ASC
+"
+										Type="SQL"
+									/>
+									<DataTableColumn
+										Header="CONTRACT NO"
+										ID="colCONTRACTNMBR"
+										>
+										<Label
+											Caption="@Data.CONTRACTNMBR~"
+											ID="lblCONTRACTNMBR"
+										/>
+										<DataColumnSort
+											DataColumn="CONTRACTNMBR"
+										/>
+										<Remark>
+											<Action
+												ID="rptContractsAll"
+												Type="Report"
+												>
+												<Target
+													Report="DataTable-DrillDown"
+													RequestForwarding="True"
+													Type="Report"
+												/>
+												<LinkParams
+													paramContract="@Request.paramContract~"
+												/>
+											</Action>
+										</Remark>
+									</DataTableColumn>
+									<DataTableColumn
+										Header="REMAINING BUSHELS"
+										ID="colREMAINING_BU"
+										>
+										<Label
+											Caption="@Data.REMAINING_BU~"
+											Format="###,###,##0"
+											ID="lblREMAINING_BU"
+										/>
+										<DataColumnSort
+											DataColumn="REMAINING_BU"
+											DataType="Number"
+										/>
+									</DataTableColumn>
+									<DataTableColumn
+										ID="colKPI"
+										>
+										<Label
+											ID="KPI"
+											>
+											<ConditionalClass
+												Class="fa fa-arrow-up fa-2x text-success"
+												Condition="@Data.REMAINING_BU~&gt; 0"
+											/>
+											<ConditionalClass
+												Class="fa fa-arrow-down fa-2x text-danger"
+												Condition="@Data.REMAINING_BU~&lt;= 1000"
+											/>
+										</Label>
+									</DataTableColumn>
+								</DataTable>
+							</Division>
+						</PopupPanel>
+					</Division>
+				</Division>
+			</ResponsiveColumn>
+		</ResponsiveRow>
+		<ResponsiveRow
+			CollisionBehavior="Overlap"
+			>
+			<ResponsiveColumn>
+				<Division
+					Class="panel panel-default"
+					HtmlDiv="True"
+					ID="panel"
+					>
+					<Division
+						Class="panel-heading"
+						HtmlDiv="True"
+						ID="panel-heading"
+						>
+						<Image
+							Caption="calendar.png"
+							Height="30"
+							Width="30"
+						/>
+						<Label
+							Caption=" Customer Receipts By Commodity (YTD)"
+						/>
+					</Division>
+					<Division
+						Class="panel-body"
+						HtmlDiv="True"
+						ID="panel-body"
+						>
+						<ChartCanvas
+							ChartHeight="300"
+							ID="BarChartCanvas2"
+							>
+							<Series
+								ChartXDataColumn="COMMODITY"
+								ChartYDataColumn="BU_YTD"
+								Color="DarkOrange"
+								Type="Bar"
+								>
+								<Quicktip>
+									<QuicktipRow
+										Caption="Commodity: "
+										Value="@Chart.COMMODITY~"
+									/>
+									<QuicktipRow
+										Caption="BU YTD: "
+										Format="###,###,##0.00"
+										Value="@Chart.BU_YTD~"
+									/>
+								</Quicktip>
+							</Series>
+							<ChartXAxis
+								AxisCaption="COMMODITY"
+								>
+								<AxisLabelStyle
+									FontAngle="0"
+								/>
+							</ChartXAxis>
+							<ChartYAxis
+								AxisCaption="BUSHELS YTD"
+							/>
+							<DataLayer
+								ConnectionID="connProdGP"
+								ID="sqlReceipts"
+								Source="Select IV.DESCRIPTION COMMODITY,
+  Sum(PB.LBS_LIVE / UOM.STANDARD_UNITS_LBS) As BU_YTD
+From Agtrax_TMA..CA_POSITION_BALANCE PB
+  Join Agtrax_TMA..CA_COMMODITY_MASTER IV On PB.COMMODITY_CODE =
+    IV.COMMODITY_CODE
+  Join Agtrax_TMA..IV_BRANCH_MASTER BM On PB.BRANCH_NUMBER = BM.BRANCH_NUMBER
+  Join Agtrax_TMA..IV_UNIT_OF_MEASURE UOM On IV.UOM_BUSHELS =
+    UOM.UNIT_OF_MEASURE
+  Join Agtrax_TMA..CA_POSITION_MASTER PM On PB.DPR_POSITION = PM.DPR_POSITION
+Where PB.DPR_POSITION = 10 And PB.LBS_LIVE &lt;&gt; 0 And PB.COMMODITY_CODE In (&apos;01&apos;,
+  &apos;02&apos;, &apos;03&apos;, &apos;04&apos;)
+Group By IV.DESCRIPTION"
+								Type="SQL"
+							/>
+							<Remark>
+								<DataLayer
+									ColumnNamesRow="1"
+									ExcelFile="C:\Logi Installs\AgTraxFallReceipts20151005.xlsx"
+									ExcelWorksheet="FALL_RECEIPTS_TOTAL"
+									ID="ExcelDataLayer3"
+									Type="Excel"
+									>
+									<GroupFilter
+										DataType="Text"
+										GroupColumn="COMMODITY"
+										KeepGroupedRows="False"
+										>
+										<GroupAggregateColumn
+											AggregateColumn="LOCCD"
+											AggregateFunction="SUM"
+											DataType="Number"
+											ID="rdGrAggr-LOCCD-sum"
+										/>
+									</GroupFilter>
+									<SortFilter
+										DataType="Number"
+										SortColumn="rdGrAggr-LOCCD-sum"
+										SortSequence="Ascending"
+									/>
+									<RelevanceFilter
+										DataColumn="rdGrAggr-LOCCD-sum"
+										IrrelevanceLabel="Other"
+										LabelColumn="COMMODITY"
+										RelevanceType="NumberOfRows"
+										RelevanceValue="0"
+									/>
+								</DataLayer>
+							</Remark>
+						</ChartCanvas>
+					</Division>
+				</Division>
+			</ResponsiveColumn>
+		</ResponsiveRow>
+	</Body>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrFooter"
+	/>
+	<ideTestParams
+		paramContract="ALL"
+		paramCust=""
+	/>
 </Report>
