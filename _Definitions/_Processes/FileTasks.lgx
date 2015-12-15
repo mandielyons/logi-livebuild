@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Process
+	ID="FileTasks"
+	>
+	<Task
+		ID="taskSaveUploadFile"
+		>
+		<Procedure
+			Filename="@Function.AppPhysicalPath~\UploadedFiles\@FileUpload.UploadFileName~"
+			FileUploadID="inputFileName"
+			ID="procSaveUploadedFile"
+			Type="SaveFileUpload"
+			>
+			<IfError
+				ID="SaveUploadedFileError"
+				>
+				<Procedure
+					Expression="@Procedure.procSaveUploadedFile.ErrorMessage~.Length &gt; 0"
+					ID="procFileUploadError"
+					Type="If"
+					>
+					<Response
+						Type="Report"
+						>
+						<Target
+							Report="Admin.FileUpload"
+							Type="Report"
+							>
+							<WaitPage/>
+						</Target>
+						<LinkParams
+							StatusMsg="@Procedure.procSaveUploadedFile.ErrorMessage~"
+						/>
+					</Response>
+				</Procedure>
+				<Procedure
+					Expression="Instr(&quot;.xls.xslx&quot;, LCase(&quot;@Procedure.procSaveUploadedFile.UploadFileExtension~&quot;)) = 0"
+					ID="procFileTypeError"
+					Type="If"
+					>
+					<Response
+						Type="Report"
+						>
+						<Target
+							Report="Admin.FileUpload"
+							Type="Report"
+							>
+							<WaitPage/>
+						</Target>
+						<LinkParams
+							StatusMsg="File Type Error.  Please upload a xls or xlsx file."
+						/>
+					</Response>
+				</Procedure>
+				<Procedure
+					Expression="@Procedure.procSaveUploadedFile.UploadFileLength~ &gt; 1024000"
+					ID="procFileTooBigError"
+					Type="If"
+					>
+					<Response
+						Type="Report"
+						>
+						<Target
+							Report="Admin.FileUpload"
+							Type="Report"
+							>
+							<WaitPage/>
+						</Target>
+						<LinkParams
+							StatusMsg="File is too large.  File size limit is 1MB."
+						/>
+					</Response>
+				</Procedure>
+				<Procedure
+					Expression="@Procedure.procSaveUploadedFile.ErrorMessage~.Length = 0"
+					ID="procSuccess"
+					Type="If"
+					>
+					<Response
+						Type="Report"
+						>
+						<Target
+							Report="Admin.FileUpload"
+							Type="Report"
+							>
+							<WaitPage/>
+						</Target>
+						<LinkParams/>
+					</Response>
+				</Procedure>
+			</IfError>
+		</Procedure>
+	</Task>
+	<ideTestParams
+		rdTaskID=""
+	/>
+</Process>
