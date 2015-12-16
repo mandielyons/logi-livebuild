@@ -29,26 +29,7 @@
 							<WaitPage/>
 						</Target>
 						<LinkParams
-							StatusMsg="@Procedure.procSaveUploadedFile.ErrorMessage~"
-						/>
-					</Response>
-				</Procedure>
-				<Procedure
-					Expression="Instr(&quot;.xls.xslx&quot;, LCase(&quot;@Procedure.procSaveUploadedFile.UploadFileExtension~&quot;)) = 0"
-					ID="procFileTypeError"
-					Type="If"
-					>
-					<Response
-						Type="Report"
-						>
-						<Target
-							Report="Admin.FileUpload"
-							Type="Report"
-							>
-							<WaitPage/>
-						</Target>
-						<LinkParams
-							StatusMsg="File Type Error.  Please upload a xls or xlsx file."
+							StatusMsg="Error: @Procedure.procSaveUploadedFile.ErrorMessage~"
 						/>
 					</Response>
 				</Procedure>
@@ -57,6 +38,11 @@
 					ID="procFileTooBigError"
 					Type="If"
 					>
+					<Procedure
+						Filename="@Procedure.procSaveUploadedFile.UploadFileName~"
+						ID="DeleteBigFile"
+						Type="DeleteFile"
+					/>
 					<Response
 						Type="Report"
 						>
@@ -67,29 +53,25 @@
 							<WaitPage/>
 						</Target>
 						<LinkParams
-							StatusMsg="File is too large.  File size limit is 1MB."
+							StatusMsg="Error: File size limit is 1MB."
 						/>
-					</Response>
-				</Procedure>
-				<Procedure
-					Expression="@Procedure.procSaveUploadedFile.ErrorMessage~.Length = 0"
-					ID="procSuccess"
-					Type="If"
-					>
-					<Response
-						Type="Report"
-						>
-						<Target
-							Report="Admin.FileUpload"
-							Type="Report"
-							>
-							<WaitPage/>
-						</Target>
-						<LinkParams/>
 					</Response>
 				</Procedure>
 			</IfError>
 		</Procedure>
+		<Response
+			Type="Report"
+			>
+			<Target
+				Report="Admin.FileUpload"
+				Type="Report"
+				>
+				<WaitPage/>
+			</Target>
+			<LinkParams
+				StatusMsg="Successfully uploaded."
+			/>
+		</Response>
 	</Task>
 	<ideTestParams
 		rdTaskID=""
