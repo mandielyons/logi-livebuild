@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report
+	Caption="TMA Contract Overshipped"
+	ID="Unknown.SubReports.TMAContractsOvershipped"
+	>
+	<LocalData>
+		<DataLayer
+			ConnectionID="connProdGP"
+			ID="sqlTMAContract"
+			Source="SELECT CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;_&apos;+CT.COMMODITY_CODE+&apos;_&apos;+SUBSTRING(LTRIM(RTRIM(CT.CONTRACT_NUMBER)),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM(CT.CONTRACT_NUMBER)))-1) as [KEY]
+  , LTRIM(RTRIM(CM.NAME)) [CUSTDESC]
+  , LTRIM(RTRIM(CT.CUSTOMER)) [CUSTNMBR]
+  , LTRIM(RTRIM(CM.ADDRESS_LINE_1)) [CUSTADDR1]
+  , LTRIM(RTRIM(CM.CITY)) [CUSTCITY]
+  , LTRIM(RTRIM(CM.[STATE])) [CUSTSTATE]
+  , LTRIM(RTRIM(CM.ZIP_CODE)) [CUSTZIPCODE]
+  , SUBSTRING(LTRIM(RTRIM(CT.CONTRACT_NUMBER)),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM(CT.CONTRACT_NUMBER)))-1) AS MAINCONTRACT
+  , SUBSTRING(LTRIM(RTRIM(CT.CONTRACT_NUMBER)),CHARINDEX(&apos;.&apos;,LTRIM(RTRIM(CT.CONTRACT_NUMBER)))+1,3) AS SUBCONTRACT
+  , LTRIM(RTRIM(CT.CONTRACT_NUMBER)) [CONTRACTNMBR]
+  , CAST(CT.ISSUED_DATE AS DATE) [CONTRACTDT]
+  , CAST(CT.DELIVERY_START_DATE AS DATE) [DELIVERY_START_DATE]
+  , CAST(CT.DELIVERY_END_DATE AS DATE) [DELIVERY_END_DATE]
+  , LTRIM(RTRIM(CT.DPR_POSITION)) [DPRPOSITION]
+  , LTRIM(RTRIM(PM.[DESCRIPTION])) [DPRDESC]
+  , LTRIM(RTRIM(CT.BRANCH_NUMBER)) [LOCNMBR]
+  , LTRIM(RTRIM(BM.BRANCH_NAME)) [LOCDESC]
+  , LTRIM(RTRIM(CT.COMMODITY_CODE)) [COMMODITYCD]
+  , LTRIM(RTRIM(IV.[DESCRIPTION])) [COMMODITYDESC]
+  , CT.ISSUED_LBS, CT.APPLIED_LBS, CT.ADJUSTED_LBS, CT.SUB_CONT_LBS
+  , (CT.ISSUED_LBS-CT.APPLIED_LBS+ADJUSTED_LBS-SUB_CONT_LBS) [REMAINING_LBS]
+  , CT.ISSUED_LBS/UM.STANDARD_UNITS_LBS [ISSUED_BU]
+  , CT.APPLIED_LBS/UM.STANDARD_UNITS_LBS [APPLIED_BU]
+  , CT.ADJUSTED_LBS/UM.STANDARD_UNITS_LBS [ADJUSTED_BU]
+  , CT.SUB_CONT_LBS/UM.STANDARD_UNITS_LBS [SUB_CONT_BU]
+  , (CT.ISSUED_LBS-CT.APPLIED_LBS+ADJUSTED_LBS-SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS [REMAINING_BU]
+FROM AgTrax_Staging..CA_CONTRACT_MASTER CT 
+  INNER JOIN AgTrax_Staging..AR_CUSTOMER_MASTER_TMA CM ON CT.CUSTOMER=CM.CUSTOMER
+  LEFT OUTER JOIN AgTrax_Staging..CA_COMMODITY_MASTER IV ON CT.COMMODITY_CODE=IV.COMMODITY_CODE
+  LEFT OUTER JOIN AgTrax_Staging..IV_UNIT_OF_MEASURE UM ON IV.UOM_BUSHELS=UM.UNIT_OF_MEASURE
+  LEFT OUTER JOIN AgTrax_Staging..CA_POSITION_MASTER PM ON CT.DPR_POSITION=PM.DPR_POSITION
+  LEFT OUTER JOIN AgTrax_Staging..IV_BRANCH_MASTER BM ON CT.BRANCH_NUMBER=BM.BRANCH_NUMBER
+WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;_&apos;+CT.COMMODITY_CODE+&apos;_&apos;+SUBSTRING(LTRIM(RTRIM(CT.CONTRACT_NUMBER)),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM(CT.CONTRACT_NUMBER)))-1)=&apos;@Request.paramContractKey~&apos;
+  AND CT.CONTRACT_STATUS=&apos;O&apos;
+"
+			Type="SQL"
+			>
+			<SortFilter
+				SortColumn="CONTRACTNMBR"
+			/>
+			<AggregateColumn
+				AggregateColumn="REMAINING_BU"
+				AggregateFunction="Sum"
+				DataType="Number"
+				ID="SumRemainingBU"
+			/>
+			<DataLayerLink
+				ID="lnkTMAContract"
+			/>
+		</DataLayer>
+	</LocalData>
+	<Body>
+		<Button
+			Caption="Export to Excel"
+			ID="buttonExport_Excel"
+			Tooltip="Click to export data to Microsoft Excel"
+			>
+			<Action
+				ID="actionExport_Excel"
+				Type="NativeExcel"
+				>
+				<Target
+					ExcelOutputFormat="Excel2007"
+					ExportDataTableID="DataTable1"
+					ExportFilename="TMAContract.xlsx"
+					ID="targetExport_Excel"
+					Report="CurrentReport"
+					ShowGridlines="True"
+					Type="NativeExcel"
+					>
+					<WaitPage
+						Caption="Exporting to Excel..."
+					/>
+				</Target>
+			</Action>
+		</Button>
+		<LineBreak/>
+		<Label
+			Caption="Contract: "
+		/>
+		<Label
+			Caption="@Local.MAINCONTRACT~"
+		/>
+		<LineBreak/>
+		<Label
+			Caption="Commodity: "
+		/>
+		<Label
+			Caption="@Local.COMMODITYDESC~"
+		/>
+		<LineBreak/>
+		<Label
+			Caption="Remaining BU: "
+		/>
+		<Label
+			Caption="@Local.SumRemainingBU~"
+			Format="###,###,##0.000"
+		/>
+		<LineBreak/>
+		<Label
+			Caption="Shipment Period: "
+			Format="General Date"
+		/>
+		<Label
+			Caption="@Local.DELIVERY_END_DATE~"
+			Format="Short Date"
+		/>
+		<LineBreak/>
+		<Label
+			Caption="Account Name: "
+		/>
+		<Label
+			Caption="@Local.CUSTDESC~"
+		/>
+		<LineBreak/>
+		<Label
+			Caption="Account Number: "
+		/>
+		<Label
+			Caption="@Local.CUSTNMBR~"
+		/>
+		<DataTable
+			AccessibleHeaders="True"
+			AccessibleSummary="AnalysisGrid DataTable"
+			ID="DataTable1"
+			KeepScrollPosition="True"
+			RememberSort="True"
+			ResizableColumns="True"
+			SortArrows="True"
+			TableBorder="0"
+			>
+			<DataLayer
+				LinkedDataLayerID="lnkTMAContract"
+				Type="Linked"
+			/>
+			<InteractivePaging
+				CaptionType="Image"
+				HideShowPrevNextCaptions="False"
+				HideWhenOnePage="True"
+				IDnotSupportedHere="pagingTableNumbered"
+				Location="Top"
+				PageRowCount="20"
+				ShowPageNumber="Numbered"
+			/>
+			<DataTableColumn
+				Header="CONTRACTNMBR"
+				ID="colCONTRACTNMBR"
+				>
+				<Label
+					Caption="@Data.CONTRACTNMBR~"
+					ID="colCONTRACTNMBR"
+				/>
+				<DataColumnSort
+					DataColumn="CONTRACTNMBR"
+					DataType="Text"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="LOCNMBR"
+				ID="colLOCNMBR"
+				>
+				<Label
+					Caption="@Data.LOCNMBR~"
+					ID="colLOCNMBR"
+				/>
+				<DataColumnSort
+					DataColumn="LOCNMBR"
+					DataType="Text"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="LOCDESC"
+				ID="colLOCDESC"
+				>
+				<Label
+					Caption="@Data.LOCDESC~"
+					ID="colLOCDESC"
+				/>
+				<DataColumnSort
+					DataColumn="LOCDESC"
+					DataType="Text"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="REMAINING_BU"
+				ID="colREMAINING_BU"
+				>
+				<Label
+					Caption="@Data.REMAINING_BU~"
+					ID="colREMAINING_BU"
+				/>
+				<DataColumnSort
+					DataColumn="REMAINING_BU"
+					DataType="Number"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				ID="colKPI"
+				>
+				<Label
+					ID="KPI"
+					>
+					<ConditionalClass
+						Class="fa fa-arrow-up fa-2x text-success"
+						Condition="@Data.REMAINING_BU~&gt; 1000"
+					/>
+					<ConditionalClass
+						Class="fa fa-arrow-down fa-2x text-danger"
+						Condition="@Data.REMAINING_BU~&lt; 0"
+					/>
+					<ConditionalClass
+						Class="fa fa-minus fa-2x text-warning"
+						Condition="@Data.REMAINING_BU~  &lt;= 1000"
+					/>
+				</Label>
+			</DataTableColumn>
+		</DataTable>
+	</Body>
+	<ideTestParams
+		paramContractKey="1_  40910_02_63977"
+	/>
+</Report>
