@@ -562,53 +562,55 @@
 				ShowModes="rdBrowser"
 				>
 				<Label
-					Caption="© Copyright 2015 - Logi Analytics"
+					Caption="© Copyright 2015 - MKC"
 					Format="HTML"
 				/>
-				<Division
-					HtmlDiv="True"
-					ID="DEBUG"
-					ShowModes="rdBrowser"
-					>
-					<Rows>
-						<Row>
-							<Column>
-								<Label
-									Caption="Username: "
-								/>
-							</Column>
-							<Column>
-								<Label
-									Caption="@Function.UserName~"
-								/>
-							</Column>
-						</Row>
-						<Row>
-							<Column>
-								<Label
-									Caption="Role(s): "
-								/>
-							</Column>
-							<Column>
-								<Label
-									Caption="@Function.UserRoles~"
-								/>
-							</Column>
-						</Row>
-						<Row>
-							<Column>
-								<Label
-									Caption="Right(s): "
-								/>
-							</Column>
-							<Column>
-								<Label
-									Caption="@Function.UserRights~"
-								/>
-							</Column>
-						</Row>
-					</Rows>
-				</Division>
+				<Remark>
+					<Division
+						HtmlDiv="True"
+						ID="DEBUG"
+						ShowModes="rdBrowser"
+						>
+						<Rows>
+							<Row>
+								<Column>
+									<Label
+										Caption="Username: "
+									/>
+								</Column>
+								<Column>
+									<Label
+										Caption="@Function.UserName~"
+									/>
+								</Column>
+							</Row>
+							<Row>
+								<Column>
+									<Label
+										Caption="Role(s): "
+									/>
+								</Column>
+								<Column>
+									<Label
+										Caption="@Function.UserRoles~"
+									/>
+								</Column>
+							</Row>
+							<Row>
+								<Column>
+									<Label
+										Caption="Right(s): "
+									/>
+								</Column>
+								<Column>
+									<Label
+										Caption="@Function.UserRights~"
+									/>
+								</Column>
+							</Row>
+						</Rows>
+					</Division>
+				</Remark>
 			</Division>
 		</Division>
 		<Division
