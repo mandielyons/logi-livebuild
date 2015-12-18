@@ -1,0 +1,236 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report
+	Caption="TMA Contracts By Ship Date"
+	ID="Unknown.SubReports.TMAContractsByShipDate"
+	>
+	<LocalData>
+		<DataLayer
+			ConnectionID="connProdGP"
+			ID="SQLDataLayer1"
+			Source="SELECT 
+    LTRIM(RTRIM(CM.NAME)) [CUSTDESC]
+  , LTRIM(RTRIM(CT.CUSTOMER)) [CUSTNMBR]
+  , SUBSTRING(LTRIM(RTRIM(CT.CONTRACT_NUMBER)),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM(CT.CONTRACT_NUMBER)))-1) AS MAINCONTRACT
+  , CASE CT.CONTRACT_TYPE WHEN 1 THEN &apos;Sale&apos; WHEN 2 THEN &apos;Purchase&apos; ELSE &apos;Other&apos; END AS [CONTRACTTYPE]
+  , LTRIM(RTRIM(CT.DPR_POSITION)) [DPRPOSITION]
+  , LTRIM(RTRIM(PM.[DESCRIPTION])) [DPRDESC]
+  , LTRIM(RTRIM(CT.BRANCH_NUMBER)) [LOCNMBR]
+  , LTRIM(RTRIM(BM.BRANCH_NAME)) [LOCDESC]
+  , LTRIM(RTRIM(CT.COMMODITY_CODE)) [COMMODITYCD]
+  , LTRIM(RTRIM(IV.[DESCRIPTION])) [COMMODITYDESC]
+  , SUM(CT.ISSUED_LBS/UM.STANDARD_UNITS_LBS) [ISSUED_BU]
+  , SUM((CT.ISSUED_LBS-CT.APPLIED_LBS+ADJUSTED_LBS-SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS) [REMAINING_BU]
+FROM AgTrax_Staging..CA_CONTRACT_MASTER CT with(nolock)
+  INNER JOIN AgTrax_Staging..AR_CUSTOMER_MASTER_TMA CM with(nolock) ON CT.CUSTOMER=CM.CUSTOMER
+  LEFT OUTER JOIN AgTrax_Staging..CA_COMMODITY_MASTER IV with(nolock) ON CT.COMMODITY_CODE=IV.COMMODITY_CODE
+  LEFT OUTER JOIN AgTrax_Staging..IV_UNIT_OF_MEASURE UM with(nolock) ON IV.UOM_BUSHELS=UM.UNIT_OF_MEASURE
+  LEFT OUTER JOIN AgTrax_Staging..CA_POSITION_MASTER PM with(nolock) ON CT.DPR_POSITION=PM.DPR_POSITION
+  LEFT OUTER JOIN AgTrax_Staging..IV_BRANCH_MASTER BM with(nolock) ON CT.BRANCH_NUMBER=BM.BRANCH_NUMBER
+WHERE CT.CONTRACT_STATUS=&apos;O&apos;
+GROUP BY LTRIM(RTRIM(CM.NAME)) 
+  , LTRIM(RTRIM(CT.CUSTOMER)) 
+  , SUBSTRING(LTRIM(RTRIM(CT.CONTRACT_NUMBER)),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM(CT.CONTRACT_NUMBER)))-1) 
+  , CT.CONTRACT_TYPE
+  , LTRIM(RTRIM(CT.DPR_POSITION)) 
+  , LTRIM(RTRIM(PM.[DESCRIPTION])) 
+  , LTRIM(RTRIM(CT.BRANCH_NUMBER)) 
+  , LTRIM(RTRIM(BM.BRANCH_NAME)) 
+  , LTRIM(RTRIM(CT.COMMODITY_CODE)) 
+  , LTRIM(RTRIM(IV.[DESCRIPTION])) 
+
+"
+			Type="SQL"
+			>
+			<DataLayerLink
+				ID="lnkTMAContractsByShipDate"
+			/>
+		</DataLayer>
+	</LocalData>
+	<Body>
+		<Button
+			Caption="Export to Excel"
+			ID="buttonExport_Excel"
+			Tooltip="Click to export data to Microsoft Excel"
+			>
+			<Action
+				ID="actionExport_Excel"
+				Type="NativeExcel"
+				>
+				<Target
+					ExcelOutputFormat="Excel2007"
+					ExportDataTableID="DataTable1"
+					ExportFilename="TMAContractsByShipDate.xlsx"
+					ID="targetExport_Excel"
+					Report="CurrentReport"
+					ShowGridlines="True"
+					Type="NativeExcel"
+					>
+					<WaitPage
+						Caption="Exporting to Excel..."
+					/>
+				</Target>
+			</Action>
+		</Button>
+		<DataTable
+			ID="DataTable1"
+			SortArrows="True"
+			>
+			<DataLayer
+				LinkedDataLayerID="lnkTMAContractsByShipDate"
+				Type="Linked"
+			/>
+			<InteractivePaging
+				CaptionType="Image"
+				Location="Top"
+				PageRowCount="10"
+				ShowPageNumber="True"
+			/>
+			<DataTableColumn
+				Header="CUSTDESC"
+				ID="colCUSTDESC"
+				>
+				<Label
+					Caption="@Data.CUSTDESC~"
+					ID="lblCUSTDESC"
+				/>
+				<DataColumnSort
+					DataColumn="CUSTDESC"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="CUSTNMBR"
+				ID="colCUSTNMBR"
+				>
+				<Label
+					Caption="@Data.CUSTNMBR~"
+					ID="lblCUSTNMBR"
+				/>
+				<DataColumnSort
+					DataColumn="CUSTNMBR"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="MAINCONTRACT"
+				ID="colMAINCONTRACT"
+				>
+				<Label
+					Caption="@Data.MAINCONTRACT~"
+					ID="lblMAINCONTRACT"
+				/>
+				<DataColumnSort
+					DataColumn="MAINCONTRACT"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="CONTRACTTYPE"
+				ID="colCONTRACTTYPE"
+				>
+				<Label
+					Caption="@Data.CONTRACTTYPE~"
+					ID="lblCONTRACTTYPE"
+				/>
+				<DataColumnSort
+					DataColumn="CONTRACTTYPE"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="DPRPOSITION"
+				ID="colDPRPOSITION"
+				>
+				<Label
+					Caption="@Data.DPRPOSITION~"
+					ID="lblDPRPOSITION"
+				/>
+				<DataColumnSort
+					DataColumn="DPRPOSITION"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="DPRDESC"
+				ID="colDPRDESC"
+				>
+				<Label
+					Caption="@Data.DPRDESC~"
+					ID="lblDPRDESC"
+				/>
+				<DataColumnSort
+					DataColumn="DPRDESC"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="LOCNMBR"
+				ID="colLOCNMBR"
+				>
+				<Label
+					Caption="@Data.LOCNMBR~"
+					ID="lblLOCNMBR"
+				/>
+				<DataColumnSort
+					DataColumn="LOCNMBR"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="LOCDESC"
+				ID="colLOCDESC"
+				>
+				<Label
+					Caption="@Data.LOCDESC~"
+					ID="lblLOCDESC"
+				/>
+				<DataColumnSort
+					DataColumn="LOCDESC"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="COMMODITYCD"
+				ID="colCOMMODITYCD"
+				>
+				<Label
+					Caption="@Data.COMMODITYCD~"
+					ID="lblCOMMODITYCD"
+				/>
+				<DataColumnSort
+					DataColumn="COMMODITYCD"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="COMMODITYDESC"
+				ID="colCOMMODITYDESC"
+				>
+				<Label
+					Caption="@Data.COMMODITYDESC~"
+					ID="lblCOMMODITYDESC"
+				/>
+				<DataColumnSort
+					DataColumn="COMMODITYDESC"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="ISSUED_BU"
+				ID="colISSUED_BU"
+				>
+				<Label
+					Caption="@Data.ISSUED_BU~"
+					ID="lblISSUED_BU"
+				/>
+				<DataColumnSort
+					DataColumn="ISSUED_BU"
+					DataType="Number"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="REMAINING_BU"
+				ID="colREMAINING_BU"
+				>
+				<Label
+					Caption="@Data.REMAINING_BU~"
+					ID="lblREMAINING_BU"
+				/>
+				<DataColumnSort
+					DataColumn="REMAINING_BU"
+					DataType="Number"
+				/>
+			</DataTableColumn>
+		</DataTable>
+	</Body>
+</Report>

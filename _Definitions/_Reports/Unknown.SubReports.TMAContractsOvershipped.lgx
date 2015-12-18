@@ -211,15 +211,18 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 					>
 					<ConditionalClass
 						Class="fa fa-arrow-up fa-2x text-success"
-						Condition="@Data.REMAINING_BU~&gt; 1000"
-					/>
-					<ConditionalClass
-						Class="fa fa-arrow-down fa-2x text-danger"
-						Condition="@Data.REMAINING_BU~&lt; 0"
+						Condition="@Data.REMAINING_BU~ &gt; 2500"
+						ID="Condition-Green&gt;2500"
 					/>
 					<ConditionalClass
 						Class="fa fa-minus fa-2x text-warning"
-						Condition="@Data.REMAINING_BU~  &lt;= 1000"
+						Condition="(@Data.REMAINING_BU~ &gt;=0) And (@Data.REMAINING_BU~ &lt;= 2500)"
+						ID="Condition-Yellow-0-2500"
+					/>
+					<ConditionalClass
+						Class="fa fa-arrow-down fa-2x text-danger"
+						Condition="@Data.REMAINING_BU~ &lt; 0"
+						ID="Condition-Red&lt;0"
 					/>
 				</Label>
 			</DataTableColumn>
