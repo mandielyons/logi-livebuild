@@ -10,6 +10,7 @@
 			Source="SELECT 
     LTRIM(RTRIM(CM.NAME)) [CUSTDESC]
   , LTRIM(RTRIM(CT.CUSTOMER)) [CUSTNMBR]
+  , LTRIM(RTRIM(CT.CUSTOMER))+&apos; - &apos;+LTRIM(RTRIM(CM.NAME)) [ACCOUNT]
   , SUBSTRING(LTRIM(RTRIM(CT.CONTRACT_NUMBER)),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM(CT.CONTRACT_NUMBER)))-1) AS MAINCONTRACT
   , CASE CT.CONTRACT_TYPE WHEN 1 THEN &apos;Sale&apos; WHEN 2 THEN &apos;Purchase&apos; ELSE &apos;Other&apos; END AS [CONTRACTTYPE]
   , LTRIM(RTRIM(CT.DPR_POSITION)) [DPRPOSITION]
@@ -18,6 +19,8 @@
   , LTRIM(RTRIM(BM.BRANCH_NAME)) [LOCDESC]
   , LTRIM(RTRIM(CT.COMMODITY_CODE)) [COMMODITYCD]
   , LTRIM(RTRIM(IV.[DESCRIPTION])) [COMMODITYDESC]
+  , CT.DELIVERY_END_DATE AS [DELIVERY_END_DATE]
+  , DATEADD(DAY,-1,DATEADD(MONTH,+1,CAST(CONVERT(VARCHAR(6),GETDATE(),112)+&apos;01&apos; AS DATE))) AS [PERIOD_END_DATE]
   , SUM(CT.ISSUED_LBS/UM.STANDARD_UNITS_LBS) [ISSUED_BU]
   , SUM((CT.ISSUED_LBS-CT.APPLIED_LBS+ADJUSTED_LBS-SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS) [REMAINING_BU]
 FROM AgTrax_Staging..CA_CONTRACT_MASTER CT with(nolock)
@@ -27,6 +30,8 @@ FROM AgTrax_Staging..CA_CONTRACT_MASTER CT with(nolock)
   LEFT OUTER JOIN AgTrax_Staging..CA_POSITION_MASTER PM with(nolock) ON CT.DPR_POSITION=PM.DPR_POSITION
   LEFT OUTER JOIN AgTrax_Staging..IV_BRANCH_MASTER BM with(nolock) ON CT.BRANCH_NUMBER=BM.BRANCH_NUMBER
 WHERE CT.CONTRACT_STATUS=&apos;O&apos;
+  AND CT.DELIVERY_END_DATE&lt;CAST(CONVERT(VARCHAR(6),GETDATE(),112)+&apos;01&apos; AS DATE)
+  AND CT.COMMODITY_CODE=&apos;@Request.paramCommodityCode~&apos; 
 GROUP BY LTRIM(RTRIM(CM.NAME)) 
   , LTRIM(RTRIM(CT.CUSTOMER)) 
   , SUBSTRING(LTRIM(RTRIM(CT.CONTRACT_NUMBER)),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM(CT.CONTRACT_NUMBER)))-1) 
@@ -37,7 +42,7 @@ GROUP BY LTRIM(RTRIM(CM.NAME))
   , LTRIM(RTRIM(BM.BRANCH_NAME)) 
   , LTRIM(RTRIM(CT.COMMODITY_CODE)) 
   , LTRIM(RTRIM(IV.[DESCRIPTION])) 
-
+  , CT.DELIVERY_END_DATE 
 "
 			Type="SQL"
 			>
@@ -46,6 +51,100 @@ GROUP BY LTRIM(RTRIM(CM.NAME))
 			/>
 		</DataLayer>
 	</LocalData>
+	<ReportHeader>
+		<Label
+			Caption="Commodity: "
+		/>
+		<Label
+			Caption="@Local.COMMODITYDESC~"
+		/>
+		<LineBreak/>
+		<Label
+			Caption="Shipment Period: "
+			Format="General Date"
+		/>
+		<Label
+			Caption="@Local.PERIOD_END_DATE~"
+			Format="Short Date"
+		/>
+		<LineBreak/>
+		<Label
+			Caption="Account: "
+		/>
+		<InputSelectList
+			ID="selAccount"
+			IncludeBlank="True"
+			IncludeBlankValue="{ALL}"
+			MultiSelect="False"
+			OptionCaptionColumn="ACCOUNT"
+			OptionValueColumn="CUSTNMBR"
+			>
+			<DataLayer
+				ConnectionID="connProdGP"
+				ID="dlSQLAccount"
+				Source="SELECT DISTINCT 
+    LTRIM(RTRIM(CM.NAME)) [CUSTDESC]
+  , LTRIM(RTRIM(CT.CUSTOMER)) [CUSTNMBR]
+  , LTRIM(RTRIM(CT.CUSTOMER))+&apos; - &apos;+LTRIM(RTRIM(CM.NAME)) [ACCOUNT]
+FROM AgTrax_Staging..CA_CONTRACT_MASTER CT with(nolock)
+  INNER JOIN AgTrax_Staging..AR_CUSTOMER_MASTER_TMA CM with(nolock) ON CT.CUSTOMER=CM.CUSTOMER
+WHERE CT.CONTRACT_STATUS=&apos;O&apos;
+"
+				Type="SQL"
+			/>
+		</InputSelectList>
+		<Button
+			Caption="a"
+			ID="buttonFilterAccount"
+			>
+			<Action
+				ID="actionReport_FilterAccount"
+				Type="Report"
+				>
+				<Target
+					ID="targetReport_FilterAccount"
+					Type="Report"
+				/>
+			</Action>
+		</Button>
+		<LineBreak/>
+		<Label
+			Caption="Position: "
+		/>
+		<InputSelectList
+			ID="selPosition"
+			IncludeBlank="True"
+			IncludeBlankValue="{ALL}"
+			MultiSelect="False"
+			OptionCaptionColumn="DPRDESC"
+			OptionValueColumn="DPRPOSITION"
+			>
+			<DataLayer
+				ConnectionID="connProdGP"
+				ID="dlSQLPosition"
+				Source="SELECT DISTINCT LTRIM(RTRIM(CT.DPR_POSITION)) [DPRPOSITION], LTRIM(RTRIM(PM.[DESCRIPTION])) [DPRDESC]
+FROM AgTrax_Staging..CA_CONTRACT_MASTER CT with(nolock)
+  LEFT OUTER JOIN AgTrax_Staging..CA_POSITION_MASTER PM with(nolock) ON CT.DPR_POSITION=PM.DPR_POSITION
+WHERE CT.CONTRACT_STATUS=&apos;O&apos;
+"
+				Type="SQL"
+			/>
+		</InputSelectList>
+		<Button
+			Caption="p"
+			ID="buttonFilterPosition"
+			>
+			<Action
+				ID="actionReport_FilterPosition"
+				Type="Report"
+				>
+				<Target
+					ID="targetReport_FilterPosition"
+					Type="Report"
+				/>
+			</Action>
+		</Button>
+	</ReportHeader>
 	<Body>
 		<Button
 			Caption="Export to Excel"
@@ -58,7 +157,7 @@ GROUP BY LTRIM(RTRIM(CM.NAME))
 				>
 				<Target
 					ExcelOutputFormat="Excel2007"
-					ExportDataTableID="DataTable1"
+					ExportDataTableID="dtTMAContractsByShipDate"
 					ExportFilename="TMAContractsByShipDate.xlsx"
 					ID="targetExport_Excel"
 					Report="CurrentReport"
@@ -72,13 +171,18 @@ GROUP BY LTRIM(RTRIM(CM.NAME))
 			</Action>
 		</Button>
 		<DataTable
-			ID="DataTable1"
+			ID="dtTMAContractsByShipDate"
 			SortArrows="True"
 			>
 			<DataLayer
 				LinkedDataLayerID="lnkTMAContractsByShipDate"
 				Type="Linked"
-			/>
+				>
+				<ConditionFilter
+					Condition="filtAccount"
+					ErrorResult="@Local.CUSTNMBR=@Request.k"
+				/>
+			</DataLayer>
 			<InteractivePaging
 				CaptionType="Image"
 				Location="Top"
@@ -233,4 +337,7 @@ GROUP BY LTRIM(RTRIM(CM.NAME))
 			</DataTableColumn>
 		</DataTable>
 	</Body>
+	<ideTestParams
+		paramCommodityCode="01"
+	/>
 </Report>

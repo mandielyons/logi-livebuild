@@ -24,6 +24,18 @@
 						Value="@Chart.rdGrgrREMAINING-REMAINING_BU-sum~"
 					/>
 				</Quicktip>
+				<Action
+					ID="actionReport.TMAContractsByShipDate"
+					Type="Report"
+					>
+					<Target
+						Report="Unknown.SubReports.TMAContractsByShipDate"
+						Type="Report"
+					/>
+					<LinkParams
+						paramCommodityCode="@Data.COMMODITYCD~"
+					/>
+				</Action>
 			</Series>
 			<RelevanceFilter
 				IrrelevanceLabel="Other"
