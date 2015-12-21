@@ -29,6 +29,7 @@
 					Type="Report"
 					>
 					<Target
+						LinkDataLayers="True"
 						Report="Unknown.SubReports.TMAContractsByShipDate"
 						Type="Report"
 					/>
