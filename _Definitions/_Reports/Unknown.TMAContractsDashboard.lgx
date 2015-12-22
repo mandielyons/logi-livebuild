@@ -3,9 +3,26 @@
 	Caption="TMA Contracts Dashboard"
 	ID="tmacontractsdashboard"
 	>
+	<DefaultRequestParams
+		Account="ALL"
+		paramCommodityCode="01"
+		paramCommodityDesc="Corn"
+		paramCustNmbr="ALL"
+		paramShipPeriodDt="2015-11-30"
+		Position="Cash"
+	/>
+	<LocalData>
+		<DataLayer
+			ConnectionID="connProdGP"
+			ID="dlSQLShipPeriodDt"
+			Source="SELECT CAST(DATEADD(DAY,-1,CAST(CONVERT(VARCHAR(7),GETDATE(),120)+&apos;-01&apos; AS DATE)) AS VARCHAR(10)) AS [SHIP_PERIOD_DT]
+  , CONVERT(VARCHAR(10),DATEADD(DAY,-1,CAST(CONVERT(VARCHAR(7),GETDATE(),120)+&apos;-01&apos; AS DATE)),110) AS [SHIP_PERIOD_DESC]"
+			Type="SQL"
+		/>
+	</LocalData>
 	<Body>
 		<ChartCanvas
-			ChartCaption="Sum of REMAINING_BU by COMMODITYDESC "
+			ChartCaption="Ship Period @Local.SHIP_PERIOD_DESC~"
 			ChartOrientation="Default"
 			ID="ContractsByCommodity"
 			>
@@ -16,11 +33,12 @@
 				>
 				<Quicktip>
 					<QuicktipRow
-						Caption="COMMODITYDESC: "
+						Caption="Commodity: "
 						Value="@Chart.COMMODITYDESC~"
 					/>
 					<QuicktipRow
-						Caption="REMAINING_BU: "
+						Caption="Remaining BU: "
+						Format="###,###,##0.000"
 						Value="@Chart.rdGrgrREMAINING-REMAINING_BU-sum~"
 					/>
 				</Quicktip>
@@ -31,10 +49,13 @@
 					<Target
 						LinkDataLayers="True"
 						Report="Unknown.SubReports.TMAContractsByShipDate"
+						RequestForwarding="True"
 						Type="Report"
 					/>
 					<LinkParams
 						paramCommodityCode="@Data.COMMODITYCD~"
+						paramCommodityDesc="@Data.COMMODITYDESC~"
+						paramShipPeriodDt="@Local.SHIP_PERIOD_DT~"
 					/>
 				</Action>
 			</Series>
@@ -44,20 +65,20 @@
 				RelevanceValue="8"
 			/>
 			<ChartXAxis
-				AxisCaption="COMMODITYDESC"
+				AxisCaption="Commodity"
 				>
 				<AxisLabelStyle
 					FontAngle="40"
 				/>
 			</ChartXAxis>
 			<ChartYAxis
-				AxisCaption="REMAINING_BU"
+				AxisCaption="Remaining BU"
 			/>
 			<DataLayer
 				ConnectionID="connProdGP"
 				ID="SQLDataLayer1"
-				Source="SELECT LTRIM(RTRIM(CT.COMMODITY_CODE)) AS COMMODITYCD,
-  LTRIM(RTRIM(MAX(IV.DESCRIPTION))) AS COMMODITYDESC,
+				Source="SELECT LTRIM(RTRIM(CT.COMMODITY_CODE)) AS [COMMODITYCD],
+  LTRIM(RTRIM(MAX(IV.DESCRIPTION))) AS [COMMODITYDESC],
   CAST(SUM((CT.ISSUED_LBS-CT.APPLIED_LBS+CT.ADJUSTED_LBS-CT.SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS) AS NUMERIC(19,3)) AS [REMAINING_BU]
 FROM [Agtrax_Staging]..[CA_CONTRACT_MASTER] AS [CT] with(nolock) 
   LEFT OUTER JOIN [Agtrax_Staging]..[CA_COMMODITY_MASTER] AS [IV] with(nolock) ON CT.COMMODITY_CODE=IV.COMMODITY_CODE 
@@ -142,6 +163,7 @@ HAVING SUM(([CT].[ISSUED_LBS]-[CT].[APPLIED_LBS]+[CT].[ADJUSTED_LBS]-[CT].[SUB_C
 						>
 						<Target
 							Report="Unknown.SubReports.TMAContractsOvershipped"
+							RequestForwarding="True"
 							Type="Report"
 						/>
 						<LinkParams
@@ -295,6 +317,13 @@ GROUP BY VC.DELENDDTID, VC.COMMODITYCD, VC.COMMODITYDESC, VC.DELENDDTDSC
 					SortColumn="ORDER, COMMODITYCD, DELENDDTID"
 				/>
 			</DataLayer>
+			<InteractivePaging
+				CaptionType="Image"
+				HideWhenOnePage="True"
+				Location="Top"
+				PageRowCount="20"
+				ShowPageNumber="True"
+			/>
 			<HeaderRow
 				ID="ctHeaderRow"
 				>
@@ -330,13 +359,6 @@ GROUP BY VC.DELENDDTID, VC.COMMODITYCD, VC.COMMODITYDESC, VC.DELENDDTDSC
 					DataType="Number"
 				/>
 			</CrosstabTableValueColumns>
-			<InteractivePaging
-				CaptionType="Image"
-				HideWhenOnePage="True"
-				Location="Top"
-				PageRowCount="20"
-				ShowPageNumber="True"
-			/>
 		</CrosstabTable>
 	</Body>
 	<ideTestParams/>

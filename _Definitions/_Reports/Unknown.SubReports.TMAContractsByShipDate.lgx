@@ -4,69 +4,19 @@
 	ID="Unknown.SubReports.TMAContractsByShipDate"
 	>
 	<DefaultRequestParams
-		Account="{ALL}"
-		paramCommodityCode="01"
-		paramCustNmbr="{ALL]"
-		Position=""
+		Account="ALL"
+		paramCommodityCode="04"
+		paramCommodityDesc="Corn"
+		paramCustNmbr="ALL"
+		paramShipPeriodDt="2015-11-30"
+		Position="Cash"
 	/>
-	<LocalData>
-		<DataLayer
-			ConnectionID="connProdGP"
-			ID="SQLDataLayer1"
-			Source="SELECT 
-    LTRIM(RTRIM(CM.NAME)) [CUSTDESC]
-  , LTRIM(RTRIM(CT.CUSTOMER)) [CUSTNMBR]
-  , LTRIM(RTRIM(CT.CUSTOMER))+&apos; - &apos;+LTRIM(RTRIM(CM.NAME)) [ACCOUNT]
-  , SUBSTRING(LTRIM(RTRIM(CT.CONTRACT_NUMBER)),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM(CT.CONTRACT_NUMBER)))-1) AS MAINCONTRACT
-  , CASE CT.CONTRACT_TYPE WHEN 1 THEN &apos;Sale&apos; WHEN 2 THEN &apos;Purchase&apos; ELSE &apos;Other&apos; END AS [CONTRACTTYPE]
-  , LTRIM(RTRIM(CT.DPR_POSITION)) [DPRPOSITION]
-  , LTRIM(RTRIM(PM.[DESCRIPTION])) [DPRDESC]
-  , LTRIM(RTRIM(CT.BRANCH_NUMBER)) [LOCNMBR]
-  , LTRIM(RTRIM(BM.BRANCH_NAME)) [LOCDESC]
-  , LTRIM(RTRIM(CT.COMMODITY_CODE)) [COMMODITYCD]
-  , LTRIM(RTRIM(IV.[DESCRIPTION])) [COMMODITYDESC]
-  , CT.DELIVERY_END_DATE AS [DELIVERY_END_DATE]
-  , DATEADD(DAY,-1,DATEADD(MONTH,+1,CAST(CONVERT(VARCHAR(6),GETDATE(),112)+&apos;01&apos; AS DATE))) AS [PERIOD_END_DATE]
-  , SUM(CT.ISSUED_LBS/UM.STANDARD_UNITS_LBS) [ISSUED_BU]
-  , SUM((CT.ISSUED_LBS-CT.APPLIED_LBS+ADJUSTED_LBS-SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS) [REMAINING_BU]
-FROM AgTrax_Staging..CA_CONTRACT_MASTER CT with(nolock)
-  INNER JOIN AgTrax_Staging..AR_CUSTOMER_MASTER_TMA CM with(nolock) ON CT.CUSTOMER=CM.CUSTOMER
-  LEFT OUTER JOIN AgTrax_Staging..CA_COMMODITY_MASTER IV with(nolock) ON CT.COMMODITY_CODE=IV.COMMODITY_CODE
-  LEFT OUTER JOIN AgTrax_Staging..IV_UNIT_OF_MEASURE UM with(nolock) ON IV.UOM_BUSHELS=UM.UNIT_OF_MEASURE
-  LEFT OUTER JOIN AgTrax_Staging..CA_POSITION_MASTER PM with(nolock) ON CT.DPR_POSITION=PM.DPR_POSITION
-  LEFT OUTER JOIN AgTrax_Staging..IV_BRANCH_MASTER BM with(nolock) ON CT.BRANCH_NUMBER=BM.BRANCH_NUMBER
-WHERE CT.CONTRACT_STATUS=&apos;O&apos;
-  AND CT.DELIVERY_END_DATE &lt; CAST(CONVERT(VARCHAR(6),GETDATE(),112)+&apos;01&apos; AS DATE)
-  AND CT.COMMODITY_CODE=&apos;@Request.paramCommodityCode~&apos; 
-  AND (
-            (LTRIM(RTRIM(CT.CUSTOMER)) = &apos;@Request.Account~&apos; OR &apos;@Request.Account~&apos;=&apos;{ALL}&apos;)
-        AND (CT.DPR_POSITION LIKE &apos;@Request.Position~&apos;+&apos;%&apos;)
-	   )
-GROUP BY LTRIM(RTRIM(CM.NAME)) 
-  , LTRIM(RTRIM(CT.CUSTOMER)) 
-  , SUBSTRING(LTRIM(RTRIM(CT.CONTRACT_NUMBER)),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM(CT.CONTRACT_NUMBER)))-1) 
-  , CT.CONTRACT_TYPE
-  , LTRIM(RTRIM(CT.DPR_POSITION)) 
-  , LTRIM(RTRIM(PM.[DESCRIPTION])) 
-  , LTRIM(RTRIM(CT.BRANCH_NUMBER)) 
-  , LTRIM(RTRIM(BM.BRANCH_NAME)) 
-  , LTRIM(RTRIM(CT.COMMODITY_CODE)) 
-  , LTRIM(RTRIM(IV.[DESCRIPTION])) 
-  , CT.DELIVERY_END_DATE 
-"
-			Type="SQL"
-			>
-			<DataLayerLink
-				ID="lnkTMAContractsByShipDate"
-			/>
-		</DataLayer>
-	</LocalData>
 	<ReportHeader>
 		<Label
 			Caption="Commodity: "
 		/>
 		<Label
-			Caption="@Local.COMMODITYDESC~"
+			Caption="@Request.paramCommodityDesc~"
 		/>
 		<LineBreak/>
 		<Label
@@ -74,7 +24,7 @@ GROUP BY LTRIM(RTRIM(CM.NAME))
 			Format="General Date"
 		/>
 		<Label
-			Caption="@Local.PERIOD_END_DATE~"
+			Caption="@Request.paramShipPeriodDt~"
 			Format="Short Date"
 		/>
 		<LineBreak/>
@@ -86,7 +36,7 @@ GROUP BY LTRIM(RTRIM(CM.NAME))
 			ID="Account"
 			IncludeBlank="True"
 			IncludeBlankCaption="{All Accounts}"
-			IncludeBlankValue="{ALL}"
+			IncludeBlankValue="ALL"
 			MultiSelect="False"
 			OptionCaptionColumn="ACCOUNT"
 			OptionValueColumn="CUSTNMBR"
@@ -101,8 +51,8 @@ GROUP BY LTRIM(RTRIM(CM.NAME))
 FROM AgTrax_Staging..CA_CONTRACT_MASTER CT with(nolock)
   INNER JOIN AgTrax_Staging..AR_CUSTOMER_MASTER_TMA CM with(nolock) ON CT.CUSTOMER=CM.CUSTOMER
 WHERE CT.CONTRACT_STATUS=&apos;O&apos;
-  AND CT.DELIVERY_END_DATE &lt; CAST(CONVERT(VARCHAR(6),GETDATE(),112)+&apos;01&apos; AS DATE)
-  AND CT.COMMODITY_CODE=&apos;@Request.paramCommodityCode~&apos;
+  AND CT.DELIVERY_END_DATE &lt;= &apos;@Request.paramShipPeriodDt~&apos;
+  AND CT.COMMODITY_CODE = &apos;@Request.paramCommodityCode~&apos;
 "
 				Type="SQL"
 				>
@@ -120,19 +70,9 @@ WHERE CT.CONTRACT_STATUS=&apos;O&apos;
 			Caption="Update"
 			ID="buttonSubmitRefresh"
 			>
-			<Remark>
-				<Action
-					Type="Report"
-					>
-					<Target
-						LinkDataLayers="True"
-						Report="Unknown.SubReports.TMAContractsByShipDate"
-						Type="Report"
-					/>
-				</Action>
-			</Remark>
 			<Action
-				ElementID="dtTMAContractsByShipDate"
+				ElementID="dtTMAContractsByShipDate, Account"
+				RequestForwarding="True"
 				Type="RefreshElement"
 			/>
 		</Button>
@@ -172,7 +112,9 @@ WHERE CT.CONTRACT_STATUS=&apos;O&apos;
 			</InputSelectList>
 		</Remark>
 	</ReportHeader>
-	<Body>
+	<Body
+		ID="bodyTMAContractsByShipDate"
+		>
 		<Button
 			Caption="Export to Excel"
 			ID="buttonExport_Excel"
@@ -198,13 +140,14 @@ WHERE CT.CONTRACT_STATUS=&apos;O&apos;
 			</Action>
 		</Button>
 		<DataTable
+			AccessibleHeaders="True"
 			AjaxPaging="True"
 			ID="dtTMAContractsByShipDate"
 			SortArrows="True"
 			>
 			<DataLayer
 				ConnectionID="connProdGP"
-				ID="SQLDataLayer2"
+				ID="dlSQLContracts"
 				Source="SELECT 
     LTRIM(RTRIM(CM.NAME)) [CUSTDESC]
   , LTRIM(RTRIM(CT.CUSTOMER)) [CUSTNMBR]
@@ -218,7 +161,6 @@ WHERE CT.CONTRACT_STATUS=&apos;O&apos;
   , LTRIM(RTRIM(CT.COMMODITY_CODE)) [COMMODITYCD]
   , LTRIM(RTRIM(IV.[DESCRIPTION])) [COMMODITYDESC]
   , CT.DELIVERY_END_DATE AS [DELIVERY_END_DATE]
-  , DATEADD(DAY,-1,DATEADD(MONTH,+1,CAST(CONVERT(VARCHAR(6),GETDATE(),112)+&apos;01&apos; AS DATE))) AS [PERIOD_END_DATE]
   , SUM(CT.ISSUED_LBS/UM.STANDARD_UNITS_LBS) [ISSUED_BU]
   , SUM((CT.ISSUED_LBS-CT.APPLIED_LBS+ADJUSTED_LBS-SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS) [REMAINING_BU]
 FROM AgTrax_Staging..CA_CONTRACT_MASTER CT with(nolock)
@@ -228,12 +170,9 @@ FROM AgTrax_Staging..CA_CONTRACT_MASTER CT with(nolock)
   LEFT OUTER JOIN AgTrax_Staging..CA_POSITION_MASTER PM with(nolock) ON CT.DPR_POSITION=PM.DPR_POSITION
   LEFT OUTER JOIN AgTrax_Staging..IV_BRANCH_MASTER BM with(nolock) ON CT.BRANCH_NUMBER=BM.BRANCH_NUMBER
 WHERE CT.CONTRACT_STATUS=&apos;O&apos;
-  AND CT.DELIVERY_END_DATE &lt; CAST(CONVERT(VARCHAR(6),GETDATE(),112)+&apos;01&apos; AS DATE)
-  AND CT.COMMODITY_CODE=&apos;@Request.paramCommodityCode~&apos; 
-  AND (
-            (LTRIM(RTRIM(CT.CUSTOMER)) = &apos;@Request.Account~&apos; OR &apos;@Request.Account~&apos;=&apos;{ALL}&apos;)
---        AND (CT.DPR_POSITION = &apos;@Request.Position~&apos; OR &apos;@Request.Position~&apos;=&apos;{ALL}&apos;)
-	   )
+  AND CT.DELIVERY_END_DATE &lt;= &apos;@Request.paramShipPeriodDt~&apos;
+  AND CT.COMMODITY_CODE = &apos;@Request.paramCommodityCode~&apos; 
+  AND (LTRIM(RTRIM(CT.CUSTOMER)) = &apos;@Request.Account~&apos; OR &apos;@Request.Account~&apos;=&apos;ALL&apos;)
 GROUP BY LTRIM(RTRIM(CM.NAME)) 
   , LTRIM(RTRIM(CT.CUSTOMER)) 
   , SUBSTRING(LTRIM(RTRIM(CT.CONTRACT_NUMBER)),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM(CT.CONTRACT_NUMBER)))-1) 
@@ -254,12 +193,6 @@ GROUP BY LTRIM(RTRIM(CM.NAME))
 					SortSequence="Ascending"
 				/>
 			</DataLayer>
-			<Remark>
-				<DataLayer
-					LinkedDataLayerID="lnkTMAContractsByShipDate"
-					Type="Linked"
-				/>
-			</Remark>
 			<InteractivePaging
 				CaptionType="Image"
 				Location="Top"
@@ -415,8 +348,9 @@ GROUP BY LTRIM(RTRIM(CM.NAME))
 		</DataTable>
 	</Body>
 	<ideTestParams
-		Account="{ALL}"
-		paramCommodityCode="01"
-		Position="{ALL}"
+		Account="ALL"
+		paramCommodityCode="04"
+		paramCommodityDesc="Corn"
+		paramShipPeriodDt="2015-11-30"
 	/>
 </Report>
