@@ -3,16 +3,14 @@
 	Caption="TMA Contracts Dashboard"
 	ID="tmacontractsdashboard"
 	>
-	<Remark>
-		<DefaultRequestParams
-			Account="ALL"
-			paramCommodityCode="01"
-			paramCommodityDesc="Corn"
-			paramCustNmbr="ALL"
-			paramShipPeriodDt="2015-11-30"
-			Position="Cash"
-		/>
-	</Remark>
+	<DefaultRequestParams
+		Account="ALL"
+		paramCommodityCode="01"
+		paramCommodityDesc="Corn"
+		paramCustNmbr="ALL"
+		paramShipPeriodDt="2015-11-30"
+		Position="Cash"
+	/>
 	<LocalData>
 		<DataLayer
 			ConnectionID="connProdGP"
@@ -31,8 +29,8 @@
 			<DataLayer
 				ConnectionID="connProdGP"
 				ID="SQLDataLayer1"
-				Source="SELECT LTRIM(RTRIM(CT.COMMODITY_CODE)) AS [CCODE],
-  LTRIM(RTRIM(MAX(IV.DESCRIPTION))) AS [CDESC],
+				Source="SELECT LTRIM(RTRIM(CT.COMMODITY_CODE)) AS [COMMODITYCODE],
+  LTRIM(RTRIM(MAX(IV.DESCRIPTION))) AS [COMMODITYDESC],
   CAST(SUM((CT.ISSUED_LBS-CT.APPLIED_LBS+CT.ADJUSTED_LBS-CT.SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS) AS NUMERIC(19,3)) AS [REMAINING_BU]
 FROM [Agtrax_Staging]..[CA_CONTRACT_MASTER] AS [CT] with(nolock) 
   LEFT OUTER JOIN [Agtrax_Staging]..[CA_COMMODITY_MASTER] AS [IV] with(nolock) ON CT.COMMODITY_CODE=IV.COMMODITY_CODE 
@@ -45,7 +43,7 @@ HAVING SUM((CT.ISSUED_LBS - CT.APPLIED_LBS + CT.ADJUSTED_LBS - CT.SUB_CONT_LBS)/
 				>
 				<GroupFilter
 					DataType="Text"
-					GroupColumn="CCODE"
+					GroupColumn="COMMODITYCODE"
 					KeepGroupedRows="False"
 					>
 					<GroupAggregateColumn
@@ -56,13 +54,18 @@ HAVING SUM((CT.ISSUED_LBS - CT.APPLIED_LBS + CT.ADJUSTED_LBS - CT.SUB_CONT_LBS)/
 					/>
 				</GroupFilter>
 				<SortFilter
-					DataType="Text"
-					SortColumn="COMMODITYCD"
-					SortSequence="Ascending"
+					DataType="Number"
+					SortColumn="rdGrgrREMAINING-REMAINING_BU-sum"
+					SortSequence="Descending"
+				/>
+				<RelevanceFilter
+					DataColumn="rdGrgrREMAINING-REMAINING_BU-sum"
+					RelevanceType="Value"
+					RelevanceValue="1"
 				/>
 			</DataLayer>
 			<Series
-				ChartXDataColumn="CDESC"
+				ChartXDataColumn="COMMODITYDESC"
 				ChartXDataColumnType="Text"
 				ChartYDataColumn="rdGrgrREMAINING-REMAINING_BU-sum"
 				Type="Bar"
@@ -70,7 +73,7 @@ HAVING SUM((CT.ISSUED_LBS - CT.APPLIED_LBS + CT.ADJUSTED_LBS - CT.SUB_CONT_LBS)/
 				<Quicktip>
 					<QuicktipRow
 						Caption="Commodity: "
-						Value="@Chart.CDESC~"
+						Value="@Chart.COMMODITYDESC~"
 					/>
 					<QuicktipRow
 						Caption="Remaining BU: "
@@ -83,20 +86,13 @@ HAVING SUM((CT.ISSUED_LBS - CT.APPLIED_LBS + CT.ADJUSTED_LBS - CT.SUB_CONT_LBS)/
 					Type="Report"
 					>
 					<LinkParams
-						paramCommodityCode="@Data.CCODE~"
-						paramCommodityDesc="@Data.CDESC~"
+						paramCommodityCode="@Chart.COMMODITYCODE~"
+						paramCommodityDesc="@Chart.COMMODITYDESC~"
 						paramShipPeriodDesc="@Local.SHIP_PERIOD_DESC~"
 						paramShipPeriodDt="@Local.SHIP_PERIOD_DT~"
 					/>
-					<Remark>
-						<Target
-							Report="Unknown.SubReports.TMAContractsByShipDate"
-							RequestForwarding="True"
-							Type="Report"
-						/>
-					</Remark>
 					<Target
-						Report="Unknown.SubReports.zPassedIn"
+						Report="Unknown.SubReports.TMAContractsByShipDate"
 						RequestForwarding="True"
 						Type="Report"
 					/>
@@ -106,7 +102,7 @@ HAVING SUM((CT.ISSUED_LBS - CT.APPLIED_LBS + CT.ADJUSTED_LBS - CT.SUB_CONT_LBS)/
 				AxisCaption="Commodity"
 				>
 				<AxisLabelStyle
-					FontAngle="40"
+					FontAngle="0"
 				/>
 			</ChartXAxis>
 			<ChartYAxis
@@ -174,26 +170,11 @@ HAVING SUM(([CT].[ISSUED_LBS]-[CT].[APPLIED_LBS]+[CT].[ADJUSTED_LBS]-[CT].[SUB_C
 						ID="rptTMAContractOvershipped"
 						Type="Report"
 						>
-						<Remark>
-							<LinkParams
-								paramContractKey="@Data.KEY~"
-							/>
-						</Remark>
-						<Remark>
-							<Target
-								Report="Unknown.SubReports.TMAContractsOvershipped"
-								RequestForwarding="True"
-								Type="Report"
-							/>
-						</Remark>
 						<LinkParams
-							paramCommodityCode="@Data.COMMODITYCD~"
-							paramCommodityDesc="@Data.COMMODITYDESC~"
-							paramShipPeriodDesc="@Local.SHIP_PERIOD_DESC~"
-							paramShipPeriodDt="@Local.SHIP_PERIOD_DT~"
+							paramContractKey="@Data.KEY~"
 						/>
 						<Target
-							Report="Unknown.SubReports.zPassedIn"
+							Report="Unknown.SubReports.TMAContractsOvershipped"
 							RequestForwarding="True"
 							Type="Report"
 						/>

@@ -3,42 +3,29 @@
 	Caption="TMA Contracts By Ship Date"
 	ID="Unknown.SubReports.TMAContractsByShipDate"
 	>
+	<DefaultRequestParams/>
 	<Body
 		ID="bodyTMAContractsByShipDate"
 		>
-		<Remark>
-			<Label
-				Caption="Commodity: "
-			/>
-		</Remark>
-		<Remark>
-			<Label
-				Caption="@Request.paramCommodityDesc~"
-			/>
-		</Remark>
-		<Remark>
-			<LineBreak/>
-		</Remark>
-		<Remark>
-			<Label
-				Caption="Shipment Period: "
-				Format="General Date"
-			/>
-		</Remark>
-		<Remark>
-			<Label
-				Caption="@Request.paramShipPeriodDt~"
-				Format="Short Date"
-			/>
-		</Remark>
-		<Remark>
-			<LineBreak/>
-		</Remark>
-		<Remark>
-			<Label
-				Caption="Account: "
-			/>
-		</Remark>
+		<Label
+			Caption="Commodity: "
+		/>
+		<Label
+			Caption="@Request.paramCommodityDesc~"
+		/>
+		<LineBreak/>
+		<Label
+			Caption="Shipment Period: "
+			Format="General Date"
+		/>
+		<Label
+			Caption="@Request.paramShipPeriodDt~"
+			Format="Short Date"
+		/>
+		<LineBreak/>
+		<Label
+			Caption="Account: "
+		/>
 		<InputSelectList
 			DefaultValue="@Request.Account~"
 			ID="Account"
@@ -70,17 +57,17 @@ WHERE CT.CONTRACT_STATUS=&apos;O&apos;
 					SortSequence="Ascending"
 				/>
 			</DataLayer>
+			<EventHandler
+				DhtmlEvent="onchange"
+				ID="evhOnChange"
+				>
+				<Action
+					ElementID="dtTMAContractsByShipDate, Account"
+					ID="actRefreshTable"
+					Type="RefreshElement"
+				/>
+			</EventHandler>
 		</InputSelectList>
-		<Button
-			Caption="Update"
-			ID="buttonSubmitRefresh"
-			>
-			<Action
-				ElementID="dtTMAContractsByShipDate, Account"
-				RequestForwarding="True"
-				Type="RefreshElement"
-			/>
-		</Button>
 		<Remark>
 			<Label
 				Caption="Position: "
@@ -176,7 +163,7 @@ FROM AgTrax_Staging..CA_CONTRACT_MASTER CT with(nolock)
 WHERE CT.CONTRACT_STATUS=&apos;O&apos;
   AND CT.DELIVERY_END_DATE &lt;= &apos;@Request.paramShipPeriodDt~&apos;
   AND CT.COMMODITY_CODE = &apos;@Request.paramCommodityCode~&apos; 
-  AND (LTRIM(RTRIM(CT.CUSTOMER)) = &apos;@Request.Account~&apos; OR &apos;@Request.Account~&apos;=&apos;ALL&apos;)
+  AND (LTRIM(RTRIM(CT.CUSTOMER)) = &apos;@Request.Account~&apos; OR &apos;ALL&apos;=&apos;@Request.Account~&apos; OR &apos;&apos;=&apos;@Request.Account~&apos;)
 GROUP BY LTRIM(RTRIM(CM.NAME)) 
   , LTRIM(RTRIM(CT.CUSTOMER)) 
   , SUBSTRING(LTRIM(RTRIM(CT.CONTRACT_NUMBER)),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM(CT.CONTRACT_NUMBER)))-1) 
@@ -355,7 +342,8 @@ GROUP BY LTRIM(RTRIM(CM.NAME))
 	</Body>
 	<ideTestParams
 		Account="ALL"
-		paramCommodityCode="04"
+		paramCommodityCode="01"
+		paramCommodityDesc="Wheat"
 		paramShipPeriodDt="2015-11-30"
 	/>
 </Report>
