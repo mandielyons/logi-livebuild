@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Report
-	Caption="MKC Branch Dashboard"
+	Caption="Branch Dashboard"
 	ID="Reports.MKC_Locations"
 	>
 	<IncludeSharedElement
@@ -26,7 +26,7 @@
 						ID="panel-heading-map"
 						>
 						<Label
-							Caption="MKC Branch Locations"
+							Caption="MKC Branch Dashboard"
 						/>
 					</Division>
 					<Division
