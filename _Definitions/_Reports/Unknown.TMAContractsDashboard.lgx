@@ -47,7 +47,6 @@
 					Type="Report"
 					>
 					<Target
-						LinkDataLayers="True"
 						Report="Unknown.SubReports.TMAContractsByShipDate"
 						RequestForwarding="True"
 						Type="Report"
@@ -55,7 +54,6 @@
 					<LinkParams
 						paramCommodityCode="@Data.COMMODITYCD~"
 						paramCommodityDesc="@Data.COMMODITYDESC~"
-						paramShipPeriodDt="@Local.SHIP_PERIOD_DT~"
 					/>
 				</Action>
 			</Series>

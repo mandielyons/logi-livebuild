@@ -3,14 +3,16 @@
 	Caption="TMA Contracts By Ship Date"
 	ID="Unknown.SubReports.TMAContractsByShipDate"
 	>
-	<DefaultRequestParams
-		Account="ALL"
-		paramCommodityCode="04"
-		paramCommodityDesc="Corn"
-		paramCustNmbr="ALL"
-		paramShipPeriodDt="2015-11-30"
-		Position="Cash"
-	/>
+	<Remark>
+		<DefaultRequestParams
+			Account="ALL"
+			paramCommodityCode="04"
+			paramCommodityDesc="Corn"
+			paramCustNmbr="ALL"
+			paramShipPeriodDt="2015-11-30"
+			Position="Cash"
+		/>
+	</Remark>
 	<ReportHeader>
 		<Label
 			Caption="Commodity: "
