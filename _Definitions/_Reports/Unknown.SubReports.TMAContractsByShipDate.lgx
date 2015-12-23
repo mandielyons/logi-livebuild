@@ -3,36 +3,42 @@
 	Caption="TMA Contracts By Ship Date"
 	ID="Unknown.SubReports.TMAContractsByShipDate"
 	>
-	<Remark>
-		<DefaultRequestParams
-			Account="ALL"
-			paramCommodityCode="04"
-			paramCommodityDesc="Corn"
-			paramCustNmbr="ALL"
-			paramShipPeriodDt="2015-11-30"
-			Position="Cash"
-		/>
-	</Remark>
-	<ReportHeader>
-		<Label
-			Caption="Commodity: "
-		/>
-		<Label
-			Caption="@Request.paramCommodityDesc~"
-		/>
-		<LineBreak/>
-		<Label
-			Caption="Shipment Period: "
-			Format="General Date"
-		/>
-		<Label
-			Caption="@Request.paramShipPeriodDt~"
-			Format="Short Date"
-		/>
-		<LineBreak/>
-		<Label
-			Caption="Account: "
-		/>
+	<Body
+		ID="bodyTMAContractsByShipDate"
+		>
+		<Remark>
+			<Label
+				Caption="Commodity: "
+			/>
+		</Remark>
+		<Remark>
+			<Label
+				Caption="@Request.paramCommodityDesc~"
+			/>
+		</Remark>
+		<Remark>
+			<LineBreak/>
+		</Remark>
+		<Remark>
+			<Label
+				Caption="Shipment Period: "
+				Format="General Date"
+			/>
+		</Remark>
+		<Remark>
+			<Label
+				Caption="@Request.paramShipPeriodDt~"
+				Format="Short Date"
+			/>
+		</Remark>
+		<Remark>
+			<LineBreak/>
+		</Remark>
+		<Remark>
+			<Label
+				Caption="Account: "
+			/>
+		</Remark>
 		<InputSelectList
 			DefaultValue="@Request.Account~"
 			ID="Account"
@@ -65,9 +71,6 @@ WHERE CT.CONTRACT_STATUS=&apos;O&apos;
 				/>
 			</DataLayer>
 		</InputSelectList>
-		<Remark>
-			<LineBreak/>
-		</Remark>
 		<Button
 			Caption="Update"
 			ID="buttonSubmitRefresh"
@@ -113,10 +116,8 @@ WHERE CT.CONTRACT_STATUS=&apos;O&apos;
 				</DataLayer>
 			</InputSelectList>
 		</Remark>
-	</ReportHeader>
-	<Body
-		ID="bodyTMAContractsByShipDate"
-		>
+		<LineBreak/>
+		<LineBreak/>
 		<Button
 			Caption="Export to Excel"
 			ID="buttonExport_Excel"
@@ -141,6 +142,7 @@ WHERE CT.CONTRACT_STATUS=&apos;O&apos;
 				</Target>
 			</Action>
 		</Button>
+		<LineBreak/>
 		<DataTable
 			AccessibleHeaders="True"
 			AjaxPaging="True"
@@ -327,6 +329,7 @@ GROUP BY LTRIM(RTRIM(CM.NAME))
 				>
 				<Label
 					Caption="@Data.ISSUED_BU~"
+					Format="###,###,##0.000"
 					ID="lblISSUED_BU"
 				/>
 				<DataColumnSort
@@ -340,6 +343,7 @@ GROUP BY LTRIM(RTRIM(CM.NAME))
 				>
 				<Label
 					Caption="@Data.REMAINING_BU~"
+					Format="###,###,##0.000"
 					ID="lblREMAINING_BU"
 				/>
 				<DataColumnSort
@@ -352,7 +356,6 @@ GROUP BY LTRIM(RTRIM(CM.NAME))
 	<ideTestParams
 		Account="ALL"
 		paramCommodityCode="04"
-		paramCommodityDesc="Corn"
 		paramShipPeriodDt="2015-11-30"
 	/>
 </Report>

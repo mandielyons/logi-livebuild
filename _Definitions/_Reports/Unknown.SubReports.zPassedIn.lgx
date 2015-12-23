@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report
+	ID="Unknown.SubReports.zPassedIn"
+	>
+	<Body>
+		<Label
+			Caption="Commodity: "
+		/>
+		<LineBreak/>
+		<Label
+			Caption="@Request.paramCommodityCode~"
+		/>
+		<LineBreak/>
+		<Label
+			Caption="@Request.paramCommodityDesc~"
+		/>
+		<LineBreak/>
+		<Label
+			Caption="Shipment Period: "
+			Format="General Date"
+		/>
+		<LineBreak/>
+		<Label
+			Caption="@Request.paramShipPeriodDt~"
+			Format="Short Date"
+		/>
+		<LineBreak/>
+		<Label
+			Caption="@Request.paramShipPeriodDesc~"
+		/>
+	</Body>
+	<ideTestParams
+		paramCommodityCode=""
+		paramCommodityDesc=""
+		paramShipPeriodDesc=""
+		paramShipPeriodDt=""
+	/>
+</Report>

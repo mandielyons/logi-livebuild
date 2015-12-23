@@ -84,6 +84,7 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 			</Action>
 		</Button>
 		<LineBreak/>
+		<LineBreak/>
 		<Label
 			Caption="Contract: "
 		/>
@@ -196,6 +197,7 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 				>
 				<Label
 					Caption="@Data.REMAINING_BU~"
+					Format="###,###,##0.000"
 					ID="colREMAINING_BU"
 				/>
 				<DataColumnSort

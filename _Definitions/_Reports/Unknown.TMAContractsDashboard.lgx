@@ -3,14 +3,16 @@
 	Caption="TMA Contracts Dashboard"
 	ID="tmacontractsdashboard"
 	>
-	<DefaultRequestParams
-		Account="ALL"
-		paramCommodityCode="01"
-		paramCommodityDesc="Corn"
-		paramCustNmbr="ALL"
-		paramShipPeriodDt="2015-11-30"
-		Position="Cash"
-	/>
+	<Remark>
+		<DefaultRequestParams
+			Account="ALL"
+			paramCommodityCode="01"
+			paramCommodityDesc="Corn"
+			paramCustNmbr="ALL"
+			paramShipPeriodDt="2015-11-30"
+			Position="Cash"
+		/>
+	</Remark>
 	<LocalData>
 		<DataLayer
 			ConnectionID="connProdGP"
@@ -26,62 +28,16 @@
 			ChartOrientation="Default"
 			ID="ContractsByCommodity"
 			>
-			<Series
-				ChartXDataColumn="COMMODITYDESC"
-				ChartYDataColumn="rdGrgrREMAINING-REMAINING_BU-sum"
-				Type="Bar"
-				>
-				<Quicktip>
-					<QuicktipRow
-						Caption="Commodity: "
-						Value="@Chart.COMMODITYDESC~"
-					/>
-					<QuicktipRow
-						Caption="Remaining BU: "
-						Format="###,###,##0.000"
-						Value="@Chart.rdGrgrREMAINING-REMAINING_BU-sum~"
-					/>
-				</Quicktip>
-				<Action
-					ID="actionReport.TMAContractsByShipDate"
-					Type="Report"
-					>
-					<Target
-						Report="Unknown.SubReports.TMAContractsByShipDate"
-						RequestForwarding="True"
-						Type="Report"
-					/>
-					<LinkParams
-						paramCommodityCode="@Data.COMMODITYCD~"
-						paramCommodityDesc="@Data.COMMODITYDESC~"
-					/>
-				</Action>
-			</Series>
-			<RelevanceFilter
-				IrrelevanceLabel="Other"
-				RelevanceType="NumberOfRows"
-				RelevanceValue="8"
-			/>
-			<ChartXAxis
-				AxisCaption="Commodity"
-				>
-				<AxisLabelStyle
-					FontAngle="40"
-				/>
-			</ChartXAxis>
-			<ChartYAxis
-				AxisCaption="Remaining BU"
-			/>
 			<DataLayer
 				ConnectionID="connProdGP"
 				ID="SQLDataLayer1"
-				Source="SELECT LTRIM(RTRIM(CT.COMMODITY_CODE)) AS [COMMODITYCD],
-  LTRIM(RTRIM(MAX(IV.DESCRIPTION))) AS [COMMODITYDESC],
+				Source="SELECT LTRIM(RTRIM(CT.COMMODITY_CODE)) AS [CCODE],
+  LTRIM(RTRIM(MAX(IV.DESCRIPTION))) AS [CDESC],
   CAST(SUM((CT.ISSUED_LBS-CT.APPLIED_LBS+CT.ADJUSTED_LBS-CT.SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS) AS NUMERIC(19,3)) AS [REMAINING_BU]
 FROM [Agtrax_Staging]..[CA_CONTRACT_MASTER] AS [CT] with(nolock) 
   LEFT OUTER JOIN [Agtrax_Staging]..[CA_COMMODITY_MASTER] AS [IV] with(nolock) ON CT.COMMODITY_CODE=IV.COMMODITY_CODE 
   LEFT OUTER JOIN [Agtrax_Staging]..[IV_UNIT_OF_MEASURE] AS [UM] with(nolock) ON IV.UOM_BUSHELS=UM.UNIT_OF_MEASURE
-WHERE CT.DELIVERY_END_DATE&lt;CAST(CONVERT(VARCHAR(6),GETDATE(),112)+&apos;01&apos; AS DATE) AND CT.CONTRACT_STATUS=&apos;O&apos;
+WHERE CT.CONTRACT_STATUS=&apos;O&apos; AND CT.DELIVERY_END_DATE&lt;=&apos;@Local.SHIP_PERIOD_DT~&apos;
 GROUP BY CT.COMMODITY_CODE
 HAVING SUM((CT.ISSUED_LBS - CT.APPLIED_LBS + CT.ADJUSTED_LBS - CT.SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS) &lt;&gt; 0.0
 "
@@ -89,7 +45,7 @@ HAVING SUM((CT.ISSUED_LBS - CT.APPLIED_LBS + CT.ADJUSTED_LBS - CT.SUB_CONT_LBS)/
 				>
 				<GroupFilter
 					DataType="Text"
-					GroupColumn="COMMODITYCD"
+					GroupColumn="CCODE"
 					KeepGroupedRows="False"
 					>
 					<GroupAggregateColumn
@@ -105,6 +61,57 @@ HAVING SUM((CT.ISSUED_LBS - CT.APPLIED_LBS + CT.ADJUSTED_LBS - CT.SUB_CONT_LBS)/
 					SortSequence="Ascending"
 				/>
 			</DataLayer>
+			<Series
+				ChartXDataColumn="CDESC"
+				ChartXDataColumnType="Text"
+				ChartYDataColumn="rdGrgrREMAINING-REMAINING_BU-sum"
+				Type="Bar"
+				>
+				<Quicktip>
+					<QuicktipRow
+						Caption="Commodity: "
+						Value="@Chart.CDESC~"
+					/>
+					<QuicktipRow
+						Caption="Remaining BU: "
+						Format="###,###,##0.000"
+						Value="@Chart.rdGrgrREMAINING-REMAINING_BU-sum~"
+					/>
+				</Quicktip>
+				<Action
+					ID="actionReport.TMAContractsByShipDate"
+					Type="Report"
+					>
+					<LinkParams
+						paramCommodityCode="@Data.CCODE~"
+						paramCommodityDesc="@Data.CDESC~"
+						paramShipPeriodDesc="@Local.SHIP_PERIOD_DESC~"
+						paramShipPeriodDt="@Local.SHIP_PERIOD_DT~"
+					/>
+					<Remark>
+						<Target
+							Report="Unknown.SubReports.TMAContractsByShipDate"
+							RequestForwarding="True"
+							Type="Report"
+						/>
+					</Remark>
+					<Target
+						Report="Unknown.SubReports.zPassedIn"
+						RequestForwarding="True"
+						Type="Report"
+					/>
+				</Action>
+			</Series>
+			<ChartXAxis
+				AxisCaption="Commodity"
+				>
+				<AxisLabelStyle
+					FontAngle="40"
+				/>
+			</ChartXAxis>
+			<ChartYAxis
+				AxisCaption="Remaining BU"
+			/>
 		</ChartCanvas>
 		<DataTable
 			AccessibleHeaders="True"
@@ -123,6 +130,7 @@ HAVING SUM((CT.ISSUED_LBS - CT.APPLIED_LBS + CT.ADJUSTED_LBS - CT.SUB_CONT_LBS)/
   , SUBSTRING(LTRIM(RTRIM([CT].[CONTRACT_NUMBER])),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM([CT].[CONTRACT_NUMBER])))-1) AS [CONTRACTNMBR]
   , LTRIM(RTRIM([CT].[CUSTOMER])) AS [CUSTNMBR]
   , LTRIM(RTRIM(MAX([CM].[NAME]))) AS [CUSTDESC]
+  , LTRIM(RTRIM([CT].[COMMODITY_CODE])) AS [COMMODITYCD]
   , LTRIM(RTRIM([IV].[DESCRIPTION])) AS [COMMODITYDESC]
   , CAST(SUM(([CT].[ISSUED_LBS]-[CT].[APPLIED_LBS]+[CT].[ADJUSTED_LBS]-[CT].[SUB_CONT_LBS])/[UM].[STANDARD_UNITS_LBS]) AS NUMERIC(19,3)) AS [REMAINING_BU]
 FROM [AgTrax_Staging]..[CA_CONTRACT_MASTER] AS [CT] with(nolock)
@@ -133,11 +141,18 @@ WHERE [CT].[CONTRACT_STATUS]=&apos;O&apos;
 GROUP BY CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;_&apos;+[CT].[COMMODITY_CODE]+&apos;_&apos;+SUBSTRING(LTRIM(RTRIM([CT].[CONTRACT_NUMBER])),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM([CT].[CONTRACT_NUMBER])))-1)
   , SUBSTRING(LTRIM(RTRIM([CT].[CONTRACT_NUMBER])),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM([CT].[CONTRACT_NUMBER])))-1)
   , LTRIM(RTRIM([CT].[CUSTOMER])) 
+  , LTRIM(RTRIM([CT].[COMMODITY_CODE]))
   , LTRIM(RTRIM([IV].[DESCRIPTION]))
 HAVING SUM(([CT].[ISSUED_LBS]-[CT].[APPLIED_LBS]+[CT].[ADJUSTED_LBS]-[CT].[SUB_CONT_LBS])/[UM].[STANDARD_UNITS_LBS])&lt;0
 "
 				Type="SQL"
-			/>
+				>
+				<SortFilter
+					DataType="Number"
+					SortColumn="REMAINING_BU"
+					SortSequence="Ascending"
+				/>
+			</DataLayer>
 			<InteractivePaging
 				CaptionType="Image"
 				HideShowPrevNextCaptions="False"
@@ -159,13 +174,28 @@ HAVING SUM(([CT].[ISSUED_LBS]-[CT].[APPLIED_LBS]+[CT].[ADJUSTED_LBS]-[CT].[SUB_C
 						ID="rptTMAContractOvershipped"
 						Type="Report"
 						>
+						<Remark>
+							<LinkParams
+								paramContractKey="@Data.KEY~"
+							/>
+						</Remark>
+						<Remark>
+							<Target
+								Report="Unknown.SubReports.TMAContractsOvershipped"
+								RequestForwarding="True"
+								Type="Report"
+							/>
+						</Remark>
+						<LinkParams
+							paramCommodityCode="@Data.COMMODITYCD~"
+							paramCommodityDesc="@Data.COMMODITYDESC~"
+							paramShipPeriodDesc="@Local.SHIP_PERIOD_DESC~"
+							paramShipPeriodDt="@Local.SHIP_PERIOD_DT~"
+						/>
 						<Target
-							Report="Unknown.SubReports.TMAContractsOvershipped"
+							Report="Unknown.SubReports.zPassedIn"
 							RequestForwarding="True"
 							Type="Report"
-						/>
-						<LinkParams
-							paramContractKey="@Data.KEY~"
 						/>
 					</Action>
 				</Label>
@@ -212,6 +242,7 @@ HAVING SUM(([CT].[ISSUED_LBS]-[CT].[APPLIED_LBS]+[CT].[ADJUSTED_LBS]-[CT].[SUB_C
 				>
 				<Label
 					Caption="@Data.REMAINING_BU~"
+					Format="###,###,##0.000"
 					ID="colREMAINING_BU"
 				/>
 				<DataColumnSort
@@ -225,6 +256,9 @@ HAVING SUM(([CT].[ISSUED_LBS]-[CT].[APPLIED_LBS]+[CT].[ADJUSTED_LBS]-[CT].[SUB_C
 				<Label
 					ID="KPI"
 					>
+					<Note
+						Note="KPI Remaining Contract Balance Conditions: Green greater than 2500 BU; Yellow 0 to 2500; Red less than 0"
+					/>
 					<ConditionalClass
 						Class="fa fa-arrow-up fa-2x text-success"
 						Condition="@Data.REMAINING_BU~ &gt; 2500"
@@ -265,10 +299,10 @@ HAVING SUM(([CT].[ISSUED_LBS]-[CT].[APPLIED_LBS]+[CT].[ADJUSTED_LBS]-[CT].[SUB_C
   , CASE WHEN CONVERT(VARCHAR(6),CT.DELIVERY_END_DATE,112)&lt;CONVERT(VARCHAR(6),GETDATE(),112) THEN &apos;190001&apos; ELSE CONVERT(VARCHAR(6),CT.DELIVERY_END_DATE,112) END AS [DELENDDTID]
   , CASE WHEN CONVERT(VARCHAR(6),CT.DELIVERY_END_DATE,112)&lt;CONVERT(VARCHAR(6),GETDATE(),112) THEN &apos;Prior&apos; ELSE DATENAME(Month,MAX(CT.DELIVERY_END_DATE))+&apos; &apos;+DATENAME(Year,MAX(CT.DELIVERY_END_DATE)) END AS [DELENDDTDSC]
   , CAST(SUM((CT.ISSUED_LBS-CT.APPLIED_LBS+ADJUSTED_LBS-SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS) AS NUMERIC(19,3)) AS [REMAINING_BU]
-FROM AgTrax_Staging..CA_CONTRACT_MASTER CT 
-  INNER JOIN AgTrax_Staging..AR_CUSTOMER_MASTER_TMA CM ON CT.CUSTOMER=CM.CUSTOMER
-  LEFT OUTER JOIN AgTrax_Staging..CA_COMMODITY_MASTER IV ON CT.COMMODITY_CODE=IV.COMMODITY_CODE
-  LEFT OUTER JOIN AgTrax_Staging..IV_UNIT_OF_MEASURE UM ON IV.UOM_BUSHELS=UM.UNIT_OF_MEASURE
+FROM AgTrax_Staging..CA_CONTRACT_MASTER CT with(nolock) 
+  INNER JOIN AgTrax_Staging..AR_CUSTOMER_MASTER_TMA CM with(nolock) ON CT.CUSTOMER=CM.CUSTOMER
+  LEFT OUTER JOIN AgTrax_Staging..CA_COMMODITY_MASTER IV with(nolock) ON CT.COMMODITY_CODE=IV.COMMODITY_CODE
+  LEFT OUTER JOIN AgTrax_Staging..IV_UNIT_OF_MEASURE UM with(nolock) ON IV.UOM_BUSHELS=UM.UNIT_OF_MEASURE
 WHERE CT.CONTRACT_STATUS=&apos;O&apos;
   AND CT.DELIVERY_END_DATE &lt; DATEADD(MONTH,11,GETDATE())
 GROUP BY CT.CONTRACT_TYPE, CONVERT(VARCHAR(6),CT.DELIVERY_END_DATE,112)
@@ -284,10 +318,10 @@ SELECT
   , CASE WHEN CONVERT(VARCHAR(6),CT.DELIVERY_END_DATE,112)&lt;CONVERT(VARCHAR(6),GETDATE(),112) THEN &apos;190001&apos; ELSE CONVERT(VARCHAR(6),CT.DELIVERY_END_DATE,112) END AS [DELENDDTID]
   , CASE WHEN CONVERT(VARCHAR(6),CT.DELIVERY_END_DATE,112)&lt;CONVERT(VARCHAR(6),GETDATE(),112) THEN &apos;Prior&apos; ELSE DATENAME(Month,MAX(CT.DELIVERY_END_DATE))+&apos; &apos;+DATENAME(Year,MAX(CT.DELIVERY_END_DATE)) END AS [DELENDDTDSC]
   , CASE CT.CONTRACT_TYPE WHEN 1 THEN CAST(SUM((CT.ISSUED_LBS-CT.APPLIED_LBS+ADJUSTED_LBS-SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS) AS NUMERIC(19,3))*-1 ELSE CAST(SUM((CT.ISSUED_LBS-CT.APPLIED_LBS+ADJUSTED_LBS-SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS) AS NUMERIC(19,3)) END AS [REMAINING_BU]
-FROM AgTrax_Staging..CA_CONTRACT_MASTER CT 
-  INNER JOIN AgTrax_Staging..AR_CUSTOMER_MASTER_TMA CM ON CT.CUSTOMER=CM.CUSTOMER
-  LEFT OUTER JOIN AgTrax_Staging..CA_COMMODITY_MASTER IV ON CT.COMMODITY_CODE=IV.COMMODITY_CODE
-  LEFT OUTER JOIN AgTrax_Staging..IV_UNIT_OF_MEASURE UM ON IV.UOM_BUSHELS=UM.UNIT_OF_MEASURE
+FROM AgTrax_Staging..CA_CONTRACT_MASTER CT with(nolock)
+  INNER JOIN AgTrax_Staging..AR_CUSTOMER_MASTER_TMA CM with(nolock) ON CT.CUSTOMER=CM.CUSTOMER
+  LEFT OUTER JOIN AgTrax_Staging..CA_COMMODITY_MASTER IV with(nolock) ON CT.COMMODITY_CODE=IV.COMMODITY_CODE
+  LEFT OUTER JOIN AgTrax_Staging..IV_UNIT_OF_MEASURE UM with(nolock) ON IV.UOM_BUSHELS=UM.UNIT_OF_MEASURE
 WHERE CT.CONTRACT_STATUS=&apos;O&apos;
   AND CT.DELIVERY_END_DATE &lt; DATEADD(MONTH,11,GETDATE())
 GROUP BY CT.CONTRACT_TYPE, CONVERT(VARCHAR(6),CT.DELIVERY_END_DATE,112)
@@ -350,6 +384,7 @@ GROUP BY VC.DELENDDTID, VC.COMMODITYCD, VC.COMMODITYDESC, VC.DELENDDTDSC
 				>
 				<Label
 					Caption="=iif(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)"
+					Format="###,###,##0.000"
 					ID="lblAxValue"
 					NoWrap="True"
 				/>
