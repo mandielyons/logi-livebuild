@@ -74,20 +74,7 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 				ShowPageNumber="Numbered"
 			/>
 			<DataTableColumn
-				Header="CUSTDESC"
-				ID="colCUSTDESC"
-				>
-				<Label
-					Caption="@Data.CUSTDESC~"
-					ID="colCUSTDESC"
-				/>
-				<DataColumnSort
-					DataColumn="CUSTDESC"
-					DataType="Text"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="CUSTNMBR"
+				Header="Account Number"
 				ID="colCUSTNMBR"
 				>
 				<Label
@@ -100,7 +87,20 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 				/>
 			</DataTableColumn>
 			<DataTableColumn
-				Header="CUSTADDR1"
+				Header="Account"
+				ID="colCUSTDESC"
+				>
+				<Label
+					Caption="@Data.CUSTDESC~"
+					ID="colCUSTDESC"
+				/>
+				<DataColumnSort
+					DataColumn="CUSTDESC"
+					DataType="Text"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Address"
 				ID="colCUSTADDR1"
 				>
 				<Label
@@ -113,7 +113,7 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 				/>
 			</DataTableColumn>
 			<DataTableColumn
-				Header="CUSTCITY"
+				Header="City"
 				ID="colCUSTCITY"
 				>
 				<Label
@@ -126,7 +126,7 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 				/>
 			</DataTableColumn>
 			<DataTableColumn
-				Header="CUSTSTATE"
+				Header="State"
 				ID="colCUSTSTATE"
 				>
 				<Label
@@ -139,7 +139,7 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 				/>
 			</DataTableColumn>
 			<DataTableColumn
-				Header="CUSTZIPCODE"
+				Header="Postal Code"
 				ID="colCUSTZIPCODE"
 				>
 				<Label
@@ -152,7 +152,7 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 				/>
 			</DataTableColumn>
 			<DataTableColumn
-				Header="MAINCONTRACT"
+				Header="Contract Main"
 				ID="colMAINCONTRACT"
 				>
 				<Label
@@ -165,7 +165,7 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 				/>
 			</DataTableColumn>
 			<DataTableColumn
-				Header="SUBCONTRACT"
+				Header="Sub Contract"
 				ID="colSUBCONTRACT"
 				>
 				<Label
@@ -177,21 +177,23 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 					DataType="Text"
 				/>
 			</DataTableColumn>
-			<DataTableColumn
-				Header="CONTRACTNMBR"
-				ID="colCONTRACTNMBR"
-				>
-				<Label
-					Caption="@Data.CONTRACTNMBR~"
+			<Remark>
+				<DataTableColumn
+					Header="CONTRACTNMBR"
 					ID="colCONTRACTNMBR"
-				/>
-				<DataColumnSort
-					DataColumn="CONTRACTNMBR"
-					DataType="Text"
-				/>
-			</DataTableColumn>
+					>
+					<Label
+						Caption="@Data.CONTRACTNMBR~"
+						ID="colCONTRACTNMBR"
+					/>
+					<DataColumnSort
+						DataColumn="CONTRACTNMBR"
+						DataType="Text"
+					/>
+				</DataTableColumn>
+			</Remark>
 			<DataTableColumn
-				Header="CONTRACTDT"
+				Header="Contract Date"
 				ID="colCONTRACTDT"
 				>
 				<Label
@@ -205,7 +207,7 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 				/>
 			</DataTableColumn>
 			<DataTableColumn
-				Header="DELIVERY_START_DATE"
+				Header="Delivery Start"
 				ID="colDELIVERY_START_DATE"
 				>
 				<Label
@@ -219,7 +221,7 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 				/>
 			</DataTableColumn>
 			<DataTableColumn
-				Header="DELIVERY_END_DATE"
+				Header="Delivery End"
 				ID="colDELIVERY_END_DATE"
 				>
 				<Label
@@ -233,7 +235,7 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 				/>
 			</DataTableColumn>
 			<DataTableColumn
-				Header="DPRPOSITION"
+				Header="DPR Position"
 				ID="colDPRPOSITION"
 				>
 				<Label
@@ -246,7 +248,7 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 				/>
 			</DataTableColumn>
 			<DataTableColumn
-				Header="DPRDESC"
+				Header="DPR Description"
 				ID="colDPRDESC"
 				>
 				<Label
@@ -259,7 +261,7 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 				/>
 			</DataTableColumn>
 			<DataTableColumn
-				Header="LOCNMBR"
+				Header="Location"
 				ID="colLOCNMBR"
 				>
 				<Label
@@ -272,7 +274,7 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 				/>
 			</DataTableColumn>
 			<DataTableColumn
-				Header="LOCDESC"
+				Header="Location Description"
 				ID="colLOCDESC"
 				>
 				<Label
@@ -285,7 +287,7 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 				/>
 			</DataTableColumn>
 			<DataTableColumn
-				Header="COMMODITYCD"
+				Header="Commodity Code"
 				ID="colCOMMODITYCD"
 				>
 				<Label
@@ -298,7 +300,7 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 				/>
 			</DataTableColumn>
 			<DataTableColumn
-				Header="COMMODITYDESC"
+				Header="Commodity Description"
 				ID="colCOMMODITYDESC"
 				>
 				<Label
@@ -311,11 +313,12 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 				/>
 			</DataTableColumn>
 			<DataTableColumn
-				Header="ISSUED_LBS"
+				Header="Issued LB"
 				ID="colISSUED_LBS"
 				>
 				<Label
 					Caption="@Data.ISSUED_LBS~"
+					Format="###,###,##0.000"
 					ID="colISSUED_LBS"
 				/>
 				<DataColumnSort
@@ -323,51 +326,58 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 					DataType="Number"
 				/>
 			</DataTableColumn>
-			<DataTableColumn
-				Header="APPLIED_LBS"
-				ID="colAPPLIED_LBS"
-				>
-				<Label
-					Caption="@Data.APPLIED_LBS~"
+			<Remark>
+				<DataTableColumn
+					Header="APPLIED_LBS"
 					ID="colAPPLIED_LBS"
-				/>
-				<DataColumnSort
-					DataColumn="APPLIED_LBS"
-					DataType="Number"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="ADJUSTED_LBS"
-				ID="colADJUSTED_LBS"
-				>
-				<Label
-					Caption="@Data.ADJUSTED_LBS~"
+					>
+					<Label
+						Caption="@Data.APPLIED_LBS~"
+						ID="colAPPLIED_LBS"
+					/>
+					<DataColumnSort
+						DataColumn="APPLIED_LBS"
+						DataType="Number"
+					/>
+				</DataTableColumn>
+			</Remark>
+			<Remark>
+				<DataTableColumn
+					Header="ADJUSTED_LBS"
 					ID="colADJUSTED_LBS"
-				/>
-				<DataColumnSort
-					DataColumn="ADJUSTED_LBS"
-					DataType="Number"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="SUB_CONT_LBS"
-				ID="colSUB_CONT_LBS"
-				>
-				<Label
-					Caption="@Data.SUB_CONT_LBS~"
+					>
+					<Label
+						Caption="@Data.ADJUSTED_LBS~"
+						ID="colADJUSTED_LBS"
+					/>
+					<DataColumnSort
+						DataColumn="ADJUSTED_LBS"
+						DataType="Number"
+					/>
+				</DataTableColumn>
+			</Remark>
+			<Remark>
+				<DataTableColumn
+					Header="SUB_CONT_LBS"
 					ID="colSUB_CONT_LBS"
-				/>
-				<DataColumnSort
-					DataColumn="SUB_CONT_LBS"
-					DataType="Number"
-				/>
-			</DataTableColumn>
+					>
+					<Label
+						Caption="@Data.SUB_CONT_LBS~"
+						ID="colSUB_CONT_LBS"
+					/>
+					<DataColumnSort
+						DataColumn="SUB_CONT_LBS"
+						DataType="Number"
+					/>
+				</DataTableColumn>
+			</Remark>
 			<DataTableColumn
-				Header="REMAINING_LBS"
+				Header="Remaining LB"
 				ID="colREMAINING_LBS"
 				>
 				<Label
 					Caption="@Data.REMAINING_LBS~"
+					Format="###,###,##0.000"
 					ID="colREMAINING_LBS"
 				/>
 				<DataColumnSort
@@ -376,11 +386,12 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 				/>
 			</DataTableColumn>
 			<DataTableColumn
-				Header="ISSUED_BU"
+				Header="Issued BU"
 				ID="colISSUED_BU"
 				>
 				<Label
 					Caption="@Data.ISSUED_BU~"
+					Format="###,###,##0.000"
 					ID="colISSUED_BU"
 				/>
 				<DataColumnSort
@@ -389,11 +400,12 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 				/>
 			</DataTableColumn>
 			<DataTableColumn
-				Header="APPLIED_BU"
+				Header="Applied BU"
 				ID="colAPPLIED_BU"
 				>
 				<Label
 					Caption="@Data.APPLIED_BU~"
+					Format="###,###,##0.000"
 					ID="colAPPLIED_BU"
 				/>
 				<DataColumnSort
@@ -402,11 +414,12 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 				/>
 			</DataTableColumn>
 			<DataTableColumn
-				Header="ADJUSTED_BU"
+				Header="Adjusted BU"
 				ID="colADJUSTED_BU"
 				>
 				<Label
 					Caption="@Data.ADJUSTED_BU~"
+					Format="###,###,##0.000"
 					ID="colADJUSTED_BU"
 				/>
 				<DataColumnSort
@@ -415,11 +428,12 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 				/>
 			</DataTableColumn>
 			<DataTableColumn
-				Header="SUB_CONT_BU"
+				Header="SubContracted BU"
 				ID="colSUB_CONT_BU"
 				>
 				<Label
 					Caption="@Data.SUB_CONT_BU~"
+					Format="###,###,##0.000"
 					ID="colSUB_CONT_BU"
 				/>
 				<DataColumnSort
@@ -428,11 +442,12 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 				/>
 			</DataTableColumn>
 			<DataTableColumn
-				Header="REMAINING_BU"
+				Header="Remaining BU"
 				ID="colREMAINING_BU"
 				>
 				<Label
 					Caption="@Data.REMAINING_BU~"
+					Format="###,###,##0.000"
 					ID="colREMAINING_BU"
 				/>
 				<DataColumnSort
@@ -443,6 +458,6 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 		</DataTable>
 	</Body>
 	<ideTestParams
-		paramContractKey="1_  40910_02_63977"
+		paramContractKey="1_8320618_02_23978"
 	/>
 </Report>

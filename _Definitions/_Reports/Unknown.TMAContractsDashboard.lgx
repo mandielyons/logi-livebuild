@@ -12,28 +12,35 @@
 		paramShipPeriodDt="2015-11-30"
 		Position="Cash"
 	/>
-	<Remark>
-		<LocalData>
-			<DataLayer
-				ConnectionID="connProdGP"
-				ID="dlSQLShipPeriodDt"
-				Source="SELECT CAST(DATEADD(DAY,-1,CAST(CONVERT(VARCHAR(7),GETDATE(),120)+&apos;-01&apos; AS DATE)) AS VARCHAR(10)) AS [SHIP_PERIOD_DT]
+	<LocalData>
+		<DataLayer
+			ConnectionID="connProdGP"
+			ID="dlSQLShipPeriodDt"
+			Source="SELECT CAST(DATEADD(DAY,-1,CAST(CONVERT(VARCHAR(7),GETDATE(),120)+&apos;-01&apos; AS DATE)) AS VARCHAR(10)) AS [SHIP_PERIOD_DT]
   , CONVERT(VARCHAR(10),DATEADD(DAY,-1,CAST(CONVERT(VARCHAR(7),GETDATE(),120)+&apos;-01&apos; AS DATE)),110) AS [SHIP_PERIOD_DESC]"
-				Type="SQL"
-			/>
-		</LocalData>
-	</Remark>
+			Type="SQL"
+		/>
+	</LocalData>
 	<Body>
-		<Remark>
-			<ChartCanvas
-				ChartCaption="Ship Period @Local.SHIP_PERIOD_DESC~"
-				ChartOrientation="Default"
-				ID="ContractsByCommodity"
+		<ResponsiveRow>
+			<ResponsiveColumn
+				ColspanExtraSmallScreen="1"
+				ColspanLargeScreen="6"
+				ColspanMediumScreen="3"
+				ColspanSmallScreen="1"
 				>
-				<DataLayer
-					ConnectionID="connProdGP"
-					ID="SQLDataLayer1"
-					Source="SELECT LTRIM(RTRIM(CT.COMMODITY_CODE)) AS [COMMODITYCODE],
+				<Division
+					ID="dviContractsbyCommodity"
+					>
+					<ChartCanvas
+						ChartCaption="Ship Period Ending @Local.SHIP_PERIOD_DESC~"
+						ChartOrientation="Default"
+						ID="ContractsByCommodity"
+						>
+						<DataLayer
+							ConnectionID="connProdGP"
+							ID="SQLDataLayer1"
+							Source="SELECT LTRIM(RTRIM(CT.COMMODITY_CODE)) AS [COMMODITYCODE],
   LTRIM(RTRIM(MAX(IV.DESCRIPTION))) AS [COMMODITYDESC],
   CAST(SUM((CT.ISSUED_LBS-CT.APPLIED_LBS+CT.ADJUSTED_LBS-CT.SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS) AS NUMERIC(19,3)) AS [REMAINING_BU]
 FROM [Agtrax_Staging]..[CA_CONTRACT_MASTER] AS [CT] with(nolock) 
@@ -43,92 +50,124 @@ WHERE CT.CONTRACT_STATUS=&apos;O&apos; AND CT.DELIVERY_END_DATE&lt;=&apos;@Local
 GROUP BY CT.COMMODITY_CODE
 HAVING SUM((CT.ISSUED_LBS - CT.APPLIED_LBS + CT.ADJUSTED_LBS - CT.SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS) &lt;&gt; 0.0
 "
-					Type="SQL"
-					>
-					<GroupFilter
-						DataType="Text"
-						GroupColumn="COMMODITYCODE"
-						KeepGroupedRows="False"
-						>
-						<GroupAggregateColumn
-							AggregateColumn="REMAINING_BU"
-							AggregateFunction="SUM"
-							DataType="Number"
-							ID="rdGrgrREMAINING-REMAINING_BU-sum"
+							Type="SQL"
+							>
+							<GroupFilter
+								DataType="Text"
+								GroupColumn="COMMODITYCODE"
+								KeepGroupedRows="False"
+								>
+								<GroupAggregateColumn
+									AggregateColumn="REMAINING_BU"
+									AggregateFunction="SUM"
+									DataType="Number"
+									ID="rdGrgrREMAINING-REMAINING_BU-sum"
+								/>
+							</GroupFilter>
+							<Remark>
+								<SortFilter
+									DataType="Number"
+									SortColumn="rdGrgrREMAINING-REMAINING_BU-sum"
+									SortSequence="Descending"
+									>
+									<Note
+										Note="Sort Bars By Size Decending"
+									/>
+								</SortFilter>
+							</Remark>
+							<SortFilter
+								DataType="Number"
+								SortColumn="COMMODITYCODE"
+								SortSequence="Ascending"
+								>
+								<Note
+									Note="Sort Bars By Commodity Code"
+								/>
+							</SortFilter>
+							<RelevanceFilter
+								DataColumn="rdGrgrREMAINING-REMAINING_BU-sum"
+								IrrelevanceLabel="Under 150k BU"
+								LabelColumn="COMMODITYDESC"
+								RelevanceType="Value"
+								RelevanceValue="150000"
+								>
+								<Note
+									Note="Apply &quot;relevance&quot; to limit display"
+								/>
+							</RelevanceFilter>
+						</DataLayer>
+						<Series
+							ChartXDataColumn="COMMODITYDESC"
+							ChartXDataColumnType="Text"
+							ChartYDataColumn="rdGrgrREMAINING-REMAINING_BU-sum"
+							Type="Bar"
+							>
+							<Remark>
+								<Quicktip>
+									<QuicktipRow
+										Caption="Commodity: "
+										Value="@Chart.COMMODITYDESC~"
+									/>
+									<QuicktipRow
+										Caption="Remaining BU: "
+										Format="###,###,##0.000"
+										Value="@Chart.rdGrgrREMAINING-REMAINING_BU-sum~"
+									/>
+								</Quicktip>
+							</Remark>
+							<Action
+								ID="actionReport.TMAContractsByShipDate"
+								Type="Report"
+								>
+								<LinkParams
+									paramCommodityCode="@Chart.COMMODITYCODE~"
+									paramCommodityDesc="@Chart.COMMODITYDESC~"
+									paramShipPeriodDesc="@Local.SHIP_PERIOD_DESC~"
+									paramShipPeriodDt="@Local.SHIP_PERIOD_DT~"
+								/>
+								<Target
+									Report="Unknown.SubReports.TMAContractsByShipDate"
+									RequestForwarding="True"
+									Type="Report"
+								/>
+							</Action>
+						</Series>
+						<ChartXAxis
+							AxisCaption="Commodity"
+							>
+							<AxisLabelStyle
+								FontAngle="0"
+							/>
+						</ChartXAxis>
+						<ChartYAxis
+							AxisCaption="Remaining BU"
 						/>
-					</GroupFilter>
-					<SortFilter
-						DataType="Number"
-						SortColumn="rdGrgrREMAINING-REMAINING_BU-sum"
-						SortSequence="Descending"
-					/>
-					<RelevanceFilter
-						DataColumn="rdGrgrREMAINING-REMAINING_BU-sum"
-						RelevanceType="Value"
-						RelevanceValue="1"
-					/>
-				</DataLayer>
-				<Series
-					ChartXDataColumn="COMMODITYDESC"
-					ChartXDataColumnType="Text"
-					ChartYDataColumn="rdGrgrREMAINING-REMAINING_BU-sum"
-					Type="Bar"
-					>
-					<Quicktip>
-						<QuicktipRow
-							Caption="Commodity: "
-							Value="@Chart.COMMODITYDESC~"
-						/>
-						<QuicktipRow
-							Caption="Remaining BU: "
-							Format="###,###,##0.000"
-							Value="@Chart.rdGrgrREMAINING-REMAINING_BU-sum~"
-						/>
-					</Quicktip>
-					<Action
-						ID="actionReport.TMAContractsByShipDate"
-						Type="Report"
-						>
-						<LinkParams
-							paramCommodityCode="@Chart.COMMODITYCODE~"
-							paramCommodityDesc="@Chart.COMMODITYDESC~"
-							paramShipPeriodDesc="@Local.SHIP_PERIOD_DESC~"
-							paramShipPeriodDt="@Local.SHIP_PERIOD_DT~"
-						/>
-						<Target
-							Report="Unknown.SubReports.TMAContractsByShipDate"
-							RequestForwarding="True"
-							Type="Report"
-						/>
-					</Action>
-				</Series>
-				<ChartXAxis
-					AxisCaption="Commodity"
-					>
-					<AxisLabelStyle
-						FontAngle="0"
-					/>
-				</ChartXAxis>
-				<ChartYAxis
-					AxisCaption="Remaining BU"
-				/>
-			</ChartCanvas>
-		</Remark>
-		<Remark>
-			<DataTable
-				AccessibleHeaders="True"
-				AccessibleSummary="AnalysisGrid DataTable"
-				ID="ContractsOvershipped"
-				KeepScrollPosition="True"
-				RememberSort="True"
-				ResizableColumns="True"
-				SortArrows="True"
-				TableBorder="0"
+					</ChartCanvas>
+				</Division>
+			</ResponsiveColumn>
+			<ResponsiveColumn
+				ColspanExtraSmallScreen="1"
+				ColspanLargeScreen="6"
+				ColspanMediumScreen="3"
+				ColspanSmallScreen="1"
 				>
-				<DataLayer
-					ConnectionID="connProdGP"
-					ID="SQLDataLayer2"
-					Source="SELECT CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;_&apos;+[CT].[COMMODITY_CODE]+&apos;_&apos;+SUBSTRING(LTRIM(RTRIM([CT].[CONTRACT_NUMBER])),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM([CT].[CONTRACT_NUMBER])))-1) as [KEY]
+				<Division
+					ID="divContractsOvershipped"
+					>
+					<DataTable
+						AccessibleHeaders="True"
+						AccessibleSummary="AnalysisGrid DataTable"
+						ID="ContractsOvershipped"
+						KeepScrollPosition="True"
+						RememberSort="True"
+						ResizableColumns="True"
+						SortArrows="True"
+						TableBorder="0"
+						>
+						<DataLayer
+							ConnectionID="connProdGP"
+							ID="SQLDataLayer2"
+							Source="SELECT CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;_&apos;+[CT].[COMMODITY_CODE]+&apos;_&apos;+SUBSTRING(LTRIM(RTRIM([CT].[CONTRACT_NUMBER])),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM([CT].[CONTRACT_NUMBER])))-1) as [KEY]
   , SUBSTRING(LTRIM(RTRIM([CT].[CONTRACT_NUMBER])),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM([CT].[CONTRACT_NUMBER])))-1) AS [CONTRACTNMBR]
   , LTRIM(RTRIM([CT].[CUSTOMER])) AS [CUSTNMBR]
   , LTRIM(RTRIM(MAX([CM].[NAME]))) AS [CUSTDESC]
@@ -147,124 +186,126 @@ GROUP BY CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&ap
   , LTRIM(RTRIM([IV].[DESCRIPTION]))
 HAVING SUM(([CT].[ISSUED_LBS]-[CT].[APPLIED_LBS]+[CT].[ADJUSTED_LBS]-[CT].[SUB_CONT_LBS])/[UM].[STANDARD_UNITS_LBS])&lt;0
 "
-					Type="SQL"
-					>
-					<SortFilter
-						DataType="Number"
-						SortColumn="REMAINING_BU"
-						SortSequence="Ascending"
-					/>
-				</DataLayer>
-				<InteractivePaging
-					CaptionType="Image"
-					HideShowPrevNextCaptions="False"
-					HideWhenOnePage="True"
-					IDnotSupportedHere="pagingTableNumbered"
-					Location="Top"
-					PageRowCount="20"
-					ShowPageNumber="Numbered"
-				/>
-				<DataTableColumn
-					Header="Contract"
-					ID="colCONTRACTNMBR"
-					>
-					<Label
-						Caption="@Data.CONTRACTNMBR~"
-						ID="colCONTRACTNMBR"
-						>
-						<Action
-							ID="rptTMAContractOvershipped"
-							Type="Report"
+							Type="SQL"
 							>
-							<LinkParams
-								paramContractKey="@Data.KEY~"
+							<SortFilter
+								DataType="Number"
+								SortColumn="REMAINING_BU"
+								SortSequence="Ascending"
 							/>
-							<Target
-								Report="Unknown.SubReports.TMAContractsOvershipped"
-								RequestForwarding="True"
-								Type="Report"
+						</DataLayer>
+						<InteractivePaging
+							CaptionType="Image"
+							HideShowPrevNextCaptions="False"
+							HideWhenOnePage="True"
+							IDnotSupportedHere="pagingTableNumbered"
+							Location="Top"
+							PageRowCount="8"
+							ShowPageNumber="Numbered"
+						/>
+						<DataTableColumn
+							Header="Contract"
+							ID="colCONTRACTNMBR"
+							>
+							<Label
+								Caption="@Data.CONTRACTNMBR~"
+								ID="colCONTRACTNMBR"
+								>
+								<Action
+									ID="rptTMAContractOvershipped"
+									Type="Report"
+									>
+									<LinkParams
+										paramContractKey="@Data.KEY~"
+									/>
+									<Target
+										Report="Unknown.SubReports.TMAContractsOvershipped"
+										RequestForwarding="True"
+										Type="Report"
+									/>
+								</Action>
+							</Label>
+							<DataColumnSort
+								DataColumn="CONTRACTNMBR"
+								DataType="Text"
 							/>
-						</Action>
-					</Label>
-					<DataColumnSort
-						DataColumn="CONTRACTNMBR"
-						DataType="Text"
-					/>
-				</DataTableColumn>
-				<DataTableColumn
-					Header="Account"
-					ID="colCUSTNMBR"
-					>
-					<Label
-						Caption="@Data.CUSTNMBR~"
-						ID="lblCUSTNMBR"
-					/>
-					<DataColumnSort
-						DataColumn="CUSTNMBR"
-					/>
-					<TooltipPanel
-						ID="tipCustomerDesc"
-						>
-						<Label
-							Caption="@Data.CUSTDESC~"
-						/>
-					</TooltipPanel>
-				</DataTableColumn>
-				<DataTableColumn
-					Header="Commodity"
-					ID="colCOMMODITYDESC"
-					>
-					<Label
-						Caption="@Data.COMMODITYDESC~"
-						ID="colCOMMODITYDESC"
-					/>
-					<DataColumnSort
-						DataColumn="COMMODITYDESC"
-						DataType="Text"
-					/>
-				</DataTableColumn>
-				<DataTableColumn
-					Header="Remaining BU"
-					ID="colREMAINING_BU"
-					>
-					<Label
-						Caption="@Data.REMAINING_BU~"
-						Format="###,###,##0.000"
-						ID="colREMAINING_BU"
-					/>
-					<DataColumnSort
-						DataColumn="REMAINING_BU"
-						DataType="Number"
-					/>
-				</DataTableColumn>
-				<DataTableColumn
-					ID="colKPI"
-					>
-					<Label
-						ID="KPI"
-						>
-						<Note
-							Note="KPI Remaining Contract Balance Conditions: Green greater than 2500 BU; Yellow 0 to 2500; Red less than 0"
-						/>
-						<ConditionalClass
-							Class="fa fa-arrow-up fa-2x text-success"
-							Condition="@Data.REMAINING_BU~ &gt; 2500"
-							ID="Condition-Green&gt;2500"
-						/>
-						<ConditionalClass
-							Class="fa fa-minus fa-2x text-warning"
-							Condition="(@Data.REMAINING_BU~ &gt;=0) And (@Data.REMAINING_BU~ &lt;= 2500)"
-							ID="Condition-Yellow-0-2500"
-						/>
-						<ConditionalClass
-							Class="fa fa-arrow-down fa-2x text-danger"
-							Condition="@Data.REMAINING_BU~ &lt; 0"
-							ID="Condition-Red&lt;0"
-						/>
-					</Label>
-				</DataTableColumn>
-			</DataTable>
-		</Remark>
+						</DataTableColumn>
+						<DataTableColumn
+							Header="Account"
+							ID="colCUSTNMBR"
+							>
+							<Label
+								Caption="@Data.CUSTNMBR~"
+								ID="lblCUSTNMBR"
+							/>
+							<DataColumnSort
+								DataColumn="CUSTNMBR"
+							/>
+							<TooltipPanel
+								ID="tipCustomerDesc"
+								>
+								<Label
+									Caption="@Data.CUSTDESC~"
+								/>
+							</TooltipPanel>
+						</DataTableColumn>
+						<DataTableColumn
+							Header="Commodity"
+							ID="colCOMMODITYDESC"
+							>
+							<Label
+								Caption="@Data.COMMODITYDESC~"
+								ID="colCOMMODITYDESC"
+							/>
+							<DataColumnSort
+								DataColumn="COMMODITYDESC"
+								DataType="Text"
+							/>
+						</DataTableColumn>
+						<DataTableColumn
+							Header="Remaining BU"
+							ID="colREMAINING_BU"
+							>
+							<Label
+								Caption="@Data.REMAINING_BU~"
+								Format="###,###,##0.000"
+								ID="colREMAINING_BU"
+							/>
+							<DataColumnSort
+								DataColumn="REMAINING_BU"
+								DataType="Number"
+							/>
+						</DataTableColumn>
+						<DataTableColumn
+							ID="colKPI"
+							>
+							<Label
+								ID="KPI"
+								>
+								<Note
+									Note="KPI Remaining Contract Balance Conditions: Green greater than 2500 BU; Yellow 0 to 2500; Red less than 0"
+								/>
+								<ConditionalClass
+									Class="fa fa-arrow-up fa-2x text-success"
+									Condition="@Data.REMAINING_BU~ &gt; 2500"
+									ID="Condition-Green&gt;2500"
+								/>
+								<ConditionalClass
+									Class="fa fa-minus fa-2x text-warning"
+									Condition="(@Data.REMAINING_BU~ &gt;=0) And (@Data.REMAINING_BU~ &lt;= 2500)"
+									ID="Condition-Yellow-0-2500"
+								/>
+								<ConditionalClass
+									Class="fa fa-arrow-down fa-2x text-danger"
+									Condition="@Data.REMAINING_BU~ &lt; 0"
+									ID="Condition-Red&lt;0"
+								/>
+							</Label>
+						</DataTableColumn>
+					</DataTable>
+				</Division>
+			</ResponsiveColumn>
+		</ResponsiveRow>
 		<Division
 			ID="divCrosstab"
 			>
@@ -362,30 +403,28 @@ ORDER BY DELENDDTID,[ORDER]
 							CrosstabLabelColumn="COMMODITYCD"
 							ID="CommodityCode"
 						/>
+						<ExtraCrosstabLabelColumn
+							CrosstabLabelColumn="COMMODITYDESC"
+							ID="CommodityDesc"
+						/>
 					</CrosstabFilter>
 					<ConditionFilter
 						Condition="@Data.CommodityCode~=@Request.paramCommodityCT~"
 						ID="ConditionCommodityCode"
 					/>
 				</DataLayer>
-				<Remark>
-					<InteractivePaging
-						CaptionType="Image"
-						HideWhenOnePage="True"
-						Location="Top"
-						PageRowCount="20"
-						ShowPageNumber="True"
-					/>
-				</Remark>
 				<HeaderRow
-					Class="ThemeHeaderSmall"
+					Caption="Commodity"
+					Class="ThemeContainerShadedAndBordered"
 					HeaderPosition="Top"
+					ID="HeaderTabs"
 					>
 					<Column
 						ID="cell-Wheat"
 						>
 						<Label
 							Caption="WHEAT"
+							Class="ThemeContainerShadedAndBordered"
 							ID="lblWHEAT-01"
 							>
 							<Action
@@ -404,6 +443,7 @@ ORDER BY DELENDDTID,[ORDER]
 						>
 						<Label
 							Caption="MILO"
+							Class="ThemeContainerShadedAndBordered"
 							ID="lblMILO-02"
 							>
 							<Action
@@ -422,6 +462,7 @@ ORDER BY DELENDDTID,[ORDER]
 						>
 						<Label
 							Caption="SOYBEANS"
+							Class="ThemeContainerShadedAndBordered"
 							ID="lblSOYBEANS-03"
 							>
 							<Action
@@ -440,6 +481,7 @@ ORDER BY DELENDDTID,[ORDER]
 						>
 						<Label
 							Caption="CORN"
+							Class="ThemeContainerShadedAndBordered"
 							ID="lblCORN-04"
 							>
 							<Action
@@ -458,6 +500,7 @@ ORDER BY DELENDDTID,[ORDER]
 						>
 						<Label
 							Caption="HCE WHEAT"
+							Class="ThemeContainerShadedAndBordered"
 							ID="lblHCEWHEAT-12"
 							>
 							<Action
@@ -478,6 +521,11 @@ ORDER BY DELENDDTID,[ORDER]
 					<Label
 						Caption="@Data.ContractType~"
 						NoWrap="True"
+					/>
+				</CrosstabTableLabelColumn>
+				<CrosstabTableLabelColumn>
+					<Label
+						Caption="@Data.CommodityDesc~"
 					/>
 				</CrosstabTableLabelColumn>
 				<CrosstabTableValueColumns
