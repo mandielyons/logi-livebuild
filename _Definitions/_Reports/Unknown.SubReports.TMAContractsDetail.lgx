@@ -49,6 +49,21 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 			/>
 		</DataLayer>
 	</LocalData>
+	<ReportHeader>
+		<Button
+			Caption="Dashboard Home"
+			ID="buttonHome"
+			>
+			<Action
+				Type="Report"
+				>
+				<Target
+					Report="Unknown.TMAContractsDashboard"
+					Type="Report"
+				/>
+			</Action>
+		</Button>
+	</ReportHeader>
 	<Body>
 		<DataTable
 			AccessibleHeaders="True"

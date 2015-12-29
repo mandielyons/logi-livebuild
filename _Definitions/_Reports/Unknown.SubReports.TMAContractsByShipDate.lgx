@@ -4,6 +4,21 @@
 	ID="Unknown.SubReports.TMAContractsByShipDate"
 	>
 	<DefaultRequestParams/>
+	<ReportHeader>
+		<Button
+			Caption="Dashboard Home"
+			ID="buttonHome"
+			>
+			<Action
+				Type="Report"
+				>
+				<Target
+					Report="Unknown.TMAContractsDashboard"
+					Type="Report"
+				/>
+			</Action>
+		</Button>
+	</ReportHeader>
 	<Body
 		ID="bodyTMAContractsByShipDate"
 		>
@@ -68,41 +83,38 @@ WHERE CT.CONTRACT_STATUS=&apos;O&apos;
 				/>
 			</EventHandler>
 		</InputSelectList>
-		<Remark>
-			<Label
-				Caption="Position: "
-			/>
-		</Remark>
-		<Remark>
-			<InputSelectList
-				DefaultValue="@Request.Position~"
-				ID="Position"
-				IncludeBlank="True"
-				IncludeBlankCaption="{All Positions}"
-				IncludeBlankValue="{ALL}"
-				MultiSelect="False"
-				OptionCaptionColumn="DPRDESC"
-				OptionValueColumn="DPRPOSITION"
-				>
-				<DataLayer
-					ConnectionID="connProdGP"
-					ID="dlSQLPosition"
-					Source="SELECT DISTINCT LTRIM(RTRIM(CT.DPR_POSITION)) [DPRPOSITION], LTRIM(RTRIM(PM.[DESCRIPTION])) [DPRDESC]
+		<LineBreak/>
+		<Label
+			Caption="Position: "
+		/>
+		<InputSelectList
+			DefaultValue="@Request.Position~"
+			ID="Position"
+			IncludeBlank="True"
+			IncludeBlankCaption="{All Positions}"
+			IncludeBlankValue="{ALL}"
+			MultiSelect="False"
+			OptionCaptionColumn="DPRDESC"
+			OptionValueColumn="DPRPOSITION"
+			>
+			<DataLayer
+				ConnectionID="connProdGP"
+				ID="dlSQLPosition"
+				Source="SELECT DISTINCT LTRIM(RTRIM(CT.DPR_POSITION)) [DPRPOSITION], LTRIM(RTRIM(PM.[DESCRIPTION])) [DPRDESC]
 FROM AgTrax_Staging..CA_CONTRACT_MASTER CT with(nolock)
   LEFT OUTER JOIN AgTrax_Staging..CA_POSITION_MASTER PM with(nolock) ON CT.DPR_POSITION=PM.DPR_POSITION
 WHERE CT.CONTRACT_STATUS=&apos;O&apos;
   AND CT.DELIVERY_END_DATE &lt; CAST(CONVERT(VARCHAR(6),GETDATE(),112)+&apos;01&apos; AS DATE)
   AND CT.COMMODITY_CODE=&apos;@Request.paramCommodityCode~&apos;"
-					Type="SQL"
-					>
-					<SortFilter
-						DataType="Text"
-						SortColumn="DPRDESC"
-						SortSequence="Ascending"
-					/>
-				</DataLayer>
-			</InputSelectList>
-		</Remark>
+				Type="SQL"
+				>
+				<SortFilter
+					DataType="Text"
+					SortColumn="DPRDESC"
+					SortSequence="Ascending"
+				/>
+			</DataLayer>
+		</InputSelectList>
 		<LineBreak/>
 		<LineBreak/>
 		<Button
@@ -345,5 +357,6 @@ GROUP BY LTRIM(RTRIM(CM.NAME))
 		paramCommodityCode="01"
 		paramCommodityDesc="Wheat"
 		paramShipPeriodDt="2015-11-30"
+		Position=""
 	/>
 </Report>

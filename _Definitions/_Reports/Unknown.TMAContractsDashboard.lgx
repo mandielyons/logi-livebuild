@@ -39,7 +39,7 @@
 						>
 						<DataLayer
 							ConnectionID="connProdGP"
-							ID="SQLDataLayer1"
+							ID="SQLDataLayer-ContractsByCommodity"
 							Source="SELECT LTRIM(RTRIM(CT.COMMODITY_CODE)) AS [COMMODITYCODE],
   LTRIM(RTRIM(MAX(IV.DESCRIPTION))) AS [COMMODITYDESC],
   CAST(SUM((CT.ISSUED_LBS-CT.APPLIED_LBS+CT.ADJUSTED_LBS-CT.SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS) AS NUMERIC(19,3)) AS [REMAINING_BU]
@@ -64,26 +64,26 @@ HAVING SUM((CT.ISSUED_LBS - CT.APPLIED_LBS + CT.ADJUSTED_LBS - CT.SUB_CONT_LBS)/
 									ID="rdGrgrREMAINING-REMAINING_BU-sum"
 								/>
 							</GroupFilter>
+							<SortFilter
+								DataType="Number"
+								SortColumn="rdGrgrREMAINING-REMAINING_BU-sum"
+								SortSequence="Descending"
+								>
+								<Note
+									Note="Sort Bars By Size Decending"
+								/>
+							</SortFilter>
 							<Remark>
 								<SortFilter
 									DataType="Number"
-									SortColumn="rdGrgrREMAINING-REMAINING_BU-sum"
-									SortSequence="Descending"
+									SortColumn="COMMODITYCODE"
+									SortSequence="Ascending"
 									>
 									<Note
-										Note="Sort Bars By Size Decending"
+										Note="Sort Bars By Commodity Code"
 									/>
 								</SortFilter>
 							</Remark>
-							<SortFilter
-								DataType="Number"
-								SortColumn="COMMODITYCODE"
-								SortSequence="Ascending"
-								>
-								<Note
-									Note="Sort Bars By Commodity Code"
-								/>
-							</SortFilter>
 							<RelevanceFilter
 								DataColumn="rdGrgrREMAINING-REMAINING_BU-sum"
 								IrrelevanceLabel="Under 150k BU"
@@ -102,19 +102,19 @@ HAVING SUM((CT.ISSUED_LBS - CT.APPLIED_LBS + CT.ADJUSTED_LBS - CT.SUB_CONT_LBS)/
 							ChartYDataColumn="rdGrgrREMAINING-REMAINING_BU-sum"
 							Type="Bar"
 							>
-							<Remark>
-								<Quicktip>
+							<Quicktip>
+								<Remark>
 									<QuicktipRow
 										Caption="Commodity: "
 										Value="@Chart.COMMODITYDESC~"
 									/>
-									<QuicktipRow
-										Caption="Remaining BU: "
-										Format="###,###,##0.000"
-										Value="@Chart.rdGrgrREMAINING-REMAINING_BU-sum~"
-									/>
-								</Quicktip>
-							</Remark>
+								</Remark>
+								<QuicktipRow
+									Caption="Remaining BU: "
+									Format="###,###,##0.000"
+									Value="@Chart.rdGrgrREMAINING-REMAINING_BU-sum~"
+								/>
+							</Quicktip>
 							<Action
 								ID="actionReport.TMAContractsByShipDate"
 								Type="Report"
@@ -166,7 +166,7 @@ HAVING SUM((CT.ISSUED_LBS - CT.APPLIED_LBS + CT.ADJUSTED_LBS - CT.SUB_CONT_LBS)/
 						>
 						<DataLayer
 							ConnectionID="connProdGP"
-							ID="SQLDataLayer2"
+							ID="SQLDataLayer-ContractsOvershipped"
 							Source="SELECT CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;_&apos;+[CT].[COMMODITY_CODE]+&apos;_&apos;+SUBSTRING(LTRIM(RTRIM([CT].[CONTRACT_NUMBER])),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM([CT].[CONTRACT_NUMBER])))-1) as [KEY]
   , SUBSTRING(LTRIM(RTRIM([CT].[CONTRACT_NUMBER])),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM([CT].[CONTRACT_NUMBER])))-1) AS [CONTRACTNMBR]
   , LTRIM(RTRIM([CT].[CUSTOMER])) AS [CUSTNMBR]
@@ -317,7 +317,7 @@ HAVING SUM(([CT].[ISSUED_LBS]-[CT].[APPLIED_LBS]+[CT].[ADJUSTED_LBS]-[CT].[SUB_C
 				>
 				<DataLayer
 					ConnectionID="connProdGP"
-					ID="SQLDataLayer3"
+					ID="SQLDataLayer-CommodityNetCrosstab"
 					Source="SELECT CASE CT.CONTRACT_TYPE WHEN 1 THEN &apos;2&apos; WHEN 2 THEN &apos;1&apos; ELSE &apos;0&apos; END +&apos;-&apos;+ CT.COMMODITY_CODE AS [ORDER]
   , LTRIM(RTRIM(CT.COMMODITY_CODE)) AS [COMMODITYCD]
   , LTRIM(RTRIM(IV.[DESCRIPTION])) AS [COMMODITYDESC]
@@ -523,7 +523,9 @@ ORDER BY DELENDDTID,[ORDER]
 						NoWrap="True"
 					/>
 				</CrosstabTableLabelColumn>
-				<CrosstabTableLabelColumn>
+				<CrosstabTableLabelColumn
+					ID="colCommodityDesc"
+					>
 					<Label
 						Caption="@Data.CommodityDesc~"
 					/>
