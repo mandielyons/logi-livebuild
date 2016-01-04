@@ -1,11 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Report
+	Caption="File Upload"
 	ID="Admin.FileUpload"
 	>
 	<DefaultRequestParams
 		StatusMsg=""
 	/>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrHeader"
+	/>
 	<Body>
+		<ResponsiveRow/>
 		<ResponsiveRow>
 			<ResponsiveColumn>
 				<Division
@@ -29,7 +35,17 @@
 						>
 						<ResponsiveRow>
 							<ResponsiveColumn>
-								<Label/>
+								<LineBreak/>
+								<Label
+									Caption="@Request.StatusMsg~"
+									ID="lblStatus"
+									>
+									<ConditionalClass
+										Class="ThemeErrorText"
+										Condition="InStr(&quot;@Request.StatusMsg~&quot;,&quot;Error:&quot;) &gt; 0"
+									/>
+								</Label>
+								<LineBreak/>
 							</ResponsiveColumn>
 						</ResponsiveRow>
 						<ResponsiveRow>
@@ -59,6 +75,9 @@
 										Type="Process"
 										Validate="True"
 										>
+										<LinkParams
+											ReportName="@Request.rdReport~"
+										/>
 										<WaitPage/>
 									</Action>
 								</Button>
@@ -69,4 +88,11 @@
 			</ResponsiveColumn>
 		</ResponsiveRow>
 	</Body>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrFooter"
+	/>
+	<ideTestParams
+		StatusMsg=""
+	/>
 </Report>

@@ -1,0 +1,291 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report
+	Caption="AFD Tank Locations"
+	ID="Maps.EnergyTanks"
+	>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrHeader"
+	/>
+	<Body>
+		<ResponsiveRow>
+			<ResponsiveColumn
+				ColspanExtraSmallScreen="12"
+				ColspanLargeScreen="6"
+				ColspanMediumScreen="12"
+				ColspanSmallScreen="12"
+				>
+				<Division
+					Class="panel panel-default"
+					HtmlDiv="True"
+					ID="panel-map"
+					>
+					<Division
+						Class="panel-heading"
+						HtmlDiv="True"
+						ID="panel-heading-map"
+						>
+						<Label
+							Caption="AFD Tank Locations"
+						/>
+					</Division>
+					<Division
+						Class="panel-body"
+						HtmlDiv="True"
+						ID="panel-body-map"
+						>
+						<GoogleMap
+							GoogleMapPanControl="True"
+							GoogleMapShowTraffic="False"
+							GoogleMapStreetView="True"
+							GoogleMapTypeControl="Dropdown"
+							GoogleMapTypes="Hybrid"
+							GoogleMapZoomControl="Small"
+							Height="600"
+							ID="LocationMap"
+							MapScale="False"
+							Width="800"
+							>
+							<GoogleMapMarkers
+								ID="LocationMarker"
+								>
+								<DataLayer
+									ColumnNamesRow="1"
+									ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx"
+									ExcelWorksheet="Sheet1"
+									ID="dlAFDTanks"
+									Type="Excel"
+									>
+									<GeocodeColumns
+										CityDataColumn="city"
+										LatitudeColumnID="lat"
+										LongitudeColumnID="long"
+									/>
+								</DataLayer>
+								<Action
+									ID="ActMapMarkerInfo"
+									Type="MapMarkerInfo"
+									>
+									<MapMarkerInfo>
+										<Label
+											Caption="Tank ID: "
+											Class="ThemeBold"
+										/>
+										<Label
+											Caption="@Data.tankid~"
+										/>
+										<LineBreak/>
+										<Label
+											Caption="Probe ID: "
+											Class="ThemeBold"
+										/>
+										<Label
+											Caption="@Data.probeid~"
+										/>
+									</MapMarkerInfo>
+								</Action>
+								<Remark>
+									<DataLayer
+										ConnectionID="connMKC"
+										ID="dlDataLocations"
+										Source="Select Distinct MapMKCLocations.LOCNCODE As LOCNCODE,
+  LTrim(RTrim(MapMKCLocations.ADDRESS1)) + &apos; &apos; +
+  LTrim(RTrim(MapMKCLocations.CITY)) + &apos; &apos; +
+  LTrim(RTrim(MapMKCLocations.STATEABBR)) + &apos; &apos; +
+  LTrim(RTrim(MapMKCLocations.ZIPCODE)) As GeoPlace,
+  LTrim(RTrim(MapMKCLocations.CITY)) + &apos; &apos; +
+  LTrim(RTrim(MapMKCLocations.STATEABBR)) As GeoCity,
+  LTrim(RTrim(MapMKCLocations.STATEABBR)) As GeoStateProvince,
+  LTrim(RTrim(MapMKCLocations.ZIPCODE)) As GeoZipCode,
+  MapMKCLocations.LOCNDSCR As LocValue
+From MapMKCLocations"
+										Type="SQL"
+										>
+										<GeocodeColumns
+											CityDataColumn="GeoCity"
+											ID="MapPlaceData"
+											PlaceDataColumn="GeoPlace"
+											PostalCodeDataColumn="GeoZipCode"
+											StateProvinceDataColumn="GeoStateProvince"
+										/>
+									</DataLayer>
+								</Remark>
+								<Remark>
+									<Action
+										ElementID="panel-detail-container"
+										ID="refLocationInfoTable"
+										Type="RefreshElement"
+										>
+										<LinkParams
+											paramLocCd="@Data.LOCNCODE~"
+											paramLocName="@Data.LocValue~"
+										/>
+										<WaitPage/>
+									</Action>
+								</Remark>
+								<Remark>
+									<MapMarkerImage>
+										<Remark>
+											<Image
+												Caption="elevator.gif"
+												Height="42"
+												ID="imgElevator"
+												Width="42"
+											/>
+										</Remark>
+									</MapMarkerImage>
+								</Remark>
+							</GoogleMapMarkers>
+						</GoogleMap>
+						<LineBreak/>
+						<Remark>
+							<Division
+								HtmlDiv="True"
+								ID="panel-detail-container"
+								>
+								<Division
+									Class="panel panel-default"
+									Condition="&quot;@Request.paramLocName~&quot;.length &gt; 0"
+									HtmlDiv="True"
+									ID="panel-detail"
+									>
+									<Division
+										Class="panel-heading"
+										HtmlDiv="True"
+										ID="panel-heading-detail"
+										>
+										<ResponsiveRow
+											CollisionBehavior="Overlap"
+											>
+											<ResponsiveColumn>
+												<Label
+													Caption="Location Detail for @Request.paramLocName~"
+												/>
+											</ResponsiveColumn>
+											<ResponsiveColumn>
+												<Label
+													Class="fa fa-close pull-right color-panel-heading"
+													>
+													<Action
+														ElementID="panel-detail-container"
+														ID="actCloseMapDetail"
+														Type="RefreshElement"
+														>
+														<LinkParams
+															paramLocName=""
+														/>
+														<WaitPage/>
+													</Action>
+												</Label>
+												<IncludeHtml
+													Html="&lt;style&gt;
+/* Color Classes */
+.color-panel-heading {
+	color: #6F767F !important;
+}
+.color-black {
+	color: #000000 !important;
+}
+&lt;/style&gt;"
+												/>
+											</ResponsiveColumn>
+										</ResponsiveRow>
+									</Division>
+									<Division
+										Class="panel-body"
+										HtmlDiv="True"
+										ID="panel-body-detail"
+										>
+										<ResponsiveRow>
+											<ResponsiveColumn
+												ColspanExtraSmallScreen="1"
+												ColspanLargeScreen="1"
+												ColspanMediumScreen="1"
+												ColspanSmallScreen="1"
+												>
+												<Label
+													Class="fa fa-tachometer color-panel-heading"
+												/>
+											</ResponsiveColumn>
+											<ResponsiveColumn
+												ColspanExtraSmallScreen="11"
+												ColspanLargeScreen="5"
+												ColspanMediumScreen="5"
+												ColspanSmallScreen="11"
+												>
+												<Label
+													Caption="Financials Dashboard"
+													>
+													<Action
+														ID="lnkFinancials"
+														Type="Report"
+														>
+														<Target
+															FrameID="NewWindow"
+															ID="targetFinancials"
+															Report="Home.Financials"
+															RequestForwarding="True"
+															Type="Report"
+															>
+															<WaitPage/>
+														</Target>
+													</Action>
+												</Label>
+											</ResponsiveColumn>
+											<ResponsiveColumn>
+												<Image
+													Caption="location.jpg"
+													Height="250"
+													ID="imgLocation"
+													Width="325"
+												/>
+											</ResponsiveColumn>
+											<ResponsiveColumn
+												ColspanExtraSmallScreen="6"
+												ColspanLargeScreen="6"
+												ColspanMediumScreen="6"
+												ColspanSmallScreen="6"
+												>
+												<Label/>
+											</ResponsiveColumn>
+										</ResponsiveRow>
+										<DataTable
+											ID="tblLocationInfo"
+											>
+											<DataLayer
+												ConnectionID="connMKC"
+												ID="sqlLocInfo"
+												Source="SELECT DISTINCT 1 AS ID, LOCNDSCR AS AttrValue FROM MAPMKCLOCATIONS WHERE LOCNCODE=&apos;@Request.paramLocCd~&apos;
+union 
+SELECT DISTINCT 2 AS ID, LTRIM(RTRIM(ADDRESS1)) + &apos; &apos; + LTRIM(RTRIM(CITY)) + &apos; &apos; + LTRIM(RTRIM(STATEABBR)) + &apos; &apos; + LTRIM(RTRIM(ZIPCODE)) AS LOCNADDR FROM MAPMKCLOCATIONS WHERE LOCNCODE=&apos;@Request.paramLocCd~&apos;
+union 
+SELECT 3 AS ID, AttrValue FROM MAPMKCLOCATIONS WHERE AttrType=&apos;Employees&apos; and LOCNCODE=&apos;@Request.paramLocCd~&apos;
+union
+SELECT 4 AS ID, AttrValue FROM MAPMKCLOCATIONS WHERE AttrType&lt;&gt;&apos;Employees&apos; and LOCNCODE=&apos;@Request.paramLocCd~&apos;
+ORDER BY ID"
+												Type="SQL"
+											/>
+											<DataTableColumn
+												ID="colAttributes"
+												>
+												<LineBreak/>
+												<Label
+													Caption="@Data.AttrValue~"
+												/>
+											</DataTableColumn>
+										</DataTable>
+									</Division>
+								</Division>
+							</Division>
+						</Remark>
+					</Division>
+				</Division>
+			</ResponsiveColumn>
+		</ResponsiveRow>
+	</Body>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrFooter"
+	/>
+	<ideTestParams/>
+</Report>

@@ -1,390 +1,1202 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report Caption="User Management" ID="Admin.UserManagement">
-  <DefaultRequestParams cacheExpirationNow="False" iptActive="1" iptMemberOf="-1" iptSearchEmail="" iptSearchUsername="" />
-  <IncludeSharedElement DefinitionFile="_Layout.Shared" SharedElementID="shrHeader" />
-  <LocalData ID="Local-CurrentUser">
-    <DataLayer CacheKey="dlcCurrentUser-@Function.UserName~" ExpirationNow="@Request.cacheExpirationNow~" ExpirationTime="@Constant.cacheExpirationTime~" ExpirationTimeSpan="@Constant.cacheExpirationTimeSpan~" ID="dlcCurrentUser" Type="Cached">
-      <DataLayer ConnectionID="connLogiDB" HandleQuotesInTokens="True" ID="dlLogiUser" Source="SELECT USERNAME&#xD;&#xA;FROM USERS&#xD;&#xA;WHERE &#xD;&#xA;ACTIVE = 1&#xD;&#xA;AND USERNAME = @iptUsername" Type="SQL">
-        <SqlParameters>
-          <SqlParameter ID="iptUsername" SqlParamType="dt-200" Value="@Function.UserName~" />
-        </SqlParameters>
-        <CalculatedColumn Formula="&quot;OC&quot;" ID="memberOf" />
-        <Join ID="joinLDAP" JoinType="Union">
-          <DataLayer ConnectionID="mkcLDAP" ID="dlLdapUser" LdapSource="SELECT memberOf, sAMAccountName, title, name, userPrincipalName, ADsPath, DisplayName, givenName, sn, mail FROM 'DC=midkscoop,DC=lan' WHERE SamAccountName='@Function.UserName~' and objectClass='person'" Type="Ldap" />
-        </Join>
-      </DataLayer>
-      <DataLayerLink ID="linkCurrentUser" />
-    </DataLayer>
-  </LocalData>
-  <LocalData ID="Local-GetOtherCoopUserList">
-    <DataLayer ConnectionID="connLogiDB" HandleQuotesInTokens="True" ID="lOtherCoopUserList" Source="Select USERS.USERNAME,&#xD;&#xA;  USERS.PASSWORD,&#xD;&#xA;  USERS.EMAIL,&#xD;&#xA;  USERS.ACTIVE&#xD;&#xA;From USERS" Type="SQL">
-      <DataLayerLink ID="linkOtherCoopUserList" />
-      <AggregateColumn AggregateColumn="USERNAME" AggregateFunction="Concat" ConcatSeparator="," DataType="Text" ID="aggUsername">
-        <Note Note="*** can be used to check for existing usernames w/ indexOf function ***" />
-      </AggregateColumn>
-      <CalculatedColumn Formula="&quot;,@Data.aggUsername~,&quot;" ID="aggUsername">
-        <Note Note="*** adding a comma to beginning and end of string for username check ***" />
-      </CalculatedColumn>
-    </DataLayer>
-  </LocalData>
-  <LocalData ID="Local-GetActiveDirectoryUserList">
-    <DataLayer CacheKey="dlcActiveDirectoryUsers" ExpirationNow="@Request.cacheExpirationNow~" ExpirationTime="@Constant.cacheExpirationTime~" ExpirationTimeSpan="@Constant.cacheExpirationTimeSpan~" ID="dlcActiveDirectoryUsers" Type="Cached">
-      <DataLayer ConnectionID="mkcLDAP" ID="LDAP_mkc" LdapSource="SELECT memberOf, cn, displayName, givenName, sn, mail FROM 'OU=MKC Users,DC=midkscoop,DC=lan' WHERE objectClass='Person'" Type="Ldap" />
-      <DataLayer ConnectionID="mkcLDAP" ID="LDAP_tma" LdapSource="SELECT memberOf, cn, displayName, givenName, sn, mail FROM 'OU=TMA LLC,DC=midkscoop,DC=lan' WHERE objectClass='Person'" Type="Ldap" />
-      <GroupFilter DataType="Text" GroupColumn="mail" ID="gMail" KeepGroupedRows="False" SortSequence="Ascending">
-        <GroupAggregateColumn AggregateColumn="memberOf" AggregateFunction="Concat" ConcatSeparator="," DataType="Text" ID="gagMemberOf" />
-      </GroupFilter>
-      <CalculatedColumn Formula="IIF(&quot;@Data.gagMemberOf~&quot;.indexOf(&quot;MKC Dashboard&quot;) &lt;&gt; &quot;-1&quot;,&quot;1&quot;,&quot;0&quot;)" ID="cMKC" />
-      <CalculatedColumn Formula="IIF(&quot;@Data.gagMemberOf~&quot;.indexOf(&quot;TMA Dashboard&quot;) &lt;&gt; &quot;-1&quot;,&quot;1&quot;,&quot;0&quot;)" ID="cTMA" />
-      <DataLayerLink ID="linkActiveDirectoryUserList" />
-    </DataLayer>
-  </LocalData>
-  <Body>
-    <ResponsiveRow CollisionBehavior="Overlap">
-      <ResponsiveColumn>
-        <Division Class="panel panel-default" HtmlDiv="True" ID="panel">
-          <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
-            <ResponsiveRow CollisionBehavior="Overlap">
-              <ResponsiveColumn>
-                <Label Caption="Current User" Class="fa fa-user fa-2x" />
-              </ResponsiveColumn>
-            </ResponsiveRow>
-          </Division>
-          <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
-            <DataTable ID="dtCurrentUser">
-              <AutoColumns />
-              <DataLayer ID="dllCurrentUser" LinkedDataLayerID="linkCurrentUser" Type="Linked" />
-            </DataTable>
-          </Division>
-        </Division>
-      </ResponsiveColumn>
-    </ResponsiveRow>
-    <ResponsiveRow CollisionBehavior="Overlap">
-      <ResponsiveColumn>
-        <Division Class="panel panel-default" HtmlDiv="True" ID="panel">
-          <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
-            <ResponsiveRow CollisionBehavior="Overlap">
-              <ResponsiveColumn ColspanExtraSmallScreen="12" ColspanLargeScreen="3" ColspanMediumScreen="3" ColspanSmallScreen="3">
-                <Label Caption="OC Users" Class="fa fa-users fa-2x" />
-              </ResponsiveColumn>
-              <ResponsiveColumn ColspanExtraSmallScreen="12" ColspanLargeScreen="7" ColspanMediumScreen="7" ColspanSmallScreen="7">
-                <ResponsiveRow CollisionBehavior="Overlap">
-                  <ResponsiveColumn ColspanExtraSmallScreen="12" ColspanLargeScreen="4" ColspanMediumScreen="4" ColspanSmallScreen="12">
-                    <InputRadioButtons DefaultValue="@Request.iptActive~" ID="iptActive" OptionCaptionColumn="ACTIVE_DESC" OptionValueColumn="ACTIVE" RadioButtonDirection="Across">
-                      <EventHandler DhtmlEvent="onchange">
-                        <Action ElementID="dtOtherCoopUsers,div-other-coop-user-search" ID="actRefreshUsersTable" Type="RefreshElement">
-                          <LinkParams cacheExpirationNow="False" />
-                          <WaitPage />
-                        </Action>
-                      </EventHandler>
-                      <DataLayer ID="dlActive" Type="Static">
-                        <StaticDataRow ACTIVE="1" ACTIVE_DESC="Active" />
-                        <StaticDataRow ACTIVE="0" ACTIVE_DESC="Inactive" />
-                        <StaticDataRow ACTIVE="-1" ACTIVE_DESC="All" />
-                      </DataLayer>
-                    </InputRadioButtons>
-                  </ResponsiveColumn>
-                  <ResponsiveColumn ColspanExtraSmallScreen="12" ColspanLargeScreen="8" ColspanMediumScreen="8" ColspanSmallScreen="12">
-                    <Rows>
-                      <Row>
-                        <Column>
-                          <Label Caption="Username:      " />
-                        </Column>
-                        <Column>
-                          <Division HtmlDiv="True" ID="div-other-coop-user-search">
-                            <InputSelectList Class="chosen-select" DefaultValue="@Request.iptSearchUsername~" ID="iptSearchUsername" MultiSelect="True" OptionCaptionColumn="USERNAME" OptionValueColumn="USERNAME">
-                              <DataLayer ID="dllOtherCoopUserList-UserSearch" LinkedDataLayerID="linkOtherCoopUserList" Type="Linked">
-                                <ConditionFilter Condition="&quot;@Data.ACTIVE~&quot;==&quot;@Request.iptActive~&quot; || &quot;@Request.iptActive~&quot;==&quot;-1&quot;" ID="fActive" />
-                              </DataLayer>
-                              <EventHandler DhtmlEvent="onchange">
-                                <Action ElementID="dtOtherCoopUsers" ID="actRefreshUsersTable" Type="RefreshElement">
-                                  <LinkParams cacheExpirationNow="False" />
-                                  <WaitPage />
-                                </Action>
-                              </EventHandler>
-                            </InputSelectList>
-                            <Image Caption="_theme_files.1x1.gif" Class="ThemeHidden">
-                              <EventHandler DhtmlEvent="onload">
-                                <Action ID="jsChosen" Javascript="$( document ).ready(function() {&#xD;&#xA;  $(&quot;.chosen-select&quot;).chosen({&#xD;&#xA;    	search_contains:true&#xD;&#xA;  });&#xD;&#xA;});" Type="Javascript" />
-                              </EventHandler>
-                            </Image>
-                          </Division>
-                        </Column>
-                      </Row>
-                    </Rows>
-                  </ResponsiveColumn>
-                </ResponsiveRow>
-              </ResponsiveColumn>
-              <ResponsiveColumn ColspanExtraSmallScreen="12" ColspanLargeScreen="2" ColspanMediumScreen="2" ColspanSmallScreen="2">
-                <Division Class="btn btn-default pull-right" ID="add-user">
-                  <Label Caption="Add User" Class="fa fa-plus" />
-                  <EventHandler DhtmlEvent="onmousedown">
-                    <Action ElementID="div-edit-popup" ID="actRefreshEditPopup" Type="RefreshElement">
-                      <LinkParams actionType="Add" iptEmail="" iptPassword="" iptUsername="" />
-                    </Action>
-                  </EventHandler>
-                  <EventHandler DhtmlEvent="onmouseup">
-                    <Action ElementID="div-edit-user-content" ID="actShowPopup" Type="ShowElement" />
-                  </EventHandler>
-                </Division>
-              </ResponsiveColumn>
-            </ResponsiveRow>
-          </Division>
-          <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
-            <DataTable AccessibleHeaders="True" AjaxPaging="True" ID="dtOtherCoopUsers" SortArrows="True">
-              <DataLayer ID="dllOtherCoopUserList" LinkedDataLayerID="linkOtherCoopUserList" Type="Linked">
-                <ConditionFilter Condition="&quot;@Data.ACTIVE~&quot;==&quot;@Request.iptActive~&quot; || &quot;@Request.iptActive~&quot;==&quot;-1&quot;" ID="fActive" />
-                <ConditionFilter Condition="&quot;@Request.iptUsername~&quot;.indexOf(&quot;@Data.USERNAME~&quot;) != -1 || &quot;@Request.iptUsername~&quot;==&quot;&quot;" ID="fUsername" />
-              </DataLayer>
-              <InteractivePaging CaptionType="Text" HideShowPrevNextCaptions="True" HideWhenOnePage="True" Location="Top" PageRowCount="20" ShowPageNumber="True" />
-              <Remark>
-                <DataTableColumn Header="ACTIVE" ID="colACTIVE">
-                  <Label HtmlTag="I" ID="lblACTIVE">
-                    <ConditionalClass Class="fa fa-check-square-o" Condition="&quot;@Data.ACTIVE~&quot;==&quot;1&quot;" ID="ccActive" />
-                  </Label>
-                  <DataColumnSort DataColumn="ACTIVE" DataType="Number" />
-                </DataTableColumn>
-              </Remark>
-              <DataTableColumn Header="USERNAME" ID="colUSERNAME">
-                <Label Caption="@Data.USERNAME~" ID="lblUSERNAME" />
-                <DataColumnSort DataColumn="USERNAME" />
-              </DataTableColumn>
-              <DataTableColumn Header="PASSWORD" ID="colPASSWORD">
-                <Label Caption="@Data.PASSWORD~" ID="lblPASSWORD" />
-                <DataColumnSort DataColumn="USER_PASSWORD" />
-                <ResponsiveVisibility HideForExtraSmallScreen="True" HideForLargeScreen="False" HideForMediumScreen="False" HideForSmallScreen="True" />
-              </DataTableColumn>
-              <DataTableColumn Header="EMAIL" ID="colEMAIL">
-                <Label Caption="@Data.EMAIL~" ID="lblEMAIL" />
-                <DataColumnSort DataColumn="EMAIL" />
-                <ResponsiveVisibility HideForExtraSmallScreen="True" HideForLargeScreen="False" HideForMediumScreen="False" HideForSmallScreen="False" />
-              </DataTableColumn>
-              <DataTableColumn Header="ACTIONS" ID="colACTIONS">
-                <Division Class="btn btn-default" ID="edit-user">
-                  <Label Caption=" Edit" Class="fa fa-edit" HtmlTag="I" />
-                  <EventHandler DhtmlEvent="onmousedown">
-                    <Action ElementID="div-edit-popup" ID="actRefreshEditPopup" Type="RefreshElement">
-                      <LinkParams actionType="Edit" iptEmail="@Data.EMAIL~" iptPassword="@Data.PASSWORD~" iptUsername="@Data.USERNAME~" />
-                    </Action>
-                  </EventHandler>
-                  <EventHandler DhtmlEvent="onmouseup">
-                    <Action ElementID="div-edit-user-content" ID="actShowPopup" Type="ShowElement" />
-                  </EventHandler>
-                </Division>
-                <Spaces Size="5" />
-                <Division Class="btn btn-default" Condition="&quot;@Data.ACTIVE~&quot;==&quot;1&quot;" ID="inactivate-user">
-                  <Label Caption=" Inactivate" Class="fa fa-remove" HtmlTag="I" />
-                  <Action ConfirmMessage="Are you sure you want to INACTIVATE @Data.USERNAME~?" ID="actInactivateUser" Process="Admin" TaskID="tskManageUser" Type="Process">
-                    <LinkParams actionType="Inactivate" iptUsername="@Data.USERNAME~" />
-                    <WaitPage />
-                  </Action>
-                </Division>
-                <Division Class="btn btn-default" Condition="&quot;@Data.ACTIVE~&quot;==&quot;0&quot;" ID="activate-user">
-                  <Label Caption="Activate" Class="fa fa-check" />
-                  <Action ConfirmMessage="Are you sure you want to ACTIVATE @Data.USERNAME~?" ID="actActivateUser" Process="Admin" TaskID="tskManageUser" Type="Process">
-                    <LinkParams actionType="Activate" iptUsername="@Data.USERNAME~" />
-                    <WaitPage />
-                  </Action>
-                </Division>
-              </DataTableColumn>
-            </DataTable>
-            <Division HtmlDiv="True" ID="div-edit-popup">
-              <Division Class="panel panel-default" Condition="&quot;@Request.actionType~&quot;==&quot;Add&quot; || &quot;@Request.actionType~&quot;==&quot;Edit&quot;" HtmlDiv="True" ID="div-edit-user-content">
-                <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
-                  <Label Caption="@Request.actionType~ User" Class="fa fa-user" />
-                </Division>
-                <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
-                  <Image Caption="_theme_files.1x1.gif" Class="ThemeHidden">
-                    <Note Note="*** deactivate username when editing ***" />
-                    <EventHandler DhtmlEvent="onload">
-                      <Action ID="actDisableUsernameInput" Javascript="if('@Request.actionType~'=='Edit') $('#iptUsername').prop( &quot;disabled&quot;, true );" Type="Javascript" />
-                    </EventHandler>
-                  </Image>
-                  <InputGrid GridWidth="400" WidthScale="px">
-                    <InputText Caption="Username: " DefaultValue="@Request.iptUsername~" ID="iptUsername">
-                      <Validation ErrorMsg="Username is REQUIRED" Type="Required" />
-                      <EventHandler DhtmlEvent="onchange">
-                        <Action ID="actDuplicateCheck" Javascript="var ipt = $('#iptUsername').val();&#xD;&#xA;var existing = '@Local.aggUsername~';&#xD;&#xA;if(ipt.indexOf(',') != -1)&#xD;&#xA;{&#xD;&#xA;	alert('Username must not contain commas');&#xD;&#xA;} else if(existing.indexOf(','+ipt+',') != -1) /* wrapped to check for ENTIRE username - not a portion */&#xD;&#xA;{&#xD;&#xA;	alert('Username must be Unique');&#xD;&#xA;	$('#iptUsername-Edit').val('');&#xD;&#xA;	$('#iptUsername-Edit').focus();	&#xD;&#xA;}" Type="Javascript" />
-                      </EventHandler>
-                    </InputText>
-                    <InputText Caption="Password: " DefaultValue="@Request.iptPassword~" ID="iptPassword">
-                      <Validation ErrorMsg="Password is REQUIRED" Type="Required" />
-                    </InputText>
-                    <InputText Caption="Email: " DefaultValue="@Request.iptEmail~" ID="iptEmail">
-                      <Validation ErrorMsg="Email Address is REQUIRED" Type="Required" />
-                      <EventHandler DhtmlEvent="onchange">
-                        <Action ID="actEmailValidation" Javascript="var email = $('#iptEmail').val();&#xD;&#xA;if(!isEmail(email))&#xD;&#xA;{&#xD;&#xA;	alert('Invalid Email Address');&#xD;&#xA;	$('#iptEmail').focus();&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;function isEmail(email) {&#xD;&#xA;  var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;&#xD;&#xA;  return regex.test(email);&#xD;&#xA;}" Type="Javascript" />
-                      </EventHandler>
-                    </InputText>
-                  </InputGrid>
-                  <Division Condition="&quot;@Request.actionType~&quot;==&quot;Edit&quot;" ID="div-edit-button">
-                    <Label Caption="Apply" Class="btn btn-default pull-right">
-                      <Action ConfirmMessage="Are you sure you want to EDIT @Request.iptUsername~" ID="actEditUser" Process="Admin" TaskID="tskManageUser" Type="Process" Validate="True">
-                        <LinkParams actionType="Edit" />
-                        <WaitPage />
-                      </Action>
-                    </Label>
-                  </Division>
-                  <Division Condition="&quot;@Request.actionType~&quot;==&quot;Add&quot;" ID="div-add-button">
-                    <Label Caption="Apply" Class="btn btn-default pull-right">
-                      <Action ConfirmMessage="Are you sure you want to create this NEW user?" ID="actAddUser" Process="Admin" TaskID="tskManageUser" Type="Process" Validate="True">
-                        <LinkParams actionType="Add" />
-                        <WaitPage />
-                      </Action>
-                    </Label>
-                  </Division>
-                  <Division ID="div-cancel-button">
-                    <Label Caption="Cancel" Class="btn btn-default pull-right">
-                      <Action Display="Toggle" ElementID="div-edit-popup" ID="actCancelPopup" Type="ShowElement" />
-                    </Label>
-                  </Division>
-                </Division>
-              </Division>
-            </Division>
-          </Division>
-        </Division>
-      </ResponsiveColumn>
-    </ResponsiveRow>
-    <ResponsiveRow CollisionBehavior="Overlap">
-      <ResponsiveColumn>
-        <Division Class="panel panel-default" HtmlDiv="True" ID="panel">
-          <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
-            <ResponsiveRow CollisionBehavior="Overlap">
-              <ResponsiveColumn ColspanExtraSmallScreen="12" ColspanLargeScreen="3" ColspanMediumScreen="3" ColspanSmallScreen="3">
-                <Label Caption="AD Users" Class="fa fa-users fa-2x" />
-              </ResponsiveColumn>
-              <ResponsiveColumn ColspanExtraSmallScreen="12" ColspanLargeScreen="7" ColspanMediumScreen="7" ColspanSmallScreen="7">
-                <ResponsiveRow CollisionBehavior="Overlap">
-                  <ResponsiveColumn ColspanExtraSmallScreen="12" ColspanLargeScreen="4" ColspanMediumScreen="4" ColspanSmallScreen="12">
-                    <InputRadioButtons DefaultValue="@Request.iptMemberOf~" ID="iptMemberOf" OptionCaptionColumn="MEMBER_DESC" OptionValueColumn="MEMBER" RadioButtonDirection="Across">
-                      <EventHandler DhtmlEvent="onchange">
-                        <Action ElementID="dtActiveDirectoryUsers,div-active-directory-user-search" ID="actRefreshUsersTable" Type="RefreshElement">
-                          <LinkParams cacheExpirationNow="False" />
-                          <WaitPage />
-                        </Action>
-                      </EventHandler>
-                      <DataLayer ID="dlMemberOf" Type="Static">
-                        <StaticDataRow MEMBER="MKC Dashboard" MEMBER_DESC="MKC" />
-                        <StaticDataRow MEMBER="TMA Dashboard" MEMBER_DESC="TMA" />
-                        <StaticDataRow MEMBER="-1" MEMBER_DESC="All" />
-                      </DataLayer>
-                    </InputRadioButtons>
-                  </ResponsiveColumn>
-                  <ResponsiveColumn ColspanExtraSmallScreen="12" ColspanLargeScreen="4" ColspanMediumScreen="4" ColspanSmallScreen="12">
-                    <Rows>
-                      <Row>
-                        <Column>
-                          <Label Caption="Email:      " />
-                        </Column>
-                        <Column>
-                          <Division HtmlDiv="True" ID="div-active-directory-user-search">
-                            <InputSelectList Class="chosen-select" DefaultValue="@Request.iptUsername-ActiveDirectory~" ID="iptUsername-ActiveDirectory" MultiSelect="True" OptionCaptionColumn="mail" OptionValueColumn="mail">
-                              <DataLayer ID="dllActiveDirectoryUserList-UserSearch" LinkedDataLayerID="linkActiveDirectoryUserList" Type="Linked">
-                                <ConditionFilter Condition="(&quot;@Request.iptMemberOf~&quot;==&quot;MKC Dashboard&quot; &amp;&amp; &quot;@Data.cMKC~&quot;==&quot;1&quot;) &#xD;&#xA;|| (&quot;@Request.iptMemberOf~&quot;==&quot;TMA Dashboard&quot; &amp;&amp; &quot;@Data.cTMA~&quot;==&quot;1&quot;) || (&quot;@Request.iptMemberOf~&quot;==&quot;-1&quot;)" ID="fUserType" />
-                              </DataLayer>
-                              <EventHandler DhtmlEvent="onchange">
-                                <Action ElementID="dtActiveDirectoryUsers" ID="actRefreshUsersTable" Type="RefreshElement">
-                                  <LinkParams cacheExpirationNow="False" />
-                                  <WaitPage />
-                                </Action>
-                              </EventHandler>
-                            </InputSelectList>
-                            <Image Caption="_theme_files.1x1.gif" Class="ThemeHidden">
-                              <EventHandler DhtmlEvent="onload">
-                                <Action ID="jsChosen" Javascript="$( document ).ready(function() {&#xD;&#xA;  $(&quot;.chosen-select&quot;).chosen({&#xD;&#xA;    	search_contains:true&#xD;&#xA;  });&#xD;&#xA;});" Type="Javascript" />
-                              </EventHandler>
-                            </Image>
-                          </Division>
-                        </Column>
-                      </Row>
-                    </Rows>
-                  </ResponsiveColumn>
-                </ResponsiveRow>
-              </ResponsiveColumn>
-              <ResponsiveColumn ColspanExtraSmallScreen="12" ColspanLargeScreen="2" ColspanMediumScreen="2" ColspanSmallScreen="2">
-                <Label Caption=" " Class="fa fa-refresh text-success pull-right">
-                  <Action ConfirmMessage="Requery Active Directory and Refresh Report?" ID="actRefreshReport" Type="Report">
-                    <LinkParams cacheExpirationNow="True" />
-                    <Target Type="Report">
-                      <WaitPage />
-                    </Target>
-                  </Action>
-                </Label>
-              </ResponsiveColumn>
-            </ResponsiveRow>
-          </Division>
-          <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
-            <DataTable ID="dtActiveDirectoryUsers">
-              <DataLayer ID="dllActiveDirectoryUserList" LinkedDataLayerID="linkActiveDirectoryUserList" Type="Linked">
-                <ConditionFilter Condition="(&quot;@Request.iptMemberOf~&quot;==&quot;MKC Dashboard&quot; &amp;&amp; &quot;@Data.cMKC~&quot;==&quot;1&quot;) &#xD;&#xA;|| (&quot;@Request.iptMemberOf~&quot;==&quot;TMA Dashboard&quot; &amp;&amp; &quot;@Data.cTMA~&quot;==&quot;1&quot;) || (&quot;@Request.iptMemberOf~&quot;==&quot;-1&quot;)" ID="fUserType" />
-                <ConditionFilter Condition="&quot;@Request.iptUsername-ActiveDirectory~&quot;.indexOf(&quot;@Data.mail~&quot;) != -1 || &quot;@Request.iptUsername-ActiveDirectory~&quot;==&quot;&quot;" ID="fUsername" />
-              </DataLayer>
-              <InteractivePaging CaptionType="Text" HideShowPrevNextCaptions="True" HideWhenOnePage="True" Location="Top" PageRowCount="20" ShowPageNumber="True" />
-              <DataTableColumn Header="EMAIL" ID="colmail">
-                <Label Caption="@Data.mail~" ID="lblmail" />
-                <DataColumnSort DataColumn="mail" />
-              </DataTableColumn>
-              <DataTableColumn Header="SURNAME" ID="colsn">
-                <Label Caption="@Data.sn~" ID="lblsn" />
-                <DataColumnSort DataColumn="sn" />
-                <ResponsiveVisibility HideForExtraSmallScreen="True" HideForLargeScreen="False" HideForMediumScreen="False" HideForSmallScreen="False" />
-              </DataTableColumn>
-              <DataTableColumn Header="GIVEN NAME" ID="colgivenName">
-                <Label Caption="@Data.givenName~" ID="lblgivenName" />
-                <DataColumnSort DataColumn="givenName" />
-                <ResponsiveVisibility HideForExtraSmallScreen="True" HideForLargeScreen="False" HideForMediumScreen="False" HideForSmallScreen="False" />
-              </DataTableColumn>
-              <DataTableColumn Header="DISPLAY NAME" ID="coldisplayName">
-                <Label Caption="@Data.displayName~" ID="lbldisplayName" />
-                <DataColumnSort DataColumn="displayName" />
-                <ResponsiveVisibility HideForExtraSmallScreen="True" HideForLargeScreen="False" HideForMediumScreen="False" HideForSmallScreen="False" />
-              </DataTableColumn>
-              <Remark>
-                <DataTableColumn Header="cn" ID="colcn">
-                  <Label Caption="@Data.cn~" ID="lblcn" />
-                  <DataColumnSort DataColumn="cn" />
-                </DataTableColumn>
-              </Remark>
-              <Remark>
-                <DataTableColumn Header="MEMBER OF" ID="colmemberOf">
-                  <Label Caption="@Data.memberOf~" ID="lblmemberOf" />
-                  <DataColumnSort DataColumn="memberOf" />
-                </DataTableColumn>
-              </Remark>
-              <DataTableColumn Header="MKC" ID="colMKC">
-                <Label Caption="@Data.cMKC~" />
-                <DataColumnSort DataColumn="cMKC" DataType="Number" />
-              </DataTableColumn>
-              <DataTableColumn Header="TMA" ID="colTMA">
-                <Label Caption="@Data.cTMA~" />
-                <DataColumnSort DataColumn="cTMA" DataType="Number" />
-              </DataTableColumn>
-              <DataTableColumn Header="MEMBER OF" ID="colGagMemberOf">
-                <Label Caption="@Data.gagMemberOf~" />
-                <DataColumnSort DataColumn="gagMemberOf" />
-                <ResponsiveVisibility HideForExtraSmallScreen="True" HideForLargeScreen="False" HideForMediumScreen="True" HideForSmallScreen="True" />
-              </DataTableColumn>
-            </DataTable>
-          </Division>
-        </Division>
-      </ResponsiveColumn>
-    </ResponsiveRow>
-  </Body>
-  <IncludeSharedElement DefinitionFile="_Layout.Shared" SharedElementID="shrFooter" />
-  <ReportFooter>
-    <Division HtmlDiv="True" ID="div-response-popup">
-      <PopupPanel Draggable="False" HideCloseX="True" ID="pup-action-response" PopupModal="True" PopupPanelLocation="Center" ShowOnPageLoad="@Request.showResponse~">
-        <Division Class="ThemeAlignCenter" HtmlDiv="True" ID="div-response-content">
-          <Label Caption="@Request.respMessage~" />
-          <LineBreak />
-          <LineBreak />
-          <Label Caption="OK" Class="btn btn-default">
-            <Action Display="Hide" ElementID="pup-action-response" ID="actHideResponsePopup" Type="ShowElement" />
-          </Label>
-        </Division>
-      </PopupPanel>
-    </Division>
-    <IncludeScript ID="jsChosen" IncludedScript="$( document ).ready(function() {&#xD;&#xA;  $(&quot;.chosen-select&quot;).chosen({&#xD;&#xA;    	search_contains:true&#xD;&#xA;  });&#xD;&#xA;});" />
-  </ReportFooter>
-  <ideTestParams actionType="" cacheExpirationNow="" iptActive="" iptEmail="" iptMemberOf="" iptPassword="" iptSearchUsername="" iptUsername="" iptUsername-ActiveDirectory="" respMessage="" showResponse="" />
+<Report
+	Caption="User Management"
+	ID="Admin.UserManagement"
+	>
+	<DefaultRequestParams
+		cacheExpirationNow="False"
+		iptActive="1"
+		iptMemberOf="-1"
+		iptSearchEmail=""
+		iptSearchUsername=""
+	/>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrHeader"
+	/>
+	<LocalData
+		ID="Local-CurrentUser"
+		>
+		<DataLayer
+			CacheKey="dlcCurrentUser-@Function.UserName~"
+			ExpirationNow="@Request.cacheExpirationNow~"
+			ExpirationTime="@Constant.cacheExpirationTime~"
+			ExpirationTimeSpan="@Constant.cacheExpirationTimeSpan~"
+			ID="dlcCurrentUser"
+			Type="Cached"
+			>
+			<DataLayer
+				ConnectionID="connLogiDB"
+				HandleQuotesInTokens="True"
+				ID="dlLogiUser"
+				Source="SELECT USERNAME
+FROM USERS
+WHERE 
+ACTIVE = 1
+AND USERNAME = @iptUsername"
+				Type="SQL"
+				>
+				<SqlParameters>
+					<SqlParameter
+						ID="iptUsername"
+						SqlParamType="dt-200"
+						Value="@Function.UserName~"
+					/>
+				</SqlParameters>
+				<CalculatedColumn
+					Formula="&quot;OC&quot;"
+					ID="memberOf"
+				/>
+				<Join
+					ID="joinLDAP"
+					JoinType="Union"
+					>
+					<DataLayer
+						ConnectionID="mkcLDAP"
+						ID="dlLdapUser"
+						LdapSource="SELECT memberOf, sAMAccountName, title, name, userPrincipalName, ADsPath, DisplayName, givenName, sn, mail FROM &apos;DC=midkscoop,DC=lan&apos; WHERE SamAccountName=&apos;@Function.UserName~&apos; and objectClass=&apos;person&apos;"
+						Type="Ldap"
+					/>
+				</Join>
+			</DataLayer>
+			<DataLayerLink
+				ID="linkCurrentUser"
+			/>
+		</DataLayer>
+	</LocalData>
+	<LocalData
+		ID="Local-GetOtherCoopUserList"
+		>
+		<DataLayer
+			ConnectionID="connLogiDB"
+			HandleQuotesInTokens="True"
+			ID="lOtherCoopUserList"
+			Source="Select USERS.USERNAME,
+  USERS.PASSWORD,
+  USERS.EMAIL,
+  USERS.ACTIVE
+From USERS"
+			Type="SQL"
+			>
+			<DataLayerLink
+				ID="linkOtherCoopUserList"
+			/>
+			<AggregateColumn
+				AggregateColumn="USERNAME"
+				AggregateFunction="Concat"
+				ConcatSeparator=","
+				DataType="Text"
+				ID="aggUsername"
+				>
+				<Note
+					Note="*** can be used to check for existing usernames w/ indexOf function ***"
+				/>
+			</AggregateColumn>
+			<CalculatedColumn
+				Formula="&quot;,@Data.aggUsername~,&quot;"
+				ID="aggUsername"
+				>
+				<Note
+					Note="*** adding a comma to beginning and end of string for username check ***"
+				/>
+			</CalculatedColumn>
+		</DataLayer>
+	</LocalData>
+	<LocalData
+		ID="Local-GetActiveDirectoryUserList"
+		>
+		<DataLayer
+			CacheKey="dlcActiveDirectoryUsers"
+			ExpirationNow="@Request.cacheExpirationNow~"
+			ExpirationTime="@Constant.cacheExpirationTime~"
+			ExpirationTimeSpan="@Constant.cacheExpirationTimeSpan~"
+			ID="dlcActiveDirectoryUsers"
+			Type="Cached"
+			>
+			<DataLayer
+				ConnectionID="mkcLDAP"
+				ID="LDAP_mkc"
+				LdapSource="SELECT memberOf, cn, displayName, givenName, sn, mail FROM &apos;OU=MKC Users,DC=midkscoop,DC=lan&apos; WHERE objectClass=&apos;Person&apos;"
+				Type="Ldap"
+			/>
+			<DataLayer
+				ConnectionID="mkcLDAP"
+				ID="LDAP_tma"
+				LdapSource="SELECT memberOf, cn, displayName, givenName, sn, mail FROM &apos;OU=TMA LLC,DC=midkscoop,DC=lan&apos; WHERE objectClass=&apos;Person&apos;"
+				Type="Ldap"
+			/>
+			<GroupFilter
+				DataType="Text"
+				GroupColumn="mail"
+				ID="gMail"
+				KeepGroupedRows="False"
+				SortSequence="Ascending"
+				>
+				<GroupAggregateColumn
+					AggregateColumn="memberOf"
+					AggregateFunction="Concat"
+					ConcatSeparator=","
+					DataType="Text"
+					ID="gagMemberOf"
+				/>
+			</GroupFilter>
+			<CalculatedColumn
+				Formula="IIF(&quot;@Data.gagMemberOf~&quot;.indexOf(&quot;MKC Dashboard&quot;) &lt;&gt; &quot;-1&quot;,&quot;1&quot;,&quot;0&quot;)"
+				ID="cMKC"
+			/>
+			<CalculatedColumn
+				Formula="IIF(&quot;@Data.gagMemberOf~&quot;.indexOf(&quot;TMA Dashboard&quot;) &lt;&gt; &quot;-1&quot;,&quot;1&quot;,&quot;0&quot;)"
+				ID="cTMA"
+			/>
+			<DataLayerLink
+				ID="linkActiveDirectoryUserList"
+			/>
+		</DataLayer>
+	</LocalData>
+	<Body>
+		<ResponsiveRow
+			CollisionBehavior="Overlap"
+			>
+			<ResponsiveColumn>
+				<Division
+					Class="panel panel-default"
+					HtmlDiv="True"
+					ID="panel"
+					>
+					<Division
+						Class="panel-heading"
+						HtmlDiv="True"
+						ID="panel-heading"
+						>
+						<ResponsiveRow
+							CollisionBehavior="Overlap"
+							>
+							<ResponsiveColumn>
+								<Label
+									Caption="Current User"
+									Class="fa fa-user fa-2x"
+								/>
+							</ResponsiveColumn>
+						</ResponsiveRow>
+					</Division>
+					<Division
+						Class="panel-body"
+						HtmlDiv="True"
+						ID="panel-body"
+						>
+						<DataTable
+							ID="dtCurrentUser"
+							>
+							<AutoColumns/>
+							<DataLayer
+								ID="dllCurrentUser"
+								LinkedDataLayerID="linkCurrentUser"
+								Type="Linked"
+							/>
+						</DataTable>
+					</Division>
+				</Division>
+			</ResponsiveColumn>
+		</ResponsiveRow>
+		<ResponsiveRow
+			CollisionBehavior="Overlap"
+			>
+			<ResponsiveColumn>
+				<Division
+					Class="panel panel-default"
+					HtmlDiv="True"
+					ID="panel"
+					>
+					<Division
+						Class="panel-heading"
+						HtmlDiv="True"
+						ID="panel-heading"
+						>
+						<ResponsiveRow
+							CollisionBehavior="Overlap"
+							>
+							<ResponsiveColumn
+								ColspanExtraSmallScreen="12"
+								ColspanLargeScreen="3"
+								ColspanMediumScreen="3"
+								ColspanSmallScreen="3"
+								>
+								<Label
+									Caption="OC Users"
+									Class="fa fa-users fa-2x"
+								/>
+							</ResponsiveColumn>
+							<ResponsiveColumn
+								ColspanExtraSmallScreen="12"
+								ColspanLargeScreen="7"
+								ColspanMediumScreen="7"
+								ColspanSmallScreen="7"
+								>
+								<ResponsiveRow
+									CollisionBehavior="Overlap"
+									>
+									<ResponsiveColumn
+										ColspanExtraSmallScreen="12"
+										ColspanLargeScreen="4"
+										ColspanMediumScreen="4"
+										ColspanSmallScreen="12"
+										>
+										<InputRadioButtons
+											DefaultValue="@Request.iptActive~"
+											ID="iptActive"
+											OptionCaptionColumn="ACTIVE_DESC"
+											OptionValueColumn="ACTIVE"
+											RadioButtonDirection="Across"
+											>
+											<EventHandler
+												DhtmlEvent="onchange"
+												>
+												<Action
+													ElementID="dtOtherCoopUsers,div-other-coop-user-search"
+													ID="actRefreshUsersTable"
+													Type="RefreshElement"
+													>
+													<LinkParams
+														cacheExpirationNow="False"
+													/>
+													<WaitPage/>
+												</Action>
+											</EventHandler>
+											<DataLayer
+												ID="dlActive"
+												Type="Static"
+												>
+												<StaticDataRow
+													ACTIVE="1"
+													ACTIVE_DESC="Active"
+												/>
+												<StaticDataRow
+													ACTIVE="0"
+													ACTIVE_DESC="Inactive"
+												/>
+												<StaticDataRow
+													ACTIVE="-1"
+													ACTIVE_DESC="All"
+												/>
+											</DataLayer>
+										</InputRadioButtons>
+									</ResponsiveColumn>
+									<ResponsiveColumn
+										ColspanExtraSmallScreen="12"
+										ColspanLargeScreen="8"
+										ColspanMediumScreen="8"
+										ColspanSmallScreen="12"
+										>
+										<Rows>
+											<Row>
+												<Column>
+													<Label
+														Caption="Username:      "
+													/>
+												</Column>
+												<Column>
+													<Division
+														HtmlDiv="True"
+														ID="div-other-coop-user-search"
+														>
+														<InputSelectList
+															Class="chosen-select"
+															DefaultValue="@Request.iptSearchUsername~"
+															ID="iptSearchUsername"
+															MultiSelect="True"
+															OptionCaptionColumn="USERNAME"
+															OptionValueColumn="USERNAME"
+															>
+															<DataLayer
+																ID="dllOtherCoopUserList-UserSearch"
+																LinkedDataLayerID="linkOtherCoopUserList"
+																Type="Linked"
+																>
+																<ConditionFilter
+																	Condition="&quot;@Data.ACTIVE~&quot;==&quot;@Request.iptActive~&quot; || &quot;@Request.iptActive~&quot;==&quot;-1&quot;"
+																	ID="fActive"
+																/>
+															</DataLayer>
+															<EventHandler
+																DhtmlEvent="onchange"
+																>
+																<Action
+																	ElementID="dtOtherCoopUsers"
+																	ID="actRefreshUsersTable"
+																	Type="RefreshElement"
+																	>
+																	<LinkParams
+																		cacheExpirationNow="False"
+																	/>
+																	<WaitPage/>
+																</Action>
+															</EventHandler>
+														</InputSelectList>
+														<Image
+															Caption="_theme_files.1x1.gif"
+															Class="ThemeHidden"
+															>
+															<EventHandler
+																DhtmlEvent="onload"
+																>
+																<Action
+																	ID="jsChosen"
+																	Javascript="$( document ).ready(function() {
+  $(&quot;.chosen-select&quot;).chosen({
+    	search_contains:true
+  });
+});"
+																	Type="Javascript"
+																/>
+															</EventHandler>
+														</Image>
+													</Division>
+												</Column>
+											</Row>
+										</Rows>
+									</ResponsiveColumn>
+								</ResponsiveRow>
+							</ResponsiveColumn>
+							<ResponsiveColumn
+								ColspanExtraSmallScreen="12"
+								ColspanLargeScreen="2"
+								ColspanMediumScreen="2"
+								ColspanSmallScreen="2"
+								>
+								<Division
+									Class="btn btn-default pull-right"
+									ID="add-user"
+									>
+									<Label
+										Caption="Add User"
+										Class="fa fa-plus"
+									/>
+									<EventHandler
+										DhtmlEvent="onmousedown"
+										>
+										<Action
+											ElementID="div-edit-popup"
+											ID="actRefreshEditPopup"
+											Type="RefreshElement"
+											>
+											<LinkParams
+												actionType="Add"
+												iptEmail=""
+												iptPassword=""
+												iptUsername=""
+											/>
+										</Action>
+									</EventHandler>
+									<EventHandler
+										DhtmlEvent="onmouseup"
+										>
+										<Action
+											ElementID="div-edit-user-content"
+											ID="actShowPopup"
+											Type="ShowElement"
+										/>
+									</EventHandler>
+								</Division>
+							</ResponsiveColumn>
+						</ResponsiveRow>
+					</Division>
+					<Division
+						Class="panel-body"
+						HtmlDiv="True"
+						ID="panel-body"
+						>
+						<DataTable
+							AccessibleHeaders="True"
+							AjaxPaging="True"
+							ID="dtOtherCoopUsers"
+							SortArrows="True"
+							>
+							<DataLayer
+								ID="dllOtherCoopUserList"
+								LinkedDataLayerID="linkOtherCoopUserList"
+								Type="Linked"
+								>
+								<ConditionFilter
+									Condition="&quot;@Data.ACTIVE~&quot;==&quot;@Request.iptActive~&quot; || &quot;@Request.iptActive~&quot;==&quot;-1&quot;"
+									ID="fActive"
+								/>
+								<ConditionFilter
+									Condition="&quot;@Request.iptUsername~&quot;.indexOf(&quot;@Data.USERNAME~&quot;) != -1 || &quot;@Request.iptUsername~&quot;==&quot;&quot;"
+									ID="fUsername"
+								/>
+							</DataLayer>
+							<InteractivePaging
+								CaptionType="Text"
+								HideShowPrevNextCaptions="True"
+								HideWhenOnePage="True"
+								Location="Top"
+								PageRowCount="20"
+								ShowPageNumber="True"
+							/>
+							<Remark>
+								<DataTableColumn
+									Header="ACTIVE"
+									ID="colACTIVE"
+									>
+									<Label
+										HtmlTag="I"
+										ID="lblACTIVE"
+										>
+										<ConditionalClass
+											Class="fa fa-check-square-o"
+											Condition="&quot;@Data.ACTIVE~&quot;==&quot;1&quot;"
+											ID="ccActive"
+										/>
+									</Label>
+									<DataColumnSort
+										DataColumn="ACTIVE"
+										DataType="Number"
+									/>
+								</DataTableColumn>
+							</Remark>
+							<DataTableColumn
+								Header="USERNAME"
+								ID="colUSERNAME"
+								>
+								<Label
+									Caption="@Data.USERNAME~"
+									ID="lblUSERNAME"
+								/>
+								<DataColumnSort
+									DataColumn="USERNAME"
+								/>
+							</DataTableColumn>
+							<DataTableColumn
+								Header="PASSWORD"
+								ID="colPASSWORD"
+								>
+								<Label
+									Caption="@Data.PASSWORD~"
+									ID="lblPASSWORD"
+								/>
+								<DataColumnSort
+									DataColumn="USER_PASSWORD"
+								/>
+								<ResponsiveVisibility
+									HideForExtraSmallScreen="True"
+									HideForLargeScreen="False"
+									HideForMediumScreen="False"
+									HideForSmallScreen="True"
+								/>
+							</DataTableColumn>
+							<DataTableColumn
+								Header="EMAIL"
+								ID="colEMAIL"
+								>
+								<Label
+									Caption="@Data.EMAIL~"
+									ID="lblEMAIL"
+								/>
+								<DataColumnSort
+									DataColumn="EMAIL"
+								/>
+								<ResponsiveVisibility
+									HideForExtraSmallScreen="True"
+									HideForLargeScreen="False"
+									HideForMediumScreen="False"
+									HideForSmallScreen="False"
+								/>
+							</DataTableColumn>
+							<DataTableColumn
+								Header="ACTIONS"
+								ID="colACTIONS"
+								>
+								<Division
+									Class="btn btn-default"
+									ID="edit-user"
+									>
+									<Label
+										Caption=" Edit"
+										Class="fa fa-edit"
+										HtmlTag="I"
+									/>
+									<EventHandler
+										DhtmlEvent="onmousedown"
+										>
+										<Action
+											ElementID="div-edit-popup"
+											ID="actRefreshEditPopup"
+											Type="RefreshElement"
+											>
+											<LinkParams
+												actionType="Edit"
+												iptEmail="@Data.EMAIL~"
+												iptPassword="@Data.PASSWORD~"
+												iptUsername="@Data.USERNAME~"
+											/>
+										</Action>
+									</EventHandler>
+									<EventHandler
+										DhtmlEvent="onmouseup"
+										>
+										<Action
+											ElementID="div-edit-user-content"
+											ID="actShowPopup"
+											Type="ShowElement"
+										/>
+									</EventHandler>
+								</Division>
+								<Spaces
+									Size="5"
+								/>
+								<Division
+									Class="btn btn-default"
+									Condition="&quot;@Data.ACTIVE~&quot;==&quot;1&quot;"
+									ID="inactivate-user"
+									>
+									<Label
+										Caption=" Inactivate"
+										Class="fa fa-remove"
+										HtmlTag="I"
+									/>
+									<Action
+										ConfirmMessage="Are you sure you want to INACTIVATE @Data.USERNAME~?"
+										ID="actInactivateUser"
+										Process="Admin"
+										TaskID="tskManageUser"
+										Type="Process"
+										>
+										<LinkParams
+											actionType="Inactivate"
+											iptUsername="@Data.USERNAME~"
+										/>
+										<WaitPage/>
+									</Action>
+								</Division>
+								<Division
+									Class="btn btn-default"
+									Condition="&quot;@Data.ACTIVE~&quot;==&quot;0&quot;"
+									ID="activate-user"
+									>
+									<Label
+										Caption="Activate"
+										Class="fa fa-check"
+									/>
+									<Action
+										ConfirmMessage="Are you sure you want to ACTIVATE @Data.USERNAME~?"
+										ID="actActivateUser"
+										Process="Admin"
+										TaskID="tskManageUser"
+										Type="Process"
+										>
+										<LinkParams
+											actionType="Activate"
+											iptUsername="@Data.USERNAME~"
+										/>
+										<WaitPage/>
+									</Action>
+								</Division>
+							</DataTableColumn>
+						</DataTable>
+						<Division
+							HtmlDiv="True"
+							ID="div-edit-popup"
+							>
+							<Division
+								Class="panel panel-default"
+								Condition="&quot;@Request.actionType~&quot;==&quot;Add&quot; || &quot;@Request.actionType~&quot;==&quot;Edit&quot;"
+								HtmlDiv="True"
+								ID="div-edit-user-content"
+								>
+								<Division
+									Class="panel-heading"
+									HtmlDiv="True"
+									ID="panel-heading"
+									>
+									<Label
+										Caption="@Request.actionType~ User"
+										Class="fa fa-user"
+									/>
+								</Division>
+								<Division
+									Class="panel-body"
+									HtmlDiv="True"
+									ID="panel-body"
+									>
+									<Image
+										Caption="_theme_files.1x1.gif"
+										Class="ThemeHidden"
+										>
+										<Note
+											Note="*** deactivate username when editing ***"
+										/>
+										<EventHandler
+											DhtmlEvent="onload"
+											>
+											<Action
+												ID="actDisableUsernameInput"
+												Javascript="if(&apos;@Request.actionType~&apos;==&apos;Edit&apos;) $(&apos;#iptUsername&apos;).prop( &quot;disabled&quot;, true );"
+												Type="Javascript"
+											/>
+										</EventHandler>
+									</Image>
+									<InputGrid
+										GridWidth="400"
+										WidthScale="px"
+										>
+										<InputText
+											Caption="Username: "
+											DefaultValue="@Request.iptUsername~"
+											ID="iptUsername"
+											>
+											<Validation
+												ErrorMsg="Username is REQUIRED"
+												Type="Required"
+											/>
+											<EventHandler
+												DhtmlEvent="onchange"
+												>
+												<Action
+													ID="actDuplicateCheck"
+													Javascript="var ipt = $(&apos;#iptUsername&apos;).val();
+var existing = &apos;@Local.aggUsername~&apos;;
+if(ipt.indexOf(&apos;,&apos;) != -1)
+{
+	alert(&apos;Username must not contain commas&apos;);
+} else if(existing.indexOf(&apos;,&apos;+ipt+&apos;,&apos;) != -1) /* wrapped to check for ENTIRE username - not a portion */
+{
+	alert(&apos;Username must be Unique&apos;);
+	$(&apos;#iptUsername-Edit&apos;).val(&apos;&apos;);
+	$(&apos;#iptUsername-Edit&apos;).focus();	
+}"
+													Type="Javascript"
+												/>
+											</EventHandler>
+										</InputText>
+										<InputText
+											Caption="Password: "
+											DefaultValue="@Request.iptPassword~"
+											ID="iptPassword"
+											>
+											<Validation
+												ErrorMsg="Password is REQUIRED"
+												Type="Required"
+											/>
+										</InputText>
+										<InputText
+											Caption="Email: "
+											DefaultValue="@Request.iptEmail~"
+											ID="iptEmail"
+											>
+											<Validation
+												ErrorMsg="Email Address is REQUIRED"
+												Type="Required"
+											/>
+											<EventHandler
+												DhtmlEvent="onchange"
+												>
+												<Action
+													ID="actEmailValidation"
+													Javascript="var email = $(&apos;#iptEmail&apos;).val();
+if(!isEmail(email))
+{
+	alert(&apos;Invalid Email Address&apos;);
+	$(&apos;#iptEmail&apos;).focus();
+}
+
+function isEmail(email) {
+  var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  return regex.test(email);
+}"
+													Type="Javascript"
+												/>
+											</EventHandler>
+										</InputText>
+									</InputGrid>
+									<Division
+										Condition="&quot;@Request.actionType~&quot;==&quot;Edit&quot;"
+										ID="div-edit-button"
+										>
+										<Label
+											Caption="Apply"
+											Class="btn btn-default pull-right"
+											>
+											<Action
+												ConfirmMessage="Are you sure you want to EDIT @Request.iptUsername~"
+												ID="actEditUser"
+												Process="Admin"
+												TaskID="tskManageUser"
+												Type="Process"
+												Validate="True"
+												>
+												<LinkParams
+													actionType="Edit"
+												/>
+												<WaitPage/>
+											</Action>
+										</Label>
+									</Division>
+									<Division
+										Condition="&quot;@Request.actionType~&quot;==&quot;Add&quot;"
+										ID="div-add-button"
+										>
+										<Label
+											Caption="Apply"
+											Class="btn btn-default pull-right"
+											>
+											<Action
+												ConfirmMessage="Are you sure you want to create this NEW user?"
+												ID="actAddUser"
+												Process="Admin"
+												TaskID="tskManageUser"
+												Type="Process"
+												Validate="True"
+												>
+												<LinkParams
+													actionType="Add"
+												/>
+												<WaitPage/>
+											</Action>
+										</Label>
+									</Division>
+									<Division
+										ID="div-cancel-button"
+										>
+										<Label
+											Caption="Cancel"
+											Class="btn btn-default pull-right"
+											>
+											<Action
+												Display="Toggle"
+												ElementID="div-edit-popup"
+												ID="actCancelPopup"
+												Type="ShowElement"
+											/>
+										</Label>
+									</Division>
+								</Division>
+							</Division>
+						</Division>
+					</Division>
+				</Division>
+			</ResponsiveColumn>
+		</ResponsiveRow>
+		<ResponsiveRow
+			CollisionBehavior="Overlap"
+			>
+			<ResponsiveColumn>
+				<Division
+					Class="panel panel-default"
+					HtmlDiv="True"
+					ID="panel"
+					>
+					<Division
+						Class="panel-heading"
+						HtmlDiv="True"
+						ID="panel-heading"
+						>
+						<ResponsiveRow
+							CollisionBehavior="Overlap"
+							>
+							<ResponsiveColumn
+								ColspanExtraSmallScreen="12"
+								ColspanLargeScreen="3"
+								ColspanMediumScreen="3"
+								ColspanSmallScreen="3"
+								>
+								<Label
+									Caption="AD Users"
+									Class="fa fa-users fa-2x"
+								/>
+							</ResponsiveColumn>
+							<ResponsiveColumn
+								ColspanExtraSmallScreen="12"
+								ColspanLargeScreen="7"
+								ColspanMediumScreen="7"
+								ColspanSmallScreen="7"
+								>
+								<ResponsiveRow
+									CollisionBehavior="Overlap"
+									>
+									<ResponsiveColumn
+										ColspanExtraSmallScreen="12"
+										ColspanLargeScreen="4"
+										ColspanMediumScreen="4"
+										ColspanSmallScreen="12"
+										>
+										<InputRadioButtons
+											DefaultValue="@Request.iptMemberOf~"
+											ID="iptMemberOf"
+											OptionCaptionColumn="MEMBER_DESC"
+											OptionValueColumn="MEMBER"
+											RadioButtonDirection="Across"
+											>
+											<EventHandler
+												DhtmlEvent="onchange"
+												>
+												<Action
+													ElementID="dtActiveDirectoryUsers,div-active-directory-user-search"
+													ID="actRefreshUsersTable"
+													Type="RefreshElement"
+													>
+													<LinkParams
+														cacheExpirationNow="False"
+													/>
+													<WaitPage/>
+												</Action>
+											</EventHandler>
+											<DataLayer
+												ID="dlMemberOf"
+												Type="Static"
+												>
+												<StaticDataRow
+													MEMBER="MKC Dashboard"
+													MEMBER_DESC="MKC"
+												/>
+												<StaticDataRow
+													MEMBER="TMA Dashboard"
+													MEMBER_DESC="TMA"
+												/>
+												<StaticDataRow
+													MEMBER="-1"
+													MEMBER_DESC="All"
+												/>
+											</DataLayer>
+										</InputRadioButtons>
+									</ResponsiveColumn>
+									<ResponsiveColumn
+										ColspanExtraSmallScreen="12"
+										ColspanLargeScreen="4"
+										ColspanMediumScreen="4"
+										ColspanSmallScreen="12"
+										>
+										<Rows>
+											<Row>
+												<Column>
+													<Label
+														Caption="Email:      "
+													/>
+												</Column>
+												<Column>
+													<Division
+														HtmlDiv="True"
+														ID="div-active-directory-user-search"
+														>
+														<InputSelectList
+															Class="chosen-select"
+															DefaultValue="@Request.iptUsername-ActiveDirectory~"
+															ID="iptUsername-ActiveDirectory"
+															MultiSelect="True"
+															OptionCaptionColumn="mail"
+															OptionValueColumn="mail"
+															>
+															<DataLayer
+																ID="dllActiveDirectoryUserList-UserSearch"
+																LinkedDataLayerID="linkActiveDirectoryUserList"
+																Type="Linked"
+																>
+																<ConditionFilter
+																	Condition="(&quot;@Request.iptMemberOf~&quot;==&quot;MKC Dashboard&quot; &amp;&amp; &quot;@Data.cMKC~&quot;==&quot;1&quot;) 
+|| (&quot;@Request.iptMemberOf~&quot;==&quot;TMA Dashboard&quot; &amp;&amp; &quot;@Data.cTMA~&quot;==&quot;1&quot;) || (&quot;@Request.iptMemberOf~&quot;==&quot;-1&quot;)"
+																	ID="fUserType"
+																/>
+															</DataLayer>
+															<EventHandler
+																DhtmlEvent="onchange"
+																>
+																<Action
+																	ElementID="dtActiveDirectoryUsers"
+																	ID="actRefreshUsersTable"
+																	Type="RefreshElement"
+																	>
+																	<LinkParams
+																		cacheExpirationNow="False"
+																	/>
+																	<WaitPage/>
+																</Action>
+															</EventHandler>
+														</InputSelectList>
+														<Image
+															Caption="_theme_files.1x1.gif"
+															Class="ThemeHidden"
+															>
+															<EventHandler
+																DhtmlEvent="onload"
+																>
+																<Action
+																	ID="jsChosen"
+																	Javascript="$( document ).ready(function() {
+  $(&quot;.chosen-select&quot;).chosen({
+    	search_contains:true
+  });
+});"
+																	Type="Javascript"
+																/>
+															</EventHandler>
+														</Image>
+													</Division>
+												</Column>
+											</Row>
+										</Rows>
+									</ResponsiveColumn>
+								</ResponsiveRow>
+							</ResponsiveColumn>
+							<ResponsiveColumn
+								ColspanExtraSmallScreen="12"
+								ColspanLargeScreen="2"
+								ColspanMediumScreen="2"
+								ColspanSmallScreen="2"
+								>
+								<Label
+									Caption=" "
+									Class="fa fa-refresh text-success pull-right"
+									>
+									<Action
+										ConfirmMessage="Requery Active Directory and Refresh Report?"
+										ID="actRefreshReport"
+										Type="Report"
+										>
+										<LinkParams
+											cacheExpirationNow="True"
+										/>
+										<Target
+											Type="Report"
+											>
+											<WaitPage/>
+										</Target>
+									</Action>
+								</Label>
+							</ResponsiveColumn>
+						</ResponsiveRow>
+					</Division>
+					<Division
+						Class="panel-body"
+						HtmlDiv="True"
+						ID="panel-body"
+						>
+						<DataTable
+							ID="dtActiveDirectoryUsers"
+							>
+							<DataLayer
+								ID="dllActiveDirectoryUserList"
+								LinkedDataLayerID="linkActiveDirectoryUserList"
+								Type="Linked"
+								>
+								<ConditionFilter
+									Condition="(&quot;@Request.iptMemberOf~&quot;==&quot;MKC Dashboard&quot; &amp;&amp; &quot;@Data.cMKC~&quot;==&quot;1&quot;) 
+|| (&quot;@Request.iptMemberOf~&quot;==&quot;TMA Dashboard&quot; &amp;&amp; &quot;@Data.cTMA~&quot;==&quot;1&quot;) || (&quot;@Request.iptMemberOf~&quot;==&quot;-1&quot;)"
+									ID="fUserType"
+								/>
+								<ConditionFilter
+									Condition="&quot;@Request.iptUsername-ActiveDirectory~&quot;.indexOf(&quot;@Data.mail~&quot;) != -1 || &quot;@Request.iptUsername-ActiveDirectory~&quot;==&quot;&quot;"
+									ID="fUsername"
+								/>
+							</DataLayer>
+							<InteractivePaging
+								CaptionType="Text"
+								HideShowPrevNextCaptions="True"
+								HideWhenOnePage="True"
+								Location="Top"
+								PageRowCount="20"
+								ShowPageNumber="True"
+							/>
+							<DataTableColumn
+								Header="EMAIL"
+								ID="colmail"
+								>
+								<Label
+									Caption="@Data.mail~"
+									ID="lblmail"
+								/>
+								<DataColumnSort
+									DataColumn="mail"
+								/>
+							</DataTableColumn>
+							<DataTableColumn
+								Header="SURNAME"
+								ID="colsn"
+								>
+								<Label
+									Caption="@Data.sn~"
+									ID="lblsn"
+								/>
+								<DataColumnSort
+									DataColumn="sn"
+								/>
+								<ResponsiveVisibility
+									HideForExtraSmallScreen="True"
+									HideForLargeScreen="False"
+									HideForMediumScreen="False"
+									HideForSmallScreen="False"
+								/>
+							</DataTableColumn>
+							<DataTableColumn
+								Header="GIVEN NAME"
+								ID="colgivenName"
+								>
+								<Label
+									Caption="@Data.givenName~"
+									ID="lblgivenName"
+								/>
+								<DataColumnSort
+									DataColumn="givenName"
+								/>
+								<ResponsiveVisibility
+									HideForExtraSmallScreen="True"
+									HideForLargeScreen="False"
+									HideForMediumScreen="False"
+									HideForSmallScreen="False"
+								/>
+							</DataTableColumn>
+							<DataTableColumn
+								Header="DISPLAY NAME"
+								ID="coldisplayName"
+								>
+								<Label
+									Caption="@Data.displayName~"
+									ID="lbldisplayName"
+								/>
+								<DataColumnSort
+									DataColumn="displayName"
+								/>
+								<ResponsiveVisibility
+									HideForExtraSmallScreen="True"
+									HideForLargeScreen="False"
+									HideForMediumScreen="False"
+									HideForSmallScreen="False"
+								/>
+							</DataTableColumn>
+							<Remark>
+								<DataTableColumn
+									Header="cn"
+									ID="colcn"
+									>
+									<Label
+										Caption="@Data.cn~"
+										ID="lblcn"
+									/>
+									<DataColumnSort
+										DataColumn="cn"
+									/>
+								</DataTableColumn>
+							</Remark>
+							<Remark>
+								<DataTableColumn
+									Header="MEMBER OF"
+									ID="colmemberOf"
+									>
+									<Label
+										Caption="@Data.memberOf~"
+										ID="lblmemberOf"
+									/>
+									<DataColumnSort
+										DataColumn="memberOf"
+									/>
+								</DataTableColumn>
+							</Remark>
+							<DataTableColumn
+								Header="MKC"
+								ID="colMKC"
+								>
+								<Label
+									Caption="@Data.cMKC~"
+								/>
+								<DataColumnSort
+									DataColumn="cMKC"
+									DataType="Number"
+								/>
+							</DataTableColumn>
+							<DataTableColumn
+								Header="TMA"
+								ID="colTMA"
+								>
+								<Label
+									Caption="@Data.cTMA~"
+								/>
+								<DataColumnSort
+									DataColumn="cTMA"
+									DataType="Number"
+								/>
+							</DataTableColumn>
+							<DataTableColumn
+								Header="MEMBER OF"
+								ID="colGagMemberOf"
+								>
+								<Label
+									Caption="@Data.gagMemberOf~"
+								/>
+								<DataColumnSort
+									DataColumn="gagMemberOf"
+								/>
+								<ResponsiveVisibility
+									HideForExtraSmallScreen="True"
+									HideForLargeScreen="False"
+									HideForMediumScreen="True"
+									HideForSmallScreen="True"
+								/>
+							</DataTableColumn>
+						</DataTable>
+					</Division>
+				</Division>
+			</ResponsiveColumn>
+		</ResponsiveRow>
+	</Body>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrFooter"
+	/>
+	<ReportFooter>
+		<Division
+			HtmlDiv="True"
+			ID="div-response-popup"
+			>
+			<PopupPanel
+				Draggable="False"
+				HideCloseX="True"
+				ID="pup-action-response"
+				PopupModal="True"
+				PopupPanelLocation="Center"
+				ShowOnPageLoad="@Request.showResponse~"
+				>
+				<Division
+					Class="ThemeAlignCenter"
+					HtmlDiv="True"
+					ID="div-response-content"
+					>
+					<Label
+						Caption="@Request.respMessage~"
+					/>
+					<LineBreak/>
+					<LineBreak/>
+					<Label
+						Caption="OK"
+						Class="btn btn-default"
+						>
+						<Action
+							Display="Hide"
+							ElementID="pup-action-response"
+							ID="actHideResponsePopup"
+							Type="ShowElement"
+						/>
+					</Label>
+				</Division>
+			</PopupPanel>
+		</Division>
+		<IncludeScript
+			ID="jsChosen"
+			IncludedScript="$( document ).ready(function() {
+  $(&quot;.chosen-select&quot;).chosen({
+    	search_contains:true
+  });
+});"
+		/>
+	</ReportFooter>
+	<ideTestParams
+		actionType=""
+		cacheExpirationNow=""
+		iptActive=""
+		iptEmail=""
+		iptMemberOf=""
+		iptPassword=""
+		iptSearchUsername=""
+		iptUsername=""
+		iptUsername-ActiveDirectory=""
+		respMessage=""
+		showResponse=""
+	/>
 </Report>

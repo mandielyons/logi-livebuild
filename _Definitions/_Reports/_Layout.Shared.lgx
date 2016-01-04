@@ -97,7 +97,6 @@
 								</ResponsiveVisibility>
 								<Label
 									Caption="MKC Home"
-									Class="fa fa-home"
 									>
 									<Action
 										ID="actReport"
@@ -112,7 +111,7 @@
 										</Target>
 									</Action>
 									<ConditionalClass
-										Class="fa fa-home selected-menu"
+										Class="selected-menu "
 										Condition="&quot;@Request.rdReport~&quot;==&quot;Home.MKCReport&quot; || &quot;@Request.rdReport~&quot;==&quot;&quot;"
 									/>
 								</Label>
@@ -131,7 +130,6 @@
 										>
 										<Label
 											Caption="MKC Reports"
-											Class="fa fa-line-chart"
 											>
 											<Action
 												ID="actBlank"
@@ -139,7 +137,7 @@
 												Type="Javascript"
 											/>
 											<ConditionalClass
-												Class="fa fa-line-chart selected-menu"
+												Class="selected-menu"
 												Condition="&quot;@Request.rdReport~&quot;.indexOf(&quot;Reports&quot;)&lt;&gt;&quot;-1&quot;"
 											/>
 										</Label>
@@ -208,6 +206,91 @@
 									/>
 								</Division>
 								<Division
+									ID="tma-reports-container"
+									>
+									<Division
+										Class="dropdown"
+										HtmlDiv="True"
+										ID="tma-reports"
+										>
+										<Label
+											Caption="TMA Reports"
+											>
+											<Action
+												ID="actBlank"
+												Javascript="void(0)"
+												Type="Javascript"
+											/>
+											<ConditionalClass
+												Class="selected-menu"
+												Condition="&quot;@Request.rdReport~&quot;.indexOf(&quot;TMAReports&quot;)&lt;&gt;&quot;-1&quot;"
+											/>
+										</Label>
+										<Label
+											Class="caret"
+											>
+											<Action
+												ID="actBlank"
+												Javascript="void(0)"
+												Type="Javascript"
+											/>
+											<ConditionalClass
+												Class="caret selected-menu"
+												Condition="&quot;@Request.rdReport~&quot;.indexOf(&quot;Reports&quot;)&lt;&gt;&quot;-1&quot;"
+											/>
+										</Label>
+										<Division
+											Class="submenu"
+											HtmlDiv="True"
+											ID="submenu-tma-reports"
+											>
+											<DataList
+												ID="lstTMAReports"
+												>
+												<DataLayer
+													ID="dlNav-TMAReports"
+													Type="DefinitionList"
+													>
+													<CompareFilter
+														CaseSensitive="True"
+														CompareType="="
+														CompareValue="TMAReports"
+														DataColumn="Folder1"
+														DataType="Text"
+														ID="fTMAReports"
+													/>
+												</DataLayer>
+												<ListItem>
+													<Label
+														Caption="@Data.Caption~"
+														>
+														<Action
+															ID="actReport"
+															Type="Report"
+															>
+															<Target
+																Report="@Data.ID~"
+																Type="Report"
+																>
+																<WaitPage/>
+															</Target>
+														</Action>
+														<ConditionalClass
+															Class="selected-menu"
+															Condition="&quot;@Request.rdReport~&quot;==&quot;@Data.ID~&quot;"
+														/>
+													</Label>
+												</ListItem>
+											</DataList>
+										</Division>
+									</Division>
+									<Label
+										Caption="|"
+										Class="pipe-spacer"
+										ID="pipe-spacer"
+									/>
+								</Division>
+								<Division
 									ID="maps-container"
 									>
 									<Division
@@ -217,7 +300,6 @@
 										>
 										<Label
 											Caption="MKC Maps"
-											Class="fa fa-globe"
 											>
 											<Action
 												ID="actBlank"
@@ -225,7 +307,7 @@
 												Type="Javascript"
 											/>
 											<ConditionalClass
-												Class="fa fa-globe selected-menu"
+												Class="selected-menu"
 												Condition="&quot;@Request.rdReport~&quot;.indexOf(&quot;Maps&quot;)&lt;&gt;&quot;-1&quot;"
 											/>
 										</Label>
@@ -298,7 +380,6 @@
 									>
 									<Label
 										Caption="MKC Scorecard"
-										Class="fa fa-dashboard"
 										>
 										<Action
 											ID="actReport"
@@ -313,7 +394,7 @@
 											</Target>
 										</Action>
 										<ConditionalClass
-											Class="fa fa-dashboard selected-menu"
+											Class="selected-menu"
 											Condition="&quot;@Request.rdReport~&quot;==&quot;Scorecard.StrategicDashboard&quot;"
 										/>
 									</Label>
@@ -333,7 +414,6 @@
 										>
 										<Label
 											Caption="Admin"
-											Class="fa fa-cogs"
 											>
 											<Action
 												ID="actBlank"
@@ -341,7 +421,7 @@
 												Type="Javascript"
 											/>
 											<ConditionalClass
-												Class="fa fa-cogs selected-menu"
+												Class="selected-menu"
 												Condition="&quot;@Request.rdReport~&quot;.indexOf(&quot;Admin&quot;)&lt;&gt;&quot;-1&quot;"
 											/>
 										</Label>
@@ -482,53 +562,55 @@
 				ShowModes="rdBrowser"
 				>
 				<Label
-					Caption="© Copyright 2015 - Logi Analytics"
+					Caption="© Copyright 2015 - MKC"
 					Format="HTML"
 				/>
-				<Division
-					HtmlDiv="True"
-					ID="DEBUG"
-					ShowModes="rdBrowser"
-					>
-					<Rows>
-						<Row>
-							<Column>
-								<Label
-									Caption="Username: "
-								/>
-							</Column>
-							<Column>
-								<Label
-									Caption="@Function.UserName~"
-								/>
-							</Column>
-						</Row>
-						<Row>
-							<Column>
-								<Label
-									Caption="Role(s): "
-								/>
-							</Column>
-							<Column>
-								<Label
-									Caption="@Function.UserRoles~"
-								/>
-							</Column>
-						</Row>
-						<Row>
-							<Column>
-								<Label
-									Caption="Right(s): "
-								/>
-							</Column>
-							<Column>
-								<Label
-									Caption="@Function.UserRights~"
-								/>
-							</Column>
-						</Row>
-					</Rows>
-				</Division>
+				<Remark>
+					<Division
+						HtmlDiv="True"
+						ID="DEBUG"
+						ShowModes="rdBrowser"
+						>
+						<Rows>
+							<Row>
+								<Column>
+									<Label
+										Caption="Username: "
+									/>
+								</Column>
+								<Column>
+									<Label
+										Caption="@Function.UserName~"
+									/>
+								</Column>
+							</Row>
+							<Row>
+								<Column>
+									<Label
+										Caption="Role(s): "
+									/>
+								</Column>
+								<Column>
+									<Label
+										Caption="@Function.UserRoles~"
+									/>
+								</Column>
+							</Row>
+							<Row>
+								<Column>
+									<Label
+										Caption="Right(s): "
+									/>
+								</Column>
+								<Column>
+									<Label
+										Caption="@Function.UserRights~"
+									/>
+								</Column>
+							</Row>
+						</Rows>
+					</Division>
+				</Remark>
 			</Division>
 		</Division>
 		<Division
@@ -536,8 +618,9 @@
 			ID="div-JS"
 			ShowModes="rdBrowser"
 			>
-			<IncludeHtml
-				Html="&lt;ul id=&quot;main-menu&quot; class=&quot;sm sm-blue&quot;&gt;
+			<Remark>
+				<IncludeHtml
+					Html="&lt;ul id=&quot;main-menu&quot; class=&quot;sm sm-blue&quot;&gt;
   &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Item 1&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Item 2&lt;/a&gt;
     &lt;ul&gt;
@@ -548,7 +631,8 @@
   &lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Item 3&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;"
-			/>
+				/>
+			</Remark>
 			<IncludeScript
 				IncludedScript="$(function() {
   $(&apos;#main-menu&apos;).smartmenus();

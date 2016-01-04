@@ -1,7 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Report
-	ID="Home.MKC_Locations"
+	Caption="Branch Dashboard"
+	ID="Reports.MKC_Locations"
 	>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrHeader"
+	/>
 	<Body>
 		<ResponsiveRow>
 			<ResponsiveColumn
@@ -21,7 +26,7 @@
 						ID="panel-heading-map"
 						>
 						<Label
-							Caption="MKC Locations"
+							Caption="MKC Branch Dashboard"
 						/>
 					</Division>
 					<Division
@@ -36,10 +41,10 @@
 							GoogleMapTypeControl="Dropdown"
 							GoogleMapTypes="Hybrid"
 							GoogleMapZoomControl="Small"
-							Height="500"
+							Height="600"
 							ID="LocationMap"
 							MapScale="False"
-							Width="750"
+							Width="800"
 							>
 							<GoogleMapMarkers
 								ID="LocationMarker"
@@ -264,6 +269,10 @@ ORDER BY ID"
 			</ResponsiveColumn>
 		</ResponsiveRow>
 	</Body>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrFooter"
+	/>
 	<ideTestParams
 		paramLocCd=""
 		paramLocName=""

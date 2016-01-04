@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report Caption="Location Map" ID="Maps.Map">
+<Report Caption="Location Map" ID="Other.Map">
   <IncludeSharedElement DefinitionFile="_Layout.Shared" SharedElementID="shrHeader" />
   <Body>
     <ResponsiveRow>
