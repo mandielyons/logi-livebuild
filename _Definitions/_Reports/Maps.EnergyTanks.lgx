@@ -3,11 +3,189 @@
 	Caption="AFD Tank Locations"
 	ID="Maps.EnergyTanks"
 	>
+	<LocalData
+		Condition="&quot;@Request.iptCity~&quot;.length &gt; 0"
+		ID="Local-AFDData"
+		>
+		<DataLayer
+			ColumnNamesRow="1"
+			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx"
+			ExcelWorksheet="Sheet1"
+			ID="dlGmap-AFDTanks"
+			Type="Excel"
+			>
+			<DataLayerLink
+				ID="linkGmap-AFDTanks"
+			/>
+		</DataLayer>
+	</LocalData>
 	<IncludeSharedElement
 		DefinitionFile="_Layout.Shared"
 		SharedElementID="shrHeader"
 	/>
 	<Body>
+		<ResponsiveRow>
+			<ResponsiveColumn>
+				<Division
+					Class="panel panel-default"
+					HtmlDiv="True"
+					ID="panel"
+					>
+					<Division
+						Class="panel-heading"
+						HtmlDiv="True"
+						ID="panel-heading"
+						>
+						<Label
+							Caption="AFD Tank Information"
+						/>
+					</Division>
+					<Division
+						Class="panel-body"
+						ID="panel-body"
+						>
+						<Rows
+							Width="100"
+							WidthScale="%"
+							>
+							<Row>
+								<Column>
+									<Spaces
+										Size="5"
+									/>
+								</Column>
+								<Column>
+									<Label
+										Caption="Near What City:"
+									/>
+								</Column>
+								<Column>
+									<InputSelectList
+										Class="chosen-select"
+										DefaultValue="@Request.iptCity~"
+										ID="iptCity"
+										MultiSelect="True"
+										OptionCaptionColumn="city"
+										OptionValueColumn="city"
+										>
+										<DataLayer
+											CacheKey="dlcCity-Tanks"
+											ExpirationNow="@Request.cacheExpireNow~"
+											ExpirationTime="@Constant.cacheExpirationTime~"
+											ExpirationTimeSpan="@Constant.cacheExpirationTimeSpan~"
+											ID="dlcCity-Tanks"
+											Type="Cached"
+											>
+											<DataLayer
+												ColumnNamesRow="1"
+												ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx"
+												ExcelWorksheet="Sheet1"
+												ID="dlCity"
+												Type="Excel"
+											/>
+											<Remark>
+												<DataLayer
+													ConnectionID="connProdGP"
+													HandleQuotesInTokens="True"
+													ID="dlCity"
+													Source="Select 
+Objects.Name CustDesc
+,  Objects.AccInterfaceID CustCd
+,  Objects.ObjectID CustID
+,  Farm.FarmID
+,  Farm.Name FarmDesc
+,  Fields.FieldID
+,  Fields.Name FieldDesc
+From AgOS_MKC_Live..Objects As Objects With(NoLock)  
+Inner Join AgOS_MKC_Live.dbo.Grower As Grower With(NoLock)    
+	On Objects.ObjectID = Grower.ObjectID  
+Inner Join AgOS_MKC_Live.dbo.Farm As Farm With(NoLock) 
+	On Grower.ObjectID =    Farm.ObjectID  
+Inner Join AgOS_MKC_Live.dbo.Fields As Fields With(NoLock)    
+	On Farm.FarmID = Fields.Farm  
+Inner Join AgOS_MKC_Live.dbo.Contours As Contours With(NoLock)    
+	On Fields.FieldID = Contours.FieldID
+Where 
+Objects.ObjCategoryID = 1 
+And Objects.Visible = 1"
+													Type="SQL"
+													>
+													<GroupFilter
+														DataType="Number"
+														GroupColumn="CustID"
+														ID="gCustID"
+														KeepGroupedRows="False"
+													/>
+													<SortFilter
+														DataType="Text"
+														ID="sCustDesc"
+														SortColumn="CustDesc"
+														SortSequence="Ascending"
+													/>
+												</DataLayer>
+											</Remark>
+										</DataLayer>
+									</InputSelectList>
+									<Image
+										Caption="_theme_files.1x1.gif"
+										Class="ThemeHidden"
+										>
+										<EventHandler
+											DhtmlEvent="onload"
+											>
+											<Action
+												ID="jsChosen"
+												Javascript="$( document ).ready(function() {
+  $(&quot;.chosen-select&quot;).chosen({
+    	search_contains:true,
+		display_selected_options:false
+  });
+});"
+												Type="Javascript"
+											/>
+										</EventHandler>
+									</Image>
+								</Column>
+								<Column>
+									<Spaces
+										Size="5"
+									/>
+								</Column>
+								<Column>
+									<Label
+										Caption="Apply"
+										Class="btn btn-default pull-right"
+										>
+										<EventHandler
+											DhtmlEvent="onclick"
+											>
+											<Action
+												ID="actRefreshReport"
+												Type="Report"
+												>
+												<Target
+													Type="Report"
+													>
+													<WaitPage/>
+												</Target>
+												<LinkParams
+													cacheExpirationNow="False"
+												/>
+											</Action>
+										</EventHandler>
+									</Label>
+								</Column>
+								<Column>
+									<Spaces
+										Size="5"
+									/>
+								</Column>
+							</Row>
+						</Rows>
+					</Division>
+				</Division>
+			</ResponsiveColumn>
+		</ResponsiveRow>
 		<ResponsiveRow>
 			<ResponsiveColumn
 				ColspanExtraSmallScreen="12"
@@ -34,168 +212,111 @@
 						HtmlDiv="True"
 						ID="panel-body-map"
 						>
+						<Label
+							Caption="MAP"
+						/>
 						<GoogleMap
-							GoogleMapPanControl="True"
-							GoogleMapShowTraffic="False"
-							GoogleMapStreetView="True"
-							GoogleMapTypeControl="Dropdown"
-							GoogleMapTypes="Hybrid"
+							GoogleMapTypes="Satellite,Map,Hybrid,Terrain"
 							GoogleMapZoomControl="Small"
-							Height="600"
-							ID="LocationMap"
-							MapScale="False"
-							Width="800"
+							Height="700"
+							ID="gmAFDTanks"
+							MapScale="True"
+							Width="900"
 							>
 							<GoogleMapMarkers
-								ID="LocationMarker"
+								ID="gmmTank"
 								>
+								<Remark>
+									<DataLayer
+										ColumnNamesRow="1"
+										ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx"
+										ExcelWorksheet="Sheet1"
+										ID="ExcelDataLayer4"
+										Type="Excel"
+									/>
+								</Remark>
 								<DataLayer
-									ColumnNamesRow="1"
-									ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx"
-									ExcelWorksheet="Sheet1"
-									ID="dlAFDTanks"
-									Type="Excel"
+									ID="dllGmap-AFDTanks"
+									LinkedDataLayerID="linkGmap-AFDTanks"
+									Type="Linked"
 									>
-									<GeocodeColumns
-										CityDataColumn="city"
-										LatitudeColumnID="lat"
-										LongitudeColumnID="long"
+									<ReverseGeocodeColumns
+										ID="revLookup"
+										LatitudeDataColumn="lat"
+										LongitudeDataColumn="long"
 									/>
 								</DataLayer>
 								<Action
-									ID="ActMapMarkerInfo"
 									Type="MapMarkerInfo"
 									>
+									<Remark>
+										<MapMarkerInfo>
+											<Label
+												Caption="Customer ID: "
+												Class="ThemeBold"
+											/>
+											<Label
+												Caption="@Data.customerid"
+											/>
+											<LineBreak/>
+											<Label
+												Caption="Farm: "
+												Class="ThemeBold"
+											/>
+											<Label
+												Caption="@Data.FarmDesc~"
+											/>
+											<LineBreak/>
+											<Label
+												Caption="Field: "
+												Class="ThemeBold"
+											/>
+											<Label
+												Caption="@Data.FieldDesc~"
+											/>
+											<LineBreak/>
+											<Label
+												Caption="@Data.Acres~"
+												Format="#.#0 Acres"
+											/>
+										</MapMarkerInfo>
+									</Remark>
 									<MapMarkerInfo>
 										<Label
-											Caption="Tank ID: "
-											Class="ThemeBold"
-										/>
-										<Label
-											Caption="@Data.tankid~"
-										/>
-										<LineBreak/>
-										<Label
-											Caption="Probe ID: "
-											Class="ThemeBold"
-										/>
-										<Label
-											Caption="@Data.probeid~"
+											Caption="TEST"
 										/>
 									</MapMarkerInfo>
 								</Action>
-								<Remark>
-									<DataLayer
-										ConnectionID="connMKC"
-										ID="dlDataLocations"
-										Source="Select Distinct MapMKCLocations.LOCNCODE As LOCNCODE,
-  LTrim(RTrim(MapMKCLocations.ADDRESS1)) + &apos; &apos; +
-  LTrim(RTrim(MapMKCLocations.CITY)) + &apos; &apos; +
-  LTrim(RTrim(MapMKCLocations.STATEABBR)) + &apos; &apos; +
-  LTrim(RTrim(MapMKCLocations.ZIPCODE)) As GeoPlace,
-  LTrim(RTrim(MapMKCLocations.CITY)) + &apos; &apos; +
-  LTrim(RTrim(MapMKCLocations.STATEABBR)) As GeoCity,
-  LTrim(RTrim(MapMKCLocations.STATEABBR)) As GeoStateProvince,
-  LTrim(RTrim(MapMKCLocations.ZIPCODE)) As GeoZipCode,
-  MapMKCLocations.LOCNDSCR As LocValue
-From MapMKCLocations"
-										Type="SQL"
-										>
-										<GeocodeColumns
-											CityDataColumn="GeoCity"
-											ID="MapPlaceData"
-											PlaceDataColumn="GeoPlace"
-											PostalCodeDataColumn="GeoZipCode"
-											StateProvinceDataColumn="GeoStateProvince"
-										/>
-									</DataLayer>
-								</Remark>
-								<Remark>
-									<Action
-										ElementID="panel-detail-container"
-										ID="refLocationInfoTable"
-										Type="RefreshElement"
-										>
-										<LinkParams
-											paramLocCd="@Data.LOCNCODE~"
-											paramLocName="@Data.LocValue~"
-										/>
-										<WaitPage/>
-									</Action>
-								</Remark>
-								<Remark>
-									<MapMarkerImage>
-										<Remark>
-											<Image
-												Caption="elevator.gif"
-												Height="42"
-												ID="imgElevator"
-												Width="42"
-											/>
-										</Remark>
-									</MapMarkerImage>
-								</Remark>
 							</GoogleMapMarkers>
 						</GoogleMap>
 						<LineBreak/>
-						<Remark>
+						<Division
+							HtmlDiv="True"
+							ID="panel-detail-container"
+							>
 							<Division
+								Class="panel panel-default"
+								Condition="&quot;@Request.paramLocName~&quot;.length &gt; 0"
 								HtmlDiv="True"
-								ID="panel-detail-container"
+								ID="panel-detail"
 								>
 								<Division
-									Class="panel panel-default"
-									Condition="&quot;@Request.paramLocName~&quot;.length &gt; 0"
+									Class="panel-heading"
 									HtmlDiv="True"
-									ID="panel-detail"
+									ID="panel-heading-detail"
 									>
-									<Division
-										Class="panel-heading"
-										HtmlDiv="True"
-										ID="panel-heading-detail"
+									<ResponsiveRow
+										CollisionBehavior="Overlap"
 										>
-										<ResponsiveRow
-											CollisionBehavior="Overlap"
-											>
-											<ResponsiveColumn>
-												<Label
-													Caption="Location Detail for @Request.paramLocName~"
-												/>
-											</ResponsiveColumn>
-											<ResponsiveColumn>
-												<Label
-													Class="fa fa-close pull-right color-panel-heading"
-													>
-													<Action
-														ElementID="panel-detail-container"
-														ID="actCloseMapDetail"
-														Type="RefreshElement"
-														>
-														<LinkParams
-															paramLocName=""
-														/>
-														<WaitPage/>
-													</Action>
-												</Label>
-												<IncludeHtml
-													Html="&lt;style&gt;
-/* Color Classes */
-.color-panel-heading {
-	color: #6F767F !important;
-}
-.color-black {
-	color: #000000 !important;
-}
-&lt;/style&gt;"
-												/>
-											</ResponsiveColumn>
-										</ResponsiveRow>
-									</Division>
-									<Division
-										Class="panel-body"
-										HtmlDiv="True"
-										ID="panel-body-detail"
-										>
+										<ResponsiveColumn/>
+									</ResponsiveRow>
+								</Division>
+								<Division
+									Class="panel-body"
+									HtmlDiv="True"
+									ID="panel-body-detail"
+									>
+									<Remark>
 										<ResponsiveRow>
 											<ResponsiveColumn
 												ColspanExtraSmallScreen="1"
@@ -203,81 +324,182 @@ From MapMKCLocations"
 												ColspanMediumScreen="1"
 												ColspanSmallScreen="1"
 												>
-												<Label
-													Class="fa fa-tachometer color-panel-heading"
-												/>
-											</ResponsiveColumn>
-											<ResponsiveColumn
-												ColspanExtraSmallScreen="11"
-												ColspanLargeScreen="5"
-												ColspanMediumScreen="5"
-												ColspanSmallScreen="11"
-												>
-												<Label
-													Caption="Financials Dashboard"
+												<DataTable
+													AccessibleHeaders="True"
+													AccessibleSummary="AnalysisGrid DataTable"
+													ID="DataTable1"
+													KeepScrollPosition="True"
+													RememberSort="True"
+													ResizableColumns="True"
+													SortArrows="True"
+													TableBorder="0"
 													>
-													<Action
-														ID="lnkFinancials"
-														Type="Report"
+													<DataLayer
+														ColumnNamesRow="1"
+														ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx"
+														ExcelWorksheet="Sheet1"
+														ID="dlAFDSpreadsheet"
+														Type="Excel"
+													/>
+													<InteractivePaging
+														CaptionType="Image"
+														HideShowPrevNextCaptions="False"
+														HideWhenOnePage="True"
+														IDnotSupportedHere="pagingTableNumbered"
+														Location="Top"
+														PageRowCount="20"
+														ShowPageNumber="Numbered"
+													/>
+													<DataTableColumn
+														Header="coopid"
+														ID="colcoopid"
 														>
-														<Target
-															FrameID="NewWindow"
-															ID="targetFinancials"
-															Report="Home.Financials"
-															RequestForwarding="True"
-															Type="Report"
-															>
-															<WaitPage/>
-														</Target>
-													</Action>
-												</Label>
-											</ResponsiveColumn>
-											<ResponsiveColumn>
-												<Image
-													Caption="location.jpg"
-													Height="250"
-													ID="imgLocation"
-													Width="325"
-												/>
-											</ResponsiveColumn>
-											<ResponsiveColumn
-												ColspanExtraSmallScreen="6"
-												ColspanLargeScreen="6"
-												ColspanMediumScreen="6"
-												ColspanSmallScreen="6"
-												>
-												<Label/>
+														<Label
+															Caption="@Data.coopid~"
+															ID="colcoopid"
+														/>
+														<DataColumnSort
+															DataColumn="coopid"
+															DataType="Number"
+														/>
+													</DataTableColumn>
+													<DataTableColumn
+														Header="customerid"
+														ID="colcustomerid"
+														>
+														<Label
+															Caption="@Data.customerid~"
+															ID="colcustomerid"
+														/>
+														<DataColumnSort
+															DataColumn="customerid"
+															DataType="Number"
+														/>
+													</DataTableColumn>
+													<DataTableColumn
+														Header="companyname"
+														ID="colcompanyname"
+														>
+														<Label
+															Caption="@Data.companyname~"
+															ID="colcompanyname"
+														/>
+														<DataColumnSort
+															DataColumn="companyname"
+															DataType="Text"
+														/>
+													</DataTableColumn>
+													<DataTableColumn
+														Header="firstname"
+														ID="colfirstname"
+														>
+														<Label
+															Caption="@Data.firstname~"
+															ID="colfirstname"
+														/>
+														<DataColumnSort
+															DataColumn="firstname"
+															DataType="Text"
+														/>
+													</DataTableColumn>
+													<DataTableColumn
+														Header="lastname"
+														ID="collastname"
+														>
+														<Label
+															Caption="@Data.lastname~"
+															ID="collastname"
+														/>
+														<DataColumnSort
+															DataColumn="lastname"
+															DataType="Text"
+														/>
+													</DataTableColumn>
+													<DataTableColumn
+														Header="city"
+														ID="colcity"
+														>
+														<Label
+															Caption="@Data.city~"
+															ID="colcity"
+														/>
+														<DataColumnSort
+															DataColumn="city"
+															DataType="Text"
+														/>
+													</DataTableColumn>
+													<DataTableColumn
+														Header="siteid"
+														ID="colsiteid"
+														>
+														<Label
+															Caption="@Data.siteid~"
+															ID="colsiteid"
+														/>
+														<DataColumnSort
+															DataColumn="siteid"
+															DataType="Number"
+														/>
+													</DataTableColumn>
+													<DataTableColumn
+														Header="long"
+														ID="collong"
+														>
+														<Label
+															Caption="@Data.long~"
+															ID="collong"
+														/>
+														<DataColumnSort
+															DataColumn="long"
+															DataType="Number"
+														/>
+													</DataTableColumn>
+													<DataTableColumn
+														Header="lat"
+														ID="collat"
+														>
+														<Label
+															Caption="@Data.lat~"
+															ID="collat"
+														/>
+														<DataColumnSort
+															DataColumn="lat"
+															DataType="Number"
+														/>
+													</DataTableColumn>
+													<DataTableColumn
+														Header="tankid"
+														ID="coltankid"
+														>
+														<Label
+															Caption="@Data.tankid~"
+															ID="coltankid"
+														/>
+														<DataColumnSort
+															DataColumn="tankid"
+															DataType="Number"
+														/>
+													</DataTableColumn>
+													<DataTableColumn
+														Header="probeid"
+														ID="colprobeid"
+														>
+														<Label
+															Caption="@Data.probeid~"
+															ID="colprobeid"
+														/>
+														<DataColumnSort
+															DataColumn="probeid"
+															DataType="Number"
+														/>
+													</DataTableColumn>
+												</DataTable>
 											</ResponsiveColumn>
 										</ResponsiveRow>
-										<DataTable
-											ID="tblLocationInfo"
-											>
-											<DataLayer
-												ConnectionID="connMKC"
-												ID="sqlLocInfo"
-												Source="SELECT DISTINCT 1 AS ID, LOCNDSCR AS AttrValue FROM MAPMKCLOCATIONS WHERE LOCNCODE=&apos;@Request.paramLocCd~&apos;
-union 
-SELECT DISTINCT 2 AS ID, LTRIM(RTRIM(ADDRESS1)) + &apos; &apos; + LTRIM(RTRIM(CITY)) + &apos; &apos; + LTRIM(RTRIM(STATEABBR)) + &apos; &apos; + LTRIM(RTRIM(ZIPCODE)) AS LOCNADDR FROM MAPMKCLOCATIONS WHERE LOCNCODE=&apos;@Request.paramLocCd~&apos;
-union 
-SELECT 3 AS ID, AttrValue FROM MAPMKCLOCATIONS WHERE AttrType=&apos;Employees&apos; and LOCNCODE=&apos;@Request.paramLocCd~&apos;
-union
-SELECT 4 AS ID, AttrValue FROM MAPMKCLOCATIONS WHERE AttrType&lt;&gt;&apos;Employees&apos; and LOCNCODE=&apos;@Request.paramLocCd~&apos;
-ORDER BY ID"
-												Type="SQL"
-											/>
-											<DataTableColumn
-												ID="colAttributes"
-												>
-												<LineBreak/>
-												<Label
-													Caption="@Data.AttrValue~"
-												/>
-											</DataTableColumn>
-										</DataTable>
-									</Division>
+									</Remark>
 								</Division>
 							</Division>
-						</Remark>
+						</Division>
 					</Division>
 				</Division>
 			</ResponsiveColumn>
@@ -287,5 +509,9 @@ ORDER BY ID"
 		DefinitionFile="_Layout.Shared"
 		SharedElementID="shrFooter"
 	/>
-	<ideTestParams/>
+	<ideTestParams
+		cacheExpireNow=""
+		iptCity=""
+		paramLocName=""
+	/>
 </Report>
