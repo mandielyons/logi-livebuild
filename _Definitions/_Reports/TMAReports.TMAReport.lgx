@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Report
-	ID="Home.MKCReport"
+	Caption="TMA Contracts Dashboard"
+	ID="TMAReports.TMAReport"
 	>
 	<DefaultRequestParams
 		paramCust="CHS INC"

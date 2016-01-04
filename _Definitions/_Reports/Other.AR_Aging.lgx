@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report Caption="AR Aging" ID="Reports.AR_Aging">
+<Report Caption="AR Aging" ID="Other.AR_Aging">
   <IncludeSharedElement DefinitionFile="_Layout.Shared" SharedElementID="shrHeader" />
   <Body>
     <ResponsiveRow>

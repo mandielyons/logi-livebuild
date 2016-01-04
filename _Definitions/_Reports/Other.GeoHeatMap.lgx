@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report Caption="Geo Heat Map" ID="Maps.GeoHeatMap">
+<Report Caption="Geo Heat Map" ID="Other.GeoHeatMap">
   <DefaultRequestParams paramCommodity="All" />
   <IncludeSharedElement DefinitionFile="_Layout.Shared" SharedElementID="shrHeader" />
   <Body>
