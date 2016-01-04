@@ -1,0 +1,478 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report
+	Caption="TMA Contract Detail"
+	ID="Unknown.SubReports.TMAContractsDetail"
+	>
+	<LocalData>
+		<DataLayer
+			ConnectionID="connProdGP"
+			ID="sqlTMAContract"
+			Source="SELECT CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;_&apos;+CT.COMMODITY_CODE+&apos;_&apos;+SUBSTRING(LTRIM(RTRIM(CT.CONTRACT_NUMBER)),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM(CT.CONTRACT_NUMBER)))-1) as [KEY]
+  , LTRIM(RTRIM(CM.NAME)) [CUSTDESC]
+  , LTRIM(RTRIM(CT.CUSTOMER)) [CUSTNMBR]
+  , LTRIM(RTRIM(CM.ADDRESS_LINE_1)) [CUSTADDR1]
+  , LTRIM(RTRIM(CM.CITY)) [CUSTCITY]
+  , LTRIM(RTRIM(CM.[STATE])) [CUSTSTATE]
+  , LTRIM(RTRIM(CM.ZIP_CODE)) [CUSTZIPCODE]
+  , SUBSTRING(LTRIM(RTRIM(CT.CONTRACT_NUMBER)),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM(CT.CONTRACT_NUMBER)))-1) AS MAINCONTRACT
+  , SUBSTRING(LTRIM(RTRIM(CT.CONTRACT_NUMBER)),CHARINDEX(&apos;.&apos;,LTRIM(RTRIM(CT.CONTRACT_NUMBER)))+1,3) AS SUBCONTRACT
+  , LTRIM(RTRIM(CT.CONTRACT_NUMBER)) [CONTRACTNMBR]
+  , CAST(CT.ISSUED_DATE AS DATE) [CONTRACTDT]
+  , CAST(CT.DELIVERY_START_DATE AS DATE) [DELIVERY_START_DATE]
+  , CAST(CT.DELIVERY_END_DATE AS DATE) [DELIVERY_END_DATE]
+  , LTRIM(RTRIM(CT.DPR_POSITION)) [DPRPOSITION]
+  , LTRIM(RTRIM(PM.[DESCRIPTION])) [DPRDESC]
+  , LTRIM(RTRIM(CT.BRANCH_NUMBER)) [LOCNMBR]
+  , LTRIM(RTRIM(BM.BRANCH_NAME)) [LOCDESC]
+  , LTRIM(RTRIM(CT.COMMODITY_CODE)) [COMMODITYCD]
+  , LTRIM(RTRIM(IV.[DESCRIPTION])) [COMMODITYDESC]
+  , CT.ISSUED_LBS, CT.APPLIED_LBS, CT.ADJUSTED_LBS, CT.SUB_CONT_LBS
+  , (CT.ISSUED_LBS-CT.APPLIED_LBS+ADJUSTED_LBS-SUB_CONT_LBS) [REMAINING_LBS]
+  , CT.ISSUED_LBS/UM.STANDARD_UNITS_LBS [ISSUED_BU]
+  , CT.APPLIED_LBS/UM.STANDARD_UNITS_LBS [APPLIED_BU]
+  , CT.ADJUSTED_LBS/UM.STANDARD_UNITS_LBS [ADJUSTED_BU]
+  , CT.SUB_CONT_LBS/UM.STANDARD_UNITS_LBS [SUB_CONT_BU]
+  , (CT.ISSUED_LBS-CT.APPLIED_LBS+ADJUSTED_LBS-SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS [REMAINING_BU]
+FROM AgTrax_Staging..CA_CONTRACT_MASTER CT 
+  INNER JOIN AgTrax_Staging..AR_CUSTOMER_MASTER_TMA CM ON CT.CUSTOMER=CM.CUSTOMER
+  LEFT OUTER JOIN AgTrax_Staging..CA_COMMODITY_MASTER IV ON CT.COMMODITY_CODE=IV.COMMODITY_CODE
+  LEFT OUTER JOIN AgTrax_Staging..IV_UNIT_OF_MEASURE UM ON IV.UOM_BUSHELS=UM.UNIT_OF_MEASURE
+  LEFT OUTER JOIN AgTrax_Staging..CA_POSITION_MASTER PM ON CT.DPR_POSITION=PM.DPR_POSITION
+  LEFT OUTER JOIN AgTrax_Staging..IV_BRANCH_MASTER BM ON CT.BRANCH_NUMBER=BM.BRANCH_NUMBER
+WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;_&apos;+CT.COMMODITY_CODE+&apos;_&apos;+SUBSTRING(LTRIM(RTRIM(CT.CONTRACT_NUMBER)),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM(CT.CONTRACT_NUMBER)))-1)=&apos;@Request.paramContractKey~&apos;
+  AND CT.CONTRACT_STATUS=&apos;O&apos;
+"
+			Type="SQL"
+			>
+			<DataLayerLink
+				ID="lnkTMAContract"
+			/>
+		</DataLayer>
+	</LocalData>
+	<ReportHeader>
+		<Button
+			Caption="Dashboard Home"
+			ID="buttonHome"
+			>
+			<Action
+				Type="Report"
+				>
+				<Target
+					Report="Unknown.TMAContractsDashboard"
+					Type="Report"
+				/>
+			</Action>
+		</Button>
+	</ReportHeader>
+	<Body>
+		<DataTable
+			AccessibleHeaders="True"
+			AccessibleSummary="AnalysisGrid DataTable"
+			ID="DataTable1"
+			KeepScrollPosition="True"
+			RememberSort="True"
+			ResizableColumns="True"
+			SortArrows="True"
+			TableBorder="0"
+			>
+			<DataLayer
+				LinkedDataLayerID="lnkTMAContract"
+				Type="Linked"
+			/>
+			<InteractivePaging
+				CaptionType="Image"
+				HideShowPrevNextCaptions="False"
+				HideWhenOnePage="True"
+				IDnotSupportedHere="pagingTableNumbered"
+				Location="Top"
+				PageRowCount="20"
+				ShowPageNumber="Numbered"
+			/>
+			<DataTableColumn
+				Header="Account Number"
+				ID="colCUSTNMBR"
+				>
+				<Label
+					Caption="@Data.CUSTNMBR~"
+					ID="colCUSTNMBR"
+				/>
+				<DataColumnSort
+					DataColumn="CUSTNMBR"
+					DataType="Text"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Account"
+				ID="colCUSTDESC"
+				>
+				<Label
+					Caption="@Data.CUSTDESC~"
+					ID="colCUSTDESC"
+				/>
+				<DataColumnSort
+					DataColumn="CUSTDESC"
+					DataType="Text"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Address"
+				ID="colCUSTADDR1"
+				>
+				<Label
+					Caption="@Data.CUSTADDR1~"
+					ID="colCUSTADDR1"
+				/>
+				<DataColumnSort
+					DataColumn="CUSTADDR1"
+					DataType="Text"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="City"
+				ID="colCUSTCITY"
+				>
+				<Label
+					Caption="@Data.CUSTCITY~"
+					ID="colCUSTCITY"
+				/>
+				<DataColumnSort
+					DataColumn="CUSTCITY"
+					DataType="Text"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="State"
+				ID="colCUSTSTATE"
+				>
+				<Label
+					Caption="@Data.CUSTSTATE~"
+					ID="colCUSTSTATE"
+				/>
+				<DataColumnSort
+					DataColumn="CUSTSTATE"
+					DataType="Text"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Postal Code"
+				ID="colCUSTZIPCODE"
+				>
+				<Label
+					Caption="@Data.CUSTZIPCODE~"
+					ID="colCUSTZIPCODE"
+				/>
+				<DataColumnSort
+					DataColumn="CUSTZIPCODE"
+					DataType="Text"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Contract Main"
+				ID="colMAINCONTRACT"
+				>
+				<Label
+					Caption="@Data.MAINCONTRACT~"
+					ID="colMAINCONTRACT"
+				/>
+				<DataColumnSort
+					DataColumn="MAINCONTRACT"
+					DataType="Text"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Sub Contract"
+				ID="colSUBCONTRACT"
+				>
+				<Label
+					Caption="@Data.SUBCONTRACT~"
+					ID="colSUBCONTRACT"
+				/>
+				<DataColumnSort
+					DataColumn="SUBCONTRACT"
+					DataType="Text"
+				/>
+			</DataTableColumn>
+			<Remark>
+				<DataTableColumn
+					Header="CONTRACTNMBR"
+					ID="colCONTRACTNMBR"
+					>
+					<Label
+						Caption="@Data.CONTRACTNMBR~"
+						ID="colCONTRACTNMBR"
+					/>
+					<DataColumnSort
+						DataColumn="CONTRACTNMBR"
+						DataType="Text"
+					/>
+				</DataTableColumn>
+			</Remark>
+			<DataTableColumn
+				Header="Contract Date"
+				ID="colCONTRACTDT"
+				>
+				<Label
+					Caption="@Data.CONTRACTDT~"
+					Format="Short Date"
+					ID="colCONTRACTDT"
+				/>
+				<DataColumnSort
+					DataColumn="CONTRACTDT"
+					DataType="Date"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Delivery Start"
+				ID="colDELIVERY_START_DATE"
+				>
+				<Label
+					Caption="@Data.DELIVERY_START_DATE~"
+					Format="Short Date"
+					ID="colDELIVERY_START_DATE"
+				/>
+				<DataColumnSort
+					DataColumn="DELIVERY_START_DATE"
+					DataType="Date"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Delivery End"
+				ID="colDELIVERY_END_DATE"
+				>
+				<Label
+					Caption="@Data.DELIVERY_END_DATE~"
+					Format="Short Date"
+					ID="colDELIVERY_END_DATE"
+				/>
+				<DataColumnSort
+					DataColumn="DELIVERY_END_DATE"
+					DataType="Date"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="DPR Position"
+				ID="colDPRPOSITION"
+				>
+				<Label
+					Caption="@Data.DPRPOSITION~"
+					ID="colDPRPOSITION"
+				/>
+				<DataColumnSort
+					DataColumn="DPRPOSITION"
+					DataType="Text"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="DPR Description"
+				ID="colDPRDESC"
+				>
+				<Label
+					Caption="@Data.DPRDESC~"
+					ID="colDPRDESC"
+				/>
+				<DataColumnSort
+					DataColumn="DPRDESC"
+					DataType="Text"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Location"
+				ID="colLOCNMBR"
+				>
+				<Label
+					Caption="@Data.LOCNMBR~"
+					ID="colLOCNMBR"
+				/>
+				<DataColumnSort
+					DataColumn="LOCNMBR"
+					DataType="Text"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Location Description"
+				ID="colLOCDESC"
+				>
+				<Label
+					Caption="@Data.LOCDESC~"
+					ID="colLOCDESC"
+				/>
+				<DataColumnSort
+					DataColumn="LOCDESC"
+					DataType="Text"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Commodity Code"
+				ID="colCOMMODITYCD"
+				>
+				<Label
+					Caption="@Data.COMMODITYCD~"
+					ID="colCOMMODITYCD"
+				/>
+				<DataColumnSort
+					DataColumn="COMMODITYCD"
+					DataType="Text"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Commodity Description"
+				ID="colCOMMODITYDESC"
+				>
+				<Label
+					Caption="@Data.COMMODITYDESC~"
+					ID="colCOMMODITYDESC"
+				/>
+				<DataColumnSort
+					DataColumn="COMMODITYDESC"
+					DataType="Text"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Issued LB"
+				ID="colISSUED_LBS"
+				>
+				<Label
+					Caption="@Data.ISSUED_LBS~"
+					Format="###,###,##0.000"
+					ID="colISSUED_LBS"
+				/>
+				<DataColumnSort
+					DataColumn="ISSUED_LBS"
+					DataType="Number"
+				/>
+			</DataTableColumn>
+			<Remark>
+				<DataTableColumn
+					Header="APPLIED_LBS"
+					ID="colAPPLIED_LBS"
+					>
+					<Label
+						Caption="@Data.APPLIED_LBS~"
+						ID="colAPPLIED_LBS"
+					/>
+					<DataColumnSort
+						DataColumn="APPLIED_LBS"
+						DataType="Number"
+					/>
+				</DataTableColumn>
+			</Remark>
+			<Remark>
+				<DataTableColumn
+					Header="ADJUSTED_LBS"
+					ID="colADJUSTED_LBS"
+					>
+					<Label
+						Caption="@Data.ADJUSTED_LBS~"
+						ID="colADJUSTED_LBS"
+					/>
+					<DataColumnSort
+						DataColumn="ADJUSTED_LBS"
+						DataType="Number"
+					/>
+				</DataTableColumn>
+			</Remark>
+			<Remark>
+				<DataTableColumn
+					Header="SUB_CONT_LBS"
+					ID="colSUB_CONT_LBS"
+					>
+					<Label
+						Caption="@Data.SUB_CONT_LBS~"
+						ID="colSUB_CONT_LBS"
+					/>
+					<DataColumnSort
+						DataColumn="SUB_CONT_LBS"
+						DataType="Number"
+					/>
+				</DataTableColumn>
+			</Remark>
+			<DataTableColumn
+				Header="Remaining LB"
+				ID="colREMAINING_LBS"
+				>
+				<Label
+					Caption="@Data.REMAINING_LBS~"
+					Format="###,###,##0.000"
+					ID="colREMAINING_LBS"
+				/>
+				<DataColumnSort
+					DataColumn="REMAINING_LBS"
+					DataType="Number"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Issued BU"
+				ID="colISSUED_BU"
+				>
+				<Label
+					Caption="@Data.ISSUED_BU~"
+					Format="###,###,##0.000"
+					ID="colISSUED_BU"
+				/>
+				<DataColumnSort
+					DataColumn="ISSUED_BU"
+					DataType="Number"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Applied BU"
+				ID="colAPPLIED_BU"
+				>
+				<Label
+					Caption="@Data.APPLIED_BU~"
+					Format="###,###,##0.000"
+					ID="colAPPLIED_BU"
+				/>
+				<DataColumnSort
+					DataColumn="APPLIED_BU"
+					DataType="Number"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Adjusted BU"
+				ID="colADJUSTED_BU"
+				>
+				<Label
+					Caption="@Data.ADJUSTED_BU~"
+					Format="###,###,##0.000"
+					ID="colADJUSTED_BU"
+				/>
+				<DataColumnSort
+					DataColumn="ADJUSTED_BU"
+					DataType="Number"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="SubContracted BU"
+				ID="colSUB_CONT_BU"
+				>
+				<Label
+					Caption="@Data.SUB_CONT_BU~"
+					Format="###,###,##0.000"
+					ID="colSUB_CONT_BU"
+				/>
+				<DataColumnSort
+					DataColumn="SUB_CONT_BU"
+					DataType="Number"
+				/>
+			</DataTableColumn>
+			<DataTableColumn
+				Header="Remaining BU"
+				ID="colREMAINING_BU"
+				>
+				<Label
+					Caption="@Data.REMAINING_BU~"
+					Format="###,###,##0.000"
+					ID="colREMAINING_BU"
+				/>
+				<DataColumnSort
+					DataColumn="REMAINING_BU"
+					DataType="Number"
+				/>
+			</DataTableColumn>
+		</DataTable>
+	</Body>
+	<ideTestParams
+		paramContractKey="1_8320618_02_23978"
+	/>
+</Report>
