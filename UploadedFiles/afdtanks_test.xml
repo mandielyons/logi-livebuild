@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<data-set xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<record>
+		<coopid>115596</coopid>
+		<customerid>72137</customerid>
+		<companyname>NULL</companyname>
+		<firstname>Gary</firstname>
+		<lastname>Patrick</lastname>
+		<city>Lindsborg</city>
+		<siteid>1</siteid>
+		<long>-97.58956</long>
+		<lat>38.5394</lat>
+		<tankid>1</tankid>
+		<probeid>1033</probeid>
+	</record>
+	<record>
+		<coopid>115596</coopid>
+		<customerid>75817</customerid>
+		<companyname>NULL</companyname>
+		<firstname>James J</firstname>
+		<lastname>Heglund</lastname>
+		<city>Asaria</city>
+		<siteid>1</siteid>
+		<long>-97.60465</long>
+		<lat>38.69576</lat>
+		<tankid>1</tankid>
+		<probeid>1261</probeid>
+	</record>
+	<record>
+		<coopid>115596</coopid>
+		<customerid>87275</customerid>
+		<companyname>KENNETH GOEHRING</companyname>
+		<firstname>KENNETH</firstname>
+		<lastname>GOEHRING</lastname>
+		<city>WESTMORELAND</city>
+		<siteid>1</siteid>
+		<long>-96.315078</long>
+		<lat>39.332256</lat>
+		<tankid>2</tankid>
+		<probeid>1854</probeid>
+	</record>
+</data-set>

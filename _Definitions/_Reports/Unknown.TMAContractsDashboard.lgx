@@ -1,0 +1,527 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report
+	Caption="TMA Contracts Dashboard"
+	ID="tmacontractsdashboard"
+	>
+	<DefaultRequestParams
+		Account="ALL"
+		paramCommodityCode="01"
+		paramCommodityCT="01"
+		paramCommodityDesc="Corn"
+		paramCustNmbr="ALL"
+		paramShipPeriodDt="2015-11-30"
+		Position="Cash"
+	/>
+	<LocalData>
+		<DataLayer
+			ConnectionID="connProdGP"
+			ID="dlSQLShipPeriodDt"
+			Source="SELECT CAST(DATEADD(DAY,-1,CAST(CONVERT(VARCHAR(7),GETDATE(),120)+&apos;-01&apos; AS DATE)) AS VARCHAR(10)) AS [SHIP_PERIOD_DT]
+  , CONVERT(VARCHAR(10),DATEADD(DAY,-1,CAST(CONVERT(VARCHAR(7),GETDATE(),120)+&apos;-01&apos; AS DATE)),110) AS [SHIP_PERIOD_DESC]"
+			Type="SQL"
+		/>
+	</LocalData>
+	<Body>
+		<ResponsiveRow>
+			<ResponsiveColumn
+				ColspanExtraSmallScreen="1"
+				ColspanLargeScreen="6"
+				ColspanMediumScreen="3"
+				ColspanSmallScreen="1"
+				>
+				<Division
+					ID="dviContractsbyCommodity"
+					>
+					<ChartCanvas
+						ChartCaption="Ship Period Ending @Local.SHIP_PERIOD_DESC~"
+						ChartOrientation="Default"
+						ID="ContractsByCommodity"
+						>
+						<DataLayer
+							ConnectionID="connProdGP"
+							ID="SQLDataLayer-ContractsByCommodity"
+							Source="SELECT LTRIM(RTRIM(CT.COMMODITY_CODE)) AS [COMMODITYCODE],
+  LTRIM(RTRIM(MAX(IV.DESCRIPTION))) AS [COMMODITYDESC],
+  CAST(SUM((CT.ISSUED_LBS-CT.APPLIED_LBS+CT.ADJUSTED_LBS-CT.SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS) AS NUMERIC(19,3)) AS [REMAINING_BU]
+FROM [Agtrax_Staging]..[CA_CONTRACT_MASTER] AS [CT] with(nolock) 
+  LEFT OUTER JOIN [Agtrax_Staging]..[CA_COMMODITY_MASTER] AS [IV] with(nolock) ON CT.COMMODITY_CODE=IV.COMMODITY_CODE 
+  LEFT OUTER JOIN [Agtrax_Staging]..[IV_UNIT_OF_MEASURE] AS [UM] with(nolock) ON IV.UOM_BUSHELS=UM.UNIT_OF_MEASURE
+WHERE CT.CONTRACT_STATUS=&apos;O&apos; AND CT.DELIVERY_END_DATE&lt;=&apos;@Local.SHIP_PERIOD_DT~&apos;
+GROUP BY CT.COMMODITY_CODE
+HAVING SUM((CT.ISSUED_LBS - CT.APPLIED_LBS + CT.ADJUSTED_LBS - CT.SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS) &lt;&gt; 0.0
+"
+							Type="SQL"
+							>
+							<GroupFilter
+								DataType="Text"
+								GroupColumn="COMMODITYCODE"
+								KeepGroupedRows="False"
+								>
+								<GroupAggregateColumn
+									AggregateColumn="REMAINING_BU"
+									AggregateFunction="SUM"
+									DataType="Number"
+									ID="rdGrgrREMAINING-REMAINING_BU-sum"
+								/>
+							</GroupFilter>
+							<SortFilter
+								DataType="Number"
+								SortColumn="COMMODITYCODE"
+								SortSequence="Ascending"
+								>
+								<Note
+									Note="Sort Bars By Commodity Code"
+								/>
+							</SortFilter>
+						</DataLayer>
+						<Series
+							ChartXDataColumn="COMMODITYDESC"
+							ChartXDataColumnType="Text"
+							ChartYDataColumn="rdGrgrREMAINING-REMAINING_BU-sum"
+							Type="Bar"
+							>
+							<Quicktip>
+								<Remark>
+									<QuicktipRow
+										Caption="Commodity: "
+										Value="@Chart.COMMODITYDESC~"
+									/>
+								</Remark>
+								<QuicktipRow
+									Caption="Remaining BU: "
+									Format="###,###,##0.000"
+									Value="@Chart.rdGrgrREMAINING-REMAINING_BU-sum~"
+								/>
+							</Quicktip>
+							<Action
+								ID="actionReport.TMAContractsByShipDate"
+								Type="Report"
+								>
+								<LinkParams
+									paramCommodityCode="@Chart.COMMODITYCODE~"
+									paramCommodityDesc="@Chart.COMMODITYDESC~"
+									paramShipPeriodDesc="@Local.SHIP_PERIOD_DESC~"
+									paramShipPeriodDt="@Local.SHIP_PERIOD_DT~"
+								/>
+								<Target
+									Report="Unknown.SubReports.TMAContractsByShipDate"
+									RequestForwarding="True"
+									Type="Report"
+								/>
+							</Action>
+						</Series>
+						<ChartXAxis
+							AxisCaption="Commodity"
+							>
+							<AxisLabelStyle
+								FontAngle="0"
+							/>
+						</ChartXAxis>
+						<ChartYAxis
+							AxisCaption="Remaining BU"
+						/>
+					</ChartCanvas>
+				</Division>
+			</ResponsiveColumn>
+			<ResponsiveColumn
+				ColspanExtraSmallScreen="1"
+				ColspanLargeScreen="6"
+				ColspanMediumScreen="3"
+				ColspanSmallScreen="1"
+				>
+				<Division
+					ID="divContractsOvershipped"
+					>
+					<DataTable
+						AccessibleHeaders="True"
+						AccessibleSummary="AnalysisGrid DataTable"
+						ID="ContractsOvershipped"
+						KeepScrollPosition="True"
+						RememberSort="True"
+						ResizableColumns="True"
+						SortArrows="True"
+						TableBorder="0"
+						>
+						<DataLayer
+							ConnectionID="connProdGP"
+							ID="SQLDataLayer-ContractsOvershipped"
+							Source="SELECT CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;_&apos;+[CT].[COMMODITY_CODE]+&apos;_&apos;+SUBSTRING(LTRIM(RTRIM([CT].[CONTRACT_NUMBER])),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM([CT].[CONTRACT_NUMBER])))-1) as [KEY]
+  , SUBSTRING(LTRIM(RTRIM([CT].[CONTRACT_NUMBER])),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM([CT].[CONTRACT_NUMBER])))-1) AS [CONTRACTNMBR]
+  , LTRIM(RTRIM([CT].[CUSTOMER])) AS [CUSTNMBR]
+  , LTRIM(RTRIM(MAX([CM].[NAME]))) AS [CUSTDESC]
+  , LTRIM(RTRIM([CT].[COMMODITY_CODE])) AS [COMMODITYCD]
+  , LTRIM(RTRIM([IV].[DESCRIPTION])) AS [COMMODITYDESC]
+  , CAST(SUM(([CT].[ISSUED_LBS]-[CT].[APPLIED_LBS]+[CT].[ADJUSTED_LBS]-[CT].[SUB_CONT_LBS])/[UM].[STANDARD_UNITS_LBS]) AS NUMERIC(19,3)) AS [REMAINING_BU]
+FROM [AgTrax_Staging]..[CA_CONTRACT_MASTER] AS [CT] with(nolock)
+  INNER JOIN [AgTrax_Staging]..[AR_CUSTOMER_MASTER_TMA] AS [CM] with(nolock) ON [CT].[CUSTOMER]=[CM].[CUSTOMER]
+  LEFT OUTER JOIN [AgTrax_Staging]..[CA_COMMODITY_MASTER] AS [IV] with(nolock) ON [CT].[COMMODITY_CODE]=[IV].[COMMODITY_CODE]
+  LEFT OUTER JOIN [AgTrax_Staging]..[IV_UNIT_OF_MEASURE] AS [UM] with(nolock) ON [IV].[UOM_BUSHELS]=[UM].[UNIT_OF_MEASURE]
+WHERE [CT].[CONTRACT_STATUS]=&apos;O&apos;
+GROUP BY CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;_&apos;+[CT].[COMMODITY_CODE]+&apos;_&apos;+SUBSTRING(LTRIM(RTRIM([CT].[CONTRACT_NUMBER])),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM([CT].[CONTRACT_NUMBER])))-1)
+  , SUBSTRING(LTRIM(RTRIM([CT].[CONTRACT_NUMBER])),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM([CT].[CONTRACT_NUMBER])))-1)
+  , LTRIM(RTRIM([CT].[CUSTOMER])) 
+  , LTRIM(RTRIM([CT].[COMMODITY_CODE]))
+  , LTRIM(RTRIM([IV].[DESCRIPTION]))
+HAVING SUM(([CT].[ISSUED_LBS]-[CT].[APPLIED_LBS]+[CT].[ADJUSTED_LBS]-[CT].[SUB_CONT_LBS])/[UM].[STANDARD_UNITS_LBS])&lt;0
+"
+							Type="SQL"
+							>
+							<SortFilter
+								DataType="Number"
+								SortColumn="REMAINING_BU"
+								SortSequence="Ascending"
+							/>
+						</DataLayer>
+						<InteractivePaging
+							CaptionType="Image"
+							HideShowPrevNextCaptions="False"
+							HideWhenOnePage="True"
+							IDnotSupportedHere="pagingTableNumbered"
+							Location="Top"
+							PageRowCount="8"
+							ShowPageNumber="Numbered"
+						/>
+						<DataTableColumn
+							Header="Contract"
+							ID="colCONTRACTNMBR"
+							>
+							<Label
+								Caption="@Data.CONTRACTNMBR~"
+								ID="colCONTRACTNMBR"
+								>
+								<Action
+									ID="rptTMAContractOvershipped"
+									Type="Report"
+									>
+									<LinkParams
+										paramContractKey="@Data.KEY~"
+									/>
+									<Target
+										Report="Unknown.SubReports.TMAContractsOvershipped"
+										RequestForwarding="True"
+										Type="Report"
+									/>
+								</Action>
+							</Label>
+							<DataColumnSort
+								DataColumn="CONTRACTNMBR"
+								DataType="Text"
+							/>
+						</DataTableColumn>
+						<DataTableColumn
+							Header="Account"
+							ID="colCUSTNMBR"
+							>
+							<Label
+								Caption="@Data.CUSTNMBR~"
+								ID="lblCUSTNMBR"
+							/>
+							<DataColumnSort
+								DataColumn="CUSTNMBR"
+							/>
+							<TooltipPanel
+								ID="tipCustomerDesc"
+								>
+								<Label
+									Caption="@Data.CUSTDESC~"
+								/>
+							</TooltipPanel>
+						</DataTableColumn>
+						<DataTableColumn
+							Header="Commodity"
+							ID="colCOMMODITYDESC"
+							>
+							<Label
+								Caption="@Data.COMMODITYDESC~"
+								ID="colCOMMODITYDESC"
+							/>
+							<DataColumnSort
+								DataColumn="COMMODITYDESC"
+								DataType="Text"
+							/>
+						</DataTableColumn>
+						<DataTableColumn
+							Header="Remaining BU"
+							ID="colREMAINING_BU"
+							>
+							<Label
+								Caption="@Data.REMAINING_BU~"
+								Format="###,###,##0.000"
+								ID="colREMAINING_BU"
+							/>
+							<DataColumnSort
+								DataColumn="REMAINING_BU"
+								DataType="Number"
+							/>
+						</DataTableColumn>
+						<DataTableColumn
+							ID="colKPI"
+							>
+							<Label
+								ID="KPI"
+								>
+								<Note
+									Note="KPI Remaining Contract Balance Conditions: Green greater than 2500 BU; Yellow 0 to 2500; Red less than 0"
+								/>
+								<ConditionalClass
+									Class="fa fa-arrow-up fa-2x text-success"
+									Condition="@Data.REMAINING_BU~ &gt; 2500"
+									ID="Condition-Green&gt;2500"
+								/>
+								<ConditionalClass
+									Class="fa fa-minus fa-2x text-warning"
+									Condition="(@Data.REMAINING_BU~ &gt;=0) And (@Data.REMAINING_BU~ &lt;= 2500)"
+									ID="Condition-Yellow-0-2500"
+								/>
+								<ConditionalClass
+									Class="fa fa-arrow-down fa-2x text-danger"
+									Condition="@Data.REMAINING_BU~ &lt; 0"
+									ID="Condition-Red&lt;0"
+								/>
+							</Label>
+						</DataTableColumn>
+					</DataTable>
+				</Division>
+			</ResponsiveColumn>
+		</ResponsiveRow>
+		<Division
+			ID="divCrosstab"
+			>
+			<CrosstabTable
+				Caption="Summary"
+				CellSpacing="10000"
+				ID="CommodityNetCrosstab"
+				TableBorder="1"
+				>
+				<DataLayer
+					ConnectionID="connProdGP"
+					ID="SQLDataLayer-CommodityNetCrosstab"
+					Source="SELECT CASE CT.CONTRACT_TYPE WHEN 1 THEN &apos;2&apos; WHEN 2 THEN &apos;1&apos; ELSE &apos;0&apos; END +&apos;-&apos;+ CT.COMMODITY_CODE AS [ORDER]
+  , LTRIM(RTRIM(CT.COMMODITY_CODE)) AS [COMMODITYCD]
+  , LTRIM(RTRIM(IV.[DESCRIPTION])) AS [COMMODITYDESC]
+  , CASE CT.CONTRACT_TYPE WHEN 1 THEN &apos;Sale&apos; WHEN 2 THEN &apos;Purchase&apos; ELSE &apos;Other&apos; END AS [CONTRACT_TYPE]
+  , DT.MONTHID AS [DELENDDTID]
+  , DT.MONTHDESC AS [DELENDDTDSC]
+  , CAST(SUM((CT.ISSUED_LBS-CT.APPLIED_LBS+ADJUSTED_LBS-SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS) AS NUMERIC(19,3)) AS [REMAINING_BU]
+FROM AgTrax_Staging..CA_CONTRACT_MASTER CT with(nolock) 
+  INNER JOIN AgTrax_Staging..AR_CUSTOMER_MASTER_TMA CM with(nolock) ON CT.CUSTOMER=CM.CUSTOMER
+  LEFT OUTER JOIN AgTrax_Staging..CA_COMMODITY_MASTER IV with(nolock) ON CT.COMMODITY_CODE=IV.COMMODITY_CODE
+  LEFT OUTER JOIN AgTrax_Staging..IV_UNIT_OF_MEASURE UM with(nolock) ON IV.UOM_BUSHELS=UM.UNIT_OF_MEASURE
+  RIGHT JOIN (SELECT 190001 AS MONTHID, &apos;Prior&apos; AS MONTHDESC
+                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,0,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,0,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,0,GETDATE()),102)
+                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,1,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,1,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,1,GETDATE()),102) 
+                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,2,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,2,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,2,GETDATE()),102)
+                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,3,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,3,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,3,GETDATE()),102) 
+                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,4,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,4,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,4,GETDATE()),102) 
+                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,5,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,5,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,5,GETDATE()),102) 
+                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,6,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,6,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,6,GETDATE()),102) 
+                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,7,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,7,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,7,GETDATE()),102) 
+                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,8,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,8,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,8,GETDATE()),102) 
+                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,9,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,9,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,9,GETDATE()),102) 
+                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,10,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,10,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,10,GETDATE()),102)
+                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,11,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,11,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,11,GETDATE()),102)
+              ) AS DT ON CAST(CASE WHEN CONVERT(VARCHAR(6),CT.DELIVERY_END_DATE,112)&lt;CONVERT(VARCHAR(6),GETDATE(),112) THEN &apos;190001&apos; ELSE CONVERT(VARCHAR(6),CT.DELIVERY_END_DATE,112) END AS INT)=DT.MONTHID
+WHERE CT.CONTRACT_STATUS=&apos;O&apos;
+  AND CT.DELIVERY_END_DATE &lt; DATEADD(MONTH,11,GETDATE())
+GROUP BY CT.CONTRACT_TYPE, DT.MONTHID, DT.MONTHDESC
+  , CT.COMMODITY_CODE
+  , IV.[DESCRIPTION]
+HAVING SUM((CT.ISSUED_LBS-CT.APPLIED_LBS+ADJUSTED_LBS-SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS) &lt;&gt; 0.0
+UNION ALL
+SELECT &apos;3&apos;+&apos;-&apos;+VC.COMMODITYCD AS [ORDER], VC.COMMODITYCD, VC.COMMODITYDESC, &apos;Net&apos; AS [CONTRACT_TYPE], VC.DELENDDTID, VC.DELENDDTDSC, SUM(VC.REMAINING_BU) AS REMAINING_BU
+FROM (
+SELECT
+    CT.COMMODITY_CODE AS [COMMODITYCD]
+  , IV.[DESCRIPTION] AS [COMMODITYDESC]
+  , DT.MONTHID AS [DELENDDTID]
+  , DT.MONTHDESC AS [DELENDDTDSC]
+  , CASE CT.CONTRACT_TYPE WHEN 1 THEN CAST(SUM((CT.ISSUED_LBS-CT.APPLIED_LBS+ADJUSTED_LBS-SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS) AS NUMERIC(19,3))*-1 ELSE CAST(SUM((CT.ISSUED_LBS-CT.APPLIED_LBS+ADJUSTED_LBS-SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS) AS NUMERIC(19,3)) END AS [REMAINING_BU]
+FROM AgTrax_Staging..CA_CONTRACT_MASTER CT with(nolock)
+  INNER JOIN AgTrax_Staging..AR_CUSTOMER_MASTER_TMA CM with(nolock) ON CT.CUSTOMER=CM.CUSTOMER
+  LEFT OUTER JOIN AgTrax_Staging..CA_COMMODITY_MASTER IV with(nolock) ON CT.COMMODITY_CODE=IV.COMMODITY_CODE
+  LEFT OUTER JOIN AgTrax_Staging..IV_UNIT_OF_MEASURE UM with(nolock) ON IV.UOM_BUSHELS=UM.UNIT_OF_MEASURE
+  RIGHT JOIN (SELECT 190001 AS MONTHID, &apos;Prior&apos; AS MONTHDESC
+                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,0,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,0,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,0,GETDATE()),102)
+                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,1,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,1,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,1,GETDATE()),102) 
+                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,2,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,2,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,2,GETDATE()),102)
+                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,3,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,3,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,3,GETDATE()),102) 
+                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,4,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,4,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,4,GETDATE()),102) 
+                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,5,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,5,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,5,GETDATE()),102) 
+                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,6,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,6,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,6,GETDATE()),102) 
+                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,7,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,7,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,7,GETDATE()),102) 
+                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,8,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,8,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,8,GETDATE()),102) 
+                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,9,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,9,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,9,GETDATE()),102) 
+                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,10,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,10,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,10,GETDATE()),102)
+                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,11,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,11,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,11,GETDATE()),102)
+              ) AS DT ON CAST(CASE WHEN CONVERT(VARCHAR(6),CT.DELIVERY_END_DATE,112)&lt;CONVERT(VARCHAR(6),GETDATE(),112) THEN &apos;190001&apos; ELSE CONVERT(VARCHAR(6),CT.DELIVERY_END_DATE,112) END AS INT)=DT.MONTHID
+WHERE CT.CONTRACT_STATUS=&apos;O&apos;
+  AND CT.DELIVERY_END_DATE &lt; DATEADD(MONTH,11,GETDATE())
+GROUP BY CT.CONTRACT_TYPE, DT.MONTHID, DT.MONTHDESC
+  , CT.COMMODITY_CODE
+  , IV.[DESCRIPTION]
+HAVING SUM((CT.ISSUED_LBS-CT.APPLIED_LBS+ADJUSTED_LBS-SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS) &lt;&gt; 0.0
+) AS VC
+GROUP BY VC.DELENDDTID, VC.COMMODITYCD, VC.COMMODITYDESC, VC.DELENDDTDSC
+ORDER BY DELENDDTID,[ORDER]
+"
+					Type="SQL"
+					>
+					<CrosstabFilter
+						CrosstabColumn="DELENDDTDSC"
+						CrosstabLabelColumn="ORDER"
+						CrosstabValueColumn="REMAINING_BU"
+						CrosstabValueFunction="SUM"
+						ID="CrosstabFilter1"
+						>
+						<ExtraCrosstabLabelColumn
+							CrosstabLabelColumn="CONTRACT_TYPE"
+							ID="ContractType"
+						/>
+						<ExtraCrosstabLabelColumn
+							CrosstabLabelColumn="COMMODITYCD"
+							ID="CommodityCode"
+						/>
+						<ExtraCrosstabLabelColumn
+							CrosstabLabelColumn="COMMODITYDESC"
+							ID="CommodityDesc"
+						/>
+					</CrosstabFilter>
+					<ConditionFilter
+						Condition="@Data.CommodityCode~=@Request.paramCommodityCT~"
+						ID="ConditionCommodityCode"
+					/>
+				</DataLayer>
+				<HeaderRow
+					Caption="Commodity"
+					Class="ThemeContainerShadedAndBordered"
+					HeaderPosition="Top"
+					ID="HeaderTabs"
+					>
+					<Column
+						ID="cell-Wheat"
+						>
+						<Label
+							Caption="WHEAT"
+							Class="ThemeContainerShadedAndBordered"
+							ID="lblWHEAT-01"
+							>
+							<Action
+								ElementID="divCrosstab"
+								ID="actRefCrossTab"
+								Type="RefreshElement"
+								>
+								<LinkParams
+									paramCommodityCT="01"
+								/>
+							</Action>
+						</Label>
+					</Column>
+					<Column
+						ID="cell-Milo"
+						>
+						<Label
+							Caption="MILO"
+							Class="ThemeContainerShadedAndBordered"
+							ID="lblMILO-02"
+							>
+							<Action
+								ElementID="divCrosstab"
+								ID="actRefCrossTab"
+								Type="RefreshElement"
+								>
+								<LinkParams
+									paramCommodityCT="02"
+								/>
+							</Action>
+						</Label>
+					</Column>
+					<Column
+						ID="cell-SOYBEANS"
+						>
+						<Label
+							Caption="SOYBEANS"
+							Class="ThemeContainerShadedAndBordered"
+							ID="lblSOYBEANS-03"
+							>
+							<Action
+								ElementID="divCrosstab"
+								ID="actRefCrossTab"
+								Type="RefreshElement"
+								>
+								<LinkParams
+									paramCommodityCT="03"
+								/>
+							</Action>
+						</Label>
+					</Column>
+					<Column
+						ID="cell-CORN"
+						>
+						<Label
+							Caption="CORN"
+							Class="ThemeContainerShadedAndBordered"
+							ID="lblCORN-04"
+							>
+							<Action
+								ElementID="divCrosstab"
+								ID="actRefCrossTab"
+								Type="RefreshElement"
+								>
+								<LinkParams
+									paramCommodityCT="04"
+								/>
+							</Action>
+						</Label>
+					</Column>
+					<Column
+						ID="cell-HCEWHEAT"
+						>
+						<Label
+							Caption="HCE WHEAT"
+							Class="ThemeContainerShadedAndBordered"
+							ID="lblHCEWHEAT-12"
+							>
+							<Action
+								ElementID="divCrosstab"
+								ID="actRefCrossTab"
+								Type="RefreshElement"
+								>
+								<LinkParams
+									paramCommodityCT="12"
+								/>
+							</Action>
+						</Label>
+					</Column>
+				</HeaderRow>
+				<CrosstabTableLabelColumn
+					ID="colAxLabel"
+					>
+					<Label
+						Caption="@Data.ContractType~"
+						NoWrap="True"
+					/>
+				</CrosstabTableLabelColumn>
+				<CrosstabTableLabelColumn
+					ID="colCommodityDesc"
+					>
+					<Label
+						Caption="@Data.CommodityDesc~"
+					/>
+				</CrosstabTableLabelColumn>
+				<CrosstabTableValueColumns
+					Header="@Data.rdCrosstabColumn~"
+					ID="colAxValue"
+					>
+					<Label
+						Caption="=iif(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)"
+						Format="###,###,##0.000"
+						NoWrap="True"
+					/>
+				</CrosstabTableValueColumns>
+			</CrosstabTable>
+		</Division>
+	</Body>
+	<ideTestParams
+		paramCommodityCT="01"
+	/>
+</Report>
