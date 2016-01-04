@@ -66,35 +66,13 @@ HAVING SUM((CT.ISSUED_LBS - CT.APPLIED_LBS + CT.ADJUSTED_LBS - CT.SUB_CONT_LBS)/
 							</GroupFilter>
 							<SortFilter
 								DataType="Number"
-								SortColumn="rdGrgrREMAINING-REMAINING_BU-sum"
-								SortSequence="Descending"
+								SortColumn="COMMODITYCODE"
+								SortSequence="Ascending"
 								>
 								<Note
-									Note="Sort Bars By Size Decending"
+									Note="Sort Bars By Commodity Code"
 								/>
 							</SortFilter>
-							<Remark>
-								<SortFilter
-									DataType="Number"
-									SortColumn="COMMODITYCODE"
-									SortSequence="Ascending"
-									>
-									<Note
-										Note="Sort Bars By Commodity Code"
-									/>
-								</SortFilter>
-							</Remark>
-							<RelevanceFilter
-								DataColumn="rdGrgrREMAINING-REMAINING_BU-sum"
-								IrrelevanceLabel="Under 150k BU"
-								LabelColumn="COMMODITYDESC"
-								RelevanceType="Value"
-								RelevanceValue="150000"
-								>
-								<Note
-									Note="Apply &quot;relevance&quot; to limit display"
-								/>
-							</RelevanceFilter>
 						</DataLayer>
 						<Series
 							ChartXDataColumn="COMMODITYDESC"

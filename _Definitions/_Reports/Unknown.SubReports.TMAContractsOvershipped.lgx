@@ -226,6 +226,9 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 				<Label
 					ID="KPI"
 					>
+					<Note
+						Note="KPI Remaining Contract Balance Conditions: Green greater than 2500 BU; Yellow 0 to 2500; Red less than 0"
+					/>
 					<ConditionalClass
 						Class="fa fa-arrow-up fa-2x text-success"
 						Condition="@Data.REMAINING_BU~ &gt; 2500"
