@@ -67,24 +67,6 @@ Group By IV.DESCRIPTION"
 	</LocalData>
 	<LocalData>
 		<DataLayer
-<<<<<<< HEAD
-			ConnectionID="connProdGP"
-			ID="lContractsOvershipped"
-			Source="SELECT 
-    SUBSTRING(LTRIM(RTRIM(CT.CONTRACT_NUMBER)),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM(CT.CONTRACT_NUMBER)))-1) AS CONTRACTNMBR
-  , LTRIM(RTRIM(IV.[DESCRIPTION])) AS [COMMODITYDESC]
-  , SUM((CT.ISSUED_LBS-CT.APPLIED_LBS+ADJUSTED_LBS-SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS) AS [REMAINING_BU]
-FROM AgTrax_Staging..CA_CONTRACT_MASTER CT 
-  INNER JOIN AgTrax_Staging..AR_CUSTOMER_MASTER_TMA CM ON CT.CUSTOMER=CM.CUSTOMER
-  LEFT OUTER JOIN AgTrax_Staging..CA_COMMODITY_MASTER IV ON CT.COMMODITY_CODE=IV.COMMODITY_CODE
-  LEFT OUTER JOIN AgTrax_Staging..IV_UNIT_OF_MEASURE UM ON IV.UOM_BUSHELS=UM.UNIT_OF_MEASURE
-WHERE CT.CONTRACT_STATUS=&apos;O&apos;
-GROUP BY 
-    SUBSTRING(LTRIM(RTRIM(CT.CONTRACT_NUMBER)),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM(CT.CONTRACT_NUMBER)))-1)
-  , LTRIM(RTRIM(IV.[DESCRIPTION]))
-HAVING SUM((CT.ISSUED_LBS-CT.APPLIED_LBS+ADJUSTED_LBS-SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS)&lt;0
-ORDER BY [REMAINING_BU]
-=======
 			ConnectionID="connMKC"
 			ID="lContractsOvershipped"
 			Source="Select SUBSTRING(GaugeAgTraxContracts.CONTRACTNMBR,1,CHARINDEX(&apos;.&apos;,GaugeAgTraxContracts.CONTRACTNMBR)-1) CONTRACTNMBR,
@@ -95,7 +77,6 @@ Where GaugeAgTraxContracts.REMAINING_BU &lt; 0
 Group By SUBSTRING(GaugeAgTraxContracts.CONTRACTNMBR,1,CHARINDEX(&apos;.&apos;,GaugeAgTraxContracts.CONTRACTNMBR)-1),
   GaugeAgTraxContracts.COMMODITYDESC
 Order By REMAINING_BU
->>>>>>> 528ecb629c53e993e37ec13577034c2837c2c815
 "
 			Type="SQL"
 			>
@@ -464,11 +445,7 @@ Group By [GaugeAgTraxContracts].CUSTDESC"
 										/>
 									</Remark>
 									<Action
-<<<<<<< HEAD
-										ElementID="Contracts, SubContracts"
-=======
 										ElementID="Contracts,SubContracts"
->>>>>>> 528ecb629c53e993e37ec13577034c2837c2c815
 										ID="refSubContracts"
 										Type="RefreshElement"
 										>
@@ -625,44 +602,6 @@ Group By [GaugeAgTraxContracts].CUSTDESC"
 							TableBorder="0"
 							>
 							<DataLayer
-<<<<<<< HEAD
-								ConnectionID="connProdGP"
-								ID="dlSubContracts"
-								Source="SELECT 
-    LTRIM(RTRIM(CM.NAME)) [CUSTDESC]
-  , LTRIM(RTRIM(CT.CUSTOMER)) [CUSTNMBR]
-  , LTRIM(RTRIM(CM.ADDRESS_LINE_1)) [CUSTADDR1]
-  , LTRIM(RTRIM(CM.CITY)) [CUSTCITY]
-  , LTRIM(RTRIM(CM.[STATE])) [CUSTSTATE]
-  , LTRIM(RTRIM(CM.ZIP_CODE)) [CUSTZIPCODE]
-  , SUBSTRING(LTRIM(RTRIM(CT.CONTRACT_NUMBER)),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM(CT.CONTRACT_NUMBER)))-1) AS MAINCONTRACT
-  , SUBSTRING(LTRIM(RTRIM(CT.CONTRACT_NUMBER)),CHARINDEX(&apos;.&apos;,LTRIM(RTRIM(CT.CONTRACT_NUMBER)))+1,3) AS SUBCONTRACT
-  , LTRIM(RTRIM(CT.CONTRACT_NUMBER)) [CONTRACTNMBR]
-  , CT.ISSUED_DATE [CONTRACTDT]
-  , LTRIM(RTRIM(CT.DPR_POSITION)) [DPRPOSITION]
-  , LTRIM(RTRIM(PM.[DESCRIPTION])) [DPRDESC]
-  , LTRIM(RTRIM(CT.BRANCH_NUMBER)) [LOCNMBR]
-  , LTRIM(RTRIM(BM.BRANCH_NAME)) [LOCDESC]
-  , LTRIM(RTRIM(CT.COMMODITY_CODE)) [COMMODITYCD]
-  , LTRIM(RTRIM(IV.[DESCRIPTION])) [COMMODITYDESC]
-  , CT.ISSUED_LBS, CT.APPLIED_LBS, CT.ADJUSTED_LBS, CT.SUB_CONT_LBS
-  , (CT.ISSUED_LBS-CT.APPLIED_LBS+ADJUSTED_LBS-SUB_CONT_LBS) [REMAINING_LBS]
-  , CT.ISSUED_LBS/UM.STANDARD_UNITS_LBS [ISSUED_BU]
-  , CT.APPLIED_LBS/UM.STANDARD_UNITS_LBS [APPLIED_BU]
-  , CT.ADJUSTED_LBS/UM.STANDARD_UNITS_LBS [ADJUSTED_BU]
-  , CT.SUB_CONT_LBS/UM.STANDARD_UNITS_LBS [SUB_CONT_BU]
-  , (CT.ISSUED_LBS-CT.APPLIED_LBS+ADJUSTED_LBS-SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS [REMAINING_BU]
-FROM AgTrax_Staging..CA_CONTRACT_MASTER CT 
-  INNER JOIN AgTrax_Staging..AR_CUSTOMER_MASTER_TMA CM ON CT.CUSTOMER=CM.CUSTOMER
-  LEFT OUTER JOIN AgTrax_Staging..CA_COMMODITY_MASTER IV ON CT.COMMODITY_CODE=IV.COMMODITY_CODE
-  LEFT OUTER JOIN AgTrax_Staging..IV_UNIT_OF_MEASURE UM ON IV.UOM_BUSHELS=UM.UNIT_OF_MEASURE
-  LEFT OUTER JOIN AgTrax_Staging..CA_POSITION_MASTER PM ON CT.DPR_POSITION=PM.DPR_POSITION
-  LEFT OUTER JOIN AgTrax_Staging..IV_BRANCH_MASTER BM ON CT.BRANCH_NUMBER=BM.BRANCH_NUMBER
-WHERE CT.CONTRACT_NUMBER LIKE &apos;@Request.paramContract~&apos;+&apos;.%&apos;
-  AND CT.CONTRACT_STATUS=&apos;O&apos;
-ORDER BY [CONTRACTNMBR]
-"
-=======
 								ConnectionID="connMKC"
 								ID="dlSubContracts"
 								Source="Select [GaugeAgTraxContracts].CUSTDESC,
@@ -692,7 +631,6 @@ ORDER BY [CONTRACTNMBR]
 From [GaugeAgTraxContracts]
 Where [GaugeAgTraxContracts].CONTRACTNMBR LIKE &apos;@Request.paramContract~&apos;+&apos;.%&apos; Or &apos;@Request.paramContract~&apos; = &apos;ALL&apos; 
 Order by [GaugeAgTraxContracts].CONTRACTNMBR"
->>>>>>> 528ecb629c53e993e37ec13577034c2837c2c815
 								Type="SQL"
 								>
 								<SortFilter
@@ -720,8 +658,6 @@ Order by [GaugeAgTraxContracts].CONTRACTNMBR"
 									Caption="@Data.CONTRACTNMBR~"
 									ID="colCONTRACTNMBR"
 									>
-<<<<<<< HEAD
-=======
 									<Remark>
 										<Action
 											ID="actReportDT"
@@ -737,7 +673,6 @@ Order by [GaugeAgTraxContracts].CONTRACTNMBR"
 											/>
 										</Action>
 									</Remark>
->>>>>>> 528ecb629c53e993e37ec13577034c2837c2c815
 									<Action
 										ID="rptContractsAll"
 										Type="Report"
@@ -758,8 +693,6 @@ Order by [GaugeAgTraxContracts].CONTRACTNMBR"
 									DataType="Text"
 								/>
 							</DataTableColumn>
-<<<<<<< HEAD
-=======
 							<Remark>
 								<DataTableColumn
 									Header="Customer"
@@ -836,7 +769,6 @@ Order by [GaugeAgTraxContracts].CONTRACTNMBR"
 									/>
 								</DataTableColumn>
 							</Remark>
->>>>>>> 528ecb629c53e993e37ec13577034c2837c2c815
 							<DataTableColumn
 								Header="Location"
 								ID="colLOCDESC"
@@ -850,8 +782,6 @@ Order by [GaugeAgTraxContracts].CONTRACTNMBR"
 									DataType="Text"
 								/>
 							</DataTableColumn>
-<<<<<<< HEAD
-=======
 							<Remark>
 								<DataTableColumn
 									Header="Code"
@@ -867,7 +797,6 @@ Order by [GaugeAgTraxContracts].CONTRACTNMBR"
 									/>
 								</DataTableColumn>
 							</Remark>
->>>>>>> 528ecb629c53e993e37ec13577034c2837c2c815
 							<DataTableColumn
 								Header="Commodity"
 								ID="colCOMMODITYDESC"
@@ -881,8 +810,6 @@ Order by [GaugeAgTraxContracts].CONTRACTNMBR"
 									DataType="Text"
 								/>
 							</DataTableColumn>
-<<<<<<< HEAD
-=======
 							<Remark>
 								<DataTableColumn
 									Header="Issued LBS"
@@ -913,7 +840,6 @@ Order by [GaugeAgTraxContracts].CONTRACTNMBR"
 									/>
 								</DataTableColumn>
 							</Remark>
->>>>>>> 528ecb629c53e993e37ec13577034c2837c2c815
 							<DataTableColumn
 								Header="Remaining BU"
 								ID="colREMAINING_BU"
