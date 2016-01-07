@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Caption="TMA Direct Ship Management" ID="Unknown.SubReports.SubReport_TMADirectShipEntry">
+  <IncludeSharedElement DefinitionFile="_Layout.Shared" SharedElementID="shrHeader" />
+  <Body>
+    <Division Class="panel panel-default" HtmlDiv="True" ID="panel-ds">
+      <Division Class="panel-heading" HtmlDiv="True" ID="panel-ds-header">
+        <Label Caption="Direct Ship Entry" />
+      </Division>
+      <Division Class="panel-body" HtmlDiv="True" ID="panel-ds-body">
+        <ResponsiveRow>
+          <ResponsiveColumn Class="ThemeAlignRight">
+            <Label Caption="Drop Off Date:" />
+            <LineBreak />
+            <LineBreak />
+          </ResponsiveColumn>
+          <ResponsiveColumn Class="ThemeAlignLeft">
+            <InputDate CalendarCaptionFormat="MM/dd/yyyy" ID="dteDropOff">
+              <InputDateCalendar />
+            </InputDate>
+            <LineBreak />
+            <LineBreak />
+          </ResponsiveColumn>
+          <ResponsiveColumn>
+            <Spaces Size="20" />
+            <LineBreak />
+            <LineBreak />
+          </ResponsiveColumn>
+        </ResponsiveRow>
+        <ResponsiveRow>
+          <ResponsiveColumn Class="ThemeAlignRight">
+            <Label Caption="Account Holder:" />
+            <LineBreak />
+          </ResponsiveColumn>
+          <ResponsiveColumn Class="ThemeAlignLeft">
+            <InputText />
+            <Remark>
+              <InputSelectList ID="iptCustomer" />
+            </Remark>
+            <LineBreak />
+          </ResponsiveColumn>
+          <ResponsiveColumn>
+            <Spaces Size="20" />
+            <LineBreak />
+          </ResponsiveColumn>
+        </ResponsiveRow>
+        <ResponsiveRow>
+          <ResponsiveColumn Class="ThemeAlignRight">
+            <Label Caption="Approx. # of Tickets:" />
+            <LineBreak />
+          </ResponsiveColumn>
+          <ResponsiveColumn Class="ThemeAlignLeft">
+            <InputText />
+            <Remark>
+              <InputSelectList ID="iptTickets" />
+            </Remark>
+            <LineBreak />
+          </ResponsiveColumn>
+          <ResponsiveColumn>
+            <Spaces Size="20" />
+            <LineBreak />
+          </ResponsiveColumn>
+        </ResponsiveRow>
+        <ResponsiveRow>
+          <ResponsiveColumn Class="ThemeAlignRight">
+            <Label Caption="Delivery Location:" />
+            <LineBreak />
+          </ResponsiveColumn>
+          <ResponsiveColumn Class="ThemeAlignLeft">
+            <InputText ID="iptLocation" />
+            <LineBreak />
+          </ResponsiveColumn>
+          <ResponsiveColumn>
+            <Spaces Size="20" />
+            <LineBreak />
+          </ResponsiveColumn>
+        </ResponsiveRow>
+        <ResponsiveRow>
+          <ResponsiveColumn Class="ThemeAlignRight">
+            <Label Caption="Date Tickets Keyed:" />
+            <LineBreak />
+            <LineBreak />
+          </ResponsiveColumn>
+          <ResponsiveColumn Class="ThemeAlignLeft">
+            <InputDate ID="dteEntered">
+              <InputDateCalendar />
+            </InputDate>
+            <LineBreak />
+            <LineBreak />
+          </ResponsiveColumn>
+          <ResponsiveColumn>
+            <Spaces Size="20" />
+            <LineBreak />
+            <LineBreak />
+          </ResponsiveColumn>
+        </ResponsiveRow>
+        <ResponsiveRow>
+          <ResponsiveColumn Class="ThemeAlignRight">
+            <Label Caption="Completed per Request:" />
+            <LineBreak />
+            <LineBreak />
+          </ResponsiveColumn>
+          <ResponsiveColumn Class="ThemeAlignLeft">
+            <InputCheckbox ID="chkComplete" />
+            <LineBreak />
+            <LineBreak />
+          </ResponsiveColumn>
+          <ResponsiveColumn>
+            <Spaces Size="20" />
+            <LineBreak />
+            <LineBreak />
+          </ResponsiveColumn>
+        </ResponsiveRow>
+        <ResponsiveRow>
+          <ResponsiveColumn />
+          <ResponsiveColumn Class="ThemeAlignLeft">
+            <Button Caption="Submit" ID="btnSubmit" />
+          </ResponsiveColumn>
+          <ResponsiveColumn>
+            <Spaces Size="20" />
+          </ResponsiveColumn>
+        </ResponsiveRow>
+      </Division>
+    </Division>
+  </Body>
+  <IncludeSharedElement DefinitionFile="_Layout.Shared" SharedElementID="shrFooter" />
+</Report>
