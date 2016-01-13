@@ -48,7 +48,7 @@ WHERE OC.DATA_KEY=&apos;@Request.paramContractKey~&apos; OR (OC.CONTRACT_MAIN=&a
 				Type="Report"
 				>
 				<Target
-					Report="Unknown.TMAContractsDashboard"
+					Report="TMAReports.TMAContractsDashboard"
 					Type="Report"
 				/>
 			</Action>
