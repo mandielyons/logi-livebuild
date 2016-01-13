@@ -13,7 +13,7 @@
 				Type="Report"
 				>
 				<Target
-					Report="Unknown.TMAContractsDashboard"
+					Report="TMAReports.TMAContractsDashboard"
 					Type="Report"
 				/>
 			</Action>

@@ -67,7 +67,7 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 				Type="Report"
 				>
 				<Target
-					Report="Unknown.TMAContractsDashboard"
+					Report="TMAReports.TMAContractsDashboard"
 					Type="Report"
 				/>
 			</Action>

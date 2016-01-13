@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Report
 	Caption="TMA Contracts Dashboard"
-	ID="tmacontractsdashboard"
+	ID="TMAReports.TMAContractsDashboard"
 	>
 	<DefaultRequestParams
 		Account="ALL"
