@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Process
+	ID="SQLTasks"
+	>
+	<DefaultRequestParams/>
+	<Task
+		ID="updateRow"
+		>
+		<Procedure
+			ConnectionID="connMKC"
+			ID="procUpdateRow"
+			SqlCommand="UPDATE DM_DSTicketTracking SET DM_DSTicketTracking.DropOffDate = &apos;@Request.dteDropOff~&apos;, DM_DSTicketTracking.CUSTOMER = &apos;@Request.iptCustomer~&apos;, DM_DSTicketTracking.BRANCH_NUMBER = &apos;@Request.iptBranch~&apos;, DM_DSTicketTracking.TotalTickets = &apos;@Request.iptTickets~&apos;, DM_DSTicketTracking.EnteredDate = &apos;@Request.dteEntered~&apos;, DM_DSTicketTracking.UserID = &apos;mlyons@mkcoop.com&apos;, DM_DSTicketTracking.CompletedDate = &apos;@Request.iptCompleteDate~&apos;
+WHERE DM_DSTicketTracking.EntryID = &apos;@Request.iptEntryId~&apos;"
+			Type="SQL"
+			>
+			<IfError
+				ID="UpdateRowError"
+				>
+				<Procedure
+					Expression="@Procedure.procUpdateRow.ErrorMessage~.Length &gt; 0"
+					ID="procUpdateRowError"
+					Type="If"
+					>
+					<Response
+						Type="Report"
+						>
+						<Target
+							Report="Unknown.SubReports.SubReport_TMADirectShipEntry"
+							Type="Report"
+							>
+							<WaitPage/>
+						</Target>
+						<LinkParams
+							StatusMsg="Error: @Procedure.procUpdateRowError.ErrorMessage~"
+						/>
+					</Response>
+				</Procedure>
+			</IfError>
+		</Procedure>
+		<Response
+			Type="Report"
+			>
+			<Target
+				Report="Unknown.SubReports.SubReport_TMADirectShipEntry"
+				Type="Report"
+				>
+				<WaitPage/>
+			</Target>
+			<LinkParams
+				EntryId="@Request.EntryId~"
+				StatusMsg="Success: Record updated."
+			/>
+		</Response>
+	</Task>
+	<Task
+		ID="insertRow"
+		>
+		<Procedure
+			ConnectionID="connMKC"
+			ID="procInsertRow"
+			SqlCommand="INSERT INTO DM_DSTicketTracking (DM_DSTicketTracking.DropOffDate,DM_DSTicketTracking.CUSTOMER,DM_DSTicketTracking.BRANCH_NUMBER,DM_DSTicketTracking.TotalTickets,DM_DSTicketTracking.EnteredDate,DM_DSTicketTracking.UserID)
+VALUES (&apos;@Request.dteDropOff~&apos;,&apos;@Request.iptCustomer~&apos;,&apos;@Request.iptBranch~&apos;,&apos;@Request.iptTickets~&apos;,&apos;@Request.dteEntered~&apos;,&apos;mlyons@mkcoop.com&apos;)
+
+"
+			SqlReturnType="RowsAffected"
+			Type="SQL"
+			>
+			<IfError
+				ID="InsertRowError"
+				>
+				<Procedure
+					Expression="@Procedure.procInsertRow.ErrorMessage~.Length &gt; 0"
+					ID="procInsertRowError"
+					Type="If"
+					>
+					<Response
+						Type="Report"
+						>
+						<Target
+							Report="Unknown.SubReports.SubReport_TMADirectShipEntry"
+							Type="Report"
+							>
+							<WaitPage/>
+						</Target>
+						<LinkParams
+							StatusMsg="Error: @Procedure.procInsertRowError.ErrorMessage~"
+						/>
+					</Response>
+				</Procedure>
+			</IfError>
+		</Procedure>
+		<Response
+			Type="Report"
+			>
+			<Target
+				Report="Unknown.SubReports.SubReport_TMADirectShipEntry"
+				Type="Report"
+				>
+				<WaitPage/>
+			</Target>
+			<LinkParams
+				EntryId="@Request.EntryId~"
+				StatusMsg="Success: Record added."
+			/>
+		</Response>
+	</Task>
+	<ideTestParams
+		dteDropOff=""
+		dteEntered=""
+		EntryId=""
+		iptBranch=""
+		iptCompleteDate=""
+		iptCustomer=""
+		iptEntryId=""
+		iptTickets=""
+		rdTaskID=""
+	/>
+</Process>
