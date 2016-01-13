@@ -7,6 +7,9 @@
 		DefinitionFile="_Layout.Shared"
 		SharedElementID="shrHeader"
 	/>
+	<DefaultRequestParams
+		EntryID=""
+	/>
 	<Body>
 		<Division
 			Class="panel panel-default"
@@ -22,200 +25,205 @@
 					Caption="TMA Direct Ship Management"
 				/>
 			</Division>
-			<Remark>
-				<Division
-					Class="panel-body"
-					HtmlDiv="True"
-					ID="panel-ds-body"
-					>
-					<ResponsiveRow>
-						<ResponsiveColumn
-							Class="ThemeAlignRight"
-							>
-							<Label
-								Caption="Drop Off Date:"
-							/>
-							<LineBreak/>
-							<LineBreak/>
-						</ResponsiveColumn>
-						<ResponsiveColumn
-							Class="ThemeAlignLeft"
-							>
-							<InputDate
-								CalendarCaptionFormat="MM/dd/yyyy"
-								ID="dteDropOff"
-								>
-								<InputDateCalendar/>
-							</InputDate>
-							<LineBreak/>
-							<LineBreak/>
-						</ResponsiveColumn>
-						<ResponsiveColumn>
-							<Spaces
-								Size="20"
-							/>
-							<LineBreak/>
-							<LineBreak/>
-						</ResponsiveColumn>
-					</ResponsiveRow>
-					<ResponsiveRow>
-						<ResponsiveColumn
-							Class="ThemeAlignRight"
-							>
-							<Label
-								Caption="Account Holder:"
-							/>
-							<LineBreak/>
-						</ResponsiveColumn>
-						<ResponsiveColumn
-							Class="ThemeAlignLeft"
-							>
-							<InputText/>
-							<Remark>
-								<InputSelectList
-									ID="iptCustomer"
-								/>
-							</Remark>
-							<LineBreak/>
-						</ResponsiveColumn>
-						<ResponsiveColumn>
-							<Spaces
-								Size="20"
-							/>
-							<LineBreak/>
-						</ResponsiveColumn>
-					</ResponsiveRow>
-					<ResponsiveRow>
-						<ResponsiveColumn
-							Class="ThemeAlignRight"
-							>
-							<Label
-								Caption="Approx. # of Tickets:"
-							/>
-							<LineBreak/>
-						</ResponsiveColumn>
-						<ResponsiveColumn
-							Class="ThemeAlignLeft"
-							>
-							<InputText/>
-							<Remark>
-								<InputSelectList
-									ID="iptTickets"
-								/>
-							</Remark>
-							<LineBreak/>
-						</ResponsiveColumn>
-						<ResponsiveColumn>
-							<Spaces
-								Size="20"
-							/>
-							<LineBreak/>
-						</ResponsiveColumn>
-					</ResponsiveRow>
-					<ResponsiveRow>
-						<ResponsiveColumn
-							Class="ThemeAlignRight"
-							>
-							<Label
-								Caption="Delivery Location:"
-							/>
-							<LineBreak/>
-						</ResponsiveColumn>
-						<ResponsiveColumn
-							Class="ThemeAlignLeft"
-							>
-							<InputText
-								ID="iptLocation"
-							/>
-							<LineBreak/>
-						</ResponsiveColumn>
-						<ResponsiveColumn>
-							<Spaces
-								Size="20"
-							/>
-							<LineBreak/>
-						</ResponsiveColumn>
-					</ResponsiveRow>
-					<ResponsiveRow>
-						<ResponsiveColumn
-							Class="ThemeAlignRight"
-							>
-							<Label
-								Caption="Date Tickets Keyed:"
-							/>
-							<LineBreak/>
-							<LineBreak/>
-						</ResponsiveColumn>
-						<ResponsiveColumn
-							Class="ThemeAlignLeft"
-							>
-							<InputDate
-								ID="dteEntered"
-								>
-								<InputDateCalendar/>
-							</InputDate>
-							<LineBreak/>
-							<LineBreak/>
-						</ResponsiveColumn>
-						<ResponsiveColumn>
-							<Spaces
-								Size="20"
-							/>
-							<LineBreak/>
-							<LineBreak/>
-						</ResponsiveColumn>
-					</ResponsiveRow>
-					<ResponsiveRow>
-						<ResponsiveColumn
-							Class="ThemeAlignRight"
-							>
-							<Label
-								Caption="Completed per Request:"
-							/>
-							<LineBreak/>
-							<LineBreak/>
-						</ResponsiveColumn>
-						<ResponsiveColumn
-							Class="ThemeAlignLeft"
-							>
-							<InputCheckbox
-								ID="chkComplete"
-							/>
-							<LineBreak/>
-							<LineBreak/>
-						</ResponsiveColumn>
-						<ResponsiveColumn>
-							<Spaces
-								Size="20"
-							/>
-							<LineBreak/>
-							<LineBreak/>
-						</ResponsiveColumn>
-					</ResponsiveRow>
-					<ResponsiveRow>
-						<ResponsiveColumn/>
-						<ResponsiveColumn
-							Class="ThemeAlignLeft"
-							>
-							<Button
-								Caption="Submit"
-								ID="btnSubmit"
-							/>
-						</ResponsiveColumn>
-						<ResponsiveColumn>
-							<Spaces
-								Size="20"
-							/>
-						</ResponsiveColumn>
-					</ResponsiveRow>
-				</Division>
-			</Remark>
 			<Division
 				Class="panel-body"
 				ID="panel-ds-report"
 				>
+				<ResponsiveRow
+					Class="ThemeAlignRight"
+					>
+					<ResponsiveColumn>
+						<Label
+							Caption="Add"
+							Class="fa fa-plus fa-2x "
+							HtmlTag="Div"
+							Tooltip="Add a record"
+							>
+							<Action
+								Type="Report"
+								>
+								<Target
+									FrameID="Self"
+									ID="lnkEntry"
+									Report="Unknown.SubReports.SubReport_TMADirectShipEntry"
+									Type="Report"
+									>
+									<WaitPage/>
+								</Target>
+							</Action>
+						</Label>
+						<Spaces
+							Size="25"
+						/>
+					</ResponsiveColumn>
+				</ResponsiveRow>
 				<ResponsiveRow>
-					<ResponsiveColumn/>
+					<ResponsiveColumn>
+						<DataTable
+							AccessibleHeaders="True"
+							AccessibleSummary="AnalysisGrid DataTable"
+							ID="DataTable1"
+							KeepScrollPosition="True"
+							RememberSort="True"
+							ResizableColumns="True"
+							SortArrows="True"
+							TableBorder="0"
+							>
+							<DataLayer
+								ConnectionID="connMKC"
+								ID="SQLDataLayer1"
+								Source="Select DM_DSTicketTracking.EntryID,
+  DM_DSTicketTracking.DropOffDate,
+  DM_DSTicketTracking.CUSTOMER,
+  DM_DSTicketTracking.BRANCH_NUMBER,
+  DM_DSTicketTracking.TotalTickets,
+  DM_DSTicketTracking.EnteredDate,
+  DM_DSTicketTracking.UserID,
+  DM_DSTicketTracking.CompletedDate
+From DM_DSTicketTracking"
+								Type="SQL"
+							/>
+							<InteractivePaging
+								CaptionType="Image"
+								HideShowPrevNextCaptions="False"
+								HideWhenOnePage="True"
+								IDnotSupportedHere="pagingTableNumbered"
+								Location="Top"
+								PageRowCount="20"
+								ShowPageNumber="Numbered"
+							/>
+							<Remark>
+								<DataTableColumn
+									Header="EntryID"
+									ID="colEntryID"
+									>
+									<Label
+										Caption="@Data.EntryID~"
+										ID="colEntryID"
+									/>
+									<DataColumnSort
+										DataColumn="EntryID"
+										DataType="Number"
+									/>
+								</DataTableColumn>
+							</Remark>
+							<DataTableColumn
+								Header="Tickets Received"
+								ID="colDropOffDate"
+								>
+								<Label
+									Caption="@Data.DropOffDate~"
+									Format="Short Date"
+									ID="colDropOffDate"
+								/>
+								<DataColumnSort
+									DataColumn="DropOffDate"
+									DataType="Date"
+								/>
+							</DataTableColumn>
+							<DataTableColumn
+								Header="Customer"
+								ID="colCUSTOMER"
+								>
+								<Label
+									Caption="@Data.CUSTOMER~"
+									ID="colCUSTOMER"
+								/>
+								<DataColumnSort
+									DataColumn="CUSTOMER"
+									DataType="Text"
+								/>
+							</DataTableColumn>
+							<DataTableColumn
+								Header="Branch "
+								ID="colBRANCH_NUMBER"
+								>
+								<Label
+									Caption="@Data.BRANCH_NUMBER~"
+									ID="colBRANCH_NUMBER"
+								/>
+								<DataColumnSort
+									DataColumn="BRANCH_NUMBER"
+									DataType="Number"
+								/>
+							</DataTableColumn>
+							<DataTableColumn
+								Header="Total Tickets"
+								ID="colTotalTickets"
+								>
+								<Label
+									Caption="@Data.TotalTickets~"
+									ID="colTotalTickets"
+								/>
+								<DataColumnSort
+									DataColumn="TotalTickets"
+									DataType="Text"
+								/>
+							</DataTableColumn>
+							<DataTableColumn
+								Header="AgTrax Entered Date"
+								ID="colEnteredDate"
+								>
+								<Label
+									Caption="@Data.EnteredDate~"
+									Format="Short Date"
+									ID="colEnteredDate"
+								/>
+								<DataColumnSort
+									DataColumn="EnteredDate"
+									DataType="Date"
+								/>
+							</DataTableColumn>
+							<DataTableColumn
+								Header="Entered By"
+								ID="colUserID"
+								>
+								<Label
+									Caption="@Data.UserID~"
+									ID="colUserID"
+								/>
+								<DataColumnSort
+									DataColumn="UserID"
+									DataType="Text"
+								/>
+							</DataTableColumn>
+							<DataTableColumn
+								Header="Date Completed"
+								ID="colCompletedDate"
+								>
+								<Label
+									Caption="@Data.CompletedDate~"
+									Format="Short Date"
+									ID="colCompletedDate"
+								/>
+								<DataColumnSort
+									DataColumn="CompletedDate"
+									DataType="Date"
+								/>
+							</DataTableColumn>
+							<DataTableColumn>
+								<Label
+									Class="fa fa-edit fa-2x "
+									>
+									<Action
+										ID="actEdit"
+										Type="Report"
+										>
+										<Target
+											FrameID="Self"
+											Report="Unknown.SubReports.SubReport_TMADirectShipEntry"
+											Type="Report"
+											>
+											<WaitPage/>
+										</Target>
+										<LinkParams
+											EntryId="@Data.EntryID~"
+										/>
+									</Action>
+								</Label>
+							</DataTableColumn>
+						</DataTable>
+					</ResponsiveColumn>
 				</ResponsiveRow>
 			</Division>
 		</Division>
@@ -224,4 +232,5 @@
 		DefinitionFile="_Layout.Shared"
 		SharedElementID="shrFooter"
 	/>
+	<ideTestParams/>
 </Report>

@@ -1,126 +1,490 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report Caption="TMA Direct Ship Management" ID="Unknown.SubReports.SubReport_TMADirectShipEntry">
-  <IncludeSharedElement DefinitionFile="_Layout.Shared" SharedElementID="shrHeader" />
-  <Body>
-    <Division Class="panel panel-default" HtmlDiv="True" ID="panel-ds">
-      <Division Class="panel-heading" HtmlDiv="True" ID="panel-ds-header">
-        <Label Caption="Direct Ship Entry" />
-      </Division>
-      <Division Class="panel-body" HtmlDiv="True" ID="panel-ds-body">
-        <ResponsiveRow>
-          <ResponsiveColumn Class="ThemeAlignRight">
-            <Label Caption="Drop Off Date:" />
-            <LineBreak />
-            <LineBreak />
-          </ResponsiveColumn>
-          <ResponsiveColumn Class="ThemeAlignLeft">
-            <InputDate CalendarCaptionFormat="MM/dd/yyyy" ID="dteDropOff">
-              <InputDateCalendar />
-            </InputDate>
-            <LineBreak />
-            <LineBreak />
-          </ResponsiveColumn>
-          <ResponsiveColumn>
-            <Spaces Size="20" />
-            <LineBreak />
-            <LineBreak />
-          </ResponsiveColumn>
-        </ResponsiveRow>
-        <ResponsiveRow>
-          <ResponsiveColumn Class="ThemeAlignRight">
-            <Label Caption="Account Holder:" />
-            <LineBreak />
-          </ResponsiveColumn>
-          <ResponsiveColumn Class="ThemeAlignLeft">
-            <InputText />
-            <Remark>
-              <InputSelectList ID="iptCustomer" />
-            </Remark>
-            <LineBreak />
-          </ResponsiveColumn>
-          <ResponsiveColumn>
-            <Spaces Size="20" />
-            <LineBreak />
-          </ResponsiveColumn>
-        </ResponsiveRow>
-        <ResponsiveRow>
-          <ResponsiveColumn Class="ThemeAlignRight">
-            <Label Caption="Approx. # of Tickets:" />
-            <LineBreak />
-          </ResponsiveColumn>
-          <ResponsiveColumn Class="ThemeAlignLeft">
-            <InputText />
-            <Remark>
-              <InputSelectList ID="iptTickets" />
-            </Remark>
-            <LineBreak />
-          </ResponsiveColumn>
-          <ResponsiveColumn>
-            <Spaces Size="20" />
-            <LineBreak />
-          </ResponsiveColumn>
-        </ResponsiveRow>
-        <ResponsiveRow>
-          <ResponsiveColumn Class="ThemeAlignRight">
-            <Label Caption="Delivery Location:" />
-            <LineBreak />
-          </ResponsiveColumn>
-          <ResponsiveColumn Class="ThemeAlignLeft">
-            <InputText ID="iptLocation" />
-            <LineBreak />
-          </ResponsiveColumn>
-          <ResponsiveColumn>
-            <Spaces Size="20" />
-            <LineBreak />
-          </ResponsiveColumn>
-        </ResponsiveRow>
-        <ResponsiveRow>
-          <ResponsiveColumn Class="ThemeAlignRight">
-            <Label Caption="Date Tickets Keyed:" />
-            <LineBreak />
-            <LineBreak />
-          </ResponsiveColumn>
-          <ResponsiveColumn Class="ThemeAlignLeft">
-            <InputDate ID="dteEntered">
-              <InputDateCalendar />
-            </InputDate>
-            <LineBreak />
-            <LineBreak />
-          </ResponsiveColumn>
-          <ResponsiveColumn>
-            <Spaces Size="20" />
-            <LineBreak />
-            <LineBreak />
-          </ResponsiveColumn>
-        </ResponsiveRow>
-        <ResponsiveRow>
-          <ResponsiveColumn Class="ThemeAlignRight">
-            <Label Caption="Completed per Request:" />
-            <LineBreak />
-            <LineBreak />
-          </ResponsiveColumn>
-          <ResponsiveColumn Class="ThemeAlignLeft">
-            <InputCheckbox ID="chkComplete" />
-            <LineBreak />
-            <LineBreak />
-          </ResponsiveColumn>
-          <ResponsiveColumn>
-            <Spaces Size="20" />
-            <LineBreak />
-            <LineBreak />
-          </ResponsiveColumn>
-        </ResponsiveRow>
-        <ResponsiveRow>
-          <ResponsiveColumn />
-          <ResponsiveColumn Class="ThemeAlignLeft">
-            <Button Caption="Submit" ID="btnSubmit" />
-          </ResponsiveColumn>
-          <ResponsiveColumn>
-            <Spaces Size="20" />
-          </ResponsiveColumn>
-        </ResponsiveRow>
-      </Division>
-    </Division>
-  </Body>
-  <IncludeSharedElement DefinitionFile="_Layout.Shared" SharedElementID="shrFooter" />
+<Report
+	Caption="TMA Direct Ship Management"
+	ID="Unknown.SubReports.SubReport_TMADirectShipEntry"
+	>
+	<DefaultRequestParams
+		StatusMsg=""
+	/>
+	<LocalData>
+		<DataLayer
+			ConnectionID="connMKC"
+			ID="dlDSEntryIDRecord"
+			Source="Select DM_DSTicketTracking.EntryID,
+  DM_DSTicketTracking.DropOffDate,
+  DM_DSTicketTracking.CUSTOMER,
+  DM_DSTicketTracking.TotalTickets,
+  DM_DSTicketTracking.EnteredDate,
+  DM_DSTicketTracking.UserID,
+  DM_DSTicketTracking.CompletedDate,
+  DM_DSTicketTracking.BRANCH_NUMBER
+From DM_DSTicketTracking
+Where DM_DSTicketTracking.EntryID = &apos;@Request.EntryId~&apos;"
+			Type="SQL"
+		/>
+	</LocalData>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrHeader"
+	/>
+	<Body>
+		<InputHidden
+			DefaultValue="@Request.EntryId~"
+			ID="iptEntryId"
+		/>
+		<Division
+			Class="panel panel-default"
+			HtmlDiv="True"
+			ID="panel-ds"
+			>
+			<Division
+				Class="panel-heading"
+				HtmlDiv="True"
+				ID="panel-ds-header"
+				>
+				<Label
+					Caption="Direct Ship Entry"
+				/>
+			</Division>
+			<Division
+				Class="panel-body"
+				HtmlDiv="True"
+				ID="panel-ds-body"
+				>
+				<ResponsiveRow
+					Class="ThemeAlignRight"
+					>
+					<ResponsiveColumn>
+						<Button
+							Caption="Report View"
+							ID="btnReport"
+							Tooltip="Click here to view report."
+							>
+							<Action
+								ID="lnkReportView"
+								Type="Report"
+								>
+								<Target
+									FrameID="Self"
+									ID="viewReport"
+									Report="TMAReports.TMADirectShip"
+									Type="Report"
+								/>
+							</Action>
+						</Button>
+						<LineBreak/>
+						<LineBreak/>
+						<LineBreak/>
+					</ResponsiveColumn>
+				</ResponsiveRow>
+				<ResponsiveRow>
+					<ResponsiveColumn>
+						<LineBreak/>
+						<Label
+							Caption="@Request.StatusMsg~"
+							ID="lblStatus"
+							>
+							<ConditionalClass
+								Class="ThemeErrorText"
+								Condition="InStr(&quot;@Request.StatusMsg~&quot;,&quot;Error:&quot;) &gt; 0"
+							/>
+							<ConditionalClass
+								Class="ThemeTextNegative"
+								Condition="InStr(&quot;@Request.StatusMsg~&quot;,&quot;Success:&quot;) &gt; 0"
+							/>
+						</Label>
+						<LineBreak/>
+					</ResponsiveColumn>
+				</ResponsiveRow>
+				<ResponsiveRow>
+					<ResponsiveColumn
+						Class="ThemeAlignLeft"
+						>
+						<InputDate
+							CalendarCaptionFormat="MM/dd/yyyy"
+							Caption="Tickets Received:"
+							DefaultValue="@Local.DropOffDate~"
+							ID="dteDropOff"
+							Tooltip="Select the drop off date"
+							>
+							<InputDateCalendar
+								ID="iptDropOff"
+							/>
+						</InputDate>
+						<LineBreak/>
+						<LineBreak/>
+						<LineBreak/>
+					</ResponsiveColumn>
+				</ResponsiveRow>
+				<ResponsiveRow>
+					<ResponsiveColumn
+						Class="ThemeAlignLeft"
+						>
+						<InputSelectList
+							Caption="Customer:"
+							DefaultValue="@Local.CUSTOMER~"
+							ID="iptCustomer"
+							IncludeBlank="True"
+							IncludeBlankCaption="Select a customer"
+							OptionCaptionColumn="NAME"
+							OptionTooltipColumn="Select a customer"
+							OptionValueColumn="CUSTOMER"
+							>
+							<DataLayer
+								ConnectionID="connMKC"
+								ID="dlCustomer"
+								Source="Select AR_CUSTOMER_MASTER_TMA.CUSTOMER,
+  AR_CUSTOMER_MASTER_TMA.NAME
+From AR_CUSTOMER_MASTER_TMA
+"
+								Type="SQL"
+							/>
+						</InputSelectList>
+						<LineBreak/>
+						<LineBreak/>
+					</ResponsiveColumn>
+				</ResponsiveRow>
+				<ResponsiveRow>
+					<ResponsiveColumn
+						Class="ThemeAlignLeft"
+						>
+						<InputSelectList
+							Caption="# of Tickets:"
+							DefaultValue="@Local.TotalTickets~"
+							ID="iptTickets"
+							IncludeBlank="True"
+							IncludeBlankCaption="Select a range"
+							OptionCaptionColumn="Option"
+							OptionTooltipColumn="Select a ticket range"
+							OptionValueColumn="Value"
+							>
+							<DataLayer
+								ColumnNamesRow="1"
+								ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\DSRange.xlsx"
+								ExcelWorksheet="Sheet1"
+								ID="dlTicketRange"
+								Type="Excel"
+							/>
+						</InputSelectList>
+						<LineBreak/>
+						<LineBreak/>
+					</ResponsiveColumn>
+				</ResponsiveRow>
+				<ResponsiveRow>
+					<ResponsiveColumn
+						Class="ThemeAlignLeft"
+						>
+						<InputSelectList
+							Caption="Delivery Branch:"
+							DefaultValue="@Local.BRANCH_NUMBER~"
+							ID="iptBranch"
+							IncludeBlank="True"
+							IncludeBlankCaption="Select a location"
+							OptionCaptionColumn="BRANCH_NAME"
+							OptionValueColumn="BRANCH_NUMBER"
+							>
+							<DataLayer
+								ConnectionID="connMKC"
+								ID="dlLocation"
+								Source="SELECT BRANCH_NUMBER, BRANCH_NAME FROM Agtrax_Staging..IV_BRANCH_MASTER"
+								Type="SQL"
+							/>
+						</InputSelectList>
+						<LineBreak/>
+						<LineBreak/>
+					</ResponsiveColumn>
+				</ResponsiveRow>
+				<ResponsiveRow>
+					<ResponsiveColumn
+						Class="ThemeAlignLeft"
+						>
+						<InputDate
+							Caption="AgTrax Entry Date:"
+							DefaultValue="@Local.EnteredDate~"
+							ID="dteEntered"
+							Tooltip="Enter the date ticketes were entered into AgTrax"
+							>
+							<InputDateCalendar
+								ID="iptEntered"
+							/>
+						</InputDate>
+						<LineBreak/>
+						<LineBreak/>
+						<LineBreak/>
+					</ResponsiveColumn>
+				</ResponsiveRow>
+				<ResponsiveRow>
+					<ResponsiveColumn
+						Class="ThemeAlignLeft"
+						>
+						<InputCheckbox
+							Caption="Completed per Request:"
+							ID="chkComplete"
+							>
+							<EventHandler
+								DhtmlEvent="onchange"
+								>
+								<Action
+									ID="jsCheckChanged"
+									Javascript="var complete = document.getElementById(&quot;iptCompleteDate&quot;);
+var today = document.getElementById(&quot;iptToday&quot;);
+var done = document.getElementById(&quot;chkComplete&quot;);
+
+if (done.checked){complete.value = today.value;}
+else {complete.value = &quot;&quot;;}
+
+
+"
+									Type="Javascript"
+								/>
+							</EventHandler>
+						</InputCheckbox>
+						<InputHidden
+							ID="iptCompleteDate"
+						/>
+						<InputHidden
+							DefaultValue="@Function.Date~"
+							ID="iptToday"
+						/>
+						<LineBreak/>
+						<LineBreak/>
+						<LineBreak/>
+					</ResponsiveColumn>
+				</ResponsiveRow>
+				<ResponsiveRow>
+					<ResponsiveColumn
+						Class="ThemeAlignLeft"
+						>
+						<Button
+							Caption="Submit"
+							ID="btnUpdate"
+							>
+							<Action
+								ID="updateRow"
+								Process="SQLTasks"
+								TaskID="updateRow"
+								Type="Process"
+								>
+								<WaitPage/>
+								<LinkParams/>
+							</Action>
+						</Button>
+						<Button
+							Caption="Submit"
+							ID="btnAdd"
+							>
+							<Action
+								ID="AddRow"
+								Process="SQLTasks"
+								TaskID="insertRow"
+								Type="Process"
+								>
+								<WaitPage/>
+								<LinkParams/>
+							</Action>
+						</Button>
+					</ResponsiveColumn>
+				</ResponsiveRow>
+			</Division>
+		</Division>
+		<Remark>
+			<Division
+				ID="divTest"
+				>
+				<Label
+					Caption="@Local.DropOffDate~"
+				/>
+				<LineBreak/>
+				<Label
+					Caption="@Local.TotalTickets~"
+				/>
+				<LineBreak/>
+				<Label
+					Caption="@Local.BRANCH_NUMBER~"
+				/>
+				<Remark>
+					<DataTable
+						AccessibleHeaders="True"
+						AccessibleSummary="AnalysisGrid DataTable"
+						ID="DataTable1"
+						KeepScrollPosition="True"
+						RememberSort="True"
+						ResizableColumns="True"
+						SortArrows="True"
+						TableBorder="0"
+						>
+						<DataLayer
+							ConnectionID="connMKC"
+							ID="SQLDataLayer1"
+							Source="Select DM_DSTicketTracking.EntryID,
+  DM_DSTicketTracking.DropOffDate,
+  DM_DSTicketTracking.CUSTOMER,
+  DM_DSTicketTracking.TotalTickets,
+  DM_DSTicketTracking.EnteredDate,
+  DM_DSTicketTracking.UserID,
+  DM_DSTicketTracking.CompletedDate,
+  DM_DSTicketTracking.BRANCH_NUMBER
+From DM_DSTicketTracking
+Where DM_DSTicketTracking.EntryID = &apos;@Request.EntryId~&apos;
+"
+							Type="SQL"
+						/>
+						<InteractivePaging
+							CaptionType="Image"
+							HideShowPrevNextCaptions="False"
+							HideWhenOnePage="True"
+							IDnotSupportedHere="pagingTableNumbered"
+							Location="Top"
+							PageRowCount="20"
+							ShowPageNumber="Numbered"
+						/>
+						<DataTableColumn
+							Header="EntryID"
+							ID="colEntryID"
+							>
+							<Label
+								Caption="@Data.EntryID~"
+								ID="colEntryID"
+							/>
+							<DataColumnSort
+								DataColumn="EntryID"
+								DataType="Number"
+							/>
+						</DataTableColumn>
+						<DataTableColumn
+							Header="DropOffDate"
+							ID="colDropOffDate"
+							>
+							<Label
+								Caption="@Data.DropOffDate~"
+								Format="Short Date"
+								ID="colDropOffDate"
+							/>
+							<DataColumnSort
+								DataColumn="DropOffDate"
+								DataType="Date"
+							/>
+						</DataTableColumn>
+						<DataTableColumn
+							Header="CUSTOMER"
+							ID="colCUSTOMER"
+							>
+							<Label
+								Caption="@Data.CUSTOMER~"
+								ID="colCUSTOMER"
+							/>
+							<DataColumnSort
+								DataColumn="CUSTOMER"
+								DataType="Text"
+							/>
+						</DataTableColumn>
+						<DataTableColumn
+							Header="CustDesc"
+							ID="colCustDesc"
+							>
+							<Label
+								Caption="@Data.CustDesc~"
+								ID="colCustDesc"
+							/>
+							<DataColumnSort
+								DataColumn="CustDesc"
+								DataType="Text"
+							/>
+						</DataTableColumn>
+						<DataTableColumn
+							Header="TotalTickets"
+							ID="colTotalTickets"
+							>
+							<Label
+								Caption="@Data.TotalTickets~"
+								ID="colTotalTickets"
+							/>
+							<DataColumnSort
+								DataColumn="TotalTickets"
+								DataType="Text"
+							/>
+						</DataTableColumn>
+						<DataTableColumn
+							Header="DeliveryLocation"
+							ID="colDeliveryLocation"
+							>
+							<Label
+								Caption="@Data.DeliveryLocation~"
+								ID="colDeliveryLocation"
+							/>
+							<DataColumnSort
+								DataColumn="DeliveryLocation"
+								DataType="Text"
+							/>
+						</DataTableColumn>
+						<DataTableColumn
+							Header="EnteredDate"
+							ID="colEnteredDate"
+							>
+							<Label
+								Caption="@Data.EnteredDate~"
+								Format="Short Date"
+								ID="colEnteredDate"
+							/>
+							<DataColumnSort
+								DataColumn="EnteredDate"
+								DataType="Date"
+							/>
+						</DataTableColumn>
+						<DataTableColumn
+							Header="EntryComplete"
+							ID="colEntryComplete"
+							>
+							<Label
+								Caption="@Data.EntryComplete~"
+								ID="colEntryComplete"
+							/>
+							<DataColumnSort
+								DataColumn="EntryComplete"
+								DataType="Text"
+							/>
+						</DataTableColumn>
+					</DataTable>
+				</Remark>
+			</Division>
+		</Remark>
+		<IncludeScript
+			ID="jsOnLoad"
+			IncludedScript="var complete = document.getElementById(&quot;iptCompleteDate&quot;);
+var today = document.getElementById(&quot;iptToday&quot;);
+var done = document.getElementById(&quot;chkComplete&quot;);
+var entry = document.getElementById(&quot;iptEntryId&quot;);
+var add = document.getElementById(&quot;btnAdd&quot;);
+var update = document.getElementById(&quot;btnUpdate&quot;);
+var dteDrop = document.getElementById(&quot;dteDropOff&quot;);
+var dteEntry = document.getElementById(&quot;dteEntered&quot;);
+
+if (done != null) {
+	if (done.checked){complete.value = today.value;}
+	else {complete.value = &quot;&quot;;}
+}
+
+if (complete.value == &quot;&quot;){complete.value = &quot;1/1/1900&quot;;}
+
+if (entry.value == &quot;&quot;){
+	entry.value = &quot;0&quot;;
+	add.style.display = &quot;&quot;;
+	update.style.display = &quot;none&quot;;
+	dteDrop.value = today.value;
+	dteEntry.value = today.value;}
+else if (entry.value &gt; 0){
+	update.style.display = &quot;&quot;;
+	add.style.display = &quot;none&quot;;
+}
+"
+		/>
+	</Body>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrFooter"
+	/>
+	<ideTestParams
+		EntryId=""
+		StatusMsg=""
+	/>
 </Report>
