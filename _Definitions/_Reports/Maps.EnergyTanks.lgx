@@ -4,7 +4,7 @@
 	ID="Maps.EnergyTanks"
 	>
 	<LocalData
-		Condition="&quot;@Request.iptCity~&quot;.length &gt; 0"
+		Condition="&quot;@Request.iptCustomer~&quot;.length &gt; 0"
 		ID="Local-AFDData"
 		>
 		<DataLayer
@@ -24,7 +24,9 @@
 		SharedElementID="shrHeader"
 	/>
 	<Body>
-		<ResponsiveRow>
+		<ResponsiveRow
+			CollisionBehavior="Wrap"
+			>
 			<ResponsiveColumn>
 				<Division
 					Class="panel panel-default"
@@ -56,76 +58,45 @@
 								</Column>
 								<Column>
 									<Label
-										Caption="Near What City:"
+										Caption="Filter By Customer:"
 									/>
 								</Column>
 								<Column>
-									<InputSelectList
-										Class="chosen-select"
-										DefaultValue="@Request.iptCity~"
-										ID="iptCity"
-										MultiSelect="True"
-										OptionCaptionColumn="city"
-										OptionValueColumn="city"
-										>
-										<DataLayer
-											CacheKey="dlcCity-Tanks"
-											ExpirationNow="@Request.cacheExpireNow~"
-											ExpirationTime="@Constant.cacheExpirationTime~"
-											ExpirationTimeSpan="@Constant.cacheExpirationTimeSpan~"
-											ID="dlcCity-Tanks"
-											Type="Cached"
+									<Remark>
+										<InputSelectList
+											Class="chosen-select"
+											DefaultValue="@Request.iptCity~"
+											ID="iptCity"
+											MultiSelect="True"
+											OptionCaptionColumn="city"
+											OptionValueColumn="city"
 											>
 											<DataLayer
-												ColumnNamesRow="1"
-												ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx"
-												ExcelWorksheet="Sheet1"
-												ID="dlCity"
-												Type="Excel"
-											/>
-											<Remark>
+												CacheKey="dlcCity-Tanks"
+												ExpirationNow="@Request.cacheExpireNow~"
+												ExpirationTime="@Constant.cacheExpirationTime~"
+												ExpirationTimeSpan="@Constant.cacheExpirationTimeSpan~"
+												ID="dlcCity-Tanks"
+												Type="Cached"
+												>
 												<DataLayer
-													ConnectionID="connProdGP"
-													HandleQuotesInTokens="True"
+													ColumnNamesRow="1"
+													ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx"
+													ExcelWorksheet="Sheet1"
 													ID="dlCity"
-													Source="Select 
-Objects.Name CustDesc
-,  Objects.AccInterfaceID CustCd
-,  Objects.ObjectID CustID
-,  Farm.FarmID
-,  Farm.Name FarmDesc
-,  Fields.FieldID
-,  Fields.Name FieldDesc
-From AgOS_MKC_Live..Objects As Objects With(NoLock)  
-Inner Join AgOS_MKC_Live.dbo.Grower As Grower With(NoLock)    
-	On Objects.ObjectID = Grower.ObjectID  
-Inner Join AgOS_MKC_Live.dbo.Farm As Farm With(NoLock) 
-	On Grower.ObjectID =    Farm.ObjectID  
-Inner Join AgOS_MKC_Live.dbo.Fields As Fields With(NoLock)    
-	On Farm.FarmID = Fields.Farm  
-Inner Join AgOS_MKC_Live.dbo.Contours As Contours With(NoLock)    
-	On Fields.FieldID = Contours.FieldID
-Where 
-Objects.ObjCategoryID = 1 
-And Objects.Visible = 1"
-													Type="SQL"
+													Type="Excel"
 													>
 													<GroupFilter
-														DataType="Number"
-														GroupColumn="CustID"
-														ID="gCustID"
-														KeepGroupedRows="False"
-													/>
-													<SortFilter
 														DataType="Text"
-														ID="sCustDesc"
-														SortColumn="CustDesc"
+														GroupColumn="city"
+														ID="gByCity"
+														KeepGroupedRows="False"
 														SortSequence="Ascending"
 													/>
 												</DataLayer>
-											</Remark>
-										</DataLayer>
-									</InputSelectList>
+											</DataLayer>
+										</InputSelectList>
+									</Remark>
 									<Image
 										Caption="_theme_files.1x1.gif"
 										Class="ThemeHidden"
@@ -145,6 +116,47 @@ And Objects.Visible = 1"
 											/>
 										</EventHandler>
 									</Image>
+									<InputSelectList
+										Class="chosen-select"
+										DefaultValue="@Request.iptCustomer~"
+										ID="iptCustomer"
+										MultiSelect="True"
+										OptionCaptionColumn="companyname"
+										OptionValueColumn="customerid"
+										>
+										<Remark>
+											<DataLayer
+												CacheKey="dlcCustomer-Tanks"
+												ExpirationNow="@Request.cacheExpireNow~"
+												ExpirationTime="@Constant.cacheExpirationTime~"
+												ExpirationTimeSpan="@Constant.cacheExpirationTimeSpan~"
+												ID="dlcCustomer-Tanks"
+												Type="Cached"
+											/>
+										</Remark>
+										<DataLayer
+											CellRange="B2:C103"
+											ColumnNamesRow="1"
+											ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx"
+											ExcelWorksheet="Sheet1"
+											ID="dlTanksData"
+											Type="Excel"
+											>
+											<SortFilter
+												DataType="Text"
+												SortColumn="companyname"
+												SortSequence="Ascending"
+											/>
+											<CompareFilter
+												CaseSensitive="True"
+												CompareType="&lt;&gt;"
+												CompareValue="NULL"
+												DataColumn="companyname"
+												DataType="Text"
+												ID="compareNull"
+											/>
+										</DataLayer>
+									</InputSelectList>
 								</Column>
 								<Column>
 									<Spaces
@@ -182,14 +194,18 @@ And Objects.Visible = 1"
 								</Column>
 							</Row>
 						</Rows>
+						<LineBreak/>
+						<LineBreak/>
 					</Division>
 				</Division>
 			</ResponsiveColumn>
 		</ResponsiveRow>
-		<ResponsiveRow>
+		<ResponsiveRow
+			CollisionBehavior="HorizontalScrollbar"
+			>
 			<ResponsiveColumn
 				ColspanExtraSmallScreen="12"
-				ColspanLargeScreen="6"
+				ColspanLargeScreen="12"
 				ColspanMediumScreen="12"
 				ColspanSmallScreen="12"
 				>
@@ -206,84 +222,98 @@ And Objects.Visible = 1"
 						<Label
 							Caption="AFD Tank Locations"
 						/>
+						<Label
+							Caption="@Request.iptCustomer~"
+						/>
 					</Division>
 					<Division
 						Class="panel-body"
 						HtmlDiv="True"
 						ID="panel-body-map"
 						>
-						<Label
-							Caption="MAP"
-						/>
 						<GoogleMap
-							GoogleMapTypes="Satellite,Map,Hybrid,Terrain"
+							GoogleMapTypes="Hybrid"
 							GoogleMapZoomControl="Small"
-							Height="700"
+							Height="600"
 							ID="gmAFDTanks"
 							MapScale="True"
-							Width="900"
+							Width="800"
 							>
 							<GoogleMapMarkers
 								ID="gmmTank"
 								>
-								<Remark>
-									<DataLayer
-										ColumnNamesRow="1"
-										ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx"
-										ExcelWorksheet="Sheet1"
-										ID="ExcelDataLayer4"
-										Type="Excel"
-									/>
-								</Remark>
 								<DataLayer
-									ID="dllGmap-AFDTanks"
-									LinkedDataLayerID="linkGmap-AFDTanks"
-									Type="Linked"
+									ColumnNamesRow="1"
+									ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx"
+									ExcelWorksheet="Sheet1"
+									ID="dlAFDTanks"
+									Type="Excel"
 									>
 									<ReverseGeocodeColumns
 										ID="revLookup"
 										LatitudeDataColumn="lat"
 										LongitudeDataColumn="long"
 									/>
+									<ConditionFilter
+										Condition="InStr(&quot;@Data.customerid~&quot;, &quot;@Request.iptCustomer~&quot;) &gt; 0
+"
+										IncludeCondition="@Request.iptCustomer &lt;&gt; &quot;&quot;"
+									/>
 								</DataLayer>
 								<Action
 									Type="MapMarkerInfo"
 									>
-									<Remark>
-										<MapMarkerInfo>
-											<Label
-												Caption="Customer ID: "
-												Class="ThemeBold"
-											/>
-											<Label
-												Caption="@Data.customerid"
-											/>
-											<LineBreak/>
-											<Label
-												Caption="Farm: "
-												Class="ThemeBold"
-											/>
-											<Label
-												Caption="@Data.FarmDesc~"
-											/>
-											<LineBreak/>
-											<Label
-												Caption="Field: "
-												Class="ThemeBold"
-											/>
-											<Label
-												Caption="@Data.FieldDesc~"
-											/>
-											<LineBreak/>
-											<Label
-												Caption="@Data.Acres~"
-												Format="#.#0 Acres"
-											/>
-										</MapMarkerInfo>
-									</Remark>
 									<MapMarkerInfo>
 										<Label
-											Caption="TEST"
+											Caption="Company: "
+											Class="ThemeBold"
+											>
+											<ConditionalClass
+												Class="ThemeHidden"
+												Condition="InStr(&quot;@Data.companyname~&quot;, &quot;NULL&quot;) &gt; 0"
+											/>
+										</Label>
+										<Label
+											Caption="@Data.companyname~"
+											>
+											<ConditionalClass
+												Class="ThemeHidden"
+												Condition="InStr(&quot;@Data.companyname~&quot;, &quot;NULL&quot;) &gt; 0"
+											/>
+										</Label>
+										<LineBreak/>
+										<Label
+											Caption="Name:"
+											Class="ThemeBold"
+											>
+											<ConditionalClass
+												Class="ThemeHidden"
+												Condition="InStr(&quot;@Data.firstname~&quot;, &quot;NULL&quot;) &gt; 0"
+											/>
+										</Label>
+										<Label
+											Caption="@Data.firstname~ @Data.lastname~"
+											>
+											<ConditionalClass
+												Class="ThemeHidden"
+												Condition="InStr(&quot;@Data.firstname~&quot;, &quot;NULL&quot;) &gt; 0"
+											/>
+										</Label>
+										<LineBreak/>
+										<Label
+											Caption="Tank ID:"
+											Class="ThemeBold"
+										/>
+										<Label
+											Caption="@Data.tankid~"
+										/>
+										<LineBreak/>
+										<Label
+											Caption="Probe ID:"
+											Class="ThemeBold"
+										/>
+										<Label
+											Caption="@Data.probeid~"
 										/>
 									</MapMarkerInfo>
 								</Action>
@@ -311,12 +341,12 @@ And Objects.Visible = 1"
 										<ResponsiveColumn/>
 									</ResponsiveRow>
 								</Division>
-								<Division
-									Class="panel-body"
-									HtmlDiv="True"
-									ID="panel-body-detail"
-									>
-									<Remark>
+								<Remark>
+									<Division
+										Class="panel-body"
+										HtmlDiv="True"
+										ID="panel-body-detail"
+										>
 										<ResponsiveRow>
 											<ResponsiveColumn
 												ColspanExtraSmallScreen="1"
@@ -324,180 +354,182 @@ And Objects.Visible = 1"
 												ColspanMediumScreen="1"
 												ColspanSmallScreen="1"
 												>
-												<DataTable
-													AccessibleHeaders="True"
-													AccessibleSummary="AnalysisGrid DataTable"
-													ID="DataTable1"
-													KeepScrollPosition="True"
-													RememberSort="True"
-													ResizableColumns="True"
-													SortArrows="True"
-													TableBorder="0"
-													>
-													<DataLayer
-														ColumnNamesRow="1"
-														ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx"
-														ExcelWorksheet="Sheet1"
-														ID="dlAFDSpreadsheet"
-														Type="Excel"
-													/>
-													<InteractivePaging
-														CaptionType="Image"
-														HideShowPrevNextCaptions="False"
-														HideWhenOnePage="True"
-														IDnotSupportedHere="pagingTableNumbered"
-														Location="Top"
-														PageRowCount="20"
-														ShowPageNumber="Numbered"
-													/>
-													<DataTableColumn
-														Header="coopid"
-														ID="colcoopid"
+												<Remark>
+													<DataTable
+														AccessibleHeaders="True"
+														AccessibleSummary="AnalysisGrid DataTable"
+														ID="DataTable1"
+														KeepScrollPosition="True"
+														RememberSort="True"
+														ResizableColumns="True"
+														SortArrows="True"
+														TableBorder="0"
 														>
-														<Label
-															Caption="@Data.coopid~"
+														<DataLayer
+															ColumnNamesRow="1"
+															ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx"
+															ExcelWorksheet="Sheet1"
+															ID="dlAFDSpreadsheet"
+															Type="Excel"
+														/>
+														<InteractivePaging
+															CaptionType="Image"
+															HideShowPrevNextCaptions="False"
+															HideWhenOnePage="True"
+															IDnotSupportedHere="pagingTableNumbered"
+															Location="Top"
+															PageRowCount="20"
+															ShowPageNumber="Numbered"
+														/>
+														<DataTableColumn
+															Header="coopid"
 															ID="colcoopid"
-														/>
-														<DataColumnSort
-															DataColumn="coopid"
-															DataType="Number"
-														/>
-													</DataTableColumn>
-													<DataTableColumn
-														Header="customerid"
-														ID="colcustomerid"
-														>
-														<Label
-															Caption="@Data.customerid~"
+															>
+															<Label
+																Caption="@Data.coopid~"
+																ID="colcoopid"
+															/>
+															<DataColumnSort
+																DataColumn="coopid"
+																DataType="Number"
+															/>
+														</DataTableColumn>
+														<DataTableColumn
+															Header="customerid"
 															ID="colcustomerid"
-														/>
-														<DataColumnSort
-															DataColumn="customerid"
-															DataType="Number"
-														/>
-													</DataTableColumn>
-													<DataTableColumn
-														Header="companyname"
-														ID="colcompanyname"
-														>
-														<Label
-															Caption="@Data.companyname~"
+															>
+															<Label
+																Caption="@Data.customerid~"
+																ID="colcustomerid"
+															/>
+															<DataColumnSort
+																DataColumn="customerid"
+																DataType="Number"
+															/>
+														</DataTableColumn>
+														<DataTableColumn
+															Header="companyname"
 															ID="colcompanyname"
-														/>
-														<DataColumnSort
-															DataColumn="companyname"
-															DataType="Text"
-														/>
-													</DataTableColumn>
-													<DataTableColumn
-														Header="firstname"
-														ID="colfirstname"
-														>
-														<Label
-															Caption="@Data.firstname~"
+															>
+															<Label
+																Caption="@Data.companyname~"
+																ID="colcompanyname"
+															/>
+															<DataColumnSort
+																DataColumn="companyname"
+																DataType="Text"
+															/>
+														</DataTableColumn>
+														<DataTableColumn
+															Header="firstname"
 															ID="colfirstname"
-														/>
-														<DataColumnSort
-															DataColumn="firstname"
-															DataType="Text"
-														/>
-													</DataTableColumn>
-													<DataTableColumn
-														Header="lastname"
-														ID="collastname"
-														>
-														<Label
-															Caption="@Data.lastname~"
+															>
+															<Label
+																Caption="@Data.firstname~"
+																ID="colfirstname"
+															/>
+															<DataColumnSort
+																DataColumn="firstname"
+																DataType="Text"
+															/>
+														</DataTableColumn>
+														<DataTableColumn
+															Header="lastname"
 															ID="collastname"
-														/>
-														<DataColumnSort
-															DataColumn="lastname"
-															DataType="Text"
-														/>
-													</DataTableColumn>
-													<DataTableColumn
-														Header="city"
-														ID="colcity"
-														>
-														<Label
-															Caption="@Data.city~"
+															>
+															<Label
+																Caption="@Data.lastname~"
+																ID="collastname"
+															/>
+															<DataColumnSort
+																DataColumn="lastname"
+																DataType="Text"
+															/>
+														</DataTableColumn>
+														<DataTableColumn
+															Header="city"
 															ID="colcity"
-														/>
-														<DataColumnSort
-															DataColumn="city"
-															DataType="Text"
-														/>
-													</DataTableColumn>
-													<DataTableColumn
-														Header="siteid"
-														ID="colsiteid"
-														>
-														<Label
-															Caption="@Data.siteid~"
+															>
+															<Label
+																Caption="@Data.city~"
+																ID="colcity"
+															/>
+															<DataColumnSort
+																DataColumn="city"
+																DataType="Text"
+															/>
+														</DataTableColumn>
+														<DataTableColumn
+															Header="siteid"
 															ID="colsiteid"
-														/>
-														<DataColumnSort
-															DataColumn="siteid"
-															DataType="Number"
-														/>
-													</DataTableColumn>
-													<DataTableColumn
-														Header="long"
-														ID="collong"
-														>
-														<Label
-															Caption="@Data.long~"
+															>
+															<Label
+																Caption="@Data.siteid~"
+																ID="colsiteid"
+															/>
+															<DataColumnSort
+																DataColumn="siteid"
+																DataType="Number"
+															/>
+														</DataTableColumn>
+														<DataTableColumn
+															Header="long"
 															ID="collong"
-														/>
-														<DataColumnSort
-															DataColumn="long"
-															DataType="Number"
-														/>
-													</DataTableColumn>
-													<DataTableColumn
-														Header="lat"
-														ID="collat"
-														>
-														<Label
-															Caption="@Data.lat~"
+															>
+															<Label
+																Caption="@Data.long~"
+																ID="collong"
+															/>
+															<DataColumnSort
+																DataColumn="long"
+																DataType="Number"
+															/>
+														</DataTableColumn>
+														<DataTableColumn
+															Header="lat"
 															ID="collat"
-														/>
-														<DataColumnSort
-															DataColumn="lat"
-															DataType="Number"
-														/>
-													</DataTableColumn>
-													<DataTableColumn
-														Header="tankid"
-														ID="coltankid"
-														>
-														<Label
-															Caption="@Data.tankid~"
+															>
+															<Label
+																Caption="@Data.lat~"
+																ID="collat"
+															/>
+															<DataColumnSort
+																DataColumn="lat"
+																DataType="Number"
+															/>
+														</DataTableColumn>
+														<DataTableColumn
+															Header="tankid"
 															ID="coltankid"
-														/>
-														<DataColumnSort
-															DataColumn="tankid"
-															DataType="Number"
-														/>
-													</DataTableColumn>
-													<DataTableColumn
-														Header="probeid"
-														ID="colprobeid"
-														>
-														<Label
-															Caption="@Data.probeid~"
+															>
+															<Label
+																Caption="@Data.tankid~"
+																ID="coltankid"
+															/>
+															<DataColumnSort
+																DataColumn="tankid"
+																DataType="Number"
+															/>
+														</DataTableColumn>
+														<DataTableColumn
+															Header="probeid"
 															ID="colprobeid"
-														/>
-														<DataColumnSort
-															DataColumn="probeid"
-															DataType="Number"
-														/>
-													</DataTableColumn>
-												</DataTable>
+															>
+															<Label
+																Caption="@Data.probeid~"
+																ID="colprobeid"
+															/>
+															<DataColumnSort
+																DataColumn="probeid"
+																DataType="Number"
+															/>
+														</DataTableColumn>
+													</DataTable>
+												</Remark>
 											</ResponsiveColumn>
 										</ResponsiveRow>
-									</Remark>
-								</Division>
+									</Division>
+								</Remark>
 							</Division>
 						</Division>
 					</Division>
@@ -510,8 +542,7 @@ And Objects.Visible = 1"
 		SharedElementID="shrFooter"
 	/>
 	<ideTestParams
-		cacheExpireNow=""
-		iptCity=""
+		iptCustomer=""
 		paramLocName=""
 	/>
 </Report>
