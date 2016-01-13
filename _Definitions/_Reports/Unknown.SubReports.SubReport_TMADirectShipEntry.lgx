@@ -10,16 +10,16 @@
 		<DataLayer
 			ConnectionID="connMKC"
 			ID="dlDSEntryIDRecord"
-			Source="Select DM_DSTicketTracking.EntryID,
-  DM_DSTicketTracking.DropOffDate,
-  DM_DSTicketTracking.CUSTOMER,
-  DM_DSTicketTracking.TotalTickets,
-  DM_DSTicketTracking.EnteredDate,
-  DM_DSTicketTracking.UserID,
-  DM_DSTicketTracking.CompletedDate,
-  DM_DSTicketTracking.BRANCH_NUMBER
-From DM_DSTicketTracking
-Where DM_DSTicketTracking.EntryID = &apos;@Request.EntryId~&apos;"
+			Source="Select AGTRAX_STAGING.dbo.DM_DSTicketTracking.EntryID,
+  AGTRAX_STAGING.dbo.DM_DSTicketTracking.DropOffDate,
+  AGTRAX_STAGING.dbo.DM_DSTicketTracking.CUSTOMER,
+  AGTRAX_STAGING.dbo.DM_DSTicketTracking.TotalTickets,
+  AGTRAX_STAGING.dbo.DM_DSTicketTracking.EnteredDate,
+  AGTRAX_STAGING.dbo.DM_DSTicketTracking.UserID,
+  AGTRAX_STAGING.dbo.DM_DSTicketTracking.CompletedDate,
+  AGTRAX_STAGING.dbo.DM_DSTicketTracking.BRANCH_NUMBER
+From AGTRAX_STAGING.dbo.DM_DSTicketTracking
+Where AGTRAX_STAGING.dbo.DM_DSTicketTracking.EntryID = &apos;@Request.EntryId~&apos;"
 			Type="SQL"
 		/>
 	</LocalData>
@@ -137,9 +137,9 @@ Where DM_DSTicketTracking.EntryID = &apos;@Request.EntryId~&apos;"
 							<DataLayer
 								ConnectionID="connMKC"
 								ID="dlCustomer"
-								Source="Select AR_CUSTOMER_MASTER_TMA.CUSTOMER,
-  AR_CUSTOMER_MASTER_TMA.NAME
-From AR_CUSTOMER_MASTER_TMA
+								Source="Select AGTRAX_STAGING.dbo.AR_CUSTOMER_MASTER_TMA.CUSTOMER,
+  AGTRAX_STAGING.dbo.AR_CUSTOMER_MASTER_TMA.NAME
+From AGTRAX_STAGING.dbo.AR_CUSTOMER_MASTER_TMA
 "
 								Type="SQL"
 							/>
@@ -190,7 +190,7 @@ From AR_CUSTOMER_MASTER_TMA
 							<DataLayer
 								ConnectionID="connMKC"
 								ID="dlLocation"
-								Source="SELECT BRANCH_NUMBER, BRANCH_NAME FROM Agtrax_Staging..IV_BRANCH_MASTER"
+								Source="SELECT BRANCH_NUMBER, BRANCH_NAME FROM Agtrax_Staging.dbo.IV_BRANCH_MASTER"
 								Type="SQL"
 							/>
 						</InputSelectList>
