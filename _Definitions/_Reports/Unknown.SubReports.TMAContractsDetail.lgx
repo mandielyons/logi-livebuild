@@ -7,40 +7,30 @@
 		<DataLayer
 			ConnectionID="connProdGP"
 			ID="sqlTMAContract"
-			Source="SELECT CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;_&apos;+CT.COMMODITY_CODE+&apos;_&apos;+SUBSTRING(LTRIM(RTRIM(CT.CONTRACT_NUMBER)),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM(CT.CONTRACT_NUMBER)))-1) as [KEY]
-  , LTRIM(RTRIM(CM.NAME)) [CUSTDESC]
-  , LTRIM(RTRIM(CT.CUSTOMER)) [CUSTNMBR]
-  , LTRIM(RTRIM(CM.ADDRESS_LINE_1)) [CUSTADDR1]
-  , LTRIM(RTRIM(CM.CITY)) [CUSTCITY]
-  , LTRIM(RTRIM(CM.[STATE])) [CUSTSTATE]
-  , LTRIM(RTRIM(CM.ZIP_CODE)) [CUSTZIPCODE]
-  , SUBSTRING(LTRIM(RTRIM(CT.CONTRACT_NUMBER)),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM(CT.CONTRACT_NUMBER)))-1) AS MAINCONTRACT
-  , SUBSTRING(LTRIM(RTRIM(CT.CONTRACT_NUMBER)),CHARINDEX(&apos;.&apos;,LTRIM(RTRIM(CT.CONTRACT_NUMBER)))+1,3) AS SUBCONTRACT
-  , LTRIM(RTRIM(CT.CONTRACT_NUMBER)) [CONTRACTNMBR]
-  , CAST(CT.ISSUED_DATE AS DATE) [CONTRACTDT]
-  , CAST(CT.DELIVERY_START_DATE AS DATE) [DELIVERY_START_DATE]
-  , CAST(CT.DELIVERY_END_DATE AS DATE) [DELIVERY_END_DATE]
-  , LTRIM(RTRIM(CT.DPR_POSITION)) [DPRPOSITION]
-  , LTRIM(RTRIM(PM.[DESCRIPTION])) [DPRDESC]
-  , LTRIM(RTRIM(CT.BRANCH_NUMBER)) [LOCNMBR]
-  , LTRIM(RTRIM(BM.BRANCH_NAME)) [LOCDESC]
-  , LTRIM(RTRIM(CT.COMMODITY_CODE)) [COMMODITYCD]
-  , LTRIM(RTRIM(IV.[DESCRIPTION])) [COMMODITYDESC]
-  , CT.ISSUED_LBS, CT.APPLIED_LBS, CT.ADJUSTED_LBS, CT.SUB_CONT_LBS
-  , (CT.ISSUED_LBS-CT.APPLIED_LBS+ADJUSTED_LBS-SUB_CONT_LBS) [REMAINING_LBS]
-  , CT.ISSUED_LBS/UM.STANDARD_UNITS_LBS [ISSUED_BU]
-  , CT.APPLIED_LBS/UM.STANDARD_UNITS_LBS [APPLIED_BU]
-  , CT.ADJUSTED_LBS/UM.STANDARD_UNITS_LBS [ADJUSTED_BU]
-  , CT.SUB_CONT_LBS/UM.STANDARD_UNITS_LBS [SUB_CONT_BU]
-  , (CT.ISSUED_LBS-CT.APPLIED_LBS+ADJUSTED_LBS-SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS [REMAINING_BU]
-FROM AgTrax_Staging..CA_CONTRACT_MASTER CT 
-  INNER JOIN AgTrax_Staging..AR_CUSTOMER_MASTER_TMA CM ON CT.CUSTOMER=CM.CUSTOMER
-  LEFT OUTER JOIN AgTrax_Staging..CA_COMMODITY_MASTER IV ON CT.COMMODITY_CODE=IV.COMMODITY_CODE
-  LEFT OUTER JOIN AgTrax_Staging..IV_UNIT_OF_MEASURE UM ON IV.UOM_BUSHELS=UM.UNIT_OF_MEASURE
-  LEFT OUTER JOIN AgTrax_Staging..CA_POSITION_MASTER PM ON CT.DPR_POSITION=PM.DPR_POSITION
-  LEFT OUTER JOIN AgTrax_Staging..IV_BRANCH_MASTER BM ON CT.BRANCH_NUMBER=BM.BRANCH_NUMBER
-WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;_&apos;+CT.COMMODITY_CODE+&apos;_&apos;+SUBSTRING(LTRIM(RTRIM(CT.CONTRACT_NUMBER)),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM(CT.CONTRACT_NUMBER)))-1)=&apos;@Request.paramContractKey~&apos;
-  AND CT.CONTRACT_STATUS=&apos;O&apos;
+			Source="SELECT OC.DATA_KEY AS [KEY]
+  , OC.CUSTOMER_DESC AS [CUSTDESC]
+  , OC.CUSTOMER AS [CUSTNMBR]
+  , LTRIM(RTRIM(CM.ADDRESS_LINE_1)) AS [CUSTADDR1]
+  , LTRIM(RTRIM(CM.CITY)) AS [CUSTCITY]
+  , LTRIM(RTRIM(CM.[STATE])) AS [CUSTSTATE]
+  , LTRIM(RTRIM(CM.ZIP_CODE)) AS [CUSTZIPCODE]
+  , OC.CONTRACT_MAIN AS [MAINCONTRACT]
+  , OC.CONTRACT_SUB AS [SUBCONTRACT]
+  , OC.CONTRACT_NUMBER AS [CONTRACTNMBR]
+  , OC.ISSUED_DATE AS [CONTRACTDT]
+  , OC.DELIVERY_START_DATE AS [DELIVERY_START_DATE]
+  , OC.DELIVERY_END_DATE AS [DELIVERY_END_DATE]
+  , OC.DPR_POSITION AS [DPRPOSITION]
+  , OC.DPR_GROUP_DESC AS [DPRDESC]
+  , OC.BRANCH_NUMBER AS [LOCNMBR]
+  , OC.BRANCH_DESC AS [LOCDESC]
+  , OC.COMMODITY_CODE AS [COMMODITYCD]
+  , OC.COMMODITY_DESC AS [COMMODITYDESC]
+  , OC.ISSUED_LBS, OC.APPLIED_LBS, OC.ADJUSTED_LBS, OC.SUB_CONT_LBS, OC.REMAINING_LBS
+  , OC.ISSUED_BU, OC.APPLIED_BU, OC.ADJUSTED_BU, OC.SUB_CONT_BU, OC.REMAINING_BU
+FROM AgTrax_Staging..DM_OpenContracts AS OC with(nolock)
+  INNER JOIN AgTrax_Staging..AR_CUSTOMER_MASTER_TMA CM ON OC.CUSTOMER=CM.CUSTOMER
+WHERE OC.DATA_KEY=&apos;@Request.paramContractKey~&apos; OR (OC.CONTRACT_MAIN=&apos;@Request.paramContractMain~&apos; and OC.CUSTOMER=&apos;@Request.paramCustomer~&apos;)
 "
 			Type="SQL"
 			>
@@ -340,6 +330,12 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 					DataColumn="ISSUED_LBS"
 					DataType="Number"
 				/>
+				<DataColumnSummary
+					DataColumn="ISSUED_LBS"
+					DataType="Number"
+					Function="Sum"
+					ID="totISSUED_LBS"
+				/>
 			</DataTableColumn>
 			<Remark>
 				<DataTableColumn
@@ -353,6 +349,12 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 					<DataColumnSort
 						DataColumn="APPLIED_LBS"
 						DataType="Number"
+					/>
+					<DataColumnSummary
+						DataColumn="APPLIED_LBS"
+						DataType="Number"
+						Function="Sum"
+						ID="totAPPLIED_LBS"
 					/>
 				</DataTableColumn>
 			</Remark>
@@ -369,6 +371,12 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 						DataColumn="ADJUSTED_LBS"
 						DataType="Number"
 					/>
+					<DataColumnSummary
+						DataColumn="ADJUSTED_LBS"
+						DataType="Number"
+						Function="Sum"
+						ID="totADJUSTED_LBS"
+					/>
 				</DataTableColumn>
 			</Remark>
 			<Remark>
@@ -383,6 +391,12 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 					<DataColumnSort
 						DataColumn="SUB_CONT_LBS"
 						DataType="Number"
+					/>
+					<DataColumnSummary
+						DataColumn="SUB_CONT_LBS"
+						DataType="Number"
+						Function="Sum"
+						ID="totSUB_CONT_LBS"
 					/>
 				</DataTableColumn>
 			</Remark>
@@ -399,6 +413,12 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 					DataColumn="REMAINING_LBS"
 					DataType="Number"
 				/>
+				<DataColumnSummary
+					DataColumn="REMAINING_LBS"
+					DataType="Number"
+					Function="Sum"
+					ID="totREMAINING_LBS"
+				/>
 			</DataTableColumn>
 			<DataTableColumn
 				Header="Issued BU"
@@ -412,6 +432,12 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 				<DataColumnSort
 					DataColumn="ISSUED_BU"
 					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="ISSUED_BU"
+					DataType="Number"
+					Function="Sum"
+					ID="totISSUED_BU"
 				/>
 			</DataTableColumn>
 			<DataTableColumn
@@ -427,6 +453,12 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 					DataColumn="APPLIED_BU"
 					DataType="Number"
 				/>
+				<DataColumnSummary
+					DataColumn="APPLIED_BU"
+					DataType="Number"
+					Function="Sum"
+					ID="totAPPLIED_BU"
+				/>
 			</DataTableColumn>
 			<DataTableColumn
 				Header="Adjusted BU"
@@ -440,6 +472,12 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 				<DataColumnSort
 					DataColumn="ADJUSTED_BU"
 					DataType="Number"
+				/>
+				<DataColumnSummary
+					DataColumn="ADJUSTED_BU"
+					DataType="Number"
+					Function="Sum"
+					ID="totADJUSTED_BU"
 				/>
 			</DataTableColumn>
 			<DataTableColumn
@@ -455,6 +493,12 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 					DataColumn="SUB_CONT_BU"
 					DataType="Number"
 				/>
+				<DataColumnSummary
+					DataColumn="SUB_CONT_BU"
+					DataType="Number"
+					Function="Sum"
+					ID="totSUB_CONT_BU"
+				/>
 			</DataTableColumn>
 			<DataTableColumn
 				Header="Remaining BU"
@@ -469,10 +513,23 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 					DataColumn="REMAINING_BU"
 					DataType="Number"
 				/>
+				<DataColumnSummary
+					DataColumn="REMAINING_BU"
+					DataType="Number"
+					Function="Sum"
+					ID="totREMAINING_BU"
+				/>
 			</DataTableColumn>
+			<SummaryRow
+				Caption="Totals: "
+				ID="SummaryTotals"
+				LastPageOnly="False"
+			/>
 		</DataTable>
 	</Body>
 	<ideTestParams
 		paramContractKey="1_8320618_02_23978"
+		paramContractMain=""
+		paramCustomer=""
 	/>
 </Report>
