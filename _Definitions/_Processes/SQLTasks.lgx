@@ -47,7 +47,7 @@ WHERE DM_DSTicketTracking.EntryID = &apos;@Request.iptEntryId~&apos;"
 				<WaitPage/>
 			</Target>
 			<LinkParams
-				EntryId="@Request.EntryId~"
+				EntryId="@Request.iptEntryId~"
 				StatusMsg="Success: Record updated."
 			/>
 		</Response>
@@ -93,13 +93,13 @@ VALUES (&apos;@Request.dteDropOff~&apos;,&apos;@Request.iptCustomer~&apos;,&apos
 			Type="Report"
 			>
 			<Target
-				Report="Unknown.SubReports.SubReport_TMADirectShipEntry"
+				Report="TMAReports.TMADirectShip"
 				Type="Report"
 				>
 				<WaitPage/>
 			</Target>
 			<LinkParams
-				EntryId="@Request.EntryId~"
+				EntryId=""
 				StatusMsg="Success: Record added."
 			/>
 		</Response>
@@ -107,7 +107,6 @@ VALUES (&apos;@Request.dteDropOff~&apos;,&apos;@Request.iptCustomer~&apos;,&apos
 	<ideTestParams
 		dteDropOff=""
 		dteEntered=""
-		EntryId=""
 		iptBranch=""
 		iptCompleteDate=""
 		iptCustomer=""

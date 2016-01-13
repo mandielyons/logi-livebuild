@@ -43,7 +43,7 @@ Where DM_DSTicketTracking.EntryID = &apos;@Request.EntryId~&apos;"
 				ID="panel-ds-header"
 				>
 				<Label
-					Caption="Direct Ship Entry"
+					Caption="TMA Direct Ship Entry"
 				/>
 			</Division>
 			<Division
@@ -55,10 +55,9 @@ Where DM_DSTicketTracking.EntryID = &apos;@Request.EntryId~&apos;"
 					Class="ThemeAlignRight"
 					>
 					<ResponsiveColumn>
-						<Button
-							Caption="Report View"
-							ID="btnReport"
-							Tooltip="Click here to view report."
+						<Label
+							Caption="View Report"
+							Tooltip="Click here to view report"
 							>
 							<Action
 								ID="lnkReportView"
@@ -71,8 +70,7 @@ Where DM_DSTicketTracking.EntryID = &apos;@Request.EntryId~&apos;"
 									Type="Report"
 								/>
 							</Action>
-						</Button>
-						<LineBreak/>
+						</Label>
 						<LineBreak/>
 						<LineBreak/>
 					</ResponsiveColumn>
@@ -94,6 +92,7 @@ Where DM_DSTicketTracking.EntryID = &apos;@Request.EntryId~&apos;"
 							/>
 						</Label>
 						<LineBreak/>
+						<LineBreak/>
 					</ResponsiveColumn>
 				</ResponsiveRow>
 				<ResponsiveRow>
@@ -108,7 +107,12 @@ Where DM_DSTicketTracking.EntryID = &apos;@Request.EntryId~&apos;"
 							Tooltip="Select the drop off date"
 							>
 							<InputDateCalendar
+								CalendarCaption="Tickets Received"
+								DropdownYearAndMonth="False"
 								ID="iptDropOff"
+								NumberOfMonths="Month"
+								Width="50"
+								WidthScale="%"
 							/>
 						</InputDate>
 						<LineBreak/>
@@ -205,7 +209,12 @@ From AR_CUSTOMER_MASTER_TMA
 							Tooltip="Enter the date ticketes were entered into AgTrax"
 							>
 							<InputDateCalendar
+								CalendarCaption="AgTrax Entry"
+								DropdownYearAndMonth="False"
 								ID="iptEntered"
+								NumberOfMonths="Month"
+								Width="50"
+								WidthScale="%"
 							/>
 						</InputDate>
 						<LineBreak/>
@@ -240,6 +249,7 @@ else {complete.value = &quot;&quot;;}
 							</EventHandler>
 						</InputCheckbox>
 						<InputHidden
+							DefaultValue="@Local.CompletedDate~"
 							ID="iptCompleteDate"
 						/>
 						<InputHidden
@@ -458,20 +468,20 @@ var add = document.getElementById(&quot;btnAdd&quot;);
 var update = document.getElementById(&quot;btnUpdate&quot;);
 var dteDrop = document.getElementById(&quot;dteDropOff&quot;);
 var dteEntry = document.getElementById(&quot;dteEntered&quot;);
+var strComplete = complete.value;
+var n = strComplete.search(&quot;1900-01-01&quot;);
 
-if (done != null) {
-	if (done.checked){complete.value = today.value;}
-	else {complete.value = &quot;&quot;;}
-}
-
-if (complete.value == &quot;&quot;){complete.value = &quot;1/1/1900&quot;;}
+if (n &gt; -1) {done.checked = false;}
+else {done.checked = true;}
 
 if (entry.value == &quot;&quot;){
 	entry.value = &quot;0&quot;;
 	add.style.display = &quot;&quot;;
 	update.style.display = &quot;none&quot;;
 	dteDrop.value = today.value;
-	dteEntry.value = today.value;}
+	dteEntry.value = &quot;&quot;;
+	strComplete = &quot;1/1/1900&quot;;
+	done.checked = false;}
 else if (entry.value &gt; 0){
 	update.style.display = &quot;&quot;;
 	add.style.display = &quot;none&quot;;

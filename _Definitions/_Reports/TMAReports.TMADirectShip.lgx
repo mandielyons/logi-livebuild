@@ -27,6 +27,7 @@
 			</Division>
 			<Division
 				Class="panel-body"
+				HtmlDiv="True"
 				ID="panel-ds-report"
 				>
 				<ResponsiveRow
@@ -59,10 +60,30 @@
 				</ResponsiveRow>
 				<ResponsiveRow>
 					<ResponsiveColumn>
+						<LineBreak/>
+						<Label
+							Caption="@Request.StatusMsg~"
+							ID="lblStatus"
+							>
+							<ConditionalClass
+								Class="ThemeErrorText"
+								Condition="InStr(&quot;@Request.StatusMsg~&quot;,&quot;Error:&quot;) &gt; 0"
+							/>
+							<ConditionalClass
+								Class="ThemeTextNegative"
+								Condition="InStr(&quot;@Request.StatusMsg~&quot;,&quot;Success:&quot;) &gt; 0"
+							/>
+						</Label>
+						<LineBreak/>
+						<LineBreak/>
+					</ResponsiveColumn>
+				</ResponsiveRow>
+				<ResponsiveRow>
+					<ResponsiveColumn>
 						<DataTable
 							AccessibleHeaders="True"
 							AccessibleSummary="AnalysisGrid DataTable"
-							ID="DataTable1"
+							ID="dtTicketTracking"
 							KeepScrollPosition="True"
 							RememberSort="True"
 							ResizableColumns="True"
@@ -71,7 +92,7 @@
 							>
 							<DataLayer
 								ConnectionID="connMKC"
-								ID="SQLDataLayer1"
+								ID="dlTicketTracking"
 								Source="Select DM_DSTicketTracking.EntryID,
   DM_DSTicketTracking.DropOffDate,
   DM_DSTicketTracking.CUSTOMER,
@@ -79,8 +100,14 @@
   DM_DSTicketTracking.TotalTickets,
   DM_DSTicketTracking.EnteredDate,
   DM_DSTicketTracking.UserID,
-  DM_DSTicketTracking.CompletedDate
-From DM_DSTicketTracking"
+  DM_DSTicketTracking.CompletedDate,
+  IV_BRANCH_MASTER.BRANCH_NAME,
+  AR_CUSTOMER_MASTER_TMA.NAME
+From DM_DSTicketTracking
+  Inner Join IV_BRANCH_MASTER On DM_DSTicketTracking.BRANCH_NUMBER =
+    IV_BRANCH_MASTER.BRANCH_NUMBER
+  Inner Join AR_CUSTOMER_MASTER_TMA On DM_DSTicketTracking.CUSTOMER =
+    AR_CUSTOMER_MASTER_TMA.CUSTOMER"
 								Type="SQL"
 							/>
 							<InteractivePaging
@@ -126,7 +153,7 @@ From DM_DSTicketTracking"
 								ID="colCUSTOMER"
 								>
 								<Label
-									Caption="@Data.CUSTOMER~"
+									Caption="@Data.CUSTOMER~ - @Data.NAME~"
 									ID="colCUSTOMER"
 								/>
 								<DataColumnSort
@@ -139,7 +166,7 @@ From DM_DSTicketTracking"
 								ID="colBRANCH_NUMBER"
 								>
 								<Label
-									Caption="@Data.BRANCH_NUMBER~"
+									Caption="@Data.BRANCH_NUMBER~ - @Data.BRANCH_NAME~"
 									ID="colBRANCH_NUMBER"
 								/>
 								<DataColumnSort
@@ -152,9 +179,59 @@ From DM_DSTicketTracking"
 								ID="colTotalTickets"
 								>
 								<Label
-									Caption="@Data.TotalTickets~"
-									ID="colTotalTickets"
-								/>
+									Caption="0 - 10"
+									Class="ThemeHidden"
+									>
+									<ConditionalClass
+										Condition="@Data.TotalTickets~ = 1"
+									/>
+								</Label>
+								<Label
+									Caption="&gt; 10"
+									Class="ThemeHidden"
+									>
+									<ConditionalClass
+										Condition="@Data.TotalTickets~ = 2"
+									/>
+								</Label>
+								<Label
+									Caption="&gt; 25"
+									Class="ThemeHidden"
+									>
+									<ConditionalClass
+										Condition="@Data.TotalTickets~ = 3"
+									/>
+								</Label>
+								<Label
+									Caption="&gt; 50"
+									Class="ThemeHidden"
+									>
+									<ConditionalClass
+										Condition="@Data.TotalTickets~ = 4"
+									/>
+								</Label>
+								<Label
+									Caption="&gt; 75"
+									Class="ThemeHidden"
+									>
+									<ConditionalClass
+										Condition="@Data.TotalTickets~ = 5"
+									/>
+								</Label>
+								<Label
+									Caption="&gt; 100"
+									Class="ThemeHidden"
+									>
+									<ConditionalClass
+										Condition="@Data.TotalTickets~ = 6"
+									/>
+								</Label>
+								<Remark>
+									<Label
+										Caption="@Data.TotalTickets~"
+										ID="colTotalTickets"
+									/>
+								</Remark>
 								<DataColumnSort
 									DataColumn="TotalTickets"
 									DataType="Text"
@@ -168,7 +245,12 @@ From DM_DSTicketTracking"
 									Caption="@Data.EnteredDate~"
 									Format="Short Date"
 									ID="colEnteredDate"
-								/>
+									>
+									<ConditionalClass
+										Class="ThemeHidden"
+										Condition="InStr(&quot;@Data.EnteredDate~&quot;, &quot;1900-01-01&quot;) &gt; 0"
+									/>
+								</Label>
 								<DataColumnSort
 									DataColumn="EnteredDate"
 									DataType="Date"
@@ -188,14 +270,27 @@ From DM_DSTicketTracking"
 								/>
 							</DataTableColumn>
 							<DataTableColumn
-								Header="Date Completed"
+								Header="Completed"
 								ID="colCompletedDate"
 								>
+								<Label
+									Class="fa fa-check"
+									>
+									<ConditionalClass
+										Class="ThemeHidden"
+										Condition="InStr(&quot;@Data.CompletedDate~&quot;, &quot;1900-01-01&quot;) &gt; 0"
+									/>
+								</Label>
 								<Label
 									Caption="@Data.CompletedDate~"
 									Format="Short Date"
 									ID="colCompletedDate"
-								/>
+									>
+									<ConditionalClass
+										Class="ThemeHidden"
+										Condition="InStr(&quot;@Data.CompletedDate~&quot;, &quot;1900-01-01&quot;) &gt; 0"
+									/>
+								</Label>
 								<DataColumnSort
 									DataColumn="CompletedDate"
 									DataType="Date"
@@ -232,5 +327,7 @@ From DM_DSTicketTracking"
 		DefinitionFile="_Layout.Shared"
 		SharedElementID="shrFooter"
 	/>
-	<ideTestParams/>
+	<ideTestParams
+		StatusMsg=""
+	/>
 </Report>
