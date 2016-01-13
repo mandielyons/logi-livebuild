@@ -168,7 +168,7 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 				ShowPageNumber="Numbered"
 			/>
 			<DataTableColumn
-				Header="CONTRACTNMBR"
+				Header="Contract"
 				ID="colCONTRACTNMBR"
 				>
 				<Label
@@ -181,7 +181,7 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 				/>
 			</DataTableColumn>
 			<DataTableColumn
-				Header="LOCNMBR"
+				Header="Location Number"
 				ID="colLOCNMBR"
 				>
 				<Label
@@ -194,7 +194,7 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 				/>
 			</DataTableColumn>
 			<DataTableColumn
-				Header="LOCDESC"
+				Header="Location Description"
 				ID="colLOCDESC"
 				>
 				<Label
@@ -207,7 +207,7 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 				/>
 			</DataTableColumn>
 			<DataTableColumn
-				Header="REMAINING_BU"
+				Header="Remaining BU"
 				ID="colREMAINING_BU"
 				>
 				<Label

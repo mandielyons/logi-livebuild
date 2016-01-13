@@ -40,44 +40,21 @@
 						<DataLayer
 							ConnectionID="connProdGP"
 							ID="SQLDataLayer-ContractsByCommodity"
-							Source="SELECT LTRIM(RTRIM(CT.COMMODITY_CODE)) AS [COMMODITYCODE],
-  LTRIM(RTRIM(MAX(IV.DESCRIPTION))) AS [COMMODITYDESC],
-  CAST(SUM((CT.ISSUED_LBS-CT.APPLIED_LBS+CT.ADJUSTED_LBS-CT.SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS) AS NUMERIC(19,3)) AS [REMAINING_BU]
-FROM [Agtrax_Staging]..[CA_CONTRACT_MASTER] AS [CT] with(nolock) 
-  LEFT OUTER JOIN [Agtrax_Staging]..[CA_COMMODITY_MASTER] AS [IV] with(nolock) ON CT.COMMODITY_CODE=IV.COMMODITY_CODE 
-  LEFT OUTER JOIN [Agtrax_Staging]..[IV_UNIT_OF_MEASURE] AS [UM] with(nolock) ON IV.UOM_BUSHELS=UM.UNIT_OF_MEASURE
-WHERE CT.CONTRACT_STATUS=&apos;O&apos; AND CT.DELIVERY_END_DATE&lt;=&apos;@Local.SHIP_PERIOD_DT~&apos;
-GROUP BY CT.COMMODITY_CODE
-HAVING SUM((CT.ISSUED_LBS - CT.APPLIED_LBS + CT.ADJUSTED_LBS - CT.SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS) &lt;&gt; 0.0
+							Source="SELECT DPR_GROUP AS [COMMODITYCODE],
+  MAX(DPR_GROUP_DESC) AS [COMMODITYDESC],
+  SUM(REMAINING_BU) AS [REMAINING_BU]
+FROM [Agtrax_Staging]..[DM_OpenContracts] with(nolock) 
+WHERE DELIVERY_END_DATE&lt;=&apos;@Local.SHIP_PERIOD_DT~&apos;
+GROUP BY DPR_GROUP
+HAVING SUM(REMAINING_BU)&gt;0.0
+ORDER BY COMMODITYCODE
 "
 							Type="SQL"
-							>
-							<GroupFilter
-								DataType="Text"
-								GroupColumn="COMMODITYCODE"
-								KeepGroupedRows="False"
-								>
-								<GroupAggregateColumn
-									AggregateColumn="REMAINING_BU"
-									AggregateFunction="SUM"
-									DataType="Number"
-									ID="rdGrgrREMAINING-REMAINING_BU-sum"
-								/>
-							</GroupFilter>
-							<SortFilter
-								DataType="Number"
-								SortColumn="COMMODITYCODE"
-								SortSequence="Ascending"
-								>
-								<Note
-									Note="Sort Bars By Commodity Code"
-								/>
-							</SortFilter>
-						</DataLayer>
+						/>
 						<Series
 							ChartXDataColumn="COMMODITYDESC"
 							ChartXDataColumnType="Text"
-							ChartYDataColumn="rdGrgrREMAINING-REMAINING_BU-sum"
+							ChartYDataColumn="REMAINING_BU"
 							Type="Bar"
 							>
 							<Quicktip>
@@ -90,7 +67,7 @@ HAVING SUM((CT.ISSUED_LBS - CT.APPLIED_LBS + CT.ADJUSTED_LBS - CT.SUB_CONT_LBS)/
 								<QuicktipRow
 									Caption="Remaining BU: "
 									Format="###,###,##0.000"
-									Value="@Chart.rdGrgrREMAINING-REMAINING_BU-sum~"
+									Value="@Chart.REMAINING_BU~"
 								/>
 							</Quicktip>
 							<Action
@@ -145,24 +122,16 @@ HAVING SUM((CT.ISSUED_LBS - CT.APPLIED_LBS + CT.ADJUSTED_LBS - CT.SUB_CONT_LBS)/
 						<DataLayer
 							ConnectionID="connProdGP"
 							ID="SQLDataLayer-ContractsOvershipped"
-							Source="SELECT CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;_&apos;+[CT].[COMMODITY_CODE]+&apos;_&apos;+SUBSTRING(LTRIM(RTRIM([CT].[CONTRACT_NUMBER])),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM([CT].[CONTRACT_NUMBER])))-1) as [KEY]
-  , SUBSTRING(LTRIM(RTRIM([CT].[CONTRACT_NUMBER])),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM([CT].[CONTRACT_NUMBER])))-1) AS [CONTRACTNMBR]
-  , LTRIM(RTRIM([CT].[CUSTOMER])) AS [CUSTNMBR]
-  , LTRIM(RTRIM(MAX([CM].[NAME]))) AS [CUSTDESC]
-  , LTRIM(RTRIM([CT].[COMMODITY_CODE])) AS [COMMODITYCD]
-  , LTRIM(RTRIM([IV].[DESCRIPTION])) AS [COMMODITYDESC]
-  , CAST(SUM(([CT].[ISSUED_LBS]-[CT].[APPLIED_LBS]+[CT].[ADJUSTED_LBS]-[CT].[SUB_CONT_LBS])/[UM].[STANDARD_UNITS_LBS]) AS NUMERIC(19,3)) AS [REMAINING_BU]
-FROM [AgTrax_Staging]..[CA_CONTRACT_MASTER] AS [CT] with(nolock)
-  INNER JOIN [AgTrax_Staging]..[AR_CUSTOMER_MASTER_TMA] AS [CM] with(nolock) ON [CT].[CUSTOMER]=[CM].[CUSTOMER]
-  LEFT OUTER JOIN [AgTrax_Staging]..[CA_COMMODITY_MASTER] AS [IV] with(nolock) ON [CT].[COMMODITY_CODE]=[IV].[COMMODITY_CODE]
-  LEFT OUTER JOIN [AgTrax_Staging]..[IV_UNIT_OF_MEASURE] AS [UM] with(nolock) ON [IV].[UOM_BUSHELS]=[UM].[UNIT_OF_MEASURE]
-WHERE [CT].[CONTRACT_STATUS]=&apos;O&apos;
-GROUP BY CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;_&apos;+[CT].[COMMODITY_CODE]+&apos;_&apos;+SUBSTRING(LTRIM(RTRIM([CT].[CONTRACT_NUMBER])),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM([CT].[CONTRACT_NUMBER])))-1)
-  , SUBSTRING(LTRIM(RTRIM([CT].[CONTRACT_NUMBER])),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM([CT].[CONTRACT_NUMBER])))-1)
-  , LTRIM(RTRIM([CT].[CUSTOMER])) 
-  , LTRIM(RTRIM([CT].[COMMODITY_CODE]))
-  , LTRIM(RTRIM([IV].[DESCRIPTION]))
-HAVING SUM(([CT].[ISSUED_LBS]-[CT].[APPLIED_LBS]+[CT].[ADJUSTED_LBS]-[CT].[SUB_CONT_LBS])/[UM].[STANDARD_UNITS_LBS])&lt;0
+							Source="SELECT DATA_KEY as [KEY]
+  , CONTRACT_MAIN AS [CONTRACTNMBR]
+  , CUSTOMER AS [CUSTNMBR]
+  , MAX(CUSTOMER_DESC) AS [CUSTDESC]
+  , COMMODITY_CODE AS [COMMODITYCD]
+  , MAX(COMMODITY_DESC) AS [COMMODITYDESC]
+  , SUM(REMAINING_BU) AS [REMAINING_BU]
+FROM [AgTrax_Staging]..[DM_OpenContracts] with(nolock)
+GROUP BY DATA_KEY,CONTRACT_MAIN,CUSTOMER,COMMODITY_CODE
+HAVING SUM(REMAINING_BU)&lt;0
 "
 							Type="SQL"
 							>
@@ -287,241 +256,729 @@ HAVING SUM(([CT].[ISSUED_LBS]-[CT].[APPLIED_LBS]+[CT].[ADJUSTED_LBS]-[CT].[SUB_C
 		<Division
 			ID="divCrosstab"
 			>
-			<CrosstabTable
-				Caption="Summary"
-				CellSpacing="10000"
-				ID="CommodityNetCrosstab"
-				TableBorder="1"
+			<Tabs
+				DefaultTab="tabWHEAT"
+				Height="100"
+				HeightScale="%"
+				ID="tabsCommodities"
+				Width="100"
+				WidthScale="%"
 				>
-				<DataLayer
-					ConnectionID="connProdGP"
-					ID="SQLDataLayer-CommodityNetCrosstab"
-					Source="SELECT CASE CT.CONTRACT_TYPE WHEN 1 THEN &apos;2&apos; WHEN 2 THEN &apos;1&apos; ELSE &apos;0&apos; END +&apos;-&apos;+ CT.COMMODITY_CODE AS [ORDER]
-  , LTRIM(RTRIM(CT.COMMODITY_CODE)) AS [COMMODITYCD]
-  , LTRIM(RTRIM(IV.[DESCRIPTION])) AS [COMMODITYDESC]
-  , CASE CT.CONTRACT_TYPE WHEN 1 THEN &apos;Sale&apos; WHEN 2 THEN &apos;Purchase&apos; ELSE &apos;Other&apos; END AS [CONTRACT_TYPE]
-  , DT.MONTHID AS [DELENDDTID]
-  , DT.MONTHDESC AS [DELENDDTDSC]
-  , CAST(SUM((CT.ISSUED_LBS-CT.APPLIED_LBS+ADJUSTED_LBS-SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS) AS NUMERIC(19,3)) AS [REMAINING_BU]
-FROM AgTrax_Staging..CA_CONTRACT_MASTER CT with(nolock) 
-  INNER JOIN AgTrax_Staging..AR_CUSTOMER_MASTER_TMA CM with(nolock) ON CT.CUSTOMER=CM.CUSTOMER
-  LEFT OUTER JOIN AgTrax_Staging..CA_COMMODITY_MASTER IV with(nolock) ON CT.COMMODITY_CODE=IV.COMMODITY_CODE
-  LEFT OUTER JOIN AgTrax_Staging..IV_UNIT_OF_MEASURE UM with(nolock) ON IV.UOM_BUSHELS=UM.UNIT_OF_MEASURE
-  RIGHT JOIN (SELECT 190001 AS MONTHID, &apos;Prior&apos; AS MONTHDESC
-                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,0,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,0,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,0,GETDATE()),102)
-                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,1,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,1,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,1,GETDATE()),102) 
-                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,2,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,2,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,2,GETDATE()),102)
-                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,3,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,3,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,3,GETDATE()),102) 
-                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,4,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,4,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,4,GETDATE()),102) 
-                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,5,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,5,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,5,GETDATE()),102) 
-                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,6,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,6,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,6,GETDATE()),102) 
-                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,7,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,7,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,7,GETDATE()),102) 
-                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,8,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,8,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,8,GETDATE()),102) 
-                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,9,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,9,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,9,GETDATE()),102) 
-                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,10,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,10,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,10,GETDATE()),102)
-                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,11,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,11,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,11,GETDATE()),102)
-              ) AS DT ON CAST(CASE WHEN CONVERT(VARCHAR(6),CT.DELIVERY_END_DATE,112)&lt;CONVERT(VARCHAR(6),GETDATE(),112) THEN &apos;190001&apos; ELSE CONVERT(VARCHAR(6),CT.DELIVERY_END_DATE,112) END AS INT)=DT.MONTHID
-WHERE CT.CONTRACT_STATUS=&apos;O&apos;
-  AND CT.DELIVERY_END_DATE &lt; DATEADD(MONTH,11,GETDATE())
-GROUP BY CT.CONTRACT_TYPE, DT.MONTHID, DT.MONTHDESC
-  , CT.COMMODITY_CODE
-  , IV.[DESCRIPTION]
-HAVING SUM((CT.ISSUED_LBS-CT.APPLIED_LBS+ADJUSTED_LBS-SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS) &lt;&gt; 0.0
-UNION ALL
-SELECT &apos;3&apos;+&apos;-&apos;+VC.COMMODITYCD AS [ORDER], VC.COMMODITYCD, VC.COMMODITYDESC, &apos;Net&apos; AS [CONTRACT_TYPE], VC.DELENDDTID, VC.DELENDDTDSC, SUM(VC.REMAINING_BU) AS REMAINING_BU
-FROM (
-SELECT
-    CT.COMMODITY_CODE AS [COMMODITYCD]
-  , IV.[DESCRIPTION] AS [COMMODITYDESC]
-  , DT.MONTHID AS [DELENDDTID]
-  , DT.MONTHDESC AS [DELENDDTDSC]
-  , CASE CT.CONTRACT_TYPE WHEN 1 THEN CAST(SUM((CT.ISSUED_LBS-CT.APPLIED_LBS+ADJUSTED_LBS-SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS) AS NUMERIC(19,3))*-1 ELSE CAST(SUM((CT.ISSUED_LBS-CT.APPLIED_LBS+ADJUSTED_LBS-SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS) AS NUMERIC(19,3)) END AS [REMAINING_BU]
-FROM AgTrax_Staging..CA_CONTRACT_MASTER CT with(nolock)
-  INNER JOIN AgTrax_Staging..AR_CUSTOMER_MASTER_TMA CM with(nolock) ON CT.CUSTOMER=CM.CUSTOMER
-  LEFT OUTER JOIN AgTrax_Staging..CA_COMMODITY_MASTER IV with(nolock) ON CT.COMMODITY_CODE=IV.COMMODITY_CODE
-  LEFT OUTER JOIN AgTrax_Staging..IV_UNIT_OF_MEASURE UM with(nolock) ON IV.UOM_BUSHELS=UM.UNIT_OF_MEASURE
-  RIGHT JOIN (SELECT 190001 AS MONTHID, &apos;Prior&apos; AS MONTHDESC
-                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,0,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,0,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,0,GETDATE()),102)
-                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,1,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,1,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,1,GETDATE()),102) 
-                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,2,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,2,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,2,GETDATE()),102)
-                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,3,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,3,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,3,GETDATE()),102) 
-                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,4,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,4,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,4,GETDATE()),102) 
-                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,5,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,5,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,5,GETDATE()),102) 
-                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,6,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,6,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,6,GETDATE()),102) 
-                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,7,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,7,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,7,GETDATE()),102) 
-                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,8,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,8,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,8,GETDATE()),102) 
-                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,9,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,9,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,9,GETDATE()),102) 
-                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,10,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,10,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,10,GETDATE()),102)
-                UNION ALL SELECT CAST(CONVERT(VARCHAR(6),DATEADD(MONTH,11,GETDATE()),112) AS INT), CONVERT(CHAR(3),DATEADD(MONTH,11,GETDATE()),0)+&apos; &apos;+CONVERT(CHAR(4),DATEADD(MONTH,11,GETDATE()),102)
-              ) AS DT ON CAST(CASE WHEN CONVERT(VARCHAR(6),CT.DELIVERY_END_DATE,112)&lt;CONVERT(VARCHAR(6),GETDATE(),112) THEN &apos;190001&apos; ELSE CONVERT(VARCHAR(6),CT.DELIVERY_END_DATE,112) END AS INT)=DT.MONTHID
-WHERE CT.CONTRACT_STATUS=&apos;O&apos;
-  AND CT.DELIVERY_END_DATE &lt; DATEADD(MONTH,11,GETDATE())
-GROUP BY CT.CONTRACT_TYPE, DT.MONTHID, DT.MONTHDESC
-  , CT.COMMODITY_CODE
-  , IV.[DESCRIPTION]
-HAVING SUM((CT.ISSUED_LBS-CT.APPLIED_LBS+ADJUSTED_LBS-SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS) &lt;&gt; 0.0
-) AS VC
-GROUP BY VC.DELENDDTID, VC.COMMODITYCD, VC.COMMODITYDESC, VC.DELENDDTDSC
-ORDER BY DELENDDTID,[ORDER]
+				<TabPanel
+					Caption="WHEAT"
+					ID="tabWHEAT"
+					>
+					<CrosstabTable
+						AjaxPaging="True"
+						ID="Crosstab-WHEAT"
+						Width="100"
+						WidthScale="%"
+						>
+						<DataLayer
+							ConnectionID="connProdGP"
+							ID="SQL-WHEAT"
+							Source="SELECT CONTRACT_TYPE, CONTRACT_TYPE_DESC, DPR_GROUP, DPR_GROUP_DESC, DELIVERY_END_DATE, MONTHID_DESC, REMAINING_BU
+FROM Agtrax_Staging..DM_OpenContractsNet with(nolock) 
+WHERE DPR_GROUP=1
+ORDER BY CONTRACT_TYPE DESC, DELIVERY_END_DATE
 "
-					Type="SQL"
-					>
-					<CrosstabFilter
-						CrosstabColumn="DELENDDTDSC"
-						CrosstabLabelColumn="ORDER"
-						CrosstabValueColumn="REMAINING_BU"
-						CrosstabValueFunction="SUM"
-						ID="CrosstabFilter1"
-						>
-						<ExtraCrosstabLabelColumn
-							CrosstabLabelColumn="CONTRACT_TYPE"
-							ID="ContractType"
-						/>
-						<ExtraCrosstabLabelColumn
-							CrosstabLabelColumn="COMMODITYCD"
-							ID="CommodityCode"
-						/>
-						<ExtraCrosstabLabelColumn
-							CrosstabLabelColumn="COMMODITYDESC"
-							ID="CommodityDesc"
-						/>
-					</CrosstabFilter>
-					<ConditionFilter
-						Condition="@Data.CommodityCode~=@Request.paramCommodityCT~"
-						ID="ConditionCommodityCode"
-					/>
-				</DataLayer>
-				<HeaderRow
-					Caption="Commodity"
-					Class="ThemeContainerShadedAndBordered"
-					HeaderPosition="Top"
-					ID="HeaderTabs"
-					>
-					<Column
-						ID="cell-Wheat"
-						>
-						<Label
-							Caption="WHEAT"
-							Class="ThemeContainerShadedAndBordered"
-							ID="lblWHEAT-01"
+							Type="SQL"
 							>
-							<Action
-								ElementID="divCrosstab"
-								ID="actRefCrossTab"
-								Type="RefreshElement"
+							<CrosstabFilter
+								CrosstabColumn="MONTHID_DESC"
+								CrosstabLabelColumn="CONTRACT_TYPE_DESC"
+								CrosstabValueColumn="REMAINING_BU"
+								CrosstabValueFunction="SUM"
 								>
-								<LinkParams
-									paramCommodityCT="01"
+								<ExtraCrosstabLabelColumn
+									CrosstabLabelColumn="DPR_GROUP"
+									ID="CommodityCode"
 								/>
-							</Action>
-						</Label>
-					</Column>
-					<Column
-						ID="cell-Milo"
-						>
-						<Label
-							Caption="MILO"
-							Class="ThemeContainerShadedAndBordered"
-							ID="lblMILO-02"
+								<ExtraCrosstabLabelColumn
+									CrosstabLabelColumn="DPR_GROUP_DESC"
+									ID="CommodityDesc"
+								/>
+								<ExtraCrosstabLabelColumn
+									CrosstabLabelColumn="CONTRACT_TYPE_DESC"
+									ID="ContractTypeDesc"
+								/>
+							</CrosstabFilter>
+						</DataLayer>
+						<CrosstabTableLabelColumn
+							Header="Contract Type"
+							ID="colContractType"
+							Width="20"
+							WidthScale="px"
 							>
-							<Action
-								ElementID="divCrosstab"
-								ID="actRefCrossTab"
-								Type="RefreshElement"
-								>
-								<LinkParams
-									paramCommodityCT="02"
-								/>
-							</Action>
-						</Label>
-					</Column>
-					<Column
-						ID="cell-SOYBEANS"
-						>
-						<Label
-							Caption="SOYBEANS"
-							Class="ThemeContainerShadedAndBordered"
-							ID="lblSOYBEANS-03"
+							<Label
+								Caption="@Data.ContractTypeDesc~"
+								NoWrap="True"
+							/>
+						</CrosstabTableLabelColumn>
+						<CrosstabTableLabelColumn
+							Header="Commodity"
+							ID="colCommodityDesc"
+							Width="20"
+							WidthScale="px"
 							>
-							<Action
-								ElementID="divCrosstab"
-								ID="actRefCrossTab"
-								Type="RefreshElement"
-								>
-								<LinkParams
-									paramCommodityCT="03"
-								/>
-							</Action>
-						</Label>
-					</Column>
-					<Column
-						ID="cell-CORN"
-						>
-						<Label
-							Caption="CORN"
-							Class="ThemeContainerShadedAndBordered"
-							ID="lblCORN-04"
+							<Label
+								Caption="@Data.CommodityDesc~"
+							/>
+						</CrosstabTableLabelColumn>
+						<CrosstabTableValueColumns
+							Format="Expanded Spaces"
+							Header="@Data.rdCrosstabColumn~"
+							ID="colHeaderMonth"
 							>
-							<Action
-								ElementID="divCrosstab"
-								ID="actRefCrossTab"
-								Type="RefreshElement"
+							<Label
+								Caption="=iif(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)"
+								Format="###,###,##0.000"
+								ID="lblValue"
+								NoWrap="True"
 								>
-								<LinkParams
-									paramCommodityCT="04"
-								/>
-							</Action>
-						</Label>
-					</Column>
-					<Column
-						ID="cell-HCEWHEAT"
-						>
-						<Label
-							Caption="HCE WHEAT"
-							Class="ThemeContainerShadedAndBordered"
-							ID="lblHCEWHEAT-12"
-							>
-							<Action
-								ElementID="divCrosstab"
-								ID="actRefCrossTab"
-								Type="RefreshElement"
-								>
-								<LinkParams
-									paramCommodityCT="12"
-								/>
-							</Action>
-						</Label>
-					</Column>
-				</HeaderRow>
-				<CrosstabTableLabelColumn
-					ID="colAxLabel"
+								<Action
+									Type="Report"
+									>
+									<Target
+										Report="Unknown.SubReports.TMAContractsNetDetail"
+										RequestForwarding="True"
+										Type="Report"
+									/>
+									<LinkParams
+										paramCommodity="@Data.CommodityCode~"
+										paramContractType="@Data.ContractTypeDesc~"
+										paramDate="@Data.rdCrosstabColumn~"
+									/>
+								</Action>
+							</Label>
+						</CrosstabTableValueColumns>
+					</CrosstabTable>
+				</TabPanel>
+				<TabPanel
+					Caption="MILO"
+					ID="tabMILO"
 					>
-					<Label
-						Caption="@Data.ContractType~"
-						NoWrap="True"
-					/>
-				</CrosstabTableLabelColumn>
-				<CrosstabTableLabelColumn
-					ID="colCommodityDesc"
+					<CrosstabTable
+						AjaxPaging="True"
+						ID="Crosstab-MILO"
+						Width="100"
+						WidthScale="%"
+						>
+						<DataLayer
+							ConnectionID="connProdGP"
+							ID="SQL-MILO"
+							Source="SELECT CONTRACT_TYPE, CONTRACT_TYPE_DESC, DPR_GROUP, DPR_GROUP_DESC, DELIVERY_END_DATE, MONTHID_DESC, REMAINING_BU
+FROM Agtrax_Staging..DM_OpenContractsNet with(nolock) 
+WHERE DPR_GROUP=2
+ORDER BY CONTRACT_TYPE DESC, DELIVERY_END_DATE
+"
+							Type="SQL"
+							>
+							<CrosstabFilter
+								CrosstabColumn="MONTHID_DESC"
+								CrosstabLabelColumn="CONTRACT_TYPE_DESC"
+								CrosstabValueColumn="REMAINING_BU"
+								CrosstabValueFunction="SUM"
+								>
+								<ExtraCrosstabLabelColumn
+									CrosstabLabelColumn="DPR_GROUP"
+									ID="CommodityCode"
+								/>
+								<ExtraCrosstabLabelColumn
+									CrosstabLabelColumn="DPR_GROUP_DESC"
+									ID="CommodityDesc"
+								/>
+								<ExtraCrosstabLabelColumn
+									CrosstabLabelColumn="CONTRACT_TYPE_DESC"
+									ID="ContractTypeDesc"
+								/>
+							</CrosstabFilter>
+						</DataLayer>
+						<CrosstabTableLabelColumn
+							Header="Contract Type"
+							ID="colContractType"
+							Width="20"
+							WidthScale="px"
+							>
+							<Label
+								Caption="@Data.ContractTypeDesc~"
+								NoWrap="True"
+							/>
+						</CrosstabTableLabelColumn>
+						<CrosstabTableLabelColumn
+							Header="Commodity"
+							ID="colCommodityDesc"
+							Width="20"
+							WidthScale="px"
+							>
+							<Label
+								Caption="@Data.CommodityDesc~"
+							/>
+						</CrosstabTableLabelColumn>
+						<CrosstabTableValueColumns
+							Header="@Data.rdCrosstabColumn~"
+							ID="colHeaderMonth"
+							>
+							<Label
+								Caption="=iif(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)"
+								Format="###,###,##0.000"
+								ID="lblValue"
+								NoWrap="True"
+								>
+								<Action
+									Type="Report"
+									>
+									<Target
+										Report="Unknown.SubReports.TMAContractsNetDetail"
+										RequestForwarding="True"
+										Type="Report"
+									/>
+									<LinkParams
+										paramCommodity="@Data.CommodityCode~"
+										paramContractType="@Data.ContractTypeDesc~"
+										paramDate="@Data.rdCrosstabColumn~"
+									/>
+								</Action>
+							</Label>
+						</CrosstabTableValueColumns>
+					</CrosstabTable>
+				</TabPanel>
+				<TabPanel
+					Caption="SOYBEANS"
+					ID="tabSOYBEANS"
 					>
-					<Label
-						Caption="@Data.CommodityDesc~"
-					/>
-				</CrosstabTableLabelColumn>
-				<CrosstabTableValueColumns
-					Header="@Data.rdCrosstabColumn~"
-					ID="colAxValue"
+					<CrosstabTable
+						AjaxPaging="True"
+						ID="Crosstab-SOYBEANS"
+						Width="100"
+						WidthScale="%"
+						>
+						<DataLayer
+							ConnectionID="connProdGP"
+							ID="SQL-SOYBEANS"
+							Source="SELECT CONTRACT_TYPE, CONTRACT_TYPE_DESC, DPR_GROUP, DPR_GROUP_DESC, DELIVERY_END_DATE, MONTHID_DESC, REMAINING_BU
+FROM Agtrax_Staging..DM_OpenContractsNet with(nolock) 
+WHERE DPR_GROUP=3
+ORDER BY CONTRACT_TYPE DESC, DELIVERY_END_DATE
+"
+							Type="SQL"
+							>
+							<CrosstabFilter
+								CrosstabColumn="MONTHID_DESC"
+								CrosstabLabelColumn="CONTRACT_TYPE_DESC"
+								CrosstabValueColumn="REMAINING_BU"
+								CrosstabValueFunction="SUM"
+								>
+								<ExtraCrosstabLabelColumn
+									CrosstabLabelColumn="DPR_GROUP"
+									ID="CommodityCode"
+								/>
+								<ExtraCrosstabLabelColumn
+									CrosstabLabelColumn="DPR_GROUP_DESC"
+									ID="CommodityDesc"
+								/>
+								<ExtraCrosstabLabelColumn
+									CrosstabLabelColumn="CONTRACT_TYPE_DESC"
+									ID="ContractTypeDesc"
+								/>
+							</CrosstabFilter>
+						</DataLayer>
+						<CrosstabTableLabelColumn
+							Header="Contract Type"
+							ID="colContractType"
+							Width="20"
+							WidthScale="px"
+							>
+							<Label
+								Caption="@Data.ContractTypeDesc~"
+								NoWrap="True"
+							/>
+						</CrosstabTableLabelColumn>
+						<CrosstabTableLabelColumn
+							Header="Commodity"
+							ID="colCommodityDesc"
+							Width="20"
+							WidthScale="px"
+							>
+							<Label
+								Caption="@Data.CommodityDesc~"
+							/>
+						</CrosstabTableLabelColumn>
+						<CrosstabTableValueColumns
+							Header="@Data.rdCrosstabColumn~"
+							ID="colHeaderMonth"
+							>
+							<Label
+								Caption="=iif(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)"
+								Format="###,###,##0.000"
+								ID="lblValue"
+								NoWrap="True"
+								>
+								<Action
+									Type="Report"
+									>
+									<Target
+										Report="Unknown.SubReports.TMAContractsNetDetail"
+										RequestForwarding="True"
+										Type="Report"
+									/>
+									<LinkParams
+										paramCommodity="@Data.CommodityCode~"
+										paramContractType="@Data.ContractTypeDesc~"
+										paramDate="@Data.rdCrosstabColumn~"
+									/>
+								</Action>
+							</Label>
+						</CrosstabTableValueColumns>
+					</CrosstabTable>
+				</TabPanel>
+				<TabPanel
+					Caption="CORN"
+					ID="tabCORN"
 					>
-					<Label
-						Caption="=iif(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)"
-						Format="###,###,##0.000"
-						NoWrap="True"
-					/>
-				</CrosstabTableValueColumns>
-			</CrosstabTable>
+					<CrosstabTable
+						AjaxPaging="True"
+						ID="Crosstab-CORN"
+						Width="100"
+						WidthScale="%"
+						>
+						<DataLayer
+							ConnectionID="connProdGP"
+							ID="SQL-CORN"
+							Source="SELECT CONTRACT_TYPE, CONTRACT_TYPE_DESC, DPR_GROUP, DPR_GROUP_DESC, DELIVERY_END_DATE, MONTHID_DESC, REMAINING_BU
+FROM Agtrax_Staging..DM_OpenContractsNet with(nolock) 
+WHERE DPR_GROUP=4
+ORDER BY CONTRACT_TYPE DESC, DELIVERY_END_DATE
+"
+							Type="SQL"
+							>
+							<CrosstabFilter
+								CrosstabColumn="MONTHID_DESC"
+								CrosstabLabelColumn="CONTRACT_TYPE_DESC"
+								CrosstabValueColumn="REMAINING_BU"
+								CrosstabValueFunction="SUM"
+								>
+								<ExtraCrosstabLabelColumn
+									CrosstabLabelColumn="DPR_GROUP"
+									ID="CommodityCode"
+								/>
+								<ExtraCrosstabLabelColumn
+									CrosstabLabelColumn="DPR_GROUP_DESC"
+									ID="CommodityDesc"
+								/>
+								<ExtraCrosstabLabelColumn
+									CrosstabLabelColumn="CONTRACT_TYPE_DESC"
+									ID="ContractTypeDesc"
+								/>
+							</CrosstabFilter>
+						</DataLayer>
+						<CrosstabTableLabelColumn
+							Header="Contract Type"
+							ID="colContractType"
+							Width="20"
+							WidthScale="px"
+							>
+							<Label
+								Caption="@Data.ContractTypeDesc~"
+								NoWrap="True"
+							/>
+						</CrosstabTableLabelColumn>
+						<CrosstabTableLabelColumn
+							Header="Commodity"
+							ID="colCommodityDesc"
+							Width="20"
+							WidthScale="px"
+							>
+							<Label
+								Caption="@Data.CommodityDesc~"
+							/>
+						</CrosstabTableLabelColumn>
+						<CrosstabTableValueColumns
+							Header="@Data.rdCrosstabColumn~"
+							ID="colHeaderMonth"
+							>
+							<Label
+								Caption="=iif(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)"
+								Format="###,###,##0.000"
+								ID="lblValue"
+								NoWrap="True"
+								>
+								<Action
+									Type="Report"
+									>
+									<Target
+										Report="Unknown.SubReports.TMAContractsNetDetail"
+										RequestForwarding="True"
+										Type="Report"
+									/>
+									<LinkParams
+										paramCommodity="@Data.CommodityCode~"
+										paramContractType="@Data.ContractTypeDesc~"
+										paramDate="@Data.rdCrosstabColumn~"
+									/>
+								</Action>
+							</Label>
+						</CrosstabTableValueColumns>
+					</CrosstabTable>
+				</TabPanel>
+				<TabPanel
+					Caption="OATS"
+					ID="tabOATS"
+					>
+					<CrosstabTable
+						AjaxPaging="True"
+						ID="Crosstab-OATS"
+						Width="100"
+						WidthScale="%"
+						>
+						<DataLayer
+							ConnectionID="connProdGP"
+							ID="SQL-OATS"
+							Source="SELECT CONTRACT_TYPE, CONTRACT_TYPE_DESC, DPR_GROUP, DPR_GROUP_DESC, DELIVERY_END_DATE, MONTHID_DESC, REMAINING_BU
+FROM Agtrax_Staging..DM_OpenContractsNet with(nolock) 
+WHERE DPR_GROUP=5
+ORDER BY CONTRACT_TYPE DESC, DELIVERY_END_DATE
+"
+							Type="SQL"
+							>
+							<CrosstabFilter
+								CrosstabColumn="MONTHID_DESC"
+								CrosstabLabelColumn="CONTRACT_TYPE_DESC"
+								CrosstabValueColumn="REMAINING_BU"
+								CrosstabValueFunction="SUM"
+								>
+								<ExtraCrosstabLabelColumn
+									CrosstabLabelColumn="DPR_GROUP"
+									ID="CommodityCode"
+								/>
+								<ExtraCrosstabLabelColumn
+									CrosstabLabelColumn="DPR_GROUP_DESC"
+									ID="CommodityDesc"
+								/>
+								<ExtraCrosstabLabelColumn
+									CrosstabLabelColumn="CONTRACT_TYPE_DESC"
+									ID="ContractTypeDesc"
+								/>
+							</CrosstabFilter>
+						</DataLayer>
+						<CrosstabTableLabelColumn
+							Header="Contract Type"
+							ID="colContractType"
+							Width="20"
+							WidthScale="px"
+							>
+							<Label
+								Caption="@Data.ContractTypeDesc~"
+								NoWrap="True"
+							/>
+						</CrosstabTableLabelColumn>
+						<CrosstabTableLabelColumn
+							Header="Commodity"
+							ID="colCommodityDesc"
+							Width="20"
+							WidthScale="px"
+							>
+							<Label
+								Caption="@Data.CommodityDesc~"
+							/>
+						</CrosstabTableLabelColumn>
+						<CrosstabTableValueColumns
+							Header="@Data.rdCrosstabColumn~"
+							ID="colHeaderMonth"
+							>
+							<Label
+								Caption="=iif(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)"
+								Format="###,###,##0.000"
+								ID="lblValue"
+								NoWrap="True"
+								>
+								<Action
+									Type="Report"
+									>
+									<Target
+										Report="Unknown.SubReports.TMAContractsNetDetail"
+										RequestForwarding="True"
+										Type="Report"
+									/>
+									<LinkParams
+										paramCommodity="@Data.CommodityCode~"
+										paramContractType="@Data.ContractTypeDesc~"
+										paramDate="@Data.rdCrosstabColumn~"
+									/>
+								</Action>
+							</Label>
+						</CrosstabTableValueColumns>
+					</CrosstabTable>
+				</TabPanel>
+				<TabPanel
+					Caption="BARLEY"
+					ID="tabBARLEY"
+					>
+					<CrosstabTable
+						AjaxPaging="True"
+						ID="Crosstab-BARLEY"
+						Width="100"
+						WidthScale="%"
+						>
+						<DataLayer
+							ConnectionID="connProdGP"
+							ID="SQL-BARLEY"
+							Source="SELECT CONTRACT_TYPE, CONTRACT_TYPE_DESC, DPR_GROUP, DPR_GROUP_DESC, DELIVERY_END_DATE, MONTHID_DESC, REMAINING_BU
+FROM Agtrax_Staging..DM_OpenContractsNet with(nolock) 
+WHERE DPR_GROUP=6
+ORDER BY CONTRACT_TYPE DESC, DELIVERY_END_DATE
+"
+							Type="SQL"
+							>
+							<CrosstabFilter
+								CrosstabColumn="MONTHID_DESC"
+								CrosstabLabelColumn="CONTRACT_TYPE_DESC"
+								CrosstabValueColumn="REMAINING_BU"
+								CrosstabValueFunction="SUM"
+								>
+								<ExtraCrosstabLabelColumn
+									CrosstabLabelColumn="DPR_GROUP"
+									ID="CommodityCode"
+								/>
+								<ExtraCrosstabLabelColumn
+									CrosstabLabelColumn="DPR_GROUP_DESC"
+									ID="CommodityDesc"
+								/>
+								<ExtraCrosstabLabelColumn
+									CrosstabLabelColumn="CONTRACT_TYPE_DESC"
+									ID="ContractTypeDesc"
+								/>
+							</CrosstabFilter>
+						</DataLayer>
+						<CrosstabTableLabelColumn
+							Header="Contract Type"
+							ID="colContractType"
+							Width="20"
+							WidthScale="px"
+							>
+							<Label
+								Caption="@Data.ContractTypeDesc~"
+								NoWrap="True"
+							/>
+						</CrosstabTableLabelColumn>
+						<CrosstabTableLabelColumn
+							Header="Commodity"
+							ID="colCommodityDesc"
+							Width="20"
+							WidthScale="px"
+							>
+							<Label
+								Caption="@Data.CommodityDesc~"
+							/>
+						</CrosstabTableLabelColumn>
+						<CrosstabTableValueColumns
+							Header="@Data.rdCrosstabColumn~"
+							ID="colHeaderMonth"
+							>
+							<Label
+								Caption="=iif(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)"
+								Format="###,###,##0.000"
+								ID="lblValue"
+								NoWrap="True"
+								>
+								<Action
+									Type="Report"
+									>
+									<Target
+										Report="Unknown.SubReports.TMAContractsNetDetail"
+										RequestForwarding="True"
+										Type="Report"
+									/>
+									<LinkParams
+										paramCommodity="@Data.CommodityCode~"
+										paramContractType="@Data.ContractTypeDesc~"
+										paramDate="@Data.rdCrosstabColumn~"
+									/>
+								</Action>
+							</Label>
+						</CrosstabTableValueColumns>
+					</CrosstabTable>
+				</TabPanel>
+				<TabPanel
+					Caption="SUNFLOWERS"
+					ID="tabSUNFLOWERS"
+					>
+					<CrosstabTable
+						AjaxPaging="True"
+						ID="Crosstab-SUNFLOWERS"
+						Width="100"
+						WidthScale="%"
+						>
+						<DataLayer
+							ConnectionID="connProdGP"
+							ID="SQL-SUNFLOWERS"
+							Source="SELECT CONTRACT_TYPE, CONTRACT_TYPE_DESC, DPR_GROUP, DPR_GROUP_DESC, DELIVERY_END_DATE, MONTHID_DESC, REMAINING_BU
+FROM Agtrax_Staging..DM_OpenContractsNet with(nolock) 
+WHERE DPR_GROUP=11
+ORDER BY CONTRACT_TYPE DESC, DELIVERY_END_DATE
+"
+							Type="SQL"
+							>
+							<CrosstabFilter
+								CrosstabColumn="MONTHID_DESC"
+								CrosstabLabelColumn="CONTRACT_TYPE_DESC"
+								CrosstabValueColumn="REMAINING_BU"
+								CrosstabValueFunction="SUM"
+								>
+								<ExtraCrosstabLabelColumn
+									CrosstabLabelColumn="DPR_GROUP"
+									ID="CommodityCode"
+								/>
+								<ExtraCrosstabLabelColumn
+									CrosstabLabelColumn="DPR_GROUP_DESC"
+									ID="CommodityDesc"
+								/>
+								<ExtraCrosstabLabelColumn
+									CrosstabLabelColumn="CONTRACT_TYPE_DESC"
+									ID="ContractTypeDesc"
+								/>
+							</CrosstabFilter>
+						</DataLayer>
+						<CrosstabTableLabelColumn
+							Header="Contract Type"
+							ID="colContractType"
+							Width="20"
+							WidthScale="px"
+							>
+							<Label
+								Caption="@Data.ContractTypeDesc~"
+								NoWrap="True"
+							/>
+						</CrosstabTableLabelColumn>
+						<CrosstabTableLabelColumn
+							Header="Commodity"
+							ID="colCommodityDesc"
+							Width="20"
+							WidthScale="px"
+							>
+							<Label
+								Caption="@Data.CommodityDesc~"
+							/>
+						</CrosstabTableLabelColumn>
+						<CrosstabTableValueColumns
+							Header="@Data.rdCrosstabColumn~"
+							ID="colHeaderMonth"
+							>
+							<Label
+								Caption="=iif(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)"
+								Format="###,###,##0.000"
+								ID="lblValue"
+								NoWrap="True"
+								>
+								<Action
+									Type="Report"
+									>
+									<Target
+										Report="Unknown.SubReports.TMAContractsNetDetail"
+										RequestForwarding="True"
+										Type="Report"
+									/>
+									<LinkParams
+										paramCommodity="@Data.CommodityCode~"
+										paramContractType="@Data.ContractTypeDesc~"
+										paramDate="@Data.rdCrosstabColumn~"
+									/>
+								</Action>
+							</Label>
+						</CrosstabTableValueColumns>
+					</CrosstabTable>
+				</TabPanel>
+				<TabPanel
+					Caption="CANOLA"
+					ID="tabCANOLA"
+					>
+					<CrosstabTable
+						AjaxPaging="True"
+						ID="Crosstab-CANOLA"
+						Width="100"
+						WidthScale="%"
+						>
+						<DataLayer
+							ConnectionID="connProdGP"
+							ID="SQL-CANOLA"
+							Source="SELECT CONTRACT_TYPE, CONTRACT_TYPE_DESC, DPR_GROUP, DPR_GROUP_DESC, DELIVERY_END_DATE, MONTHID_DESC, REMAINING_BU
+FROM Agtrax_Staging..DM_OpenContractsNet with(nolock) 
+WHERE DPR_GROUP=27
+ORDER BY CONTRACT_TYPE DESC, DELIVERY_END_DATE
+"
+							Type="SQL"
+							>
+							<CrosstabFilter
+								CrosstabColumn="MONTHID_DESC"
+								CrosstabLabelColumn="CONTRACT_TYPE_DESC"
+								CrosstabValueColumn="REMAINING_BU"
+								CrosstabValueFunction="SUM"
+								>
+								<ExtraCrosstabLabelColumn
+									CrosstabLabelColumn="DPR_GROUP"
+									ID="CommodityCode"
+								/>
+								<ExtraCrosstabLabelColumn
+									CrosstabLabelColumn="DPR_GROUP_DESC"
+									ID="CommodityDesc"
+								/>
+								<ExtraCrosstabLabelColumn
+									CrosstabLabelColumn="CONTRACT_TYPE_DESC"
+									ID="ContractTypeDesc"
+								/>
+							</CrosstabFilter>
+						</DataLayer>
+						<CrosstabTableLabelColumn
+							Header="Contract Type"
+							ID="colContractType"
+							Width="20"
+							WidthScale="px"
+							>
+							<Label
+								Caption="@Data.ContractTypeDesc~"
+								NoWrap="True"
+							/>
+						</CrosstabTableLabelColumn>
+						<CrosstabTableLabelColumn
+							Header="Commodity"
+							ID="colCommodityDesc"
+							Width="20"
+							WidthScale="px"
+							>
+							<Label
+								Caption="@Data.CommodityDesc~"
+							/>
+						</CrosstabTableLabelColumn>
+						<CrosstabTableValueColumns
+							Header="@Data.rdCrosstabColumn~"
+							ID="colHeaderMonth"
+							>
+							<Label
+								Caption="=iif(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)"
+								Format="###,###,##0.000"
+								ID="lblValue"
+								NoWrap="True"
+								>
+								<Action
+									Type="Report"
+									>
+									<Target
+										Report="Unknown.SubReports.TMAContractsNetDetail"
+										RequestForwarding="True"
+										Type="Report"
+									/>
+									<LinkParams
+										paramCommodity="@Data.CommodityCode~"
+										paramContractType="@Data.ContractTypeDesc~"
+										paramDate="@Data.rdCrosstabColumn~"
+									/>
+								</Action>
+							</Label>
+						</CrosstabTableValueColumns>
+					</CrosstabTable>
+				</TabPanel>
+			</Tabs>
 		</Division>
 	</Body>
-	<ideTestParams
-		paramCommodityCT="01"
-	/>
+	<ideTestParams/>
 </Report>
