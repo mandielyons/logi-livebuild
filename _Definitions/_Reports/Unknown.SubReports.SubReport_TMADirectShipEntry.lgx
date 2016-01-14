@@ -8,7 +8,7 @@
 	/>
 	<LocalData>
 		<DataLayer
-			ConnectionID="connMKC"
+			ConnectionID="connAgTrax"
 			ID="dlDSEntryIDRecord"
 			Source="Select AGTRAX_STAGING.dbo.DM_DSTicketTracking.EntryID,
   AGTRAX_STAGING.dbo.DM_DSTicketTracking.DropOffDate,
@@ -135,7 +135,7 @@ Where AGTRAX_STAGING.dbo.DM_DSTicketTracking.EntryID = &apos;@Request.EntryId~&a
 							OptionValueColumn="CUSTOMER"
 							>
 							<DataLayer
-								ConnectionID="connMKC"
+								ConnectionID="connAgTrax"
 								ID="dlCustomer"
 								Source="Select AGTRAX_STAGING.dbo.AR_CUSTOMER_MASTER_TMA.CUSTOMER,
   AGTRAX_STAGING.dbo.AR_CUSTOMER_MASTER_TMA.NAME
@@ -188,7 +188,7 @@ From AGTRAX_STAGING.dbo.AR_CUSTOMER_MASTER_TMA
 							OptionValueColumn="BRANCH_NUMBER"
 							>
 							<DataLayer
-								ConnectionID="connMKC"
+								ConnectionID="connAgTrax"
 								ID="dlLocation"
 								Source="SELECT BRANCH_NUMBER, BRANCH_NAME FROM Agtrax_Staging.dbo.IV_BRANCH_MASTER"
 								Type="SQL"
