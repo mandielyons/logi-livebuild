@@ -7,10 +7,10 @@
 		ID="updateRow"
 		>
 		<Procedure
-			ConnectionID="connAgTrax"
+			ConnectionID="connMKC"
 			ID="procUpdateRow"
-			SqlCommand="UPDATE AGTRAX_STAGING.dbo.DM_DSTicketTracking SET AGTRAX_STAGING.dbo.DM_DSTicketTracking.DropOffDate = &apos;@Request.dteDropOff~&apos;, AGTRAX_STAGING.dbo.DM_DSTicketTracking.CUSTOMER = &apos;@Request.iptCustomer~&apos;, AGTRAX_STAGING.dbo.DM_DSTicketTracking.BRANCH_NUMBER = &apos;@Request.iptBranch~&apos;, AGTRAX_STAGING.dbo.DM_DSTicketTracking.TotalTickets = &apos;@Request.iptTickets~&apos;, AGTRAX_STAGING.dbo.DM_DSTicketTracking.EnteredDate = &apos;@Request.dteEntered~&apos;, AGTRAX_STAGING.dbo.DM_DSTicketTracking.UserID = &apos;mlyons@mkcoop.com&apos;, AGTRAX_STAGING.dbo.DM_DSTicketTracking.CompletedDate = &apos;@Request.iptCompleteDate~&apos;
-WHERE AGTRAX_STAGING.dbo.DM_DSTicketTracking.EntryID = &apos;@Request.iptEntryId~&apos;"
+			SqlCommand="UPDATE AGTRAX_STAGING.dbo.DM_DSTicketTracking SET DM_DSTicketTracking.DropOffDate = &apos;@Request.dteDropOff~&apos;, DM_DSTicketTracking.CUSTOMER = &apos;@Request.iptCustomer~&apos;, DM_DSTicketTracking.BRANCH_NUMBER = &apos;@Request.iptBranch~&apos;, DM_DSTicketTracking.TotalTickets = &apos;@Request.iptTickets~&apos;, DM_DSTicketTracking.EnteredDate = &apos;@Request.dteEntered~&apos;, DM_DSTicketTracking.UserID = &apos;mlyons@mkcoop.com&apos;, DM_DSTicketTracking.CompletedDate = &apos;@Request.iptCompleteDate~&apos;
+WHERE DM_DSTicketTracking.EntryID = &apos;@Request.iptEntryId~&apos;"
 			Type="SQL"
 			>
 			<IfError
@@ -56,9 +56,9 @@ WHERE AGTRAX_STAGING.dbo.DM_DSTicketTracking.EntryID = &apos;@Request.iptEntryId
 		ID="insertRow"
 		>
 		<Procedure
-			ConnectionID="connAgTrax"
+			ConnectionID="connMKC"
 			ID="procInsertRow"
-			SqlCommand="INSERT INTO AGTRAX_STAGING.dbo.DM_DSTicketTracking (AGTRAX_STAGING.dbo.DM_DSTicketTracking.DropOffDate,AGTRAX_STAGING.dbo.DM_DSTicketTracking.CUSTOMER,AGTRAX_STAGING.dbo.DM_DSTicketTracking.BRANCH_NUMBER,AGTRAX_STAGING.dbo.DM_DSTicketTracking.TotalTickets,AGTRAX_STAGING.dbo.DM_DSTicketTracking.EnteredDate,AGTRAX_STAGING.dbo.DM_DSTicketTracking.UserID)
+			SqlCommand="INSERT INTO AGTRAX_STAGING.dbo.DM_DSTicketTracking (DM_DSTicketTracking.DropOffDate,DM_DSTicketTracking.CUSTOMER,DM_DSTicketTracking.BRANCH_NUMBER,DM_DSTicketTracking.TotalTickets,DM_DSTicketTracking.EnteredDate,DM_DSTicketTracking.UserID)
 VALUES (&apos;@Request.dteDropOff~&apos;,&apos;@Request.iptCustomer~&apos;,&apos;@Request.iptBranch~&apos;,&apos;@Request.iptTickets~&apos;,&apos;@Request.dteEntered~&apos;,&apos;mlyons@mkcoop.com&apos;)
 
 "
