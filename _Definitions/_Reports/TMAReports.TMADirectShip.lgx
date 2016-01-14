@@ -56,6 +56,28 @@
 						<Spaces
 							Size="25"
 						/>
+						<Label
+							Caption="Export"
+							Class="fa fa-file-excel-o fa-2x "
+							HtmlTag="Div"
+							Tooltip="Export"
+							>
+							<Action
+								Type="NativeExcel"
+								>
+								<Target
+									ExcelOutputFormat="Excel2007"
+									ExportDataTableID="dtTicketTracking"
+									FrameID="NewWindow"
+									Report="TMAReports.TMADirectShip"
+									RequestForwarding="True"
+									Type="NativeExcel"
+								/>
+							</Action>
+						</Label>
+						<Spaces
+							Size="25"
+						/>
 					</ResponsiveColumn>
 				</ResponsiveRow>
 				<ResponsiveRow>
@@ -91,7 +113,7 @@
 							TableBorder="0"
 							>
 							<DataLayer
-								ConnectionID="connMKC"
+								ConnectionID="connAgTrax"
 								ID="dlTicketTracking"
 								Source="Select DM_DSTicketTracking.EntryID,
   DM_DSTicketTracking.DropOffDate,

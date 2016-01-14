@@ -8,7 +8,7 @@
 	/>
 	<LocalData>
 		<DataLayer
-			ConnectionID="connMKC"
+			ConnectionID="connAgTrax"
 			ID="dlDSEntryIDRecord"
 			Source="Select AGTRAX_STAGING.dbo.DM_DSTicketTracking.EntryID,
   AGTRAX_STAGING.dbo.DM_DSTicketTracking.DropOffDate,
@@ -130,17 +130,25 @@ Where AGTRAX_STAGING.dbo.DM_DSTicketTracking.EntryID = &apos;@Request.EntryId~&a
 							ID="iptCustomer"
 							IncludeBlank="True"
 							IncludeBlankCaption="Select a customer"
-							OptionCaptionColumn="NAME"
+							OptionCaptionColumn="ACCOUNT"
 							OptionTooltipColumn="Select a customer"
-							OptionValueColumn="CUSTOMER"
+							OptionValueColumn="CUSTNMBR"
 							>
 							<DataLayer
-								ConnectionID="connMKC"
+								ConnectionID="connAgTrax"
 								ID="dlCustomer"
-								Source="Select AGTRAX_STAGING.dbo.AR_CUSTOMER_MASTER_TMA.CUSTOMER,
-  AGTRAX_STAGING.dbo.AR_CUSTOMER_MASTER_TMA.NAME
-From AGTRAX_STAGING.dbo.AR_CUSTOMER_MASTER_TMA
-"
+								Source="Select Distinct AR_CUSTOMER_MASTER_TMA.CUSTOMER CUSTNMBR,
+  AR_CUSTOMER_MASTER_TMA.NAME CUSTNAME,
+  LTrim(RTrim(AR_CUSTOMER_MASTER_TMA.CUSTOMER)) + &apos; - &apos; +
+  LTrim(RTrim(AR_CUSTOMER_MASTER_TMA.NAME)) ACCOUNT,
+  AR_CUSTOMER_MISC_FLAG_TMA.MISC_FLAG_NUMBER,
+  AR_CUSTOMER_MISC_FLAG_TMA.MISC_FLAG_VALUE
+From AR_CUSTOMER_MASTER_TMA
+  Inner Join AR_CUSTOMER_MISC_FLAG_TMA On AR_CUSTOMER_MASTER_TMA.CUSTOMER =
+    AR_CUSTOMER_MISC_FLAG_TMA.CUSTOMER
+Where AR_CUSTOMER_MISC_FLAG_TMA.MISC_FLAG_NUMBER = &apos;20&apos; And
+  AR_CUSTOMER_MISC_FLAG_TMA.MISC_FLAG_VALUE = &apos;Y&apos;
+Order By CUSTNMBR"
 								Type="SQL"
 							/>
 						</InputSelectList>
@@ -184,13 +192,19 @@ From AGTRAX_STAGING.dbo.AR_CUSTOMER_MASTER_TMA
 							ID="iptBranch"
 							IncludeBlank="True"
 							IncludeBlankCaption="Select a location"
-							OptionCaptionColumn="BRANCH_NAME"
-							OptionValueColumn="BRANCH_NUMBER"
+							OptionCaptionColumn="BRANCH"
+							OptionValueColumn="BRANCHNO"
 							>
 							<DataLayer
-								ConnectionID="connMKC"
+								ConnectionID="connAgTrax"
 								ID="dlLocation"
-								Source="SELECT BRANCH_NUMBER, BRANCH_NAME FROM Agtrax_Staging.dbo.IV_BRANCH_MASTER"
+								Source="SELECT DISTINCT 
+	BRANCH_NUMBER [BRANCHNO]
+	, BRANCH_NAME [BRANCHNAME]
+	, LTRIM(RTRIM(BRANCH_NUMBER))+&apos; - &apos;+LTRIM(RTRIM(BRANCH_NAME)) [BRANCH]
+FROM Agtrax_Staging.dbo.IV_BRANCH_MASTER
+WHERE BRANCH_NUMBER LIKE (&apos;9%%&apos;) AND LEN(BRANCH_NUMBER) = 3 OR BRANCH_NUMBER LIKE (&apos;8%%&apos;) AND LEN(BRANCH_NUMBER) = 3
+ORDER BY BRANCHNO"
 								Type="SQL"
 							/>
 						</InputSelectList>
@@ -485,6 +499,8 @@ if (entry.value == &quot;&quot;){
 else if (entry.value &gt; 0){
 	update.style.display = &quot;&quot;;
 	add.style.display = &quot;none&quot;;
+	//remove default date
+	if (dteEntry.value == &quot;1/1/1900&quot;) {dteEntry.value = &quot;&quot;;}
 }
 "
 		/>
