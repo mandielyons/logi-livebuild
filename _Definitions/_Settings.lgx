@@ -85,6 +85,15 @@
 			LdapUserDn="CN=Scanner,OU=MKC General Users,DC=midkscoop,DC=lan"
 			Type="LDAP"
 		/>
+		<Connection
+			ID="connAgTrax"
+			SqlServer="DEVELOPMENT"
+			SqlServerDatabase="Agtrax_Staging"
+			SqlServerPassword="integr8!"
+			SqlServerPort=""
+			SqlServerUser="BIOperations"
+			Type="SqlServer"
+		/>
 	</Connections>
 	<Remark>
 		<Security
