@@ -326,7 +326,6 @@ ORDER BY CONTRACT_TYPE DESC, DELIVERY_END_DATE
 							/>
 						</CrosstabTableLabelColumn>
 						<CrosstabTableValueColumns
-							Format="Expanded Spaces"
 							Header="@Data.rdCrosstabColumn~"
 							ID="colHeaderMonth"
 							>
