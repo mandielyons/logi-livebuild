@@ -13,11 +13,7 @@
 			ExcelWorksheet="Sheet1"
 			ID="dlGmap-AFDTanks"
 			Type="Excel"
-			>
-			<DataLayerLink
-				ID="linkGmap-AFDTanks"
-			/>
-		</DataLayer>
+		/>
 	</LocalData>
 	<IncludeSharedElement
 		DefinitionFile="_Layout.Shared"
@@ -58,45 +54,26 @@
 								</Column>
 								<Column>
 									<Label
-										Caption="Filter By Customer:"
+										Caption="Filter By Location:"
 									/>
 								</Column>
 								<Column>
-									<Remark>
-										<InputSelectList
-											Class="chosen-select"
-											DefaultValue="@Request.iptCity~"
-											ID="iptCity"
-											MultiSelect="True"
-											OptionCaptionColumn="city"
-											OptionValueColumn="city"
-											>
-											<DataLayer
-												CacheKey="dlcCity-Tanks"
-												ExpirationNow="@Request.cacheExpireNow~"
-												ExpirationTime="@Constant.cacheExpirationTime~"
-												ExpirationTimeSpan="@Constant.cacheExpirationTimeSpan~"
-												ID="dlcCity-Tanks"
-												Type="Cached"
-												>
-												<DataLayer
-													ColumnNamesRow="1"
-													ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx"
-													ExcelWorksheet="Sheet1"
-													ID="dlCity"
-													Type="Excel"
-													>
-													<GroupFilter
-														DataType="Text"
-														GroupColumn="city"
-														ID="gByCity"
-														KeepGroupedRows="False"
-														SortSequence="Ascending"
-													/>
-												</DataLayer>
-											</DataLayer>
-										</InputSelectList>
-									</Remark>
+									<InputSelectList
+										Class="chosen-select"
+										DefaultValue="@Request.iptCity~"
+										ID="iptCity"
+										MultiSelect="True"
+										OptionCaptionColumn="CITY"
+										OptionValueColumn="CITY"
+										>
+										<DataLayer
+											ColumnNamesRow="1"
+											ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx"
+											ExcelWorksheet="Cities"
+											ID="dlCities"
+											Type="Excel"
+										/>
+									</InputSelectList>
 									<Image
 										Caption="_theme_files.1x1.gif"
 										Class="ThemeHidden"
@@ -116,47 +93,39 @@
 											/>
 										</EventHandler>
 									</Image>
-									<InputSelectList
-										Class="chosen-select"
-										DefaultValue="@Request.iptCustomer~"
-										ID="iptCustomer"
-										MultiSelect="True"
-										OptionCaptionColumn="companyname"
-										OptionValueColumn="customerid"
-										>
-										<Remark>
-											<DataLayer
-												CacheKey="dlcCustomer-Tanks"
-												ExpirationNow="@Request.cacheExpireNow~"
-												ExpirationTime="@Constant.cacheExpirationTime~"
-												ExpirationTimeSpan="@Constant.cacheExpirationTimeSpan~"
-												ID="dlcCustomer-Tanks"
-												Type="Cached"
-											/>
-										</Remark>
-										<DataLayer
-											CellRange="B2:C103"
-											ColumnNamesRow="1"
-											ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx"
-											ExcelWorksheet="Sheet1"
-											ID="dlTanksData"
-											Type="Excel"
+									<Remark>
+										<InputSelectList
+											Class="chosen-select"
+											DefaultValue="@Request.iptCustomer~"
+											ID="iptCustomer"
+											MultiSelect="True"
+											OptionCaptionColumn="companyname"
+											OptionValueColumn="customerid"
 											>
-											<SortFilter
-												DataType="Text"
-												SortColumn="companyname"
-												SortSequence="Ascending"
-											/>
-											<CompareFilter
-												CaseSensitive="True"
-												CompareType="&lt;&gt;"
-												CompareValue="NULL"
-												DataColumn="companyname"
-												DataType="Text"
-												ID="compareNull"
-											/>
-										</DataLayer>
-									</InputSelectList>
+											<DataLayer
+												CellRange="B2:C103"
+												ColumnNamesRow="1"
+												ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx"
+												ExcelWorksheet="Sheet1"
+												ID="dlTanksData"
+												Type="Excel"
+												>
+												<SortFilter
+													DataType="Text"
+													SortColumn="companyname"
+													SortSequence="Ascending"
+												/>
+												<CompareFilter
+													CaseSensitive="True"
+													CompareType="&lt;&gt;"
+													CompareValue="NULL"
+													DataColumn="companyname"
+													DataType="Text"
+													ID="compareNull"
+												/>
+											</DataLayer>
+										</InputSelectList>
+									</Remark>
 								</Column>
 								<Column>
 									<Spaces
@@ -242,6 +211,14 @@
 							<GoogleMapMarkers
 								ID="gmmTank"
 								>
+								<MapMarkerImage>
+									<Image
+										Caption="map_blue.png"
+										Height="24"
+										ID="mapIcon"
+										Width="24"
+									/>
+								</MapMarkerImage>
 								<DataLayer
 									ColumnNamesRow="1"
 									ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx"
@@ -254,10 +231,16 @@
 										LatitudeDataColumn="lat"
 										LongitudeDataColumn="long"
 									/>
-									<ConditionFilter
-										Condition="InStr(&quot;@Data.customerid~&quot;, &quot;@Request.iptCustomer~&quot;) &gt; 0
+									<Remark>
+										<ConditionFilter
+											Condition="InStr(&quot;@Data.customerid~&quot;, &quot;@Request.iptCustomer~&quot;) &gt; 0
 "
-										IncludeCondition="@Request.iptCustomer &lt;&gt; &quot;&quot;"
+											IncludeCondition="@Request.iptCustomer &lt;&gt; &quot;&quot;"
+										/>
+									</Remark>
+									<ConditionFilter
+										Condition="InStr(UCase(&quot;@Data.city~&quot;), &quot;@Request.iptCity~&quot;) &gt; 0"
+										IncludeCondition="@Request.iptCity&lt;&gt; &quot;&quot;"
 									/>
 								</DataLayer>
 								<Action
@@ -265,14 +248,9 @@
 									>
 									<MapMarkerInfo>
 										<Label
-											Caption="Company: "
+											Caption="Customer: "
 											Class="ThemeBold"
-											>
-											<ConditionalClass
-												Class="ThemeHidden"
-												Condition="InStr(&quot;@Data.companyname~&quot;, &quot;NULL&quot;) &gt; 0"
-											/>
-										</Label>
+										/>
 										<Label
 											Caption="@Data.companyname~"
 											>
@@ -281,14 +259,20 @@
 												Condition="InStr(&quot;@Data.companyname~&quot;, &quot;NULL&quot;) &gt; 0"
 											/>
 										</Label>
-										<LineBreak/>
 										<Label
-											Caption="Name:"
-											Class="ThemeBold"
+											Caption=" / "
 											>
 											<ConditionalClass
 												Class="ThemeHidden"
 												Condition="InStr(&quot;@Data.firstname~&quot;, &quot;NULL&quot;) &gt; 0"
+											/>
+											<ConditionalClass
+												Class="ThemeHidden"
+												Condition="InStr(&quot;@Data.lastname~&quot;, &quot;NULL&quot;) &gt; 0"
+											/>
+											<ConditionalClass
+												Class="ThemeHidden"
+												Condition="InStr(&quot;@Data.companyname~&quot;, &quot;NULL&quot;) &gt; 0"
 											/>
 										</Label>
 										<Label
@@ -298,11 +282,18 @@
 												Class="ThemeHidden"
 												Condition="InStr(&quot;@Data.firstname~&quot;, &quot;NULL&quot;) &gt; 0"
 											/>
+											<ConditionalClass
+												Class="ThemeHidden"
+												Condition="InStr(&quot;@Data.lastname~&quot;, &quot;NULL&quot;) &gt; 0"
+											/>
 										</Label>
 										<LineBreak/>
 										<Label
 											Caption="Tank ID:"
 											Class="ThemeBold"
+										/>
+										<Spaces
+											Size="1"
 										/>
 										<Label
 											Caption="@Data.tankid~"
@@ -311,6 +302,9 @@
 										<Label
 											Caption="Probe ID:"
 											Class="ThemeBold"
+										/>
+										<Spaces
+											Size="1"
 										/>
 										<Label
 											Caption="@Data.probeid~"
@@ -542,6 +536,7 @@
 		SharedElementID="shrFooter"
 	/>
 	<ideTestParams
+		iptCity=""
 		iptCustomer=""
 		paramLocName=""
 	/>
