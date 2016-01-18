@@ -222,7 +222,7 @@
 								<DataLayer
 									ColumnNamesRow="1"
 									ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx"
-									ExcelWorksheet="Sheet1"
+									ExcelWorksheet="AllTanks"
 									ID="dlAFDTanks"
 									Type="Excel"
 									>
@@ -240,7 +240,6 @@
 									</Remark>
 									<ConditionFilter
 										Condition="InStr(UCase(&quot;@Data.city~&quot;), &quot;@Request.iptCity~&quot;) &gt; 0"
-										IncludeCondition="@Request.iptCity&lt;&gt; &quot;&quot;"
 									/>
 								</DataLayer>
 								<Action
