@@ -1,0 +1,355 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report
+	Caption="Additional Branch Reports"
+	ID="Unknown.SubReports.AdditionalReports"
+	>
+	<DefaultRequestParams
+		paramLocCd=""
+		paramLocName=""
+	/>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrHeader"
+	/>
+	<Body>
+		<ResponsiveRow
+			CollisionBehavior="Wrap"
+			>
+			<ResponsiveColumn>
+				<Division
+					Class="panel panel-default"
+					HtmlDiv="True"
+					ID="panel"
+					>
+					<Division
+						Class="panel-heading"
+						HtmlDiv="True"
+						ID="panel-heading"
+						>
+						<Label
+							Caption="Additional Branch Reports"
+						/>
+					</Division>
+					<Division
+						Class="panel-body"
+						ID="panel-body"
+						>
+						<Rows
+							Width="100"
+							WidthScale="%"
+							>
+							<Row>
+								<Column>
+									<Spaces
+										Size="5"
+									/>
+								</Column>
+								<Column>
+									<Label
+										Caption="Filter By Location:"
+									/>
+								</Column>
+								<Column>
+									<InputSelectList
+										DefaultValue="@Request.paramLocCd~"
+										ID="iptLocation"
+										IncludeBlank="True"
+										IncludeBlankCaption="Select a location"
+										OptionCaptionColumn="LocDescr"
+										OptionValueColumn="LOCNCODE"
+										>
+										<DataLayer
+											ConnectionID="connMKC"
+											ID="dlDataLocations"
+											Source="Select Distinct MapMKCLocations.LOCNCODE As LOCNCODE,
+  MapMKCLocations.LOCNDSCR As LocDescr
+From MapMKCLocations"
+											Type="SQL"
+										/>
+									</InputSelectList>
+									<Image
+										Caption="_theme_files.1x1.gif"
+										Class="ThemeHidden"
+										>
+										<EventHandler
+											DhtmlEvent="onload"
+											>
+											<Action
+												ID="jsChosen"
+												Javascript="$( document ).ready(function() {
+  $(&quot;.chosen-select&quot;).chosen({
+    	search_contains:true,
+		display_selected_options:false
+  });
+});"
+												Type="Javascript"
+											/>
+										</EventHandler>
+									</Image>
+								</Column>
+								<Column>
+									<Spaces
+										Size="45"
+									/>
+								</Column>
+								<Column>
+									<Label
+										Caption="Apply"
+										Class="btn btn-default pull-right"
+										>
+										<EventHandler
+											DhtmlEvent="onclick"
+											>
+											<Action
+												ID="actRefreshReport"
+												Type="Report"
+												>
+												<Target
+													Type="Report"
+													>
+													<WaitPage/>
+												</Target>
+												<LinkParams
+													cacheExpirationNow="False"
+												/>
+											</Action>
+										</EventHandler>
+									</Label>
+								</Column>
+								<Column>
+									<Spaces
+										Size="5"
+									/>
+								</Column>
+							</Row>
+						</Rows>
+						<LineBreak/>
+						<LineBreak/>
+					</Division>
+				</Division>
+			</ResponsiveColumn>
+		</ResponsiveRow>
+		<ResponsiveRow>
+			<ResponsiveColumn>
+				<Tabs
+					DefaultTab="tabAppByRig"
+					ID="tabRigReports"
+					TabbingStyle="Ajax"
+					TabLocation="top"
+					>
+					<TabPanel
+						Caption="Application By Rig"
+						Class="ThemeTextPositive ThemeHeaderSmall"
+						ID="tabAppByRig"
+						>
+						<Division
+							Class="panel panel-default"
+							HtmlDiv="True"
+							ID="panel-rig"
+							>
+							<Division
+								Class="panel-heading"
+								HtmlDiv="True"
+								ID="divAppByRigHeading"
+							/>
+							<Division
+								Class="panel-body ThemeAlignRight"
+								HtmlDiv="True"
+								ID="divAppByRig"
+								>
+								<Label
+									Caption="Export"
+									Class="fa fa-file-pdf-o fa-2x"
+									HtmlTag="Div"
+									ID="exportAppByRig"
+									Tooltip="Export to PDF"
+									>
+									<Action
+										ID="exportPDFAppByRig"
+										Type="PDF"
+										>
+										<Target
+											Type="PDF"
+										/>
+									</Action>
+								</Label>
+								<Spaces
+									Size="20"
+								/>
+							</Division>
+							<Division
+								Class="panel-body"
+								HtmlDiv="True"
+								ID="divAppByRigData"
+								>
+								<Note
+									Note="**Add data here**"
+								/>
+							</Division>
+						</Division>
+					</TabPanel>
+					<TabPanel
+						Caption="Application By Employee"
+						Class="ThemeTextPositive ThemeHeaderSmall"
+						ID="tabAppByEmployee"
+						>
+						<Division
+							Class="panel panel-default"
+							HtmlDiv="True"
+							ID="panel-employee"
+							>
+							<Division
+								Class="panel-heading"
+								HtmlDiv="True"
+								ID="divAppByEmpHeading"
+							/>
+							<Division
+								Class="panel-body ThemeAlignRight"
+								HtmlDiv="True"
+								ID="divAppByEmployee"
+								>
+								<Label
+									Caption="Export"
+									Class="fa fa-file-pdf-o fa-2x"
+									HtmlTag="Div"
+									ID="exportAppByEmployee"
+									Tooltip="Export to PDF"
+									>
+									<Action
+										ID="exportPDFAppByEmployee"
+										Type="PDF"
+										>
+										<Target
+											Type="PDF"
+										/>
+									</Action>
+								</Label>
+								<Spaces
+									Size="20"
+								/>
+							</Division>
+							<Division
+								Class="panel-body"
+								HtmlDiv="True"
+								ID="divAppByEmployeeData"
+								>
+								<Note
+									Note="**Add data here**"
+								/>
+							</Division>
+						</Division>
+					</TabPanel>
+					<TabPanel
+						Caption="Inventory Turns"
+						Class="ThemeTextPositive ThemeHeaderSmall"
+						ID="tabTurns"
+						>
+						<Division
+							Class="panel panel-default"
+							HtmlDiv="True"
+							ID="panel-turns"
+							>
+							<Division
+								Class="panel-heading"
+								HtmlDiv="True"
+								ID="divTurnsHeading"
+							/>
+							<Division
+								Class="panel-body ThemeAlignRight"
+								HtmlDiv="True"
+								ID="divTurns"
+								>
+								<Label
+									Caption="Export"
+									Class="fa fa-file-pdf-o fa-2x "
+									HtmlTag="Div"
+									ID="exportTurns"
+									Tooltip="Export to PDF"
+									>
+									<Action
+										ID="exportPDFTurns"
+										Type="PDF"
+										>
+										<Target
+											Type="PDF"
+										/>
+									</Action>
+								</Label>
+								<Spaces
+									Size="20"
+								/>
+							</Division>
+							<Division
+								Class="panel-body"
+								HtmlDiv="True"
+								ID="divTurnsData"
+								>
+								<Note
+									Note="**Add data here**"
+								/>
+							</Division>
+						</Division>
+					</TabPanel>
+					<TabPanel
+						Caption="Seeded Acres"
+						Class="ThemeTextPositive ThemeHeaderSmall"
+						ID="tabAcres"
+						>
+						<Division
+							Class="panel panel-default"
+							HtmlDiv="True"
+							ID="panel-acres"
+							>
+							<Division
+								Class="panel-heading"
+								HtmlDiv="True"
+								ID="divAcresHeading"
+							/>
+							<Division
+								Class="panel-body ThemeAlignRight"
+								HtmlDiv="True"
+								ID="divAcres"
+								>
+								<Label
+									Caption="Export"
+									Class="fa fa-file-pdf-o fa-2x"
+									HtmlTag="Div"
+									ID="exportAcres"
+									Tooltip="Export to PDF"
+									>
+									<Action
+										ID="exportPDFAcres"
+										Type="PDF"
+										>
+										<Target
+											Type="PDF"
+										/>
+									</Action>
+								</Label>
+								<Spaces
+									Size="20"
+								/>
+							</Division>
+							<Division
+								Class="panel-body"
+								HtmlDiv="True"
+								ID="divAcresData"
+								>
+								<Note
+									Note="**Add data here**"
+								/>
+							</Division>
+						</Division>
+					</TabPanel>
+				</Tabs>
+			</ResponsiveColumn>
+		</ResponsiveRow>
+	</Body>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrFooter"
+	/>
+	<ideTestParams
+		paramLocCd=""
+	/>
+</Report>

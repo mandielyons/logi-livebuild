@@ -1,0 +1,508 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report
+	Caption="Branch Financials"
+	ID="Unknown.SubReports.BranchFinancials"
+	>
+	<DefaultRequestParams
+		paramLocCd=""
+		paramLocName=""
+	/>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrHeader"
+	/>
+	<Body>
+		<ResponsiveRow
+			CollisionBehavior="Wrap"
+			>
+			<ResponsiveColumn>
+				<Division
+					Class="panel panel-default"
+					HtmlDiv="True"
+					ID="panel"
+					>
+					<Division
+						Class="panel-heading"
+						HtmlDiv="True"
+						ID="panel-heading"
+						>
+						<Label
+							Caption="Branch Financials"
+						/>
+					</Division>
+					<Division
+						Class="panel-body"
+						ID="panel-body"
+						>
+						<Rows
+							Width="100"
+							WidthScale="%"
+							>
+							<Row>
+								<Column>
+									<Spaces
+										Size="5"
+									/>
+								</Column>
+								<Column>
+									<Label
+										Caption="Filter By Location:"
+									/>
+								</Column>
+								<Column>
+									<InputSelectList
+										DefaultValue="@Request.paramLocCd~"
+										ID="iptLocation"
+										IncludeBlank="True"
+										IncludeBlankCaption="Select a location"
+										OptionCaptionColumn="LocDescr"
+										OptionValueColumn="LOCNCODE"
+										>
+										<DataLayer
+											ConnectionID="connMKC"
+											ID="dlDataLocations"
+											Source="Select Distinct MapMKCLocations.LOCNCODE As LOCNCODE,
+  MapMKCLocations.LOCNDSCR As LocDescr
+From MapMKCLocations"
+											Type="SQL"
+										/>
+									</InputSelectList>
+									<Image
+										Caption="_theme_files.1x1.gif"
+										Class="ThemeHidden"
+										>
+										<EventHandler
+											DhtmlEvent="onload"
+											>
+											<Action
+												ID="jsChosen"
+												Javascript="$( document ).ready(function() {
+  $(&quot;.chosen-select&quot;).chosen({
+    	search_contains:true,
+		display_selected_options:false
+  });
+});"
+												Type="Javascript"
+											/>
+										</EventHandler>
+									</Image>
+								</Column>
+								<Column>
+									<Spaces
+										Size="45"
+									/>
+								</Column>
+								<Column>
+									<Label
+										Caption="Apply"
+										Class="btn btn-default pull-right"
+										>
+										<EventHandler
+											DhtmlEvent="onclick"
+											>
+											<Action
+												ID="actRefreshReport"
+												Type="Report"
+												>
+												<Target
+													Type="Report"
+													>
+													<WaitPage/>
+												</Target>
+												<LinkParams
+													cacheExpirationNow="False"
+												/>
+											</Action>
+										</EventHandler>
+									</Label>
+								</Column>
+								<Column>
+									<Spaces
+										Size="5"
+									/>
+								</Column>
+							</Row>
+						</Rows>
+						<LineBreak/>
+						<LineBreak/>
+					</Division>
+				</Division>
+			</ResponsiveColumn>
+		</ResponsiveRow>
+		<ResponsiveRow>
+			<ResponsiveColumn>
+				<Tabs
+					DefaultTab="tabTotals"
+					ID="tabFinancials"
+					TabbingStyle="Ajax"
+					TabLocation="top"
+					>
+					<TabPanel
+						Caption="Totals"
+						Class="ThemeTextPositive ThemeHeaderSmall"
+						ID="tabTotals"
+						>
+						<Division
+							Class="panel panel-default"
+							HtmlDiv="True"
+							ID="panel-Totals"
+							>
+							<Division
+								Class="panel-heading"
+								HtmlDiv="True"
+								ID="divTotalsHeading"
+							/>
+							<Division
+								Class="panel-body ThemeAlignRight"
+								HtmlDiv="True"
+								ID="divTotals"
+								>
+								<Label
+									Caption="Export"
+									Class="fa fa-file-pdf-o fa-2x"
+									HtmlTag="Div"
+									ID="exportTotals"
+									Tooltip="Export to PDF"
+									>
+									<Action
+										ID="exportPDFTotals"
+										Type="PDF"
+										>
+										<Target
+											Type="PDF"
+										/>
+									</Action>
+								</Label>
+								<Spaces
+									Size="20"
+								/>
+							</Division>
+							<Division
+								Class="panel-body"
+								HtmlDiv="True"
+								ID="divTotalsData"
+								>
+								<Note
+									Note="**Add data here**"
+								/>
+							</Division>
+						</Division>
+					</TabPanel>
+					<TabPanel
+						Caption="Volumes"
+						Class="ThemeTextPositive ThemeHeaderSmall"
+						ID="tabVolumes"
+						>
+						<Division
+							Class="panel panel-default"
+							HtmlDiv="True"
+							ID="panel-Volumes"
+							>
+							<Division
+								Class="panel-heading"
+								HtmlDiv="True"
+								ID="divVolumesHeading"
+							/>
+							<Division
+								Class="panel-body ThemeAlignRight"
+								HtmlDiv="True"
+								ID="divVolumes"
+								>
+								<Label
+									Caption="Export"
+									Class="fa fa-file-pdf-o fa-2x"
+									HtmlTag="Div"
+									ID="exportVolumes"
+									Tooltip="Export to PDF"
+									>
+									<Action
+										ID="exportPDFVolumes"
+										Type="PDF"
+										>
+										<Target
+											Type="PDF"
+										/>
+									</Action>
+								</Label>
+								<Spaces
+									Size="20"
+								/>
+							</Division>
+							<Division
+								Class="panel-body"
+								HtmlDiv="True"
+								ID="divVolumesData"
+								>
+								<Note
+									Note="**Add data here**"
+								/>
+							</Division>
+						</Division>
+					</TabPanel>
+					<TabPanel
+						Caption="Sales"
+						Class="ThemeTextPositive ThemeHeaderSmall"
+						ID="tabSales"
+						>
+						<Division
+							Class="panel panel-default"
+							HtmlDiv="True"
+							ID="panel-Sales"
+							>
+							<Division
+								Class="panel-heading"
+								HtmlDiv="True"
+								ID="divSalesHeading"
+							/>
+							<Division
+								Class="panel-body ThemeAlignRight"
+								HtmlDiv="True"
+								ID="divSales"
+								>
+								<Label
+									Caption="Export"
+									Class="fa fa-file-pdf-o fa-2x "
+									HtmlTag="Div"
+									ID="exportSales"
+									Tooltip="Export to PDF"
+									>
+									<Action
+										ID="exportPDFSales"
+										Type="PDF"
+										>
+										<Target
+											Type="PDF"
+										/>
+									</Action>
+								</Label>
+								<Spaces
+									Size="20"
+								/>
+							</Division>
+							<Division
+								Class="panel-body"
+								HtmlDiv="True"
+								ID="divSalesData"
+								>
+								<Note
+									Note="**Add data here**"
+								/>
+							</Division>
+						</Division>
+					</TabPanel>
+					<TabPanel
+						Caption="Personnel Expense"
+						Class="ThemeTextPositive ThemeHeaderSmall"
+						ID="tabPersonnel"
+						>
+						<Division
+							Class="panel panel-default"
+							HtmlDiv="True"
+							ID="panel-Personnel"
+							>
+							<Division
+								Class="panel-heading"
+								HtmlDiv="True"
+								ID="divPersonnelHeading"
+							/>
+							<Division
+								Class="panel-body ThemeAlignRight"
+								HtmlDiv="True"
+								ID="divPersonnel"
+								>
+								<Label
+									Caption="Export"
+									Class="fa fa-file-pdf-o fa-2x"
+									HtmlTag="Div"
+									ID="exportPersonnel"
+									Tooltip="Export to PDF"
+									>
+									<Action
+										ID="exportPDFPersonnel"
+										Type="PDF"
+										>
+										<Target
+											Type="PDF"
+										/>
+									</Action>
+								</Label>
+								<Spaces
+									Size="20"
+								/>
+							</Division>
+							<Division
+								Class="panel-body"
+								HtmlDiv="True"
+								ID="divPersonnelData"
+								>
+								<Note
+									Note="**Add data here**"
+								/>
+							</Division>
+						</Division>
+					</TabPanel>
+					<TabPanel
+						Caption="Fixed Expense"
+						Class="ThemeTextPositive ThemeHeaderSmall"
+						ID="tabFixed"
+						>
+						<Division
+							Class="panel panel-default"
+							HtmlDiv="True"
+							ID="panel-Fixed"
+							>
+							<Division
+								Class="panel-heading"
+								HtmlDiv="True"
+								ID="divFixedHeading"
+							/>
+							<Division
+								Class="panel-body ThemeAlignRight"
+								HtmlDiv="True"
+								ID="divFixed"
+								>
+								<Label
+									Caption="Export"
+									Class="fa fa-file-pdf-o fa-2x"
+									HtmlTag="Div"
+									ID="exportFixed"
+									Tooltip="Export to PDF"
+									>
+									<Action
+										ID="exportPDFFixed"
+										Type="PDF"
+										>
+										<Target
+											Type="PDF"
+										/>
+									</Action>
+								</Label>
+								<Spaces
+									Size="20"
+								/>
+							</Division>
+							<Division
+								Class="panel-body"
+								HtmlDiv="True"
+								ID="divFixedData"
+								>
+								<Note
+									Note="**Add data here**"
+								/>
+							</Division>
+						</Division>
+					</TabPanel>
+					<TabPanel
+						Caption="Operating Income"
+						Class="ThemeTextPositive ThemeHeaderSmall"
+						ID="tabOpIncome"
+						>
+						<Division
+							Class="panel panel-default"
+							HtmlDiv="True"
+							ID="panel-OpIncome"
+							>
+							<Division
+								Class="panel-heading"
+								HtmlDiv="True"
+								ID="divOpIncomeHeading"
+							/>
+							<Division
+								Class="panel-body ThemeAlignRight"
+								HtmlDiv="True"
+								ID="divOpIncome"
+								>
+								<Label
+									Caption="Export"
+									Class="fa fa-file-pdf-o fa-2x"
+									HtmlTag="Div"
+									ID="exportOpIncome"
+									Tooltip="Export to PDF"
+									>
+									<Action
+										ID="exportPDFOpIncome"
+										Type="PDF"
+										>
+										<Target
+											Type="PDF"
+										/>
+									</Action>
+								</Label>
+								<Spaces
+									Size="20"
+								/>
+							</Division>
+							<Division
+								Class="panel-body"
+								HtmlDiv="True"
+								ID="divOpIncomeData"
+								>
+								<Note
+									Note="**Add data here**"
+								/>
+							</Division>
+						</Division>
+					</TabPanel>
+					<TabPanel
+						Caption="Other Operating Cost"
+						Class="ThemeTextPositive ThemeHeaderSmall"
+						ID="tabOtherCost"
+						>
+						<Division
+							Class="panel panel-default"
+							HtmlDiv="True"
+							ID="panel-OtherCost"
+							>
+							<Division
+								Class="panel-heading"
+								HtmlDiv="True"
+								ID="divOtherCostHeading"
+							/>
+							<Division
+								Class="panel-body ThemeAlignRight"
+								HtmlDiv="True"
+								ID="divOtherCost"
+								>
+								<Label
+									Caption="Export"
+									Class="fa fa-file-pdf-o fa-2x"
+									HtmlTag="Div"
+									ID="exportOtherCost"
+									Tooltip="Export to PDF"
+									>
+									<Action
+										ID="exportPDFOtherCost"
+										Type="PDF"
+										>
+										<Target
+											Type="PDF"
+										/>
+									</Action>
+								</Label>
+								<Spaces
+									Size="20"
+								/>
+							</Division>
+							<Division
+								Class="panel-body"
+								HtmlDiv="True"
+								ID="divOtherCostData"
+								>
+								<Note
+									Note="**Add data here**"
+								/>
+							</Division>
+						</Division>
+					</TabPanel>
+				</Tabs>
+			</ResponsiveColumn>
+		</ResponsiveRow>
+	</Body>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrFooter"
+	/>
+	<ideTestParams
+		paramLocCd=""
+	/>
+</Report>

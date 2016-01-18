@@ -116,42 +116,6 @@ ORDER BY DPRDESC"
 				</EventHandler>
 			</InputSelectList>
 		</Division>
-		<Remark>
-			<Division>
-				<Label
-					Caption="Account: "
-				/>
-				<InputText>
-					<AutoComplete
-						ColumnName="ACCOUNT"
-						>
-						<DataLayer
-							ConnectionID="connProdGP"
-							ID="dlSQLAccount"
-							Source="SELECT DISTINCT 
-    CUSTOMER_DESC [CUSTDESC]
-  , CUSTOMER [CUSTNMBR]
-  , LTRIM(RTRIM(CUSTOMER))+&apos; - &apos;+LTRIM(RTRIM(CUSTOMER_DESC)) [ACCOUNT]
-FROM AgTrax_Staging..DM_OpenContracts with(nolock)
-WHERE DELIVERY_END_DATE &lt;= &apos;@Request.paramShipPeriodDt~&apos;
-  AND DPR_GROUP = &apos;@Request.paramCommodityCode~&apos;
-ORDER BY CUSTDESC"
-							Type="SQL"
-						/>
-					</AutoComplete>
-					<EventHandler
-						DhtmlEvent="onchange"
-						ID="evhOnChange"
-						>
-						<Action
-							ElementID="dtTMAContractsByShipDate, Position"
-							ID="actRefreshTable"
-							Type="RefreshElement"
-						/>
-					</EventHandler>
-				</InputText>
-			</Division>
-		</Remark>
 		<Division
 			ID="divSelAccount"
 			>

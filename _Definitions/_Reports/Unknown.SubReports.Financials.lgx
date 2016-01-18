@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Report ID="Unknown.SubReports.Financials">
-  <Body>
-    <Note Note="***This will be the financials report.***" />
-    <Note Note="***Location code will be passed as a parameter.***" />
-    <Label Caption="Location Financials" />
-  </Body>
-</Report>

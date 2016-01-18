@@ -146,7 +146,7 @@ Where AGTRAX_STAGING.dbo.DM_DSTicketTracking.EntryID = &apos;@Request.EntryId~&a
 From AR_CUSTOMER_MASTER_TMA
   Inner Join AR_CUSTOMER_MISC_FLAG_TMA On AR_CUSTOMER_MASTER_TMA.CUSTOMER =
     AR_CUSTOMER_MISC_FLAG_TMA.CUSTOMER
-Where AR_CUSTOMER_MISC_FLAG_TMA.MISC_FLAG_NUMBER = &apos;20&apos; And
+Where AR_CUSTOMER_MISC_FLAG_TMA.MISC_FLAG_NUMBER = &apos;99&apos; And
   AR_CUSTOMER_MISC_FLAG_TMA.MISC_FLAG_VALUE = &apos;Y&apos;
 Order By CUSTNMBR"
 								Type="SQL"
@@ -218,7 +218,6 @@ ORDER BY BRANCHNO"
 						>
 						<InputDate
 							Caption="AgTrax Entry Date:"
-							DefaultValue="@Local.EnteredDate~"
 							ID="dteEntered"
 							Tooltip="Enter the date ticketes were entered into AgTrax"
 							>
@@ -315,17 +314,27 @@ else {complete.value = &quot;&quot;;}
 			<Division
 				ID="divTest"
 				>
-				<Label
-					Caption="@Local.DropOffDate~"
-				/>
-				<LineBreak/>
-				<Label
-					Caption="@Local.TotalTickets~"
-				/>
-				<LineBreak/>
-				<Label
-					Caption="@Local.BRANCH_NUMBER~"
-				/>
+				<Remark>
+					<Label
+						Caption="@Local.DropOffDate~"
+					/>
+				</Remark>
+				<Remark>
+					<LineBreak/>
+				</Remark>
+				<Remark>
+					<Label
+						Caption="@Local.TotalTickets~"
+					/>
+				</Remark>
+				<Remark>
+					<LineBreak/>
+				</Remark>
+				<Remark>
+					<Label
+						Caption="@Local.BRANCH_NUMBER~"
+					/>
+				</Remark>
 				<Remark>
 					<DataTable
 						AccessibleHeaders="True"
@@ -340,16 +349,18 @@ else {complete.value = &quot;&quot;;}
 						<DataLayer
 							ConnectionID="connMKC"
 							ID="SQLDataLayer1"
-							Source="Select DM_DSTicketTracking.EntryID,
-  DM_DSTicketTracking.DropOffDate,
-  DM_DSTicketTracking.CUSTOMER,
-  DM_DSTicketTracking.TotalTickets,
-  DM_DSTicketTracking.EnteredDate,
-  DM_DSTicketTracking.UserID,
-  DM_DSTicketTracking.CompletedDate,
-  DM_DSTicketTracking.BRANCH_NUMBER
-From DM_DSTicketTracking
-Where DM_DSTicketTracking.EntryID = &apos;@Request.EntryId~&apos;
+							Source="Select Distinct AR_CUSTOMER_MASTER_TMA.CUSTOMER CUSTNMBR,
+  AR_CUSTOMER_MASTER_TMA.NAME CUSTNAME,
+  LTrim(RTrim(AR_CUSTOMER_MASTER_TMA.CUSTOMER)) + &apos; - &apos; +
+  LTrim(RTrim(AR_CUSTOMER_MASTER_TMA.NAME)) ACCOUNT,
+  AR_CUSTOMER_MISC_FLAG_TMA.MISC_FLAG_NUMBER,
+  AR_CUSTOMER_MISC_FLAG_TMA.MISC_FLAG_VALUE
+From AR_CUSTOMER_MASTER_TMA
+  Inner Join AR_CUSTOMER_MISC_FLAG_TMA On AR_CUSTOMER_MASTER_TMA.CUSTOMER =
+    AR_CUSTOMER_MISC_FLAG_TMA.CUSTOMER
+Where AR_CUSTOMER_MISC_FLAG_TMA.MISC_FLAG_NUMBER = &apos;99&apos; And
+  AR_CUSTOMER_MISC_FLAG_TMA.MISC_FLAG_VALUE = &apos;Y&apos;
+Order By CUSTNMBR
 "
 							Type="SQL"
 						/>
@@ -362,112 +373,7 @@ Where DM_DSTicketTracking.EntryID = &apos;@Request.EntryId~&apos;
 							PageRowCount="20"
 							ShowPageNumber="Numbered"
 						/>
-						<DataTableColumn
-							Header="EntryID"
-							ID="colEntryID"
-							>
-							<Label
-								Caption="@Data.EntryID~"
-								ID="colEntryID"
-							/>
-							<DataColumnSort
-								DataColumn="EntryID"
-								DataType="Number"
-							/>
-						</DataTableColumn>
-						<DataTableColumn
-							Header="DropOffDate"
-							ID="colDropOffDate"
-							>
-							<Label
-								Caption="@Data.DropOffDate~"
-								Format="Short Date"
-								ID="colDropOffDate"
-							/>
-							<DataColumnSort
-								DataColumn="DropOffDate"
-								DataType="Date"
-							/>
-						</DataTableColumn>
-						<DataTableColumn
-							Header="CUSTOMER"
-							ID="colCUSTOMER"
-							>
-							<Label
-								Caption="@Data.CUSTOMER~"
-								ID="colCUSTOMER"
-							/>
-							<DataColumnSort
-								DataColumn="CUSTOMER"
-								DataType="Text"
-							/>
-						</DataTableColumn>
-						<DataTableColumn
-							Header="CustDesc"
-							ID="colCustDesc"
-							>
-							<Label
-								Caption="@Data.CustDesc~"
-								ID="colCustDesc"
-							/>
-							<DataColumnSort
-								DataColumn="CustDesc"
-								DataType="Text"
-							/>
-						</DataTableColumn>
-						<DataTableColumn
-							Header="TotalTickets"
-							ID="colTotalTickets"
-							>
-							<Label
-								Caption="@Data.TotalTickets~"
-								ID="colTotalTickets"
-							/>
-							<DataColumnSort
-								DataColumn="TotalTickets"
-								DataType="Text"
-							/>
-						</DataTableColumn>
-						<DataTableColumn
-							Header="DeliveryLocation"
-							ID="colDeliveryLocation"
-							>
-							<Label
-								Caption="@Data.DeliveryLocation~"
-								ID="colDeliveryLocation"
-							/>
-							<DataColumnSort
-								DataColumn="DeliveryLocation"
-								DataType="Text"
-							/>
-						</DataTableColumn>
-						<DataTableColumn
-							Header="EnteredDate"
-							ID="colEnteredDate"
-							>
-							<Label
-								Caption="@Data.EnteredDate~"
-								Format="Short Date"
-								ID="colEnteredDate"
-							/>
-							<DataColumnSort
-								DataColumn="EnteredDate"
-								DataType="Date"
-							/>
-						</DataTableColumn>
-						<DataTableColumn
-							Header="EntryComplete"
-							ID="colEntryComplete"
-							>
-							<Label
-								Caption="@Data.EntryComplete~"
-								ID="colEntryComplete"
-							/>
-							<DataColumnSort
-								DataColumn="EntryComplete"
-								DataType="Text"
-							/>
-						</DataTableColumn>
+						<AutoColumns/>
 					</DataTable>
 				</Remark>
 			</Division>
@@ -494,13 +400,12 @@ if (entry.value == &quot;&quot;){
 	update.style.display = &quot;none&quot;;
 	dteDrop.value = today.value;
 	dteEntry.value = &quot;&quot;;
-	strComplete = &quot;1/1/1900&quot;;
 	done.checked = false;}
 else if (entry.value &gt; 0){
 	update.style.display = &quot;&quot;;
 	add.style.display = &quot;none&quot;;
 	//remove default date
-	if (dteEntry.value == &quot;1/1/1900&quot;) {dteEntry.value = &quot;&quot;;}
+	if (dteEntry.value == &quot;1/1/1900&quot;) {dteEntry.value = today.value;}
 }
 "
 		/>
