@@ -9,12 +9,7 @@
 	/>
 	<Body>
 		<ResponsiveRow>
-			<ResponsiveColumn
-				ColspanExtraSmallScreen="12"
-				ColspanLargeScreen="6"
-				ColspanMediumScreen="12"
-				ColspanSmallScreen="12"
-				>
+			<ResponsiveColumn>
 				<Division
 					Class="panel panel-default"
 					HtmlDiv="True"
@@ -50,9 +45,25 @@
 								ID="LocationMarker"
 								>
 								<DataLayer
-									ConnectionID="connMKC"
-									ID="dlDataLocations"
-									Source="Select Distinct MapMKCLocations.LOCNCODE As LOCNCODE,
+									ColumnNamesRow="1"
+									ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\LocationData.xlsx"
+									ExcelWorksheet="BranchData"
+									ID="dlBranchLocations"
+									Type="Excel"
+									>
+									<GeocodeColumns
+										CityDataColumn="City"
+										ID="MapPlaceData"
+										PostalCodeDataColumn="Zip"
+										StateProvinceDataColumn="State"
+										StreetDataColumn="Address"
+									/>
+								</DataLayer>
+								<Remark>
+									<DataLayer
+										ConnectionID="connMKC"
+										ID="dlDataLocations"
+										Source="Select Distinct MapMKCLocations.LOCNCODE As LOCNCODE,
   LTrim(RTrim(MapMKCLocations.ADDRESS1)) + &apos; &apos; +
   LTrim(RTrim(MapMKCLocations.CITY)) + &apos; &apos; +
   LTrim(RTrim(MapMKCLocations.STATEABBR)) + &apos; &apos; +
@@ -63,16 +74,17 @@
   LTrim(RTrim(MapMKCLocations.ZIPCODE)) As GeoZipCode,
   MapMKCLocations.LOCNDSCR As LocValue
 From MapMKCLocations"
-									Type="SQL"
-									>
-									<GeocodeColumns
-										CityDataColumn="GeoCity"
-										ID="MapPlaceData"
-										PlaceDataColumn="GeoPlace"
-										PostalCodeDataColumn="GeoZipCode"
-										StateProvinceDataColumn="GeoStateProvince"
-									/>
-								</DataLayer>
+										Type="SQL"
+										>
+										<GeocodeColumns
+											CityDataColumn="GeoCity"
+											ID="MapPlaceData"
+											PlaceDataColumn="GeoPlace"
+											PostalCodeDataColumn="GeoZipCode"
+											StateProvinceDataColumn="GeoStateProvince"
+										/>
+									</DataLayer>
+								</Remark>
 								<Action
 									ElementID="panel-detail-container"
 									ID="refLocationInfoTable"
@@ -84,88 +96,53 @@ From MapMKCLocations"
 									/>
 									<WaitPage/>
 								</Action>
-								<Remark>
-									<Action
-										ElementID="divLocDetail"
-										ID="showLocDetail"
-										Type="ShowElement"
-									/>
-								</Remark>
-								<Remark>
-									<MapMarkerImage>
-										<Remark>
-											<Image
-												Caption="elevator.gif"
-												Height="42"
-												ID="imgElevator"
-												Width="42"
-											/>
-										</Remark>
-									</MapMarkerImage>
-								</Remark>
-								<Remark>
-									<Action
-										ID="ActMapMarkerInfo"
-										Type="MapMarkerInfo"
-										>
-										<MapMarkerInfo>
-											<Label
-												Caption="Location: "
-												Class="ThemeBold"
-											/>
-											<Label
-												Caption="@Data.LOCNDSCR~"
-											/>
-											<LineBreak/>
-											<Label
-												Caption="@Data.LOCNCODE~"
-											/>
-										</MapMarkerInfo>
-									</Action>
-								</Remark>
 							</GoogleMapMarkers>
 						</GoogleMap>
 						<LineBreak/>
+					</Division>
+				</Division>
+			</ResponsiveColumn>
+			<ResponsiveColumn>
+				<Division
+					HtmlDiv="True"
+					ID="panel-detail-container"
+					>
+					<Division
+						Class="panel panel-default"
+						Condition="&quot;@Request.paramLocName~&quot;.length &gt; 0"
+						HtmlDiv="True"
+						ID="panel-detail"
+						>
 						<Division
+							Class="panel-heading"
 							HtmlDiv="True"
-							ID="panel-detail-container"
+							ID="panel-heading-detail"
 							>
-							<Division
-								Class="panel panel-default"
-								Condition="&quot;@Request.paramLocName~&quot;.length &gt; 0"
-								HtmlDiv="True"
-								ID="panel-detail"
+							<ResponsiveRow
+								CollisionBehavior="Overlap"
 								>
-								<Division
-									Class="panel-heading"
-									HtmlDiv="True"
-									ID="panel-heading-detail"
-									>
-									<ResponsiveRow
-										CollisionBehavior="Overlap"
+								<ResponsiveColumn>
+									<Label
+										Caption="Branch Details"
+									/>
+								</ResponsiveColumn>
+								<ResponsiveColumn>
+									<Label
+										Class="fa fa-close pull-right color-panel-heading"
 										>
-										<ResponsiveColumn>
-											<Label
-												Caption="Location Detail for @Request.paramLocName~"
+										<Action
+											ElementID="panel-detail-container"
+											ID="actCloseMapDetail"
+											Type="RefreshElement"
+											>
+											<LinkParams
+												paramLocName=""
 											/>
-										</ResponsiveColumn>
-										<ResponsiveColumn>
-											<Label
-												Class="fa fa-close pull-right color-panel-heading"
-												>
-												<Action
-													ElementID="panel-detail-container"
-													ID="actCloseMapDetail"
-													Type="RefreshElement"
-													>
-													<LinkParams
-														paramLocName=""
-													/>
-													<WaitPage/>
-												</Action>
-											</Label>
-											<IncludeHtml
-												Html="&lt;style&gt;
+											<WaitPage/>
+										</Action>
+									</Label>
+									<IncludeHtml
+										Html="&lt;style&gt;
 /* Color Classes */
 .color-panel-heading {
 	color: #6F767F !important;
@@ -174,95 +151,270 @@ From MapMKCLocations"
 	color: #000000 !important;
 }
 &lt;/style&gt;"
-											/>
-										</ResponsiveColumn>
-									</ResponsiveRow>
-								</Division>
-								<Division
-									Class="panel-body"
-									HtmlDiv="True"
-									ID="panel-body-detail"
+									/>
+								</ResponsiveColumn>
+							</ResponsiveRow>
+						</Division>
+						<Division
+							Class="panel-body"
+							HtmlDiv="True"
+							ID="panel-body-detail"
+							>
+							<ResponsiveRow>
+								<ResponsiveColumn
+									ColspanExtraSmallScreen="11"
+									ColspanLargeScreen="5"
+									ColspanMediumScreen="5"
+									ColspanSmallScreen="11"
 									>
-									<ResponsiveRow>
-										<ResponsiveColumn
-											ColspanExtraSmallScreen="1"
-											ColspanLargeScreen="1"
-											ColspanMediumScreen="1"
-											ColspanSmallScreen="1"
-											>
-											<Label
-												Class="fa fa-tachometer color-panel-heading"
-											/>
-										</ResponsiveColumn>
-										<ResponsiveColumn
-											ColspanExtraSmallScreen="11"
-											ColspanLargeScreen="5"
-											ColspanMediumScreen="5"
-											ColspanSmallScreen="11"
-											>
-											<Label
-												Caption="Financials Dashboard"
-												>
-												<Action
-													ID="lnkFinancials"
-													Type="Report"
-													>
-													<Target
-														FrameID="NewWindow"
-														ID="targetFinancials"
-														Report="Home.Financials"
-														RequestForwarding="True"
-														Type="Report"
-														>
-														<WaitPage/>
-													</Target>
-												</Action>
-											</Label>
-										</ResponsiveColumn>
-										<ResponsiveColumn>
-											<Image
-												Caption="location.jpg"
-												Height="250"
-												ID="imgLocation"
-												Width="325"
-											/>
-										</ResponsiveColumn>
-										<ResponsiveColumn
-											ColspanExtraSmallScreen="6"
-											ColspanLargeScreen="6"
-											ColspanMediumScreen="6"
-											ColspanSmallScreen="6"
-											>
-											<Label/>
-										</ResponsiveColumn>
-									</ResponsiveRow>
 									<DataTable
 										ID="tblLocationInfo"
 										>
-										<DataLayer
-											ConnectionID="connMKC"
-											ID="sqlLocInfo"
-											Source="SELECT DISTINCT 1 AS ID, LOCNDSCR AS AttrValue FROM MAPMKCLOCATIONS WHERE LOCNCODE=&apos;@Request.paramLocCd~&apos;
+										<Remark>
+											<DataLayer
+												ConnectionID="connMKC"
+												ID="sqlLocInfo"
+												Source="SELECT DISTINCT 1 AS ID, LOCNDSCR AS AttrValue FROM MAPMKCLOCATIONS WHERE LOCNCODE=&apos;@Request.paramLocCd~&apos;
 union 
 SELECT DISTINCT 2 AS ID, LTRIM(RTRIM(ADDRESS1)) + &apos; &apos; + LTRIM(RTRIM(CITY)) + &apos; &apos; + LTRIM(RTRIM(STATEABBR)) + &apos; &apos; + LTRIM(RTRIM(ZIPCODE)) AS LOCNADDR FROM MAPMKCLOCATIONS WHERE LOCNCODE=&apos;@Request.paramLocCd~&apos;
-union 
+/*union 
 SELECT 3 AS ID, AttrValue FROM MAPMKCLOCATIONS WHERE AttrType=&apos;Employees&apos; and LOCNCODE=&apos;@Request.paramLocCd~&apos;
 union
-SELECT 4 AS ID, AttrValue FROM MAPMKCLOCATIONS WHERE AttrType&lt;&gt;&apos;Employees&apos; and LOCNCODE=&apos;@Request.paramLocCd~&apos;
+SELECT 4 AS ID, AttrValue FROM MAPMKCLOCATIONS WHERE AttrType&lt;&gt;&apos;Employees&apos; and LOCNCODE=&apos;@Request.paramLocCd~&apos;*/
 ORDER BY ID"
-											Type="SQL"
-										/>
-										<DataTableColumn
-											ID="colAttributes"
+												Type="SQL"
+											/>
+										</Remark>
+										<DataLayer
+											ColumnNamesRow="1"
+											ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\LocationData.xlsx"
+											ExcelWorksheet="BranchData"
+											ID="xlsLocInfo"
+											Type="Excel"
 											>
-											<LineBreak/>
+											<ConditionFilter
+												Condition="&quot;@Request.paramLocName~&quot; = &quot;@Data.Location~&quot;"
+											/>
+										</DataLayer>
+										<DataTableColumn
+											Header="Location"
+											ID="colLocation"
+											>
 											<Label
-												Caption="@Data.AttrValue~"
+												Caption="@Data.Location~"
+												ID="lblLocation"
+											/>
+											<DataColumnSort
+												DataColumn="Location"
+											/>
+										</DataTableColumn>
+										<DataTableColumn
+											Header="Address"
+											ID="colAddress"
+											>
+											<Label
+												Caption="@Data.Address~"
+												ID="lblAddress"
+											/>
+											<DataColumnSort
+												DataColumn="Address"
+											/>
+										</DataTableColumn>
+										<DataTableColumn
+											Header="Address 2"
+											ID="colAddress 2"
+											>
+											<Label
+												Caption="@Data.Address 2~"
+												ID="lblAddress 2"
+											/>
+											<DataColumnSort
+												DataColumn="Address 2"
+											/>
+										</DataTableColumn>
+										<DataTableColumn
+											Header="City"
+											ID="colCity"
+											>
+											<Label
+												Caption="@Data.City~"
+												ID="lblCity"
+											/>
+											<DataColumnSort
+												DataColumn="City"
+											/>
+										</DataTableColumn>
+										<DataTableColumn
+											Header="State"
+											ID="colState"
+											>
+											<Label
+												Caption="@Data.State~"
+												ID="lblState"
+											/>
+											<DataColumnSort
+												DataColumn="State"
+											/>
+										</DataTableColumn>
+										<DataTableColumn
+											Header="Zip"
+											ID="colZip"
+											>
+											<Label
+												Caption="@Data.Zip~"
+												ID="lblZip"
+											/>
+											<DataColumnSort
+												DataColumn="Zip"
+												DataType="Number"
+											/>
+										</DataTableColumn>
+										<DataTableColumn
+											Header="Phone"
+											ID="colPhone"
+											>
+											<Label
+												Caption="@Data.Phone~"
+												ID="lblPhone"
+											/>
+											<DataColumnSort
+												DataColumn="Phone"
+											/>
+										</DataTableColumn>
+										<DataTableColumn
+											Header="Services"
+											ID="colServices"
+											>
+											<Label
+												Caption="@Data.Services~"
+												ID="lblServices"
+											/>
+											<DataColumnSort
+												DataColumn="Services"
 											/>
 										</DataTableColumn>
 									</DataTable>
-								</Division>
-							</Division>
+									<Label
+										Caption="Financials Dashboard"
+										Class="ThemeBold"
+										>
+										<Action
+											ID="lnkFinancials"
+											Type="Report"
+											>
+											<Target
+												FrameID="NewWindow"
+												ID="targetFinancials"
+												Report="Unknown.SubReports.BranchFinancials"
+												RequestForwarding="True"
+												Type="Report"
+												>
+												<WaitPage/>
+											</Target>
+											<LinkParams
+												paramLocCd="@Request.paramLocCd~"
+												paramLocName="@Request.paramLocName~"
+											/>
+										</Action>
+									</Label>
+									<LineBreak/>
+									<LineBreak/>
+									<Label
+										Caption="Additional Branch Reports"
+										Class="ThemeBold"
+										>
+										<Action
+											ID="lnkFinancials"
+											Type="Report"
+											>
+											<Target
+												FrameID="NewWindow"
+												ID="targetAdditional"
+												Report="Unknown.SubReports.AdditionalReports"
+												RequestForwarding="True"
+												Type="Report"
+												>
+												<WaitPage/>
+											</Target>
+											<LinkParams
+												paramLocCd="@Request.paramLocCd~"
+												paramLocName="@Request.paramLocName~"
+											/>
+										</Action>
+									</Label>
+									<LineBreak/>
+									<LineBreak/>
+								</ResponsiveColumn>
+								<ResponsiveColumn>
+									<DataTable
+										AccessibleHeaders="True"
+										AccessibleSummary="AnalysisGrid DataTable"
+										ID="dtImageLookup"
+										KeepScrollPosition="True"
+										RememberSort="True"
+										ResizableColumns="True"
+										SortArrows="True"
+										TableBorder="0"
+										>
+										<DataLayer
+											ColumnNamesRow="1"
+											ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\ImageLookup.xlsx"
+											ExcelWorksheet="Images"
+											ID="dlImageLookup"
+											Type="Excel"
+											>
+											<ConditionFilter
+												Condition="InStr(&quot;@Request.paramLocName~&quot;, &quot;@Data.Location~ &gt; 0"
+											/>
+										</DataLayer>
+										<InteractivePaging
+											CaptionType="Image"
+											HideShowPrevNextCaptions="False"
+											HideWhenOnePage="True"
+											IDnotSupportedHere="pagingTableNumbered"
+											Location="Top"
+											PageRowCount="20"
+											ShowPageNumber="Numbered"
+										/>
+										<Remark>
+											<DataTableColumn
+												Header="Column1"
+												ID="colColumn1"
+												>
+												<Label
+													Caption="@Data.Column1~"
+													ID="colColumn1"
+												/>
+												<DataColumnSort
+													DataColumn="Column1"
+													DataType="Text"
+												/>
+											</DataTableColumn>
+										</Remark>
+										<DataTableColumn
+											Header="Location Photo"
+											ID="colColumn2"
+											>
+											<Remark>
+												<Label
+													Caption="@Data.Column2~ @Request.paramLocName~"
+													ID="colColumn2"
+												/>
+											</Remark>
+											<Image
+												Caption="@Data.Column2~"
+												Height="335"
+												ID="imgLocation"
+												Width="485"
+											/>
+											<DataColumnSort
+												DataColumn="Column2"
+												DataType="Text"
+											/>
+										</DataTableColumn>
+									</DataTable>
+								</ResponsiveColumn>
+							</ResponsiveRow>
 						</Division>
 					</Division>
 				</Division>

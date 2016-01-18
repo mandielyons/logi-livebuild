@@ -60,13 +60,13 @@
 								<Column>
 									<InputSelectList
 										Class="chosen-select"
-										DefaultValue="@Request.iptCity~"
 										ID="iptCity"
 										MultiSelect="True"
 										OptionCaptionColumn="CITY"
 										OptionValueColumn="CITY"
 										>
 										<DataLayer
+											CellRange="A2:A106"
 											ColumnNamesRow="1"
 											ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx"
 											ExcelWorksheet="Cities"
@@ -240,7 +240,6 @@
 									</Remark>
 									<ConditionFilter
 										Condition="InStr(UCase(&quot;@Data.city~&quot;), &quot;@Request.iptCity~&quot;) &gt; 0"
-										IncludeCondition="@Request.iptCity&lt;&gt; &quot;&quot;"
 									/>
 								</DataLayer>
 								<Action
