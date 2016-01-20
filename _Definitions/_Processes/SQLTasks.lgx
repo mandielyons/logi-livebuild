@@ -41,7 +41,7 @@ WHERE DM_DSTicketTracking.EntryID = &apos;@Request.iptEntryId~&apos;"
 			Type="Report"
 			>
 			<Target
-				Report="Unknown.SubReports.SubReport_TMADirectShipEntry"
+				Report="TMAReports.TMADirectShip"
 				Type="Report"
 				>
 				<WaitPage/>

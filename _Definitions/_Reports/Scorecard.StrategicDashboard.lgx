@@ -684,7 +684,7 @@
 																					Condition="@Data.Progress~ &gt; 80"
 																				/>
 																				<ConditionalClass
-																					Class="fa fa-minus text-warning"
+																					Class="fa fa-star text-warning"
 																					Condition="@Data.Progress~ &gt; 50 "
 																				/>
 																				<ConditionalClass
@@ -774,19 +774,126 @@
 																						/>
 																					</Label>
 																				</DataTableColumn>
-																				<DataTableColumn
-																					ID="colNotes"
-																					>
-																					<Label
-																						Caption="@Data.Notes~"
+																				<Remark>
+																					<DataTableColumn
 																						ID="colNotes"
 																						>
-																						<ConditionalClass/>
-																					</Label>
-																				</DataTableColumn>
+																						<Label
+																							Caption="@Data.Notes~"
+																							ID="colNotes"
+																							>
+																							<ConditionalClass/>
+																						</Label>
+																					</DataTableColumn>
+																				</Remark>
 																			</SubDataTable>
 																		</MoreInfoRow>
 																	</DataTable>
+																	<Division
+																		Class="panel-body"
+																		HtmlDiv="True"
+																		ID="panel-notes"
+																		>
+																		<DataTable
+																			AccessibleHeaders="True"
+																			AccessibleSummary="AnalysisGrid DataTable"
+																			ID="dtGrowth"
+																			KeepScrollPosition="True"
+																			RememberSort="True"
+																			ResizableColumns="False"
+																			SortArrows="True"
+																			TableBorder="0"
+																			Width="100"
+																			WidthScale="%"
+																			>
+																			<DataLayer
+																				ColumnNamesRow="1"
+																				ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
+																				ExcelWorksheet="Initiatives"
+																				ID="dlGrowth"
+																				Type="Excel"
+																				>
+																				<ConditionFilter
+																					Condition="@Data.PID~ = 1 AND @Data.INID~ = 1"
+																				/>
+																			</DataLayer>
+																			<Remark>
+																				<DataTableColumn
+																					Header="PID"
+																					ID="colPID"
+																					>
+																					<Label
+																						Caption="@Data.PID~"
+																						ID="colPID"
+																					/>
+																					<DataColumnSort
+																						DataColumn="PID"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="INID"
+																					ID="colINID"
+																					>
+																					<Label
+																						Caption="@Data.INID~"
+																						ID="colINID"
+																					/>
+																					<DataColumnSort
+																						DataColumn="INID"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="Description"
+																					ID="colDescription"
+																					>
+																					<Label
+																						Caption="@Data.Description~"
+																						ID="colDescription"
+																					/>
+																					<DataColumnSort
+																						DataColumn="Description"
+																						DataType="Text"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="Progress"
+																					ID="colProgress"
+																					>
+																					<Label
+																						Caption="@Data.Progress~"
+																						ID="colProgress"
+																					/>
+																					<DataColumnSort
+																						DataColumn="Progress"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<DataTableColumn
+																				Header="Notes"
+																				ID="colNotes"
+																				>
+																				<Label
+																					Caption="@Data.Notes~"
+																					ID="colNotes"
+																				/>
+																				<Remark>
+																					<DataColumnSort
+																						DataColumn="Notes"
+																						DataType="Text"
+																					/>
+																				</Remark>
+																			</DataTableColumn>
+																		</DataTable>
+																	</Division>
 																</Division>
 															</ResponsiveColumn>
 														</ResponsiveRow>
@@ -1154,7 +1261,7 @@
 																					Condition="@Data.Progress~ &gt; 80"
 																				/>
 																				<ConditionalClass
-																					Class="fa fa-minus text-warning"
+																					Class="fa fa-star text-warning"
 																					Condition="@Data.Progress~ &gt; 50 "
 																				/>
 																				<ConditionalClass
@@ -1244,19 +1351,126 @@
 																						/>
 																					</Label>
 																				</DataTableColumn>
-																				<DataTableColumn
-																					ID="colNotes"
-																					>
-																					<Label
-																						Caption="@Data.Notes~"
+																				<Remark>
+																					<DataTableColumn
 																						ID="colNotes"
 																						>
-																						<ConditionalClass/>
-																					</Label>
-																				</DataTableColumn>
+																						<Label
+																							Caption="@Data.Notes~"
+																							ID="colNotes"
+																							>
+																							<ConditionalClass/>
+																						</Label>
+																					</DataTableColumn>
+																				</Remark>
 																			</SubDataTable>
 																		</MoreInfoRow>
 																	</DataTable>
+																	<Division
+																		Class="panel-body"
+																		HtmlDiv="True"
+																		ID="panel-notes"
+																		>
+																		<DataTable
+																			AccessibleHeaders="True"
+																			AccessibleSummary="AnalysisGrid DataTable"
+																			ID="dtExpense"
+																			KeepScrollPosition="True"
+																			RememberSort="True"
+																			ResizableColumns="False"
+																			SortArrows="True"
+																			TableBorder="0"
+																			Width="100"
+																			WidthScale="%"
+																			>
+																			<DataLayer
+																				ColumnNamesRow="1"
+																				ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
+																				ExcelWorksheet="Initiatives"
+																				ID="dlExpense"
+																				Type="Excel"
+																				>
+																				<ConditionFilter
+																					Condition="@Data.PID~ = 1 AND @Data.INID~ = 2"
+																				/>
+																			</DataLayer>
+																			<Remark>
+																				<DataTableColumn
+																					Header="PID"
+																					ID="colPID"
+																					>
+																					<Label
+																						Caption="@Data.PID~"
+																						ID="colPID"
+																					/>
+																					<DataColumnSort
+																						DataColumn="PID"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="INID"
+																					ID="colINID"
+																					>
+																					<Label
+																						Caption="@Data.INID~"
+																						ID="colINID"
+																					/>
+																					<DataColumnSort
+																						DataColumn="INID"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="Description"
+																					ID="colDescription"
+																					>
+																					<Label
+																						Caption="@Data.Description~"
+																						ID="colDescription"
+																					/>
+																					<DataColumnSort
+																						DataColumn="Description"
+																						DataType="Text"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="Progress"
+																					ID="colProgress"
+																					>
+																					<Label
+																						Caption="@Data.Progress~"
+																						ID="colProgress"
+																					/>
+																					<DataColumnSort
+																						DataColumn="Progress"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<DataTableColumn
+																				Header="Notes"
+																				ID="colNotes"
+																				>
+																				<Label
+																					Caption="@Data.Notes~"
+																					ID="colNotes"
+																				/>
+																				<Remark>
+																					<DataColumnSort
+																						DataColumn="Notes"
+																						DataType="Text"
+																					/>
+																				</Remark>
+																			</DataTableColumn>
+																		</DataTable>
+																	</Division>
 																</Division>
 															</ResponsiveColumn>
 														</ResponsiveRow>
@@ -1440,7 +1654,7 @@
 																					Condition="@Data.Progress~ &gt; 80"
 																				/>
 																				<ConditionalClass
-																					Class="fa fa-minus text-warning"
+																					Class="fa fa-star text-warning"
 																					Condition="@Data.Progress~ &gt; 50 "
 																				/>
 																				<ConditionalClass
@@ -1530,19 +1744,126 @@
 																						/>
 																					</Label>
 																				</DataTableColumn>
-																				<DataTableColumn
-																					ID="colNotes"
-																					>
-																					<Label
-																						Caption="@Data.Notes~"
+																				<Remark>
+																					<DataTableColumn
 																						ID="colNotes"
 																						>
-																						<ConditionalClass/>
-																					</Label>
-																				</DataTableColumn>
+																						<Label
+																							Caption="@Data.Notes~"
+																							ID="colNotes"
+																							>
+																							<ConditionalClass/>
+																						</Label>
+																					</DataTableColumn>
+																				</Remark>
 																			</SubDataTable>
 																		</MoreInfoRow>
 																	</DataTable>
+																	<Division
+																		Class="panel-body"
+																		HtmlDiv="True"
+																		ID="panel-notes"
+																		>
+																		<DataTable
+																			AccessibleHeaders="True"
+																			AccessibleSummary="AnalysisGrid DataTable"
+																			ID="dtVoting"
+																			KeepScrollPosition="True"
+																			RememberSort="True"
+																			ResizableColumns="False"
+																			SortArrows="True"
+																			TableBorder="0"
+																			Width="100"
+																			WidthScale="%"
+																			>
+																			<DataLayer
+																				ColumnNamesRow="1"
+																				ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
+																				ExcelWorksheet="Initiatives"
+																				ID="dlVoting"
+																				Type="Excel"
+																				>
+																				<ConditionFilter
+																					Condition="@Data.PID~ = 1 AND @Data.INID~ = 3"
+																				/>
+																			</DataLayer>
+																			<Remark>
+																				<DataTableColumn
+																					Header="PID"
+																					ID="colPID"
+																					>
+																					<Label
+																						Caption="@Data.PID~"
+																						ID="colPID"
+																					/>
+																					<DataColumnSort
+																						DataColumn="PID"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="INID"
+																					ID="colINID"
+																					>
+																					<Label
+																						Caption="@Data.INID~"
+																						ID="colINID"
+																					/>
+																					<DataColumnSort
+																						DataColumn="INID"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="Description"
+																					ID="colDescription"
+																					>
+																					<Label
+																						Caption="@Data.Description~"
+																						ID="colDescription"
+																					/>
+																					<DataColumnSort
+																						DataColumn="Description"
+																						DataType="Text"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="Progress"
+																					ID="colProgress"
+																					>
+																					<Label
+																						Caption="@Data.Progress~"
+																						ID="colProgress"
+																					/>
+																					<DataColumnSort
+																						DataColumn="Progress"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<DataTableColumn
+																				Header="Notes"
+																				ID="colNotes"
+																				>
+																				<Label
+																					Caption="@Data.Notes~"
+																					ID="colNotes"
+																				/>
+																				<Remark>
+																					<DataColumnSort
+																						DataColumn="Notes"
+																						DataType="Text"
+																					/>
+																				</Remark>
+																			</DataTableColumn>
+																		</DataTable>
+																	</Division>
 																</Division>
 															</ResponsiveColumn>
 														</ResponsiveRow>
@@ -1724,7 +2045,7 @@
 																					Condition="@Data.Progress~ &gt; 80"
 																				/>
 																				<ConditionalClass
-																					Class="fa fa-minus text-warning"
+																					Class="fa fa-star text-warning"
 																					Condition="@Data.Progress~ &gt; 50 "
 																				/>
 																				<ConditionalClass
@@ -1814,19 +2135,126 @@
 																						/>
 																					</Label>
 																				</DataTableColumn>
-																				<DataTableColumn
-																					ID="colNotes"
-																					>
-																					<Label
-																						Caption="@Data.Notes~"
+																				<Remark>
+																					<DataTableColumn
 																						ID="colNotes"
 																						>
-																						<ConditionalClass/>
-																					</Label>
-																				</DataTableColumn>
+																						<Label
+																							Caption="@Data.Notes~"
+																							ID="colNotes"
+																							>
+																							<ConditionalClass/>
+																						</Label>
+																					</DataTableColumn>
+																				</Remark>
 																			</SubDataTable>
 																		</MoreInfoRow>
 																	</DataTable>
+																	<Division
+																		Class="panel-body"
+																		HtmlDiv="True"
+																		ID="panel-notes"
+																		>
+																		<DataTable
+																			AccessibleHeaders="True"
+																			AccessibleSummary="AnalysisGrid DataTable"
+																			ID="dtStory"
+																			KeepScrollPosition="True"
+																			RememberSort="True"
+																			ResizableColumns="False"
+																			SortArrows="True"
+																			TableBorder="0"
+																			Width="100"
+																			WidthScale="%"
+																			>
+																			<DataLayer
+																				ColumnNamesRow="1"
+																				ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
+																				ExcelWorksheet="Initiatives"
+																				ID="dlStory"
+																				Type="Excel"
+																				>
+																				<ConditionFilter
+																					Condition="@Data.PID~ = 1 AND @Data.INID~ = 4"
+																				/>
+																			</DataLayer>
+																			<Remark>
+																				<DataTableColumn
+																					Header="PID"
+																					ID="colPID"
+																					>
+																					<Label
+																						Caption="@Data.PID~"
+																						ID="colPID"
+																					/>
+																					<DataColumnSort
+																						DataColumn="PID"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="INID"
+																					ID="colINID"
+																					>
+																					<Label
+																						Caption="@Data.INID~"
+																						ID="colINID"
+																					/>
+																					<DataColumnSort
+																						DataColumn="INID"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="Description"
+																					ID="colDescription"
+																					>
+																					<Label
+																						Caption="@Data.Description~"
+																						ID="colDescription"
+																					/>
+																					<DataColumnSort
+																						DataColumn="Description"
+																						DataType="Text"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="Progress"
+																					ID="colProgress"
+																					>
+																					<Label
+																						Caption="@Data.Progress~"
+																						ID="colProgress"
+																					/>
+																					<DataColumnSort
+																						DataColumn="Progress"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<DataTableColumn
+																				Header="Notes"
+																				ID="colNotes"
+																				>
+																				<Label
+																					Caption="@Data.Notes~"
+																					ID="colNotes"
+																				/>
+																				<Remark>
+																					<DataColumnSort
+																						DataColumn="Notes"
+																						DataType="Text"
+																					/>
+																				</Remark>
+																			</DataTableColumn>
+																		</DataTable>
+																	</Division>
 																</Division>
 															</ResponsiveColumn>
 														</ResponsiveRow>
@@ -2016,7 +2444,7 @@
 																					Condition="@Data.Progress~ &gt; 80"
 																				/>
 																				<ConditionalClass
-																					Class="fa fa-minus text-warning"
+																					Class="fa fa-star text-warning"
 																					Condition="@Data.Progress~ &gt; 50 "
 																				/>
 																				<ConditionalClass
@@ -2106,19 +2534,126 @@
 																						/>
 																					</Label>
 																				</DataTableColumn>
-																				<DataTableColumn
-																					ID="colNotes"
-																					>
-																					<Label
-																						Caption="@Data.Notes~"
+																				<Remark>
+																					<DataTableColumn
 																						ID="colNotes"
 																						>
-																						<ConditionalClass/>
-																					</Label>
-																				</DataTableColumn>
+																						<Label
+																							Caption="@Data.Notes~"
+																							ID="colNotes"
+																							>
+																							<ConditionalClass/>
+																						</Label>
+																					</DataTableColumn>
+																				</Remark>
 																			</SubDataTable>
 																		</MoreInfoRow>
 																	</DataTable>
+																	<Division
+																		Class="panel-body"
+																		HtmlDiv="True"
+																		ID="panel-notes"
+																		>
+																		<DataTable
+																			AccessibleHeaders="True"
+																			AccessibleSummary="AnalysisGrid DataTable"
+																			ID="dtSales"
+																			KeepScrollPosition="True"
+																			RememberSort="True"
+																			ResizableColumns="False"
+																			SortArrows="True"
+																			TableBorder="0"
+																			Width="100"
+																			WidthScale="%"
+																			>
+																			<DataLayer
+																				ColumnNamesRow="1"
+																				ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
+																				ExcelWorksheet="Initiatives"
+																				ID="dlSales"
+																				Type="Excel"
+																				>
+																				<ConditionFilter
+																					Condition="@Data.PID~ = 2 AND @Data.INID~ = 1"
+																				/>
+																			</DataLayer>
+																			<Remark>
+																				<DataTableColumn
+																					Header="PID"
+																					ID="colPID"
+																					>
+																					<Label
+																						Caption="@Data.PID~"
+																						ID="colPID"
+																					/>
+																					<DataColumnSort
+																						DataColumn="PID"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="INID"
+																					ID="colINID"
+																					>
+																					<Label
+																						Caption="@Data.INID~"
+																						ID="colINID"
+																					/>
+																					<DataColumnSort
+																						DataColumn="INID"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="Description"
+																					ID="colDescription"
+																					>
+																					<Label
+																						Caption="@Data.Description~"
+																						ID="colDescription"
+																					/>
+																					<DataColumnSort
+																						DataColumn="Description"
+																						DataType="Text"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="Progress"
+																					ID="colProgress"
+																					>
+																					<Label
+																						Caption="@Data.Progress~"
+																						ID="colProgress"
+																					/>
+																					<DataColumnSort
+																						DataColumn="Progress"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<DataTableColumn
+																				Header="Notes"
+																				ID="colNotes"
+																				>
+																				<Label
+																					Caption="@Data.Notes~"
+																					ID="colNotes"
+																				/>
+																				<Remark>
+																					<DataColumnSort
+																						DataColumn="Notes"
+																						DataType="Text"
+																					/>
+																				</Remark>
+																			</DataTableColumn>
+																		</DataTable>
+																	</Division>
 																</Division>
 															</ResponsiveColumn>
 														</ResponsiveRow>
@@ -2308,7 +2843,7 @@
 																					Condition="@Data.Progress~ &gt; 80"
 																				/>
 																				<ConditionalClass
-																					Class="fa fa-minus text-warning"
+																					Class="fa fa-star text-warning"
 																					Condition="@Data.Progress~ &gt; 50 "
 																				/>
 																				<ConditionalClass
@@ -2398,19 +2933,126 @@
 																						/>
 																					</Label>
 																				</DataTableColumn>
-																				<DataTableColumn
-																					ID="colNotes"
-																					>
-																					<Label
-																						Caption="@Data.Notes~"
+																				<Remark>
+																					<DataTableColumn
 																						ID="colNotes"
 																						>
-																						<ConditionalClass/>
-																					</Label>
-																				</DataTableColumn>
+																						<Label
+																							Caption="@Data.Notes~"
+																							ID="colNotes"
+																							>
+																							<ConditionalClass/>
+																						</Label>
+																					</DataTableColumn>
+																				</Remark>
 																			</SubDataTable>
 																		</MoreInfoRow>
 																	</DataTable>
+																	<Division
+																		Class="panel-body"
+																		HtmlDiv="True"
+																		ID="panel-notes"
+																		>
+																		<DataTable
+																			AccessibleHeaders="True"
+																			AccessibleSummary="AnalysisGrid DataTable"
+																			ID="dtExperience"
+																			KeepScrollPosition="True"
+																			RememberSort="True"
+																			ResizableColumns="False"
+																			SortArrows="True"
+																			TableBorder="0"
+																			Width="100"
+																			WidthScale="%"
+																			>
+																			<DataLayer
+																				ColumnNamesRow="1"
+																				ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
+																				ExcelWorksheet="Initiatives"
+																				ID="dlExperience"
+																				Type="Excel"
+																				>
+																				<ConditionFilter
+																					Condition="@Data.PID~ = 2 AND @Data.INID~ = 2"
+																				/>
+																			</DataLayer>
+																			<Remark>
+																				<DataTableColumn
+																					Header="PID"
+																					ID="colPID"
+																					>
+																					<Label
+																						Caption="@Data.PID~"
+																						ID="colPID"
+																					/>
+																					<DataColumnSort
+																						DataColumn="PID"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="INID"
+																					ID="colINID"
+																					>
+																					<Label
+																						Caption="@Data.INID~"
+																						ID="colINID"
+																					/>
+																					<DataColumnSort
+																						DataColumn="INID"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="Description"
+																					ID="colDescription"
+																					>
+																					<Label
+																						Caption="@Data.Description~"
+																						ID="colDescription"
+																					/>
+																					<DataColumnSort
+																						DataColumn="Description"
+																						DataType="Text"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="Progress"
+																					ID="colProgress"
+																					>
+																					<Label
+																						Caption="@Data.Progress~"
+																						ID="colProgress"
+																					/>
+																					<DataColumnSort
+																						DataColumn="Progress"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<DataTableColumn
+																				Header="Notes"
+																				ID="colNotes"
+																				>
+																				<Label
+																					Caption="@Data.Notes~"
+																					ID="colNotes"
+																				/>
+																				<Remark>
+																					<DataColumnSort
+																						DataColumn="Notes"
+																						DataType="Text"
+																					/>
+																				</Remark>
+																			</DataTableColumn>
+																		</DataTable>
+																	</Division>
 																</Division>
 															</ResponsiveColumn>
 														</ResponsiveRow>
@@ -2593,7 +3235,7 @@
 																					Condition="@Data.Progress~ &gt; 80"
 																				/>
 																				<ConditionalClass
-																					Class="fa fa-minus text-warning"
+																					Class="fa fa-star text-warning"
 																					Condition="@Data.Progress~ &gt; 50"
 																				/>
 																				<ConditionalClass
@@ -2683,19 +3325,126 @@
 																						/>
 																					</Label>
 																				</DataTableColumn>
-																				<DataTableColumn
-																					ID="colNotes"
-																					>
-																					<Label
-																						Caption="@Data.Notes~"
+																				<Remark>
+																					<DataTableColumn
 																						ID="colNotes"
 																						>
-																						<ConditionalClass/>
-																					</Label>
-																				</DataTableColumn>
+																						<Label
+																							Caption="@Data.Notes~"
+																							ID="colNotes"
+																							>
+																							<ConditionalClass/>
+																						</Label>
+																					</DataTableColumn>
+																				</Remark>
 																			</SubDataTable>
 																		</MoreInfoRow>
 																	</DataTable>
+																	<Division
+																		Class="panel-body"
+																		HtmlDiv="True"
+																		ID="panel-notes"
+																		>
+																		<DataTable
+																			AccessibleHeaders="True"
+																			AccessibleSummary="AnalysisGrid DataTable"
+																			ID="dt40YrOld"
+																			KeepScrollPosition="True"
+																			RememberSort="True"
+																			ResizableColumns="False"
+																			SortArrows="True"
+																			TableBorder="0"
+																			Width="100"
+																			WidthScale="%"
+																			>
+																			<DataLayer
+																				ColumnNamesRow="1"
+																				ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
+																				ExcelWorksheet="Initiatives"
+																				ID="dl40YrOld"
+																				Type="Excel"
+																				>
+																				<ConditionFilter
+																					Condition="@Data.PID~ = 2 AND @Data.INID~ = 3"
+																				/>
+																			</DataLayer>
+																			<Remark>
+																				<DataTableColumn
+																					Header="PID"
+																					ID="colPID"
+																					>
+																					<Label
+																						Caption="@Data.PID~"
+																						ID="colPID"
+																					/>
+																					<DataColumnSort
+																						DataColumn="PID"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="INID"
+																					ID="colINID"
+																					>
+																					<Label
+																						Caption="@Data.INID~"
+																						ID="colINID"
+																					/>
+																					<DataColumnSort
+																						DataColumn="INID"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="Description"
+																					ID="colDescription"
+																					>
+																					<Label
+																						Caption="@Data.Description~"
+																						ID="colDescription"
+																					/>
+																					<DataColumnSort
+																						DataColumn="Description"
+																						DataType="Text"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="Progress"
+																					ID="colProgress"
+																					>
+																					<Label
+																						Caption="@Data.Progress~"
+																						ID="colProgress"
+																					/>
+																					<DataColumnSort
+																						DataColumn="Progress"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<DataTableColumn
+																				Header="Notes"
+																				ID="colNotes"
+																				>
+																				<Label
+																					Caption="@Data.Notes~"
+																					ID="colNotes"
+																				/>
+																				<Remark>
+																					<DataColumnSort
+																						DataColumn="Notes"
+																						DataType="Text"
+																					/>
+																				</Remark>
+																			</DataTableColumn>
+																		</DataTable>
+																	</Division>
 																</Division>
 															</ResponsiveColumn>
 														</ResponsiveRow>
@@ -2877,7 +3626,7 @@
 																					Condition="@Data.Progress~ &gt; 80"
 																				/>
 																				<ConditionalClass
-																					Class="fa fa-minus text-warning"
+																					Class="fa fa-star text-warning"
 																					Condition="@Data.Progress~ &gt; 50 "
 																				/>
 																				<ConditionalClass
@@ -2967,19 +3716,126 @@
 																						/>
 																					</Label>
 																				</DataTableColumn>
-																				<DataTableColumn
-																					ID="colNotes"
-																					>
-																					<Label
-																						Caption="@Data.Notes~"
+																				<Remark>
+																					<DataTableColumn
 																						ID="colNotes"
 																						>
-																						<ConditionalClass/>
-																					</Label>
-																				</DataTableColumn>
+																						<Label
+																							Caption="@Data.Notes~"
+																							ID="colNotes"
+																							>
+																							<ConditionalClass/>
+																						</Label>
+																					</DataTableColumn>
+																				</Remark>
 																			</SubDataTable>
 																		</MoreInfoRow>
 																	</DataTable>
+																	<Division
+																		Class="panel-body"
+																		HtmlDiv="True"
+																		ID="panel-notes"
+																		>
+																		<DataTable
+																			AccessibleHeaders="True"
+																			AccessibleSummary="AnalysisGrid DataTable"
+																			ID="dtPrecision"
+																			KeepScrollPosition="True"
+																			RememberSort="True"
+																			ResizableColumns="False"
+																			SortArrows="True"
+																			TableBorder="0"
+																			Width="100"
+																			WidthScale="%"
+																			>
+																			<DataLayer
+																				ColumnNamesRow="1"
+																				ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
+																				ExcelWorksheet="Initiatives"
+																				ID="dlPrecision"
+																				Type="Excel"
+																				>
+																				<ConditionFilter
+																					Condition="@Data.PID~ = 2 AND @Data.INID~ = 4"
+																				/>
+																			</DataLayer>
+																			<Remark>
+																				<DataTableColumn
+																					Header="PID"
+																					ID="colPID"
+																					>
+																					<Label
+																						Caption="@Data.PID~"
+																						ID="colPID"
+																					/>
+																					<DataColumnSort
+																						DataColumn="PID"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="INID"
+																					ID="colINID"
+																					>
+																					<Label
+																						Caption="@Data.INID~"
+																						ID="colINID"
+																					/>
+																					<DataColumnSort
+																						DataColumn="INID"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="Description"
+																					ID="colDescription"
+																					>
+																					<Label
+																						Caption="@Data.Description~"
+																						ID="colDescription"
+																					/>
+																					<DataColumnSort
+																						DataColumn="Description"
+																						DataType="Text"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="Progress"
+																					ID="colProgress"
+																					>
+																					<Label
+																						Caption="@Data.Progress~"
+																						ID="colProgress"
+																					/>
+																					<DataColumnSort
+																						DataColumn="Progress"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<DataTableColumn
+																				Header="Notes"
+																				ID="colNotes"
+																				>
+																				<Label
+																					Caption="@Data.Notes~"
+																					ID="colNotes"
+																				/>
+																				<Remark>
+																					<DataColumnSort
+																						DataColumn="Notes"
+																						DataType="Text"
+																					/>
+																				</Remark>
+																			</DataTableColumn>
+																		</DataTable>
+																	</Division>
 																</Division>
 															</ResponsiveColumn>
 														</ResponsiveRow>
@@ -3169,7 +4025,7 @@
 																					Condition="@Data.Progress~ &gt; 80"
 																				/>
 																				<ConditionalClass
-																					Class="fa fa-minus text-warning"
+																					Class="fa fa-star text-warning"
 																					Condition="@Data.Progress~ &gt; 50 "
 																				/>
 																				<ConditionalClass
@@ -3259,19 +4115,126 @@
 																						/>
 																					</Label>
 																				</DataTableColumn>
-																				<DataTableColumn
-																					ID="colNotes"
-																					>
-																					<Label
-																						Caption="@Data.Notes~"
+																				<Remark>
+																					<DataTableColumn
 																						ID="colNotes"
 																						>
-																						<ConditionalClass/>
-																					</Label>
-																				</DataTableColumn>
+																						<Label
+																							Caption="@Data.Notes~"
+																							ID="colNotes"
+																							>
+																							<ConditionalClass/>
+																						</Label>
+																					</DataTableColumn>
+																				</Remark>
 																			</SubDataTable>
 																		</MoreInfoRow>
 																	</DataTable>
+																	<Division
+																		Class="panel-body"
+																		HtmlDiv="True"
+																		ID="panel-notes"
+																		>
+																		<DataTable
+																			AccessibleHeaders="True"
+																			AccessibleSummary="AnalysisGrid DataTable"
+																			ID="dtCommunicate"
+																			KeepScrollPosition="True"
+																			RememberSort="True"
+																			ResizableColumns="False"
+																			SortArrows="True"
+																			TableBorder="0"
+																			Width="100"
+																			WidthScale="%"
+																			>
+																			<DataLayer
+																				ColumnNamesRow="1"
+																				ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
+																				ExcelWorksheet="Initiatives"
+																				ID="dlCommunicate"
+																				Type="Excel"
+																				>
+																				<ConditionFilter
+																					Condition="@Data.PID~ = 3 AND @Data.INID~ = 1"
+																				/>
+																			</DataLayer>
+																			<Remark>
+																				<DataTableColumn
+																					Header="PID"
+																					ID="colPID"
+																					>
+																					<Label
+																						Caption="@Data.PID~"
+																						ID="colPID"
+																					/>
+																					<DataColumnSort
+																						DataColumn="PID"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="INID"
+																					ID="colINID"
+																					>
+																					<Label
+																						Caption="@Data.INID~"
+																						ID="colINID"
+																					/>
+																					<DataColumnSort
+																						DataColumn="INID"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="Description"
+																					ID="colDescription"
+																					>
+																					<Label
+																						Caption="@Data.Description~"
+																						ID="colDescription"
+																					/>
+																					<DataColumnSort
+																						DataColumn="Description"
+																						DataType="Text"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="Progress"
+																					ID="colProgress"
+																					>
+																					<Label
+																						Caption="@Data.Progress~"
+																						ID="colProgress"
+																					/>
+																					<DataColumnSort
+																						DataColumn="Progress"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<DataTableColumn
+																				Header="Notes"
+																				ID="colNotes"
+																				>
+																				<Label
+																					Caption="@Data.Notes~"
+																					ID="colNotes"
+																				/>
+																				<Remark>
+																					<DataColumnSort
+																						DataColumn="Notes"
+																						DataType="Text"
+																					/>
+																				</Remark>
+																			</DataTableColumn>
+																		</DataTable>
+																	</Division>
 																</Division>
 															</ResponsiveColumn>
 														</ResponsiveRow>
@@ -3461,7 +4424,7 @@
 																					Condition="@Data.Progress~ &gt; 80"
 																				/>
 																				<ConditionalClass
-																					Class="fa fa-minus text-warning"
+																					Class="fa fa-star text-warning"
 																					Condition="@Data.Progress~ &gt; 50 "
 																				/>
 																				<ConditionalClass
@@ -3551,19 +4514,126 @@
 																						/>
 																					</Label>
 																				</DataTableColumn>
-																				<DataTableColumn
-																					ID="colNotes"
-																					>
-																					<Label
-																						Caption="@Data.Notes~"
+																				<Remark>
+																					<DataTableColumn
 																						ID="colNotes"
 																						>
-																						<ConditionalClass/>
-																					</Label>
-																				</DataTableColumn>
+																						<Label
+																							Caption="@Data.Notes~"
+																							ID="colNotes"
+																							>
+																							<ConditionalClass/>
+																						</Label>
+																					</DataTableColumn>
+																				</Remark>
 																			</SubDataTable>
 																		</MoreInfoRow>
 																	</DataTable>
+																	<Division
+																		Class="panel-body"
+																		HtmlDiv="True"
+																		ID="panel-notes"
+																		>
+																		<DataTable
+																			AccessibleHeaders="True"
+																			AccessibleSummary="AnalysisGrid DataTable"
+																			ID="dtKeys"
+																			KeepScrollPosition="True"
+																			RememberSort="True"
+																			ResizableColumns="False"
+																			SortArrows="True"
+																			TableBorder="0"
+																			Width="100"
+																			WidthScale="%"
+																			>
+																			<DataLayer
+																				ColumnNamesRow="1"
+																				ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
+																				ExcelWorksheet="Initiatives"
+																				ID="dlKeys"
+																				Type="Excel"
+																				>
+																				<ConditionFilter
+																					Condition="@Data.PID~ = 3 AND @Data.INID~ = 2"
+																				/>
+																			</DataLayer>
+																			<Remark>
+																				<DataTableColumn
+																					Header="PID"
+																					ID="colPID"
+																					>
+																					<Label
+																						Caption="@Data.PID~"
+																						ID="colPID"
+																					/>
+																					<DataColumnSort
+																						DataColumn="PID"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="INID"
+																					ID="colINID"
+																					>
+																					<Label
+																						Caption="@Data.INID~"
+																						ID="colINID"
+																					/>
+																					<DataColumnSort
+																						DataColumn="INID"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="Description"
+																					ID="colDescription"
+																					>
+																					<Label
+																						Caption="@Data.Description~"
+																						ID="colDescription"
+																					/>
+																					<DataColumnSort
+																						DataColumn="Description"
+																						DataType="Text"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="Progress"
+																					ID="colProgress"
+																					>
+																					<Label
+																						Caption="@Data.Progress~"
+																						ID="colProgress"
+																					/>
+																					<DataColumnSort
+																						DataColumn="Progress"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<DataTableColumn
+																				Header="Notes"
+																				ID="colNotes"
+																				>
+																				<Label
+																					Caption="@Data.Notes~"
+																					ID="colNotes"
+																				/>
+																				<Remark>
+																					<DataColumnSort
+																						DataColumn="Notes"
+																						DataType="Text"
+																					/>
+																				</Remark>
+																			</DataTableColumn>
+																		</DataTable>
+																	</Division>
 																</Division>
 															</ResponsiveColumn>
 														</ResponsiveRow>
@@ -3747,7 +4817,7 @@
 																					Condition="@Data.Progress~ &gt; 80"
 																				/>
 																				<ConditionalClass
-																					Class="fa fa-minus text-warning"
+																					Class="fa fa-star text-warning"
 																					Condition="@Data.Progress~ &gt; 50 "
 																				/>
 																				<ConditionalClass
@@ -3837,19 +4907,126 @@
 																						/>
 																					</Label>
 																				</DataTableColumn>
-																				<DataTableColumn
-																					ID="colNotes"
-																					>
-																					<Label
-																						Caption="@Data.Notes~"
+																				<Remark>
+																					<DataTableColumn
 																						ID="colNotes"
 																						>
-																						<ConditionalClass/>
-																					</Label>
-																				</DataTableColumn>
+																						<Label
+																							Caption="@Data.Notes~"
+																							ID="colNotes"
+																							>
+																							<ConditionalClass/>
+																						</Label>
+																					</DataTableColumn>
+																				</Remark>
 																			</SubDataTable>
 																		</MoreInfoRow>
 																	</DataTable>
+																	<Division
+																		Class="panel-body"
+																		HtmlDiv="True"
+																		ID="panel-notes"
+																		>
+																		<DataTable
+																			AccessibleHeaders="True"
+																			AccessibleSummary="AnalysisGrid DataTable"
+																			ID="dtEngage"
+																			KeepScrollPosition="True"
+																			RememberSort="True"
+																			ResizableColumns="False"
+																			SortArrows="True"
+																			TableBorder="0"
+																			Width="100"
+																			WidthScale="%"
+																			>
+																			<DataLayer
+																				ColumnNamesRow="1"
+																				ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
+																				ExcelWorksheet="Initiatives"
+																				ID="dlEngage"
+																				Type="Excel"
+																				>
+																				<ConditionFilter
+																					Condition="@Data.PID~ = 3 AND @Data.INID~ = 3"
+																				/>
+																			</DataLayer>
+																			<Remark>
+																				<DataTableColumn
+																					Header="PID"
+																					ID="colPID"
+																					>
+																					<Label
+																						Caption="@Data.PID~"
+																						ID="colPID"
+																					/>
+																					<DataColumnSort
+																						DataColumn="PID"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="INID"
+																					ID="colINID"
+																					>
+																					<Label
+																						Caption="@Data.INID~"
+																						ID="colINID"
+																					/>
+																					<DataColumnSort
+																						DataColumn="INID"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="Description"
+																					ID="colDescription"
+																					>
+																					<Label
+																						Caption="@Data.Description~"
+																						ID="colDescription"
+																					/>
+																					<DataColumnSort
+																						DataColumn="Description"
+																						DataType="Text"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="Progress"
+																					ID="colProgress"
+																					>
+																					<Label
+																						Caption="@Data.Progress~"
+																						ID="colProgress"
+																					/>
+																					<DataColumnSort
+																						DataColumn="Progress"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<DataTableColumn
+																				Header="Notes"
+																				ID="colNotes"
+																				>
+																				<Label
+																					Caption="@Data.Notes~"
+																					ID="colNotes"
+																				/>
+																				<Remark>
+																					<DataColumnSort
+																						DataColumn="Notes"
+																						DataType="Text"
+																					/>
+																				</Remark>
+																			</DataTableColumn>
+																		</DataTable>
+																	</Division>
 																</Division>
 															</ResponsiveColumn>
 														</ResponsiveRow>
@@ -4031,7 +5208,7 @@
 																					Condition="@Data.Progress~ &gt; 80"
 																				/>
 																				<ConditionalClass
-																					Class="fa fa-minus text-warning"
+																					Class="fa fa-star text-warning"
 																					Condition="@Data.Progress~ &gt; 50 "
 																				/>
 																				<ConditionalClass
@@ -4121,19 +5298,126 @@
 																						/>
 																					</Label>
 																				</DataTableColumn>
-																				<DataTableColumn
-																					ID="colNotes"
-																					>
-																					<Label
-																						Caption="@Data.Notes~"
+																				<Remark>
+																					<DataTableColumn
 																						ID="colNotes"
 																						>
-																						<ConditionalClass/>
-																					</Label>
-																				</DataTableColumn>
+																						<Label
+																							Caption="@Data.Notes~"
+																							ID="colNotes"
+																							>
+																							<ConditionalClass/>
+																						</Label>
+																					</DataTableColumn>
+																				</Remark>
 																			</SubDataTable>
 																		</MoreInfoRow>
 																	</DataTable>
+																	<Division
+																		Class="panel-body"
+																		HtmlDiv="True"
+																		ID="panel-notes"
+																		>
+																		<DataTable
+																			AccessibleHeaders="True"
+																			AccessibleSummary="AnalysisGrid DataTable"
+																			ID="dtDevelop"
+																			KeepScrollPosition="True"
+																			RememberSort="True"
+																			ResizableColumns="False"
+																			SortArrows="True"
+																			TableBorder="0"
+																			Width="100"
+																			WidthScale="%"
+																			>
+																			<DataLayer
+																				ColumnNamesRow="1"
+																				ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
+																				ExcelWorksheet="Initiatives"
+																				ID="dlDevelop"
+																				Type="Excel"
+																				>
+																				<ConditionFilter
+																					Condition="@Data.PID~ = 3 AND @Data.INID~ = 4"
+																				/>
+																			</DataLayer>
+																			<Remark>
+																				<DataTableColumn
+																					Header="PID"
+																					ID="colPID"
+																					>
+																					<Label
+																						Caption="@Data.PID~"
+																						ID="colPID"
+																					/>
+																					<DataColumnSort
+																						DataColumn="PID"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="INID"
+																					ID="colINID"
+																					>
+																					<Label
+																						Caption="@Data.INID~"
+																						ID="colINID"
+																					/>
+																					<DataColumnSort
+																						DataColumn="INID"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="Description"
+																					ID="colDescription"
+																					>
+																					<Label
+																						Caption="@Data.Description~"
+																						ID="colDescription"
+																					/>
+																					<DataColumnSort
+																						DataColumn="Description"
+																						DataType="Text"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="Progress"
+																					ID="colProgress"
+																					>
+																					<Label
+																						Caption="@Data.Progress~"
+																						ID="colProgress"
+																					/>
+																					<DataColumnSort
+																						DataColumn="Progress"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<DataTableColumn
+																				Header="Notes"
+																				ID="colNotes"
+																				>
+																				<Label
+																					Caption="@Data.Notes~"
+																					ID="colNotes"
+																				/>
+																				<Remark>
+																					<DataColumnSort
+																						DataColumn="Notes"
+																						DataType="Text"
+																					/>
+																				</Remark>
+																			</DataTableColumn>
+																		</DataTable>
+																	</Division>
 																</Division>
 															</ResponsiveColumn>
 														</ResponsiveRow>
@@ -4317,7 +5601,7 @@
 																					Condition="@Data.Progress~ &gt; 80"
 																				/>
 																				<ConditionalClass
-																					Class="fa fa-minus text-warning"
+																					Class="fa fa-star text-warning"
 																					Condition="@Data.Progress~ &gt; 50 "
 																				/>
 																				<ConditionalClass
@@ -4419,6 +5703,111 @@
 																			</SubDataTable>
 																		</MoreInfoRow>
 																	</DataTable>
+																	<Division
+																		Class="panel-body"
+																		HtmlDiv="True"
+																		ID="panel-notes"
+																		>
+																		<DataTable
+																			AccessibleHeaders="True"
+																			AccessibleSummary="AnalysisGrid DataTable"
+																			ID="dtWellness"
+																			KeepScrollPosition="True"
+																			RememberSort="True"
+																			ResizableColumns="False"
+																			SortArrows="True"
+																			TableBorder="0"
+																			Width="100"
+																			WidthScale="%"
+																			>
+																			<DataLayer
+																				ColumnNamesRow="1"
+																				ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
+																				ExcelWorksheet="Initiatives"
+																				ID="dlWellness"
+																				Type="Excel"
+																				>
+																				<ConditionFilter
+																					Condition="@Data.PID~ = 3 AND @Data.INID~ = 5"
+																				/>
+																			</DataLayer>
+																			<Remark>
+																				<DataTableColumn
+																					Header="PID"
+																					ID="colPID"
+																					>
+																					<Label
+																						Caption="@Data.PID~"
+																						ID="colPID"
+																					/>
+																					<DataColumnSort
+																						DataColumn="PID"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="INID"
+																					ID="colINID"
+																					>
+																					<Label
+																						Caption="@Data.INID~"
+																						ID="colINID"
+																					/>
+																					<DataColumnSort
+																						DataColumn="INID"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="Description"
+																					ID="colDescription"
+																					>
+																					<Label
+																						Caption="@Data.Description~"
+																						ID="colDescription"
+																					/>
+																					<DataColumnSort
+																						DataColumn="Description"
+																						DataType="Text"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="Progress"
+																					ID="colProgress"
+																					>
+																					<Label
+																						Caption="@Data.Progress~"
+																						ID="colProgress"
+																					/>
+																					<DataColumnSort
+																						DataColumn="Progress"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<DataTableColumn
+																				Header="Notes"
+																				ID="colNotes"
+																				>
+																				<Label
+																					Caption="@Data.Notes~"
+																					ID="colNotes"
+																				/>
+																				<Remark>
+																					<DataColumnSort
+																						DataColumn="Notes"
+																						DataType="Text"
+																					/>
+																				</Remark>
+																			</DataTableColumn>
+																		</DataTable>
+																	</Division>
 																</Division>
 															</ResponsiveColumn>
 														</ResponsiveRow>
@@ -4609,7 +5998,7 @@
 																					Condition="@Data.Progress~ &gt; 80"
 																				/>
 																				<ConditionalClass
-																					Class="fa fa-minus text-warning"
+																					Class="fa fa-star text-warning"
 																					Condition="@Data.Progress~ &gt; 50"
 																				/>
 																				<ConditionalClass
@@ -4699,19 +6088,126 @@
 																						/>
 																					</Label>
 																				</DataTableColumn>
-																				<DataTableColumn
-																					ID="colNotes"
-																					>
-																					<Label
-																						Caption="@Data.Notes~"
+																				<Remark>
+																					<DataTableColumn
 																						ID="colNotes"
 																						>
-																						<ConditionalClass/>
-																					</Label>
-																				</DataTableColumn>
+																						<Label
+																							Caption="@Data.Notes~"
+																							ID="colNotes"
+																							>
+																							<ConditionalClass/>
+																						</Label>
+																					</DataTableColumn>
+																				</Remark>
 																			</SubDataTable>
 																		</MoreInfoRow>
 																	</DataTable>
+																	<Division
+																		Class="panel-body"
+																		HtmlDiv="True"
+																		ID="panel-notes"
+																		>
+																		<DataTable
+																			AccessibleHeaders="True"
+																			AccessibleSummary="AnalysisGrid DataTable"
+																			ID="dtLogistics"
+																			KeepScrollPosition="True"
+																			RememberSort="True"
+																			ResizableColumns="False"
+																			SortArrows="True"
+																			TableBorder="0"
+																			Width="100"
+																			WidthScale="%"
+																			>
+																			<DataLayer
+																				ColumnNamesRow="1"
+																				ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
+																				ExcelWorksheet="Initiatives"
+																				ID="dlLogistics"
+																				Type="Excel"
+																				>
+																				<ConditionFilter
+																					Condition="@Data.PID~ = 4 AND @Data.INID~ = 1"
+																				/>
+																			</DataLayer>
+																			<Remark>
+																				<DataTableColumn
+																					Header="PID"
+																					ID="colPID"
+																					>
+																					<Label
+																						Caption="@Data.PID~"
+																						ID="colPID"
+																					/>
+																					<DataColumnSort
+																						DataColumn="PID"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="INID"
+																					ID="colINID"
+																					>
+																					<Label
+																						Caption="@Data.INID~"
+																						ID="colINID"
+																					/>
+																					<DataColumnSort
+																						DataColumn="INID"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="Description"
+																					ID="colDescription"
+																					>
+																					<Label
+																						Caption="@Data.Description~"
+																						ID="colDescription"
+																					/>
+																					<DataColumnSort
+																						DataColumn="Description"
+																						DataType="Text"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="Progress"
+																					ID="colProgress"
+																					>
+																					<Label
+																						Caption="@Data.Progress~"
+																						ID="colProgress"
+																					/>
+																					<DataColumnSort
+																						DataColumn="Progress"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<DataTableColumn
+																				Header="Notes"
+																				ID="colNotes"
+																				>
+																				<Label
+																					Caption="@Data.Notes~"
+																					ID="colNotes"
+																				/>
+																				<Remark>
+																					<DataColumnSort
+																						DataColumn="Notes"
+																						DataType="Text"
+																					/>
+																				</Remark>
+																			</DataTableColumn>
+																		</DataTable>
+																	</Division>
 																</Division>
 															</ResponsiveColumn>
 														</ResponsiveRow>
@@ -4901,7 +6397,7 @@
 																					Condition="@Data.Progress~ &gt; 80"
 																				/>
 																				<ConditionalClass
-																					Class="fa fa-minus text-warning"
+																					Class="fa fa-star text-warning"
 																					Condition="@Data.Progress~ &gt; 50"
 																				/>
 																				<ConditionalClass
@@ -4991,19 +6487,126 @@
 																						/>
 																					</Label>
 																				</DataTableColumn>
-																				<DataTableColumn
-																					ID="colNotes"
-																					>
-																					<Label
-																						Caption="@Data.Notes~"
+																				<Remark>
+																					<DataTableColumn
 																						ID="colNotes"
 																						>
-																						<ConditionalClass/>
-																					</Label>
-																				</DataTableColumn>
+																						<Label
+																							Caption="@Data.Notes~"
+																							ID="colNotes"
+																							>
+																							<ConditionalClass/>
+																						</Label>
+																					</DataTableColumn>
+																				</Remark>
 																			</SubDataTable>
 																		</MoreInfoRow>
 																	</DataTable>
+																	<Division
+																		Class="panel-body"
+																		HtmlDiv="True"
+																		ID="panel-notes"
+																		>
+																		<DataTable
+																			AccessibleHeaders="True"
+																			AccessibleSummary="AnalysisGrid DataTable"
+																			ID="dtSoftware"
+																			KeepScrollPosition="True"
+																			RememberSort="True"
+																			ResizableColumns="False"
+																			SortArrows="True"
+																			TableBorder="0"
+																			Width="100"
+																			WidthScale="%"
+																			>
+																			<DataLayer
+																				ColumnNamesRow="1"
+																				ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
+																				ExcelWorksheet="Initiatives"
+																				ID="dlSoftware"
+																				Type="Excel"
+																				>
+																				<ConditionFilter
+																					Condition="@Data.PID~ = 4 AND @Data.INID~ = 2"
+																				/>
+																			</DataLayer>
+																			<Remark>
+																				<DataTableColumn
+																					Header="PID"
+																					ID="colPID"
+																					>
+																					<Label
+																						Caption="@Data.PID~"
+																						ID="colPID"
+																					/>
+																					<DataColumnSort
+																						DataColumn="PID"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="INID"
+																					ID="colINID"
+																					>
+																					<Label
+																						Caption="@Data.INID~"
+																						ID="colINID"
+																					/>
+																					<DataColumnSort
+																						DataColumn="INID"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="Description"
+																					ID="colDescription"
+																					>
+																					<Label
+																						Caption="@Data.Description~"
+																						ID="colDescription"
+																					/>
+																					<DataColumnSort
+																						DataColumn="Description"
+																						DataType="Text"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="Progress"
+																					ID="colProgress"
+																					>
+																					<Label
+																						Caption="@Data.Progress~"
+																						ID="colProgress"
+																					/>
+																					<DataColumnSort
+																						DataColumn="Progress"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<DataTableColumn
+																				Header="Notes"
+																				ID="colNotes"
+																				>
+																				<Label
+																					Caption="@Data.Notes~"
+																					ID="colNotes"
+																				/>
+																				<Remark>
+																					<DataColumnSort
+																						DataColumn="Notes"
+																						DataType="Text"
+																					/>
+																				</Remark>
+																			</DataTableColumn>
+																		</DataTable>
+																	</Division>
 																</Division>
 															</ResponsiveColumn>
 														</ResponsiveRow>
@@ -5187,7 +6790,7 @@
 																					Condition="@Data.Progress~ &gt; 80"
 																				/>
 																				<ConditionalClass
-																					Class="fa fa-minus text-warning"
+																					Class="fa fa-star text-warning"
 																					Condition="@Data.Progress~ &gt; 50 "
 																				/>
 																				<ConditionalClass
@@ -5277,19 +6880,126 @@
 																						/>
 																					</Label>
 																				</DataTableColumn>
-																				<DataTableColumn
-																					ID="colNotes"
-																					>
-																					<Label
-																						Caption="@Data.Notes~"
+																				<Remark>
+																					<DataTableColumn
 																						ID="colNotes"
 																						>
-																						<ConditionalClass/>
-																					</Label>
-																				</DataTableColumn>
+																						<Label
+																							Caption="@Data.Notes~"
+																							ID="colNotes"
+																							>
+																							<ConditionalClass/>
+																						</Label>
+																					</DataTableColumn>
+																				</Remark>
 																			</SubDataTable>
 																		</MoreInfoRow>
 																	</DataTable>
+																	<Division
+																		Class="panel-body"
+																		HtmlDiv="True"
+																		ID="panel-notes"
+																		>
+																		<DataTable
+																			AccessibleHeaders="True"
+																			AccessibleSummary="AnalysisGrid DataTable"
+																			ID="dtGrain"
+																			KeepScrollPosition="True"
+																			RememberSort="True"
+																			ResizableColumns="False"
+																			SortArrows="True"
+																			TableBorder="0"
+																			Width="100"
+																			WidthScale="%"
+																			>
+																			<DataLayer
+																				ColumnNamesRow="1"
+																				ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
+																				ExcelWorksheet="Initiatives"
+																				ID="dlGrain"
+																				Type="Excel"
+																				>
+																				<ConditionFilter
+																					Condition="@Data.PID~ = 4 AND @Data.INID~ = 3"
+																				/>
+																			</DataLayer>
+																			<Remark>
+																				<DataTableColumn
+																					Header="PID"
+																					ID="colPID"
+																					>
+																					<Label
+																						Caption="@Data.PID~"
+																						ID="colPID"
+																					/>
+																					<DataColumnSort
+																						DataColumn="PID"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="INID"
+																					ID="colINID"
+																					>
+																					<Label
+																						Caption="@Data.INID~"
+																						ID="colINID"
+																					/>
+																					<DataColumnSort
+																						DataColumn="INID"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="Description"
+																					ID="colDescription"
+																					>
+																					<Label
+																						Caption="@Data.Description~"
+																						ID="colDescription"
+																					/>
+																					<DataColumnSort
+																						DataColumn="Description"
+																						DataType="Text"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="Progress"
+																					ID="colProgress"
+																					>
+																					<Label
+																						Caption="@Data.Progress~"
+																						ID="colProgress"
+																					/>
+																					<DataColumnSort
+																						DataColumn="Progress"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<DataTableColumn
+																				Header="Notes"
+																				ID="colNotes"
+																				>
+																				<Label
+																					Caption="@Data.Notes~"
+																					ID="colNotes"
+																				/>
+																				<Remark>
+																					<DataColumnSort
+																						DataColumn="Notes"
+																						DataType="Text"
+																					/>
+																				</Remark>
+																			</DataTableColumn>
+																		</DataTable>
+																	</Division>
 																</Division>
 															</ResponsiveColumn>
 														</ResponsiveRow>
@@ -5480,7 +7190,7 @@
 																					Condition="@Data.Progress~ &gt; 80"
 																				/>
 																				<ConditionalClass
-																					Class="fa fa-minus text-warning"
+																					Class="fa fa-star text-warning"
 																					Condition="@Data.Progress~ &gt; 50 "
 																				/>
 																				<ConditionalClass
@@ -5570,19 +7280,126 @@
 																						/>
 																					</Label>
 																				</DataTableColumn>
-																				<DataTableColumn
-																					ID="colNotes"
-																					>
-																					<Label
-																						Caption="@Data.Notes~"
+																				<Remark>
+																					<DataTableColumn
 																						ID="colNotes"
 																						>
-																						<ConditionalClass/>
-																					</Label>
-																				</DataTableColumn>
+																						<Label
+																							Caption="@Data.Notes~"
+																							ID="colNotes"
+																							>
+																							<ConditionalClass/>
+																						</Label>
+																					</DataTableColumn>
+																				</Remark>
 																			</SubDataTable>
 																		</MoreInfoRow>
 																	</DataTable>
+																	<Division
+																		Class="panel-body"
+																		HtmlDiv="True"
+																		ID="panel-notes"
+																		>
+																		<DataTable
+																			AccessibleHeaders="True"
+																			AccessibleSummary="AnalysisGrid DataTable"
+																			ID="dtFeed"
+																			KeepScrollPosition="True"
+																			RememberSort="True"
+																			ResizableColumns="False"
+																			SortArrows="True"
+																			TableBorder="0"
+																			Width="100"
+																			WidthScale="%"
+																			>
+																			<DataLayer
+																				ColumnNamesRow="1"
+																				ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
+																				ExcelWorksheet="Initiatives"
+																				ID="dlFeed"
+																				Type="Excel"
+																				>
+																				<ConditionFilter
+																					Condition="@Data.PID~ = 4 AND @Data.INID~ = 4"
+																				/>
+																			</DataLayer>
+																			<Remark>
+																				<DataTableColumn
+																					Header="PID"
+																					ID="colPID"
+																					>
+																					<Label
+																						Caption="@Data.PID~"
+																						ID="colPID"
+																					/>
+																					<DataColumnSort
+																						DataColumn="PID"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="INID"
+																					ID="colINID"
+																					>
+																					<Label
+																						Caption="@Data.INID~"
+																						ID="colINID"
+																					/>
+																					<DataColumnSort
+																						DataColumn="INID"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="Description"
+																					ID="colDescription"
+																					>
+																					<Label
+																						Caption="@Data.Description~"
+																						ID="colDescription"
+																					/>
+																					<DataColumnSort
+																						DataColumn="Description"
+																						DataType="Text"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<Remark>
+																				<DataTableColumn
+																					Header="Progress"
+																					ID="colProgress"
+																					>
+																					<Label
+																						Caption="@Data.Progress~"
+																						ID="colProgress"
+																					/>
+																					<DataColumnSort
+																						DataColumn="Progress"
+																						DataType="Number"
+																					/>
+																				</DataTableColumn>
+																			</Remark>
+																			<DataTableColumn
+																				Header="Notes"
+																				ID="colNotes"
+																				>
+																				<Label
+																					Caption="@Data.Notes~"
+																					ID="colNotes"
+																				/>
+																				<Remark>
+																					<DataColumnSort
+																						DataColumn="Notes"
+																						DataType="Text"
+																					/>
+																				</Remark>
+																			</DataTableColumn>
+																		</DataTable>
+																	</Division>
 																</Division>
 															</ResponsiveColumn>
 														</ResponsiveRow>

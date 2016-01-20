@@ -60,13 +60,13 @@
 								<Column>
 									<InputSelectList
 										Class="chosen-select"
-										DefaultValue="@Request.iptCity~"
 										ID="iptCity"
 										MultiSelect="True"
 										OptionCaptionColumn="CITY"
 										OptionValueColumn="CITY"
 										>
 										<DataLayer
+											CellRange="A2:A106"
 											ColumnNamesRow="1"
 											ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx"
 											ExcelWorksheet="Cities"
@@ -226,6 +226,19 @@
 									ID="dlAFDTanks"
 									Type="Excel"
 									>
+									<Remark>
+										<Lookup
+											ID="custLookup"
+											>
+											<DataLayer
+												ColumnNamesRow="1"
+												ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\ActiveMKCTanks.xlsx"
+												ExcelWorksheet="Sheet1"
+												ID="dlActiveTanks"
+												Type="Excel"
+											/>
+										</Lookup>
+									</Remark>
 									<ReverseGeocodeColumns
 										ID="revLookup"
 										LatitudeDataColumn="lat"
@@ -240,7 +253,6 @@
 									</Remark>
 									<ConditionFilter
 										Condition="InStr(UCase(&quot;@Data.city~&quot;), &quot;@Request.iptCity~&quot;) &gt; 0"
-										IncludeCondition="@Request.iptCity&lt;&gt; &quot;&quot;"
 									/>
 								</DataLayer>
 								<Action
@@ -289,26 +301,25 @@
 										</Label>
 										<LineBreak/>
 										<Label
-											Caption="Tank ID:"
-											Class="ThemeBold"
-										/>
+											Caption="Tank Capacity:"
+											Class="ThemeHidden"
+											>
+											<ConditionalClass
+												Class="ThemeBold"
+												Condition="&quot;@Data.capacity~&quot; &lt;&gt; &quot;inactive&quot;"
+											/>
+										</Label>
 										<Spaces
 											Size="1"
 										/>
 										<Label
-											Caption="@Data.tankid~"
-										/>
-										<LineBreak/>
-										<Label
-											Caption="Probe ID:"
-											Class="ThemeBold"
-										/>
-										<Spaces
-											Size="1"
-										/>
-										<Label
-											Caption="@Data.probeid~"
-										/>
+											Caption="@Data.capacity~"
+											Class="ThemeHidden"
+											>
+											<ConditionalClass
+												Condition="&quot;@Data.capacity~&quot; &lt;&gt; &quot;inactive&quot;"
+											/>
+										</Label>
 									</MapMarkerInfo>
 								</Action>
 							</GoogleMapMarkers>
