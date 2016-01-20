@@ -2557,35 +2557,26 @@
 																		<DataTable
 																			AccessibleHeaders="True"
 																			AccessibleSummary="AnalysisGrid DataTable"
-																			ID="DataTable2"
+																			ID="dtSales"
 																			KeepScrollPosition="True"
 																			RememberSort="True"
-																			ResizableColumns="True"
+																			ResizableColumns="False"
 																			SortArrows="True"
 																			TableBorder="0"
+																			Width="100"
+																			WidthScale="%"
 																			>
 																			<DataLayer
 																				ColumnNamesRow="1"
 																				ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																				ExcelWorksheet="Initiatives"
-																				ID="dlSalesNotes"
+																				ID="dlSales"
 																				Type="Excel"
 																				>
 																				<ConditionFilter
-																					Condition="&quot;@Data.PID~&quot; = &quot;2&quot; And &quot;@Data.INID~&quot; = &quot;1&quot;"
+																					Condition="@Data.PID~ = 2 AND @Data.INID~ = 1"
 																				/>
 																			</DataLayer>
-																			<Remark>
-																				<InteractivePaging
-																					CaptionType="Image"
-																					HideShowPrevNextCaptions="False"
-																					HideWhenOnePage="True"
-																					IDnotSupportedHere="pagingTableNumbered"
-																					Location="Top"
-																					PageRowCount="20"
-																					ShowPageNumber="Numbered"
-																				/>
-																			</Remark>
 																			<Remark>
 																				<DataTableColumn
 																					Header="PID"
@@ -2647,13 +2638,19 @@
 																				</DataTableColumn>
 																			</Remark>
 																			<DataTableColumn
-																				Header="Notes:"
+																				Header="Notes"
 																				ID="colNotes"
 																				>
 																				<Label
 																					Caption="@Data.Notes~"
 																					ID="colNotes"
 																				/>
+																				<Remark>
+																					<DataColumnSort
+																						DataColumn="Notes"
+																						DataType="Text"
+																					/>
+																				</Remark>
 																			</DataTableColumn>
 																		</DataTable>
 																	</Division>
@@ -2959,35 +2956,26 @@
 																		<DataTable
 																			AccessibleHeaders="True"
 																			AccessibleSummary="AnalysisGrid DataTable"
-																			ID="DataTable2"
+																			ID="dtExperience"
 																			KeepScrollPosition="True"
 																			RememberSort="True"
-																			ResizableColumns="True"
+																			ResizableColumns="False"
 																			SortArrows="True"
 																			TableBorder="0"
+																			Width="100"
+																			WidthScale="%"
 																			>
 																			<DataLayer
 																				ColumnNamesRow="1"
 																				ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																				ExcelWorksheet="Initiatives"
-																				ID="dlCustNotes"
+																				ID="dlExperience"
 																				Type="Excel"
 																				>
 																				<ConditionFilter
-																					Condition="&quot;@Data.PID~&quot; = &quot;2&quot; And &quot;@Data.INID~&quot; = &quot;2&quot;"
+																					Condition="@Data.PID~ = 2 AND @Data.INID~ = 2"
 																				/>
 																			</DataLayer>
-																			<Remark>
-																				<InteractivePaging
-																					CaptionType="Image"
-																					HideShowPrevNextCaptions="False"
-																					HideWhenOnePage="True"
-																					IDnotSupportedHere="pagingTableNumbered"
-																					Location="Top"
-																					PageRowCount="20"
-																					ShowPageNumber="Numbered"
-																				/>
-																			</Remark>
 																			<Remark>
 																				<DataTableColumn
 																					Header="PID"
@@ -3049,13 +3037,19 @@
 																				</DataTableColumn>
 																			</Remark>
 																			<DataTableColumn
-																				Header="Notes:"
+																				Header="Notes"
 																				ID="colNotes"
 																				>
 																				<Label
 																					Caption="@Data.Notes~"
 																					ID="colNotes"
 																				/>
+																				<Remark>
+																					<DataColumnSort
+																						DataColumn="Notes"
+																						DataType="Text"
+																					/>
+																				</Remark>
 																			</DataTableColumn>
 																		</DataTable>
 																	</Division>
@@ -3354,35 +3348,26 @@
 																		<DataTable
 																			AccessibleHeaders="True"
 																			AccessibleSummary="AnalysisGrid DataTable"
-																			ID="DataTable2"
+																			ID="dt40YrOld"
 																			KeepScrollPosition="True"
 																			RememberSort="True"
-																			ResizableColumns="True"
+																			ResizableColumns="False"
 																			SortArrows="True"
 																			TableBorder="0"
+																			Width="100"
+																			WidthScale="%"
 																			>
 																			<DataLayer
 																				ColumnNamesRow="1"
 																				ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																				ExcelWorksheet="Initiatives"
-																				ID="dl40YONotes"
+																				ID="dl40YrOld"
 																				Type="Excel"
 																				>
 																				<ConditionFilter
-																					Condition="&quot;@Data.PID~&quot; = &quot;2&quot; And &quot;@Data.INID~&quot; = &quot;3&quot;"
+																					Condition="@Data.PID~ = 2 AND @Data.INID~ = 3"
 																				/>
 																			</DataLayer>
-																			<Remark>
-																				<InteractivePaging
-																					CaptionType="Image"
-																					HideShowPrevNextCaptions="False"
-																					HideWhenOnePage="True"
-																					IDnotSupportedHere="pagingTableNumbered"
-																					Location="Top"
-																					PageRowCount="20"
-																					ShowPageNumber="Numbered"
-																				/>
-																			</Remark>
 																			<Remark>
 																				<DataTableColumn
 																					Header="PID"
@@ -3444,13 +3429,19 @@
 																				</DataTableColumn>
 																			</Remark>
 																			<DataTableColumn
-																				Header="Notes:"
+																				Header="Notes"
 																				ID="colNotes"
 																				>
 																				<Label
 																					Caption="@Data.Notes~"
 																					ID="colNotes"
 																				/>
+																				<Remark>
+																					<DataColumnSort
+																						DataColumn="Notes"
+																						DataType="Text"
+																					/>
+																				</Remark>
 																			</DataTableColumn>
 																		</DataTable>
 																	</Division>
@@ -3748,35 +3739,26 @@
 																		<DataTable
 																			AccessibleHeaders="True"
 																			AccessibleSummary="AnalysisGrid DataTable"
-																			ID="DataTable2"
+																			ID="dtPrecision"
 																			KeepScrollPosition="True"
 																			RememberSort="True"
-																			ResizableColumns="True"
+																			ResizableColumns="False"
 																			SortArrows="True"
 																			TableBorder="0"
+																			Width="100"
+																			WidthScale="%"
 																			>
 																			<DataLayer
 																				ColumnNamesRow="1"
 																				ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																				ExcelWorksheet="Initiatives"
-																				ID="dlPrecisionNotes"
+																				ID="dlPrecision"
 																				Type="Excel"
 																				>
 																				<ConditionFilter
-																					Condition="&quot;@Data.PID~&quot; = &quot;2&quot; And &quot;@Data.INID~&quot; = &quot;4&quot;"
+																					Condition="@Data.PID~ = 2 AND @Data.INID~ = 4"
 																				/>
 																			</DataLayer>
-																			<Remark>
-																				<InteractivePaging
-																					CaptionType="Image"
-																					HideShowPrevNextCaptions="False"
-																					HideWhenOnePage="True"
-																					IDnotSupportedHere="pagingTableNumbered"
-																					Location="Top"
-																					PageRowCount="20"
-																					ShowPageNumber="Numbered"
-																				/>
-																			</Remark>
 																			<Remark>
 																				<DataTableColumn
 																					Header="PID"
@@ -3838,13 +3820,19 @@
 																				</DataTableColumn>
 																			</Remark>
 																			<DataTableColumn
-																				Header="Notes:"
+																				Header="Notes"
 																				ID="colNotes"
 																				>
 																				<Label
 																					Caption="@Data.Notes~"
 																					ID="colNotes"
 																				/>
+																				<Remark>
+																					<DataColumnSort
+																						DataColumn="Notes"
+																						DataType="Text"
+																					/>
+																				</Remark>
 																			</DataTableColumn>
 																		</DataTable>
 																	</Division>
@@ -4150,35 +4138,26 @@
 																		<DataTable
 																			AccessibleHeaders="True"
 																			AccessibleSummary="AnalysisGrid DataTable"
-																			ID="DataTable2"
+																			ID="dtCommunicate"
 																			KeepScrollPosition="True"
 																			RememberSort="True"
-																			ResizableColumns="True"
+																			ResizableColumns="False"
 																			SortArrows="True"
 																			TableBorder="0"
+																			Width="100"
+																			WidthScale="%"
 																			>
 																			<DataLayer
 																				ColumnNamesRow="1"
 																				ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																				ExcelWorksheet="Initiatives"
-																				ID="dlCommunicateNotes"
+																				ID="dlCommunicate"
 																				Type="Excel"
 																				>
 																				<ConditionFilter
-																					Condition="&quot;@Data.PID~&quot; = &quot;3&quot; And &quot;@Data.INID~&quot; = &quot;1&quot;"
+																					Condition="@Data.PID~ = 3 AND @Data.INID~ = 1"
 																				/>
 																			</DataLayer>
-																			<Remark>
-																				<InteractivePaging
-																					CaptionType="Image"
-																					HideShowPrevNextCaptions="False"
-																					HideWhenOnePage="True"
-																					IDnotSupportedHere="pagingTableNumbered"
-																					Location="Top"
-																					PageRowCount="20"
-																					ShowPageNumber="Numbered"
-																				/>
-																			</Remark>
 																			<Remark>
 																				<DataTableColumn
 																					Header="PID"
@@ -4240,13 +4219,19 @@
 																				</DataTableColumn>
 																			</Remark>
 																			<DataTableColumn
-																				Header="Notes:"
+																				Header="Notes"
 																				ID="colNotes"
 																				>
 																				<Label
 																					Caption="@Data.Notes~"
 																					ID="colNotes"
 																				/>
+																				<Remark>
+																					<DataColumnSort
+																						DataColumn="Notes"
+																						DataType="Text"
+																					/>
+																				</Remark>
 																			</DataTableColumn>
 																		</DataTable>
 																	</Division>
@@ -4552,35 +4537,26 @@
 																		<DataTable
 																			AccessibleHeaders="True"
 																			AccessibleSummary="AnalysisGrid DataTable"
-																			ID="DataTable2"
+																			ID="dtKeys"
 																			KeepScrollPosition="True"
 																			RememberSort="True"
-																			ResizableColumns="True"
+																			ResizableColumns="False"
 																			SortArrows="True"
 																			TableBorder="0"
+																			Width="100"
+																			WidthScale="%"
 																			>
 																			<DataLayer
 																				ColumnNamesRow="1"
 																				ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																				ExcelWorksheet="Initiatives"
-																				ID="dlKeyNotes"
+																				ID="dlKeys"
 																				Type="Excel"
 																				>
 																				<ConditionFilter
-																					Condition="&quot;@Data.PID~&quot; = &quot;3&quot; And &quot;@Data.INID~&quot; = &quot;2&quot;"
+																					Condition="@Data.PID~ = 3 AND @Data.INID~ = 2"
 																				/>
 																			</DataLayer>
-																			<Remark>
-																				<InteractivePaging
-																					CaptionType="Image"
-																					HideShowPrevNextCaptions="False"
-																					HideWhenOnePage="True"
-																					IDnotSupportedHere="pagingTableNumbered"
-																					Location="Top"
-																					PageRowCount="20"
-																					ShowPageNumber="Numbered"
-																				/>
-																			</Remark>
 																			<Remark>
 																				<DataTableColumn
 																					Header="PID"
@@ -4642,13 +4618,19 @@
 																				</DataTableColumn>
 																			</Remark>
 																			<DataTableColumn
-																				Header="Notes:"
+																				Header="Notes"
 																				ID="colNotes"
 																				>
 																				<Label
 																					Caption="@Data.Notes~"
 																					ID="colNotes"
 																				/>
+																				<Remark>
+																					<DataColumnSort
+																						DataColumn="Notes"
+																						DataType="Text"
+																					/>
+																				</Remark>
 																			</DataTableColumn>
 																		</DataTable>
 																	</Division>
@@ -4948,35 +4930,26 @@
 																		<DataTable
 																			AccessibleHeaders="True"
 																			AccessibleSummary="AnalysisGrid DataTable"
-																			ID="DataTable2"
+																			ID="dtEngage"
 																			KeepScrollPosition="True"
 																			RememberSort="True"
-																			ResizableColumns="True"
+																			ResizableColumns="False"
 																			SortArrows="True"
 																			TableBorder="0"
+																			Width="100"
+																			WidthScale="%"
 																			>
 																			<DataLayer
 																				ColumnNamesRow="1"
 																				ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																				ExcelWorksheet="Initiatives"
-																				ID="dlEngageNotes"
+																				ID="dlEngage"
 																				Type="Excel"
 																				>
 																				<ConditionFilter
-																					Condition="&quot;@Data.PID~&quot; = &quot;3&quot; And &quot;@Data.INID~&quot; = &quot;3&quot;"
+																					Condition="@Data.PID~ = 3 AND @Data.INID~ = 3"
 																				/>
 																			</DataLayer>
-																			<Remark>
-																				<InteractivePaging
-																					CaptionType="Image"
-																					HideShowPrevNextCaptions="False"
-																					HideWhenOnePage="True"
-																					IDnotSupportedHere="pagingTableNumbered"
-																					Location="Top"
-																					PageRowCount="20"
-																					ShowPageNumber="Numbered"
-																				/>
-																			</Remark>
 																			<Remark>
 																				<DataTableColumn
 																					Header="PID"
@@ -5038,13 +5011,19 @@
 																				</DataTableColumn>
 																			</Remark>
 																			<DataTableColumn
-																				Header="Notes:"
+																				Header="Notes"
 																				ID="colNotes"
 																				>
 																				<Label
 																					Caption="@Data.Notes~"
 																					ID="colNotes"
 																				/>
+																				<Remark>
+																					<DataColumnSort
+																						DataColumn="Notes"
+																						DataType="Text"
+																					/>
+																				</Remark>
 																			</DataTableColumn>
 																		</DataTable>
 																	</Division>
@@ -5342,35 +5321,26 @@
 																		<DataTable
 																			AccessibleHeaders="True"
 																			AccessibleSummary="AnalysisGrid DataTable"
-																			ID="DataTable2"
+																			ID="dtDevelop"
 																			KeepScrollPosition="True"
 																			RememberSort="True"
-																			ResizableColumns="True"
+																			ResizableColumns="False"
 																			SortArrows="True"
 																			TableBorder="0"
+																			Width="100"
+																			WidthScale="%"
 																			>
 																			<DataLayer
 																				ColumnNamesRow="1"
 																				ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																				ExcelWorksheet="Initiatives"
-																				ID="dlDevelopNotes"
+																				ID="dlDevelop"
 																				Type="Excel"
 																				>
 																				<ConditionFilter
-																					Condition="&quot;@Data.PID~&quot; = &quot;3&quot; And &quot;@Data.INID~&quot; = &quot;4&quot;"
+																					Condition="@Data.PID~ = 3 AND @Data.INID~ = 4"
 																				/>
 																			</DataLayer>
-																			<Remark>
-																				<InteractivePaging
-																					CaptionType="Image"
-																					HideShowPrevNextCaptions="False"
-																					HideWhenOnePage="True"
-																					IDnotSupportedHere="pagingTableNumbered"
-																					Location="Top"
-																					PageRowCount="20"
-																					ShowPageNumber="Numbered"
-																				/>
-																			</Remark>
 																			<Remark>
 																				<DataTableColumn
 																					Header="PID"
@@ -5432,13 +5402,19 @@
 																				</DataTableColumn>
 																			</Remark>
 																			<DataTableColumn
-																				Header="Notes:"
+																				Header="Notes"
 																				ID="colNotes"
 																				>
 																				<Label
 																					Caption="@Data.Notes~"
 																					ID="colNotes"
 																				/>
+																				<Remark>
+																					<DataColumnSort
+																						DataColumn="Notes"
+																						DataType="Text"
+																					/>
+																				</Remark>
 																			</DataTableColumn>
 																		</DataTable>
 																	</Division>
@@ -5735,35 +5711,26 @@
 																		<DataTable
 																			AccessibleHeaders="True"
 																			AccessibleSummary="AnalysisGrid DataTable"
-																			ID="DataTable2"
+																			ID="dtWellness"
 																			KeepScrollPosition="True"
 																			RememberSort="True"
-																			ResizableColumns="True"
+																			ResizableColumns="False"
 																			SortArrows="True"
 																			TableBorder="0"
+																			Width="100"
+																			WidthScale="%"
 																			>
 																			<DataLayer
 																				ColumnNamesRow="1"
 																				ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																				ExcelWorksheet="Initiatives"
-																				ID="dlWellnessNotes"
+																				ID="dlWellness"
 																				Type="Excel"
 																				>
 																				<ConditionFilter
-																					Condition="&quot;@Data.PID~&quot; = &quot;3&quot; And &quot;@Data.INID~&quot; = &quot;5&quot;"
+																					Condition="@Data.PID~ = 3 AND @Data.INID~ = 5"
 																				/>
 																			</DataLayer>
-																			<Remark>
-																				<InteractivePaging
-																					CaptionType="Image"
-																					HideShowPrevNextCaptions="False"
-																					HideWhenOnePage="True"
-																					IDnotSupportedHere="pagingTableNumbered"
-																					Location="Top"
-																					PageRowCount="20"
-																					ShowPageNumber="Numbered"
-																				/>
-																			</Remark>
 																			<Remark>
 																				<DataTableColumn
 																					Header="PID"
@@ -5825,13 +5792,19 @@
 																				</DataTableColumn>
 																			</Remark>
 																			<DataTableColumn
-																				Header="Notes:"
+																				Header="Notes"
 																				ID="colNotes"
 																				>
 																				<Label
 																					Caption="@Data.Notes~"
 																					ID="colNotes"
 																				/>
+																				<Remark>
+																					<DataColumnSort
+																						DataColumn="Notes"
+																						DataType="Text"
+																					/>
+																				</Remark>
 																			</DataTableColumn>
 																		</DataTable>
 																	</Division>
@@ -6138,35 +6111,26 @@
 																		<DataTable
 																			AccessibleHeaders="True"
 																			AccessibleSummary="AnalysisGrid DataTable"
-																			ID="DataTable2"
+																			ID="dtLogistics"
 																			KeepScrollPosition="True"
 																			RememberSort="True"
-																			ResizableColumns="True"
+																			ResizableColumns="False"
 																			SortArrows="True"
 																			TableBorder="0"
+																			Width="100"
+																			WidthScale="%"
 																			>
 																			<DataLayer
 																				ColumnNamesRow="1"
 																				ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																				ExcelWorksheet="Initiatives"
-																				ID="dlLogisticsNotes"
+																				ID="dlLogistics"
 																				Type="Excel"
 																				>
 																				<ConditionFilter
-																					Condition="&quot;@Data.PID~&quot; = &quot;4&quot; And &quot;@Data.INID~&quot; = &quot;1&quot;"
+																					Condition="@Data.PID~ = 4 AND @Data.INID~ = 1"
 																				/>
 																			</DataLayer>
-																			<Remark>
-																				<InteractivePaging
-																					CaptionType="Image"
-																					HideShowPrevNextCaptions="False"
-																					HideWhenOnePage="True"
-																					IDnotSupportedHere="pagingTableNumbered"
-																					Location="Top"
-																					PageRowCount="20"
-																					ShowPageNumber="Numbered"
-																				/>
-																			</Remark>
 																			<Remark>
 																				<DataTableColumn
 																					Header="PID"
@@ -6228,13 +6192,19 @@
 																				</DataTableColumn>
 																			</Remark>
 																			<DataTableColumn
-																				Header="Notes:"
+																				Header="Notes"
 																				ID="colNotes"
 																				>
 																				<Label
 																					Caption="@Data.Notes~"
 																					ID="colNotes"
 																				/>
+																				<Remark>
+																					<DataColumnSort
+																						DataColumn="Notes"
+																						DataType="Text"
+																					/>
+																				</Remark>
 																			</DataTableColumn>
 																		</DataTable>
 																	</Division>
@@ -6540,35 +6510,26 @@
 																		<DataTable
 																			AccessibleHeaders="True"
 																			AccessibleSummary="AnalysisGrid DataTable"
-																			ID="DataTable2"
+																			ID="dtSoftware"
 																			KeepScrollPosition="True"
 																			RememberSort="True"
-																			ResizableColumns="True"
+																			ResizableColumns="False"
 																			SortArrows="True"
 																			TableBorder="0"
+																			Width="100"
+																			WidthScale="%"
 																			>
 																			<DataLayer
 																				ColumnNamesRow="1"
 																				ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																				ExcelWorksheet="Initiatives"
-																				ID="dlSoftwareNotes"
+																				ID="dlSoftware"
 																				Type="Excel"
 																				>
 																				<ConditionFilter
-																					Condition="&quot;@Data.PID~&quot; = &quot;4&quot; And &quot;@Data.INID~&quot; = &quot;2&quot;"
+																					Condition="@Data.PID~ = 4 AND @Data.INID~ = 2"
 																				/>
 																			</DataLayer>
-																			<Remark>
-																				<InteractivePaging
-																					CaptionType="Image"
-																					HideShowPrevNextCaptions="False"
-																					HideWhenOnePage="True"
-																					IDnotSupportedHere="pagingTableNumbered"
-																					Location="Top"
-																					PageRowCount="20"
-																					ShowPageNumber="Numbered"
-																				/>
-																			</Remark>
 																			<Remark>
 																				<DataTableColumn
 																					Header="PID"
@@ -6630,13 +6591,19 @@
 																				</DataTableColumn>
 																			</Remark>
 																			<DataTableColumn
-																				Header="Notes:"
+																				Header="Notes"
 																				ID="colNotes"
 																				>
 																				<Label
 																					Caption="@Data.Notes~"
 																					ID="colNotes"
 																				/>
+																				<Remark>
+																					<DataColumnSort
+																						DataColumn="Notes"
+																						DataType="Text"
+																					/>
+																				</Remark>
 																			</DataTableColumn>
 																		</DataTable>
 																	</Division>
@@ -6936,35 +6903,26 @@
 																		<DataTable
 																			AccessibleHeaders="True"
 																			AccessibleSummary="AnalysisGrid DataTable"
-																			ID="DataTable2"
+																			ID="dtGrain"
 																			KeepScrollPosition="True"
 																			RememberSort="True"
-																			ResizableColumns="True"
+																			ResizableColumns="False"
 																			SortArrows="True"
 																			TableBorder="0"
+																			Width="100"
+																			WidthScale="%"
 																			>
 																			<DataLayer
 																				ColumnNamesRow="1"
 																				ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																				ExcelWorksheet="Initiatives"
-																				ID="dlGrainNotes"
+																				ID="dlGrain"
 																				Type="Excel"
 																				>
 																				<ConditionFilter
-																					Condition="&quot;@Data.PID~&quot; = &quot;4&quot; And &quot;@Data.INID~&quot; = &quot;2&quot;"
+																					Condition="@Data.PID~ = 4 AND @Data.INID~ = 3"
 																				/>
 																			</DataLayer>
-																			<Remark>
-																				<InteractivePaging
-																					CaptionType="Image"
-																					HideShowPrevNextCaptions="False"
-																					HideWhenOnePage="True"
-																					IDnotSupportedHere="pagingTableNumbered"
-																					Location="Top"
-																					PageRowCount="20"
-																					ShowPageNumber="Numbered"
-																				/>
-																			</Remark>
 																			<Remark>
 																				<DataTableColumn
 																					Header="PID"
@@ -7026,13 +6984,19 @@
 																				</DataTableColumn>
 																			</Remark>
 																			<DataTableColumn
-																				Header="Notes:"
+																				Header="Notes"
 																				ID="colNotes"
 																				>
 																				<Label
 																					Caption="@Data.Notes~"
 																					ID="colNotes"
 																				/>
+																				<Remark>
+																					<DataColumnSort
+																						DataColumn="Notes"
+																						DataType="Text"
+																					/>
+																				</Remark>
 																			</DataTableColumn>
 																		</DataTable>
 																	</Division>
@@ -7339,35 +7303,26 @@
 																		<DataTable
 																			AccessibleHeaders="True"
 																			AccessibleSummary="AnalysisGrid DataTable"
-																			ID="DataTable2"
+																			ID="dtFeed"
 																			KeepScrollPosition="True"
 																			RememberSort="True"
-																			ResizableColumns="True"
+																			ResizableColumns="False"
 																			SortArrows="True"
 																			TableBorder="0"
+																			Width="100"
+																			WidthScale="%"
 																			>
 																			<DataLayer
 																				ColumnNamesRow="1"
 																				ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																				ExcelWorksheet="Initiatives"
-																				ID="dlFeedNotes"
+																				ID="dlFeed"
 																				Type="Excel"
 																				>
 																				<ConditionFilter
-																					Condition="&quot;@Data.PID~&quot; = &quot;4&quot; And &quot;@Data.INID~&quot; = &quot;2&quot;"
+																					Condition="@Data.PID~ = 4 AND @Data.INID~ = 4"
 																				/>
 																			</DataLayer>
-																			<Remark>
-																				<InteractivePaging
-																					CaptionType="Image"
-																					HideShowPrevNextCaptions="False"
-																					HideWhenOnePage="True"
-																					IDnotSupportedHere="pagingTableNumbered"
-																					Location="Top"
-																					PageRowCount="20"
-																					ShowPageNumber="Numbered"
-																				/>
-																			</Remark>
 																			<Remark>
 																				<DataTableColumn
 																					Header="PID"
@@ -7429,13 +7384,19 @@
 																				</DataTableColumn>
 																			</Remark>
 																			<DataTableColumn
-																				Header="Notes:"
+																				Header="Notes"
 																				ID="colNotes"
 																				>
 																				<Label
 																					Caption="@Data.Notes~"
 																					ID="colNotes"
 																				/>
+																				<Remark>
+																					<DataColumnSort
+																						DataColumn="Notes"
+																						DataType="Text"
+																					/>
+																				</Remark>
 																			</DataTableColumn>
 																		</DataTable>
 																	</Division>
