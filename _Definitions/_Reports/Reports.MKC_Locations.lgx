@@ -91,8 +91,7 @@ From MapMKCLocations"
 									Type="RefreshElement"
 									>
 									<LinkParams
-										paramLocCd="@Data.LOCNCODE~"
-										paramLocName="@Data.LocValue~"
+										paramLocName="@Data.Location~"
 									/>
 									<WaitPage/>
 								</Action>
@@ -204,94 +203,41 @@ ORDER BY ID"
 												Caption="@Data.Location~"
 												ID="lblLocation"
 											/>
-											<DataColumnSort
-												DataColumn="Location"
-											/>
-										</DataTableColumn>
-										<DataTableColumn
-											Header="Address"
-											ID="colAddress"
-											>
+											<Label
+												Caption="  (Seasonal)"
+												Class="ThemeHidden"
+												>
+												<ConditionalClass
+													Condition="&quot;@Data.Seasonal~&quot; = &quot;Y&quot;"
+												/>
+											</Label>
+											<LineBreak/>
 											<Label
 												Caption="@Data.Address~"
 												ID="lblAddress"
 											/>
-											<DataColumnSort
-												DataColumn="Address"
-											/>
-										</DataTableColumn>
-										<DataTableColumn
-											Header="Address 2"
-											ID="colAddress 2"
-											>
+											<LineBreak/>
 											<Label
-												Caption="@Data.Address 2~"
-												ID="lblAddress 2"
-											/>
-											<DataColumnSort
-												DataColumn="Address 2"
-											/>
-										</DataTableColumn>
-										<DataTableColumn
-											Header="City"
-											ID="colCity"
-											>
-											<Label
-												Caption="@Data.City~"
+												Caption="@Data.City~ @Data.State~ @Data.Zip~"
 												ID="lblCity"
 											/>
-											<DataColumnSort
-												DataColumn="City"
-											/>
-										</DataTableColumn>
-										<DataTableColumn
-											Header="State"
-											ID="colState"
-											>
-											<Label
-												Caption="@Data.State~"
-												ID="lblState"
-											/>
-											<DataColumnSort
-												DataColumn="State"
-											/>
-										</DataTableColumn>
-										<DataTableColumn
-											Header="Zip"
-											ID="colZip"
-											>
-											<Label
-												Caption="@Data.Zip~"
-												ID="lblZip"
-											/>
-											<DataColumnSort
-												DataColumn="Zip"
-												DataType="Number"
-											/>
-										</DataTableColumn>
-										<DataTableColumn
-											Header="Phone"
-											ID="colPhone"
-											>
+											<LineBreak/>
 											<Label
 												Caption="@Data.Phone~"
 												ID="lblPhone"
 											/>
-											<DataColumnSort
-												DataColumn="Phone"
+											<LineBreak/>
+											<LineBreak/>
+											<Label
+												Caption="Services:"
+												Class="ThemeBold"
 											/>
-										</DataTableColumn>
-										<DataTableColumn
-											Header="Services"
-											ID="colServices"
-											>
+											<LineBreak/>
 											<Label
 												Caption="@Data.Services~"
 												ID="lblServices"
 											/>
-											<DataColumnSort
-												DataColumn="Services"
-											/>
+											<LineBreak/>
 										</DataTableColumn>
 									</DataTable>
 									<Label
@@ -358,13 +304,13 @@ ORDER BY ID"
 										>
 										<DataLayer
 											ColumnNamesRow="1"
-											ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\ImageLookup.xlsx"
+											ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\LocationData.xlsx"
 											ExcelWorksheet="Images"
 											ID="dlImageLookup"
 											Type="Excel"
 											>
 											<ConditionFilter
-												Condition="InStr(&quot;@Request.paramLocName~&quot;, &quot;@Data.Location~ &gt; 0"
+												Condition="InStr(&quot;@Request.paramLocName~&quot;, &quot;@Data.Location~&quot;) &gt; 0"
 											/>
 										</DataLayer>
 										<InteractivePaging
@@ -392,7 +338,7 @@ ORDER BY ID"
 											</DataTableColumn>
 										</Remark>
 										<DataTableColumn
-											Header="Location Photo"
+											Header="Aerial Photo"
 											ID="colColumn2"
 											>
 											<Remark>
@@ -402,14 +348,14 @@ ORDER BY ID"
 												/>
 											</Remark>
 											<Image
-												Caption="@Data.Column2~"
+												Caption="@Data.Image~"
 												Height="335"
 												ID="imgLocation"
 												Width="485"
 											/>
-											<DataColumnSort
-												DataColumn="Column2"
-												DataType="Text"
+											<ConditionalClass
+												Class="ThemeHidden"
+												Condition="&quot;@Data.Image~&quot; = &quot;&quot;"
 											/>
 										</DataTableColumn>
 									</DataTable>
