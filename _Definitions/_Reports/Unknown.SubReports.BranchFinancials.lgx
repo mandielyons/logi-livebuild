@@ -55,16 +55,25 @@
 										ID="iptLocation"
 										IncludeBlank="True"
 										IncludeBlankCaption="Select a location"
-										OptionCaptionColumn="LocDescr"
-										OptionValueColumn="LOCNCODE"
+										OptionCaptionColumn="Location"
+										OptionValueColumn="LocationCode"
 										>
-										<DataLayer
-											ConnectionID="connMKC"
-											ID="dlDataLocations"
-											Source="Select Distinct MapMKCLocations.LOCNCODE As LOCNCODE,
+										<Remark>
+											<DataLayer
+												ConnectionID="connMKC"
+												ID="dlDataLocations"
+												Source="Select Distinct MapMKCLocations.LOCNCODE As LOCNCODE,
   MapMKCLocations.LOCNDSCR As LocDescr
 From MapMKCLocations"
-											Type="SQL"
+												Type="SQL"
+											/>
+										</Remark>
+										<DataLayer
+											ColumnNamesRow="1"
+											ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\LocationData.xlsx"
+											ExcelWorksheet="BranchData"
+											ID="dlLocations"
+											Type="Excel"
 										/>
 									</InputSelectList>
 									<Image

@@ -91,6 +91,7 @@ From MapMKCLocations"
 									Type="RefreshElement"
 									>
 									<LinkParams
+										paramLocCd="@Data.LocationCode~"
 										paramLocName="@Data.Location~"
 									/>
 									<WaitPage/>

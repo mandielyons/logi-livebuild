@@ -226,6 +226,19 @@
 									ID="dlAFDTanks"
 									Type="Excel"
 									>
+									<Remark>
+										<Lookup
+											ID="custLookup"
+											>
+											<DataLayer
+												ColumnNamesRow="1"
+												ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\ActiveMKCTanks.xlsx"
+												ExcelWorksheet="Sheet1"
+												ID="dlActiveTanks"
+												Type="Excel"
+											/>
+										</Lookup>
+									</Remark>
 									<ReverseGeocodeColumns
 										ID="revLookup"
 										LatitudeDataColumn="lat"
@@ -288,26 +301,25 @@
 										</Label>
 										<LineBreak/>
 										<Label
-											Caption="Tank ID:"
-											Class="ThemeBold"
-										/>
+											Caption="Tank Capacity:"
+											Class="ThemeHidden"
+											>
+											<ConditionalClass
+												Class="ThemeBold"
+												Condition="&quot;@Data.capacity~&quot; &lt;&gt; &quot;inactive&quot;"
+											/>
+										</Label>
 										<Spaces
 											Size="1"
 										/>
 										<Label
-											Caption="@Data.tankid~"
-										/>
-										<LineBreak/>
-										<Label
-											Caption="Probe ID:"
-											Class="ThemeBold"
-										/>
-										<Spaces
-											Size="1"
-										/>
-										<Label
-											Caption="@Data.probeid~"
-										/>
+											Caption="@Data.capacity~"
+											Class="ThemeHidden"
+											>
+											<ConditionalClass
+												Condition="&quot;@Data.capacity~&quot; &lt;&gt; &quot;inactive&quot;"
+											/>
+										</Label>
 									</MapMarkerInfo>
 								</Action>
 							</GoogleMapMarkers>

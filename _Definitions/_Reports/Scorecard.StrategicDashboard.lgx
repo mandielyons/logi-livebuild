@@ -540,7 +540,7 @@
 																Height="20"
 																ID="showGrowthDetails"
 																Tooltip="Show/Hide Action Details..."
-																TrueImage="minus.png"
+																TrueImage="star.png"
 																Width="20"
 															/>
 														</Division>
@@ -684,7 +684,7 @@
 																					Condition="@Data.Progress~ &gt; 80"
 																				/>
 																				<ConditionalClass
-																					Class="fa fa-minus text-warning"
+																					Class="fa fa-star text-warning"
 																					Condition="@Data.Progress~ &gt; 50 "
 																				/>
 																				<ConditionalClass
@@ -1104,7 +1104,7 @@
 																Height="20"
 																ID="showExpenseDetails"
 																Tooltip="Show/Hide Action Details..."
-																TrueImage="minus.png"
+																TrueImage="star.png"
 																Width="20"
 															/>
 														</Division>
@@ -1261,7 +1261,7 @@
 																					Condition="@Data.Progress~ &gt; 80"
 																				/>
 																				<ConditionalClass
-																					Class="fa fa-minus text-warning"
+																					Class="fa fa-star text-warning"
 																					Condition="@Data.Progress~ &gt; 50 "
 																				/>
 																				<ConditionalClass
@@ -1509,7 +1509,7 @@
 																Height="20"
 																ID="showVotingDetails"
 																Tooltip="Show/Hide Action Details..."
-																TrueImage="minus.png"
+																TrueImage="star.png"
 																Width="20"
 															/>
 														</Division>
@@ -1654,7 +1654,7 @@
 																					Condition="@Data.Progress~ &gt; 80"
 																				/>
 																				<ConditionalClass
-																					Class="fa fa-minus text-warning"
+																					Class="fa fa-star text-warning"
 																					Condition="@Data.Progress~ &gt; 50 "
 																				/>
 																				<ConditionalClass
@@ -1900,7 +1900,7 @@
 																Height="20"
 																ID="showStoryDetails"
 																Tooltip="Show/Hide Action Details..."
-																TrueImage="minus.png"
+																TrueImage="star.png"
 																Width="20"
 															/>
 														</Division>
@@ -2045,7 +2045,7 @@
 																					Condition="@Data.Progress~ &gt; 80"
 																				/>
 																				<ConditionalClass
-																					Class="fa fa-minus text-warning"
+																					Class="fa fa-star text-warning"
 																					Condition="@Data.Progress~ &gt; 50 "
 																				/>
 																				<ConditionalClass
@@ -2299,7 +2299,7 @@
 																Height="20"
 																ID="showSalesDetails"
 																Tooltip="Show/Hide Action Details..."
-																TrueImage="minus.png"
+																TrueImage="star.png"
 																Width="20"
 															/>
 														</Division>
@@ -2444,7 +2444,7 @@
 																					Condition="@Data.Progress~ &gt; 80"
 																				/>
 																				<ConditionalClass
-																					Class="fa fa-minus text-warning"
+																					Class="fa fa-star text-warning"
 																					Condition="@Data.Progress~ &gt; 50 "
 																				/>
 																				<ConditionalClass
@@ -2698,7 +2698,7 @@
 																Height="20"
 																ID="showCustDetails"
 																Tooltip="Show/Hide Action Details..."
-																TrueImage="minus.png"
+																TrueImage="star.png"
 																Width="20"
 															/>
 														</Division>
@@ -2843,7 +2843,7 @@
 																					Condition="@Data.Progress~ &gt; 80"
 																				/>
 																				<ConditionalClass
-																					Class="fa fa-minus text-warning"
+																					Class="fa fa-star text-warning"
 																					Condition="@Data.Progress~ &gt; 50 "
 																				/>
 																				<ConditionalClass
@@ -3091,7 +3091,7 @@
 																Height="20"
 																ID="show40YODetails"
 																Tooltip="Show/Hide Action Details..."
-																TrueImage="minus.png"
+																TrueImage="star.png"
 																Width="20"
 															/>
 														</Division>
@@ -3235,7 +3235,7 @@
 																					Condition="@Data.Progress~ &gt; 80"
 																				/>
 																				<ConditionalClass
-																					Class="fa fa-minus text-warning"
+																					Class="fa fa-star text-warning"
 																					Condition="@Data.Progress~ &gt; 50"
 																				/>
 																				<ConditionalClass
@@ -3481,7 +3481,7 @@
 																Height="20"
 																ID="showPrecisionDetails"
 																Tooltip="Show/Hide Action Details..."
-																TrueImage="minus.png"
+																TrueImage="star.png"
 																Width="20"
 															/>
 														</Division>
@@ -3626,7 +3626,7 @@
 																					Condition="@Data.Progress~ &gt; 80"
 																				/>
 																				<ConditionalClass
-																					Class="fa fa-minus text-warning"
+																					Class="fa fa-star text-warning"
 																					Condition="@Data.Progress~ &gt; 50 "
 																				/>
 																				<ConditionalClass
@@ -3880,7 +3880,7 @@
 																Height="20"
 																ID="showCommunicateDetails"
 																Tooltip="Show/Hide Action Details..."
-																TrueImage="minus.png"
+																TrueImage="star.png"
 																Width="20"
 															/>
 														</Division>
@@ -4025,7 +4025,7 @@
 																					Condition="@Data.Progress~ &gt; 80"
 																				/>
 																				<ConditionalClass
-																					Class="fa fa-minus text-warning"
+																					Class="fa fa-star text-warning"
 																					Condition="@Data.Progress~ &gt; 50 "
 																				/>
 																				<ConditionalClass
@@ -4279,7 +4279,7 @@
 																Height="20"
 																ID="showKeyDetails"
 																Tooltip="Show/Hide Action Details..."
-																TrueImage="minus.png"
+																TrueImage="star.png"
 																Width="20"
 															/>
 														</Division>
@@ -4424,7 +4424,7 @@
 																					Condition="@Data.Progress~ &gt; 80"
 																				/>
 																				<ConditionalClass
-																					Class="fa fa-minus text-warning"
+																					Class="fa fa-star text-warning"
 																					Condition="@Data.Progress~ &gt; 50 "
 																				/>
 																				<ConditionalClass
@@ -4672,7 +4672,7 @@
 																Height="20"
 																ID="showEngageDetails"
 																Tooltip="Show/Hide Action Details..."
-																TrueImage="minus.png"
+																TrueImage="star.png"
 																Width="20"
 															/>
 														</Division>
@@ -4817,7 +4817,7 @@
 																					Condition="@Data.Progress~ &gt; 80"
 																				/>
 																				<ConditionalClass
-																					Class="fa fa-minus text-warning"
+																					Class="fa fa-star text-warning"
 																					Condition="@Data.Progress~ &gt; 50 "
 																				/>
 																				<ConditionalClass
@@ -5063,7 +5063,7 @@
 																Height="20"
 																ID="showDevelopDetails"
 																Tooltip="Show/Hide Action Details..."
-																TrueImage="minus.png"
+																TrueImage="star.png"
 																Width="20"
 															/>
 														</Division>
@@ -5208,7 +5208,7 @@
 																					Condition="@Data.Progress~ &gt; 80"
 																				/>
 																				<ConditionalClass
-																					Class="fa fa-minus text-warning"
+																					Class="fa fa-star text-warning"
 																					Condition="@Data.Progress~ &gt; 50 "
 																				/>
 																				<ConditionalClass
@@ -5456,7 +5456,7 @@
 																Height="20"
 																ID="showWellnessDetails"
 																Tooltip="Show/Hide Action Details..."
-																TrueImage="minus.png"
+																TrueImage="star.png"
 																Width="20"
 															/>
 														</Division>
@@ -5601,7 +5601,7 @@
 																					Condition="@Data.Progress~ &gt; 80"
 																				/>
 																				<ConditionalClass
-																					Class="fa fa-minus text-warning"
+																					Class="fa fa-star text-warning"
 																					Condition="@Data.Progress~ &gt; 50 "
 																				/>
 																				<ConditionalClass
@@ -5853,7 +5853,7 @@
 																Height="20"
 																ID="showLogisticsDetails"
 																Tooltip="Show/Hide Action Details..."
-																TrueImage="minus.png"
+																TrueImage="star.png"
 																Width="20"
 															/>
 														</Division>
@@ -5998,7 +5998,7 @@
 																					Condition="@Data.Progress~ &gt; 80"
 																				/>
 																				<ConditionalClass
-																					Class="fa fa-minus text-warning"
+																					Class="fa fa-star text-warning"
 																					Condition="@Data.Progress~ &gt; 50"
 																				/>
 																				<ConditionalClass
@@ -6252,7 +6252,7 @@
 																Height="20"
 																ID="showSoftwareDetails"
 																Tooltip="Show/Hide Action Details..."
-																TrueImage="minus.png"
+																TrueImage="star.png"
 																Width="20"
 															/>
 														</Division>
@@ -6397,7 +6397,7 @@
 																					Condition="@Data.Progress~ &gt; 80"
 																				/>
 																				<ConditionalClass
-																					Class="fa fa-minus text-warning"
+																					Class="fa fa-star text-warning"
 																					Condition="@Data.Progress~ &gt; 50"
 																				/>
 																				<ConditionalClass
@@ -6645,7 +6645,7 @@
 																Height="20"
 																ID="showGrainDetails"
 																Tooltip="Show/Hide Action Details..."
-																TrueImage="minus.png"
+																TrueImage="star.png"
 																Width="20"
 															/>
 														</Division>
@@ -6790,7 +6790,7 @@
 																					Condition="@Data.Progress~ &gt; 80"
 																				/>
 																				<ConditionalClass
-																					Class="fa fa-minus text-warning"
+																					Class="fa fa-star text-warning"
 																					Condition="@Data.Progress~ &gt; 50 "
 																				/>
 																				<ConditionalClass
@@ -7036,7 +7036,7 @@
 																Height="20"
 																ID="showFeedDetails"
 																Tooltip="Show/Hide Action Details..."
-																TrueImage="minus.png"
+																TrueImage="star.png"
 																Width="20"
 															/>
 														</Division>
@@ -7190,7 +7190,7 @@
 																					Condition="@Data.Progress~ &gt; 80"
 																				/>
 																				<ConditionalClass
-																					Class="fa fa-minus text-warning"
+																					Class="fa fa-star text-warning"
 																					Condition="@Data.Progress~ &gt; 50 "
 																				/>
 																				<ConditionalClass
