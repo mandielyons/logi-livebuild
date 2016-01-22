@@ -21,6 +21,10 @@
 			Type="SQL"
 		/>
 	</LocalData>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrHeader"
+	/>
 	<Body>
 		<ResponsiveRow>
 			<ResponsiveColumn
@@ -112,12 +116,11 @@ ORDER BY COMMODITYCODE
 					<DataTable
 						AccessibleHeaders="True"
 						AccessibleSummary="AnalysisGrid DataTable"
+						Caption="Overshipped Contracts"
 						ID="ContractsOvershipped"
 						KeepScrollPosition="True"
 						RememberSort="True"
-						ResizableColumns="True"
 						SortArrows="True"
-						TableBorder="0"
 						>
 						<DataLayer
 							ConnectionID="connProdGP"
@@ -147,7 +150,7 @@ HAVING SUM(REMAINING_BU)&lt;0
 							HideWhenOnePage="True"
 							IDnotSupportedHere="pagingTableNumbered"
 							Location="Top"
-							PageRowCount="8"
+							PageRowCount="7"
 							ShowPageNumber="Numbered"
 						/>
 						<DataTableColumn
@@ -271,6 +274,7 @@ HAVING SUM(REMAINING_BU)&lt;0
 					<CrosstabTable
 						AjaxPaging="True"
 						ID="Crosstab-WHEAT"
+						TableBorder="1"
 						Width="100"
 						WidthScale="%"
 						>
@@ -360,6 +364,7 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 					<CrosstabTable
 						AjaxPaging="True"
 						ID="Crosstab-MILO"
+						TableBorder="1"
 						Width="100"
 						WidthScale="%"
 						>
@@ -449,6 +454,7 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 					<CrosstabTable
 						AjaxPaging="True"
 						ID="Crosstab-SOYBEANS"
+						TableBorder="1"
 						Width="100"
 						WidthScale="%"
 						>
@@ -538,6 +544,7 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 					<CrosstabTable
 						AjaxPaging="True"
 						ID="Crosstab-CORN"
+						TableBorder="1"
 						Width="100"
 						WidthScale="%"
 						>
@@ -627,6 +634,7 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 					<CrosstabTable
 						AjaxPaging="True"
 						ID="Crosstab-OATS"
+						TableBorder="1"
 						Width="100"
 						WidthScale="%"
 						>
@@ -716,6 +724,7 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 					<CrosstabTable
 						AjaxPaging="True"
 						ID="Crosstab-BARLEY"
+						TableBorder="1"
 						Width="100"
 						WidthScale="%"
 						>
@@ -805,6 +814,7 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 					<CrosstabTable
 						AjaxPaging="True"
 						ID="Crosstab-SUNFLOWERS"
+						TableBorder="1"
 						Width="100"
 						WidthScale="%"
 						>
@@ -894,6 +904,7 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 					<CrosstabTable
 						AjaxPaging="True"
 						ID="Crosstab-CANOLA"
+						TableBorder="1"
 						Width="100"
 						WidthScale="%"
 						>
@@ -979,5 +990,9 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 			</Tabs>
 		</Division>
 	</Body>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrFooter"
+	/>
 	<ideTestParams/>
 </Report>
