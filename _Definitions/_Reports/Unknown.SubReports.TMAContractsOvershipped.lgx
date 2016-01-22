@@ -58,21 +58,27 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 			/>
 		</DataLayer>
 	</LocalData>
-	<ReportHeader>
-		<Button
-			Caption="Dashboard Home"
-			ID="buttonHome"
-			>
-			<Action
-				Type="Report"
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrHeader"
+	/>
+	<Remark>
+		<ReportHeader>
+			<Button
+				Caption="Dashboard Home"
+				ID="buttonHome"
 				>
-				<Target
-					Report="TMAReports.TMAContractsDashboard"
+				<Action
 					Type="Report"
-				/>
-			</Action>
-		</Button>
-	</ReportHeader>
+					>
+					<Target
+						Report="TMAReports.TMAContractsDashboard"
+						Type="Report"
+					/>
+				</Action>
+			</Button>
+		</ReportHeader>
+	</Remark>
 	<Body>
 		<Button
 			Caption="Export to Excel"
@@ -147,10 +153,9 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 		<DataTable
 			AccessibleHeaders="True"
 			AccessibleSummary="AnalysisGrid DataTable"
-			ID="DataTable1"
-			KeepScrollPosition="True"
+			Caption="TMA Overshipped Contracts"
+			ID="dtTMAContracts"
 			RememberSort="True"
-			ResizableColumns="True"
 			SortArrows="True"
 			TableBorder="0"
 			>
@@ -248,6 +253,10 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 			</DataTableColumn>
 		</DataTable>
 	</Body>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrFooter"
+	/>
 	<ideTestParams
 		paramContractKey="1_  40910_02_63977"
 	/>
