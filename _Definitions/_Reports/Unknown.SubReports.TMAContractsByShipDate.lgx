@@ -4,21 +4,27 @@
 	ID="Unknown.SubReports.TMAContractsByShipDate"
 	>
 	<DefaultRequestParams/>
-	<ReportHeader>
-		<Button
-			Caption="Dashboard Home"
-			ID="buttonHome"
-			>
-			<Action
-				Type="Report"
+	<Remark>
+		<ReportHeader>
+			<Button
+				Caption="Dashboard Home"
+				ID="buttonHome"
 				>
-				<Target
-					Report="TMAReports.TMAContractsDashboard"
+				<Action
 					Type="Report"
-				/>
-			</Action>
-		</Button>
-	</ReportHeader>
+					>
+					<Target
+						Report="TMAReports.TMAContractsDashboard"
+						Type="Report"
+					/>
+				</Action>
+			</Button>
+		</ReportHeader>
+	</Remark>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrHeader"
+	/>
 	<Body
 		ID="bodyTMAContractsByShipDate"
 		>
@@ -232,6 +238,7 @@ ORDER BY BRANCH"
 			<DataTable
 				AccessibleHeaders="True"
 				AjaxPaging="True"
+				Caption="TMA Contracts"
 				ID="dtTMAContractsByShipDate"
 				SortArrows="True"
 				>
@@ -442,6 +449,10 @@ ORDER BY CUSTDESC, MAINCONTRACT
 			</DataTable>
 		</Division>
 	</Body>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrFooter"
+	/>
 	<ideTestParams
 		Account="ALL"
 		Branch="ALL"

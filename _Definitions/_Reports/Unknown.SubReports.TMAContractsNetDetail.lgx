@@ -3,26 +3,33 @@
 	Caption="TMA Contract Detail"
 	ID="Unknown.SubReports.TMAContractsNetDetail"
 	>
-	<ReportHeader>
-		<Button
-			Caption="Dashboard Home"
-			ID="buttonHome"
-			>
-			<Action
-				Type="Report"
+	<Remark>
+		<ReportHeader>
+			<Button
+				Caption="Dashboard Home"
+				ID="buttonHome"
 				>
-				<Target
-					Report="TMAReports.TMAContractsDashboard"
+				<Action
 					Type="Report"
-				/>
-			</Action>
-		</Button>
-	</ReportHeader>
+					>
+					<Target
+						Report="TMAReports.TMAContractsDashboard"
+						Type="Report"
+					/>
+				</Action>
+			</Button>
+		</ReportHeader>
+	</Remark>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrHeader"
+	/>
 	<Body>
 		<DataTable
 			AccessibleHeaders="True"
 			AccessibleSummary="AnalysisGrid DataTable"
-			ID="DataTable1"
+			Caption="TMA Contracts"
+			ID="dtTMAContractsNetDetail"
 			KeepScrollPosition="True"
 			RememberSort="True"
 			ResizableColumns="True"
@@ -307,6 +314,7 @@ AND DELIVERY_END_DATE BETWEEN CASE WHEN &apos;@Request.paramDate~&apos;=&apos;Pr
 				>
 				<Label
 					Caption="@Data.ISSUED_BU~"
+					Format="###,###,##0.000"
 					ID="lblISSUED_BU"
 				/>
 				<DataColumnSort
@@ -320,6 +328,7 @@ AND DELIVERY_END_DATE BETWEEN CASE WHEN &apos;@Request.paramDate~&apos;=&apos;Pr
 				>
 				<Label
 					Caption="@Data.APPLIED_BU~"
+					Format="###,###,##0.000"
 					ID="lblAPPLIED_BU"
 				/>
 				<DataColumnSort
@@ -333,6 +342,7 @@ AND DELIVERY_END_DATE BETWEEN CASE WHEN &apos;@Request.paramDate~&apos;=&apos;Pr
 				>
 				<Label
 					Caption="@Data.ADJUSTED_BU~"
+					Format="###,###,##0.000"
 					ID="lblADJUSTED_BU"
 				/>
 				<DataColumnSort
@@ -346,6 +356,7 @@ AND DELIVERY_END_DATE BETWEEN CASE WHEN &apos;@Request.paramDate~&apos;=&apos;Pr
 				>
 				<Label
 					Caption="@Data.SUB_CONT_BU~"
+					Format="###,###,##0.000"
 					ID="lblSUB_CONT_BU"
 				/>
 				<DataColumnSort
@@ -359,6 +370,7 @@ AND DELIVERY_END_DATE BETWEEN CASE WHEN &apos;@Request.paramDate~&apos;=&apos;Pr
 				>
 				<Label
 					Caption="@Data.REMAINING_BU~"
+					Format="###,###,##0.000"
 					ID="lblREMAINING_BU"
 				/>
 				<DataColumnSort
@@ -600,6 +612,7 @@ AND DELIVERY_END_DATE BETWEEN CASE WHEN &apos;@Request.paramDate~&apos;=&apos;Pr
 				>
 				<Label
 					Caption="@Data.FUTURES_MONTH~"
+					Format="Short Date"
 					ID="lblFUTURES_MONTH"
 				/>
 				<DataColumnSort
@@ -716,6 +729,10 @@ AND DELIVERY_END_DATE BETWEEN CASE WHEN &apos;@Request.paramDate~&apos;=&apos;Pr
 			/>
 		</DataTable>
 	</Body>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrFooter"
+	/>
 	<ideTestParams
 		paramCommodity="2"
 		paramContractType="Sale"

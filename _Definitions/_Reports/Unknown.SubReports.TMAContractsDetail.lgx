@@ -39,26 +39,33 @@ WHERE OC.DATA_KEY=&apos;@Request.paramContractKey~&apos; OR (OC.CONTRACT_MAIN=&a
 			/>
 		</DataLayer>
 	</LocalData>
-	<ReportHeader>
-		<Button
-			Caption="Dashboard Home"
-			ID="buttonHome"
-			>
-			<Action
-				Type="Report"
+	<Remark>
+		<ReportHeader>
+			<Button
+				Caption="Dashboard Home"
+				ID="buttonHome"
 				>
-				<Target
-					Report="TMAReports.TMAContractsDashboard"
+				<Action
 					Type="Report"
-				/>
-			</Action>
-		</Button>
-	</ReportHeader>
+					>
+					<Target
+						Report="TMAReports.TMAContractsDashboard"
+						Type="Report"
+					/>
+				</Action>
+			</Button>
+		</ReportHeader>
+	</Remark>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrHeader"
+	/>
 	<Body>
 		<DataTable
 			AccessibleHeaders="True"
 			AccessibleSummary="AnalysisGrid DataTable"
-			ID="DataTable1"
+			Caption="TMA Contracts Detail"
+			ID="dtTMAContractsDetail"
 			KeepScrollPosition="True"
 			RememberSort="True"
 			ResizableColumns="True"
@@ -527,6 +534,14 @@ WHERE OC.DATA_KEY=&apos;@Request.paramContractKey~&apos; OR (OC.CONTRACT_MAIN=&a
 			/>
 		</DataTable>
 	</Body>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrFooter"
+	/>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrFooter"
+	/>
 	<ideTestParams
 		paramContractKey="1_8320618_02_23978"
 		paramContractMain=""
