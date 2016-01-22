@@ -226,19 +226,6 @@
 									ID="dlAFDTanks"
 									Type="Excel"
 									>
-									<Remark>
-										<Lookup
-											ID="custLookup"
-											>
-											<DataLayer
-												ColumnNamesRow="1"
-												ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\ActiveMKCTanks.xlsx"
-												ExcelWorksheet="Sheet1"
-												ID="dlActiveTanks"
-												Type="Excel"
-											/>
-										</Lookup>
-									</Remark>
 									<ReverseGeocodeColumns
 										ID="revLookup"
 										LatitudeDataColumn="lat"
