@@ -68,7 +68,7 @@
 										TickLength="7"
 										TickRadius="72"
 										TickThickness="3"
-										Tooltip="Current Measure of Success: @Data.Progress~"
+										Tooltip="Current Measure of Success: @Data.Progress~%"
 										TotalAngle="325"
 										Type="Needle"
 										UpperBound="100"
@@ -178,7 +178,7 @@
 										TickLength="7"
 										TickRadius="72"
 										TickThickness="3"
-										Tooltip="Current Measure of Success: @Data.Progress~"
+										Tooltip="Current Measure of Success: @Data.Progress~%"
 										TotalAngle="325"
 										Type="Needle"
 										UpperBound="100"
@@ -288,7 +288,7 @@
 										TickLength="7"
 										TickRadius="72"
 										TickThickness="3"
-										Tooltip="Current Measure of Success: @Data.Progress~"
+										Tooltip="Current Measure of Success: @Data.Progress~%"
 										TotalAngle="325"
 										Type="Needle"
 										UpperBound="100"
@@ -398,7 +398,7 @@
 										TickLength="7"
 										TickRadius="72"
 										TickThickness="3"
-										Tooltip="Current Measure of Success: @Data.Progress~"
+										Tooltip="Current Measure of Success: @Data.Progress~%"
 										TotalAngle="325"
 										Type="Needle"
 										UpperBound="100"
@@ -588,7 +588,7 @@
 																	<Quicktip>
 																		<QuicktipRow
 																			Caption="Progress:"
-																			Value="@Data.Progress~"
+																			Value="@Data.Progress~%"
 																		/>
 																	</Quicktip>
 																</Gauge>
@@ -676,7 +676,7 @@
 																			ID="colProgress"
 																			>
 																			<Label
-																				Caption="@Data.Progress~"
+																				Caption="@Data.Progress~%"
 																				ID="colProgress"
 																				>
 																				<ConditionalClass
@@ -699,7 +699,7 @@
 																				/>
 																			</Label>
 																			<DataColumnSort
-																				DataColumn="Progress"
+																				DataColumn="% Progress"
 																				DataType="Number"
 																			/>
 																		</DataTableColumn>
@@ -864,7 +864,7 @@
 																			</Remark>
 																			<Remark>
 																				<DataTableColumn
-																					Header="Progress"
+																					Header="% Progress"
 																					ID="colProgress"
 																					>
 																					<Label
@@ -872,7 +872,7 @@
 																						ID="colProgress"
 																					/>
 																					<DataColumnSort
-																						DataColumn="Progress"
+																						DataColumn="% Progress"
 																						DataType="Number"
 																					/>
 																				</DataTableColumn>
@@ -1152,7 +1152,7 @@
 																	<Quicktip>
 																		<QuicktipRow
 																			Caption="Progress:"
-																			Value="@Data.Progress~"
+																			Value="@Data.Progress~%"
 																		/>
 																	</Quicktip>
 																</Gauge>
@@ -1253,7 +1253,7 @@
 																			WidthScale="%"
 																			>
 																			<Label
-																				Caption="@Data.Progress~"
+																				Caption="@Data.Progress~%"
 																				ID="colProgress"
 																				>
 																				<ConditionalClass
@@ -1276,7 +1276,7 @@
 																				/>
 																			</Label>
 																			<DataColumnSort
-																				DataColumn="Progress"
+																				DataColumn="% Progress"
 																				DataType="Number"
 																			/>
 																		</DataTableColumn>
@@ -1441,7 +1441,7 @@
 																			</Remark>
 																			<Remark>
 																				<DataTableColumn
-																					Header="Progress"
+																					Header="% Progress"
 																					ID="colProgress"
 																					>
 																					<Label
@@ -1449,7 +1449,7 @@
 																						ID="colProgress"
 																					/>
 																					<DataColumnSort
-																						DataColumn="Progress"
+																						DataColumn="% Progress"
 																						DataType="Number"
 																					/>
 																				</DataTableColumn>
@@ -1557,7 +1557,7 @@
 																	<Quicktip>
 																		<QuicktipRow
 																			Caption="Progress:"
-																			Value="@Data.Progress~"
+																			Value="@Data.Progress~%"
 																		/>
 																	</Quicktip>
 																</Gauge>
@@ -1646,7 +1646,7 @@
 																			ID="colProgress"
 																			>
 																			<Label
-																				Caption="@Data.Progress~"
+																				Caption="@Data.Progress~%"
 																				ID="colProgress"
 																				>
 																				<ConditionalClass
@@ -1948,7 +1948,7 @@
 																	<Quicktip>
 																		<QuicktipRow
 																			Caption="Progress:"
-																			Value="@Data.Progress~"
+																			Value="@Data.Progress~%"
 																		/>
 																	</Quicktip>
 																</Gauge>
@@ -2037,7 +2037,7 @@
 																			ID="colProgress"
 																			>
 																			<Label
-																				Caption="@Data.Progress~"
+																				Caption="@Data.Progress~%"
 																				ID="colProgress"
 																				>
 																				<ConditionalClass
@@ -2347,7 +2347,7 @@
 																	<Quicktip>
 																		<QuicktipRow
 																			Caption="Progress:"
-																			Value="@Data.Progress~"
+																			Value="@Data.Progress~%"
 																		/>
 																	</Quicktip>
 																</Gauge>
@@ -2436,7 +2436,7 @@
 																			ID="colProgress"
 																			>
 																			<Label
-																				Caption="@Data.Progress~"
+																				Caption="@Data.Progress~%"
 																				ID="colProgress"
 																				>
 																				<ConditionalClass
@@ -2746,7 +2746,7 @@
 																	<Quicktip>
 																		<QuicktipRow
 																			Caption="Progress:"
-																			Value="@Data.Progress~"
+																			Value="@Data.Progress~%"
 																		/>
 																	</Quicktip>
 																</Gauge>
@@ -2835,7 +2835,7 @@
 																			ID="colProgress"
 																			>
 																			<Label
-																				Caption="@Data.Progress~"
+																				Caption="@Data.Progress~%"
 																				ID="colProgress"
 																				>
 																				<ConditionalClass
@@ -3139,7 +3139,7 @@
 																	<Quicktip>
 																		<QuicktipRow
 																			Caption="Progress:"
-																			Value="@Data.Progress~"
+																			Value="@Data.Progress~%"
 																		/>
 																	</Quicktip>
 																</Gauge>
@@ -3227,7 +3227,7 @@
 																			ID="colProgress"
 																			>
 																			<Label
-																				Caption="@Data.Progress~"
+																				Caption="@Data.Progress~%"
 																				ID="colProgress"
 																				>
 																				<ConditionalClass
@@ -3529,7 +3529,7 @@
 																	<Quicktip>
 																		<QuicktipRow
 																			Caption="Progress:"
-																			Value="@Data.Progress~"
+																			Value="@Data.Progress~%"
 																		/>
 																	</Quicktip>
 																</Gauge>
@@ -3618,7 +3618,7 @@
 																			ID="colProgress"
 																			>
 																			<Label
-																				Caption="@Data.Progress~"
+																				Caption="@Data.Progress~%"
 																				ID="colProgress"
 																				>
 																				<ConditionalClass
@@ -3928,7 +3928,7 @@
 																	<Quicktip>
 																		<QuicktipRow
 																			Caption="Progress:"
-																			Value="@Data.Progress~"
+																			Value="@Data.Progress~%"
 																		/>
 																	</Quicktip>
 																</Gauge>
@@ -4017,7 +4017,7 @@
 																			ID="colProgress"
 																			>
 																			<Label
-																				Caption="@Data.Progress~"
+																				Caption="@Data.Progress~%"
 																				ID="colProgress"
 																				>
 																				<ConditionalClass
@@ -4327,7 +4327,7 @@
 																	<Quicktip>
 																		<QuicktipRow
 																			Caption="Progress:"
-																			Value="@Data.Progress~"
+																			Value="@Data.Progress~%"
 																		/>
 																	</Quicktip>
 																</Gauge>
@@ -4416,7 +4416,7 @@
 																			ID="colProgress"
 																			>
 																			<Label
-																				Caption="@Data.Progress~"
+																				Caption="@Data.Progress~%"
 																				ID="colProgress"
 																				>
 																				<ConditionalClass
@@ -4720,7 +4720,7 @@
 																	<Quicktip>
 																		<QuicktipRow
 																			Caption="Progress:"
-																			Value="@Data.Progress~"
+																			Value="@Data.Progress~%"
 																		/>
 																	</Quicktip>
 																</Gauge>
@@ -4809,7 +4809,7 @@
 																			ID="colProgress"
 																			>
 																			<Label
-																				Caption="@Data.Progress~"
+																				Caption="@Data.Progress~%"
 																				ID="colProgress"
 																				>
 																				<ConditionalClass
@@ -5111,7 +5111,7 @@
 																	<Quicktip>
 																		<QuicktipRow
 																			Caption="Progress:"
-																			Value="@Data.Progress~"
+																			Value="@Data.Progress~%"
 																		/>
 																	</Quicktip>
 																</Gauge>
@@ -5200,7 +5200,7 @@
 																			ID="colProgress"
 																			>
 																			<Label
-																				Caption="@Data.Progress~"
+																				Caption="@Data.Progress~%"
 																				ID="colProgress"
 																				>
 																				<ConditionalClass
@@ -5504,7 +5504,7 @@
 																	<Quicktip>
 																		<QuicktipRow
 																			Caption="Progress:"
-																			Value="@Data.Progress~"
+																			Value="@Data.Progress~%"
 																		/>
 																	</Quicktip>
 																</Gauge>
@@ -5593,7 +5593,7 @@
 																			ID="colProgress"
 																			>
 																			<Label
-																				Caption="@Data.Progress~"
+																				Caption="@Data.Progress~%"
 																				ID="colProgress"
 																				>
 																				<ConditionalClass
@@ -5901,7 +5901,7 @@
 																	<Quicktip>
 																		<QuicktipRow
 																			Caption="Progress:"
-																			Value="@Data.Progress~"
+																			Value="@Data.Progress~%"
 																		/>
 																	</Quicktip>
 																</Gauge>
@@ -5990,7 +5990,7 @@
 																			ID="colProgress"
 																			>
 																			<Label
-																				Caption="@Data.Progress~"
+																				Caption="@Data.Progress~%"
 																				ID="colProgress"
 																				>
 																				<ConditionalClass
@@ -6300,7 +6300,7 @@
 																	<Quicktip>
 																		<QuicktipRow
 																			Caption="Progress:"
-																			Value="@Data.Progress~"
+																			Value="@Data.Progress~%"
 																		/>
 																	</Quicktip>
 																</Gauge>
@@ -6389,7 +6389,7 @@
 																			ID="colProgress"
 																			>
 																			<Label
-																				Caption="@Data.Progress~"
+																				Caption="@Data.Progress~%"
 																				ID="colProgress"
 																				>
 																				<ConditionalClass
@@ -6693,7 +6693,7 @@
 																	<Quicktip>
 																		<QuicktipRow
 																			Caption="Progress:"
-																			Value="@Data.Progress~"
+																			Value="@Data.Progress~%"
 																		/>
 																	</Quicktip>
 																</Gauge>
@@ -6782,7 +6782,7 @@
 																			ID="colProgress"
 																			>
 																			<Label
-																				Caption="@Data.Progress~"
+																				Caption="@Data.Progress~%"
 																				ID="colProgress"
 																				>
 																				<ConditionalClass
@@ -7084,7 +7084,7 @@
 																	<Quicktip>
 																		<QuicktipRow
 																			Caption="Progress:"
-																			Value="@Data.Progress~"
+																			Value="@Data.Progress~%"
 																		/>
 																	</Quicktip>
 																</Gauge>
@@ -7182,7 +7182,7 @@
 																			ID="colProgress"
 																			>
 																			<Label
-																				Caption="@Data.Progress~"
+																				Caption="@Data.Progress~%"
 																				ID="colProgress"
 																				>
 																				<ConditionalClass
