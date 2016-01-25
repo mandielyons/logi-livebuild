@@ -68,7 +68,7 @@
 										TickLength="7"
 										TickRadius="72"
 										TickThickness="3"
-										Tooltip="Current Measure of Success: @Data.Progress~%"
+										Tooltip="Progress: @Data.Progress~%"
 										TotalAngle="325"
 										Type="Needle"
 										UpperBound="100"
@@ -106,7 +106,7 @@
 										<GaugeRing
 											Color="#CC0000"
 											ID="RingRed"
-											RingEndValue="30"
+											RingEndValue="20"
 											RingRadius="40"
 											RingStartValue="0"
 											RingThickness="8"
@@ -114,17 +114,33 @@
 										<GaugeRing
 											Color="#F1C232"
 											ID="RingYellow"
-											RingEndValue="70"
+											RingEndValue="40"
 											RingRadius="40"
-											RingStartValue="30"
+											RingStartValue="20"
 											RingThickness="8"
 										/>
 										<GaugeRing
 											Color="#6AA84F"
 											ID="RingGreen"
-											RingEndValue="100"
+											RingEndValue="70"
+											RingRadius="40"
+											RingStartValue="40"
+											RingThickness="8"
+										/>
+										<GaugeRing
+											Color="#F1C232"
+											ID="RingYellow2"
+											RingEndValue="90"
 											RingRadius="40"
 											RingStartValue="70"
+											RingThickness="8"
+										/>
+										<GaugeRing
+											Color="#CC0000"
+											ID="RingRed2"
+											RingEndValue="100"
+											RingRadius="40"
+											RingStartValue="90"
 											RingThickness="8"
 										/>
 									</Gauge>
@@ -216,7 +232,7 @@
 										<GaugeRing
 											Color="#CC0000"
 											ID="RingRed"
-											RingEndValue="30"
+											RingEndValue="20"
 											RingRadius="40"
 											RingStartValue="0"
 											RingThickness="8"
@@ -224,17 +240,33 @@
 										<GaugeRing
 											Color="#F1C232"
 											ID="RingYellow"
-											RingEndValue="70"
+											RingEndValue="40"
 											RingRadius="40"
-											RingStartValue="30"
+											RingStartValue="20"
 											RingThickness="8"
 										/>
 										<GaugeRing
 											Color="#6AA84F"
 											ID="RingGreen"
-											RingEndValue="100"
+											RingEndValue="70"
+											RingRadius="40"
+											RingStartValue="40"
+											RingThickness="8"
+										/>
+										<GaugeRing
+											Color="#F1C232"
+											ID="RingYellow2"
+											RingEndValue="90"
 											RingRadius="40"
 											RingStartValue="70"
+											RingThickness="8"
+										/>
+										<GaugeRing
+											Color="#CC0000"
+											ID="RingRed2"
+											RingEndValue="100"
+											RingRadius="40"
+											RingStartValue="90"
 											RingThickness="8"
 										/>
 									</Gauge>
@@ -326,7 +358,7 @@
 										<GaugeRing
 											Color="#CC0000"
 											ID="RingRed"
-											RingEndValue="30"
+											RingEndValue="20"
 											RingRadius="40"
 											RingStartValue="0"
 											RingThickness="8"
@@ -334,17 +366,33 @@
 										<GaugeRing
 											Color="#F1C232"
 											ID="RingYellow"
-											RingEndValue="70"
+											RingEndValue="40"
 											RingRadius="40"
-											RingStartValue="30"
+											RingStartValue="20"
 											RingThickness="8"
 										/>
 										<GaugeRing
 											Color="#6AA84F"
 											ID="RingGreen"
-											RingEndValue="100"
+											RingEndValue="70"
+											RingRadius="40"
+											RingStartValue="40"
+											RingThickness="8"
+										/>
+										<GaugeRing
+											Color="#F1C232"
+											ID="RingYellow2"
+											RingEndValue="90"
 											RingRadius="40"
 											RingStartValue="70"
+											RingThickness="8"
+										/>
+										<GaugeRing
+											Color="#CC0000"
+											ID="RingRed2"
+											RingEndValue="100"
+											RingRadius="40"
+											RingStartValue="90"
 											RingThickness="8"
 										/>
 									</Gauge>
@@ -436,7 +484,7 @@
 										<GaugeRing
 											Color="#CC0000"
 											ID="RingRed"
-											RingEndValue="30"
+											RingEndValue="20"
 											RingRadius="40"
 											RingStartValue="0"
 											RingThickness="8"
@@ -444,17 +492,33 @@
 										<GaugeRing
 											Color="#F1C232"
 											ID="RingYellow"
-											RingEndValue="70"
+											RingEndValue="40"
 											RingRadius="40"
-											RingStartValue="30"
+											RingStartValue="20"
 											RingThickness="8"
 										/>
 										<GaugeRing
 											Color="#6AA84F"
 											ID="RingGreen"
-											RingEndValue="100"
+											RingEndValue="70"
+											RingRadius="40"
+											RingStartValue="40"
+											RingThickness="8"
+										/>
+										<GaugeRing
+											Color="#F1C232"
+											ID="RingYellow2"
+											RingEndValue="90"
 											RingRadius="40"
 											RingStartValue="70"
+											RingThickness="8"
+										/>
+										<GaugeRing
+											Color="#CC0000"
+											ID="RingRed2"
+											RingEndValue="100"
+											RingRadius="40"
+											RingStartValue="90"
 											RingThickness="8"
 										/>
 									</Gauge>
