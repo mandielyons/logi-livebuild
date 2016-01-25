@@ -821,7 +821,7 @@
 																		WidthScale="%"
 																		>
 																		<DataLayer
-																			CellRange="A2:H5"
+																			CellRange="A2:I5"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																			ExcelWorksheet="Actions"
@@ -855,7 +855,8 @@
 																				ID="colDescTT"
 																				>
 																				<Label
-																					Caption="Notes: @Data.Notes~"
+																					Caption="Notes: @Data.Notes~ "
+																					Class="ThemeTextSmall"
 																				/>
 																			</TooltipPanel>
 																		</DataTableColumn>
@@ -1451,6 +1452,7 @@
 																				>
 																				<Label
 																					Caption="Notes: @Data.Notes~"
+																					Class="ThemeTextSmall"
 																				/>
 																			</TooltipPanel>
 																		</DataTableColumn>
@@ -1839,7 +1841,7 @@
 																		WidthScale="%"
 																		>
 																		<DataLayer
-																			CellRange="A8:H9"
+																			CellRange="A8:I9"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																			ExcelWorksheet="Actions"
@@ -1874,6 +1876,7 @@
 																				>
 																				<Label
 																					Caption="Notes: @Data.Notes~"
+																					Class="ThemeTextSmall"
 																				/>
 																			</TooltipPanel>
 																		</DataTableColumn>
@@ -2252,7 +2255,7 @@
 																		WidthScale="%"
 																		>
 																		<DataLayer
-																			CellRange="A10:H12"
+																			CellRange="A10:I12"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																			ExcelWorksheet="Actions"
@@ -2287,6 +2290,7 @@
 																				>
 																				<Label
 																					Caption="Notes: @Data.Notes~"
+																					Class="ThemeTextSmall"
 																				/>
 																			</TooltipPanel>
 																		</DataTableColumn>
@@ -2673,7 +2677,7 @@
 																		WidthScale="%"
 																		>
 																		<DataLayer
-																			CellRange="A13:H17"
+																			CellRange="A13:I17"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																			ExcelWorksheet="Actions"
@@ -2708,6 +2712,7 @@
 																				>
 																				<Label
 																					Caption="Notes: @Data.Notes~"
+																					Class="ThemeTextSmall"
 																				/>
 																			</TooltipPanel>
 																		</DataTableColumn>
@@ -3096,7 +3101,7 @@
 																		WidthScale="%"
 																		>
 																		<DataLayer
-																			CellRange="A18:H25"
+																			CellRange="A18:I25"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																			ExcelWorksheet="Actions"
@@ -3131,6 +3136,7 @@
 																				>
 																				<Label
 																					Caption="Notes: @Data.Notes~"
+																					Class="ThemeTextSmall"
 																				/>
 																			</TooltipPanel>
 																		</DataTableColumn>
@@ -3512,7 +3518,7 @@
 																		WidthScale="%"
 																		>
 																		<DataLayer
-																			CellRange="A26:H29"
+																			CellRange="A26:I29"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																			ExcelWorksheet="Actions"
@@ -3547,6 +3553,7 @@
 																				>
 																				<Label
 																					Caption="Notes: @Data.Notes~"
+																					Class="ThemeTextSmall"
 																				/>
 																			</TooltipPanel>
 																		</DataTableColumn>
@@ -3927,7 +3934,7 @@
 																		WidthScale="%"
 																		>
 																		<DataLayer
-																			CellRange="A30:H32"
+																			CellRange="A30:I32"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																			ExcelWorksheet="Actions"
@@ -3962,6 +3969,7 @@
 																				>
 																				<Label
 																					Caption="Notes: @Data.Notes~"
+																					Class="ThemeTextSmall"
 																				/>
 																			</TooltipPanel>
 																		</DataTableColumn>
@@ -4350,7 +4358,7 @@
 																		WidthScale="%"
 																		>
 																		<DataLayer
-																			CellRange="A33:H35"
+																			CellRange="A33:I35"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																			ExcelWorksheet="Actions"
@@ -4385,6 +4393,7 @@
 																				>
 																				<Label
 																					Caption="Notes: @Data.Notes~"
+																					Class="ThemeTextSmall"
 																				/>
 																			</TooltipPanel>
 																		</DataTableColumn>
@@ -4773,7 +4782,7 @@
 																		WidthScale="%"
 																		>
 																		<DataLayer
-																			CellRange="A36:H39"
+																			CellRange="A36:I39"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																			ExcelWorksheet="Actions"
@@ -4808,6 +4817,7 @@
 																				>
 																				<Label
 																					Caption="Notes: @Data.Notes~"
+																					Class="ThemeTextSmall"
 																				/>
 																			</TooltipPanel>
 																		</DataTableColumn>
@@ -5190,7 +5200,7 @@
 																		WidthScale="%"
 																		>
 																		<DataLayer
-																			CellRange="A40:H44"
+																			CellRange="A40:I44"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																			ExcelWorksheet="Actions"
@@ -5225,6 +5235,7 @@
 																				>
 																				<Label
 																					Caption="Notes: @Data.Notes~"
+																					Class="ThemeTextSmall"
 																				/>
 																			</TooltipPanel>
 																		</DataTableColumn>
@@ -5605,7 +5616,7 @@
 																		WidthScale="%"
 																		>
 																		<DataLayer
-																			CellRange="A45:H49"
+																			CellRange="A45:I49"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																			ExcelWorksheet="Actions"
@@ -5640,6 +5651,7 @@
 																				>
 																				<Label
 																					Caption="Notes: @Data.Notes~"
+																					Class="ThemeTextSmall"
 																				/>
 																			</TooltipPanel>
 																		</DataTableColumn>
@@ -6022,7 +6034,7 @@
 																		WidthScale="%"
 																		>
 																		<DataLayer
-																			CellRange="A50:H50"
+																			CellRange="A50:I50"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																			ExcelWorksheet="Actions"
@@ -6057,6 +6069,7 @@
 																				>
 																				<Label
 																					Caption="Notes: @Data.Notes~"
+																					Class="ThemeTextSmall"
 																				/>
 																			</TooltipPanel>
 																		</DataTableColumn>
@@ -6443,7 +6456,7 @@
 																		WidthScale="%"
 																		>
 																		<DataLayer
-																			CellRange="A51:H52"
+																			CellRange="A51:I52"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																			ExcelWorksheet="Actions"
@@ -6478,6 +6491,7 @@
 																				>
 																				<Label
 																					Caption="Notes: @Data.Notes~"
+																					Class="ThemeTextSmall"
 																				/>
 																			</TooltipPanel>
 																		</DataTableColumn>
@@ -6866,7 +6880,7 @@
 																		WidthScale="%"
 																		>
 																		<DataLayer
-																			CellRange="A53:H54"
+																			CellRange="A53:I54"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																			ExcelWorksheet="Actions"
@@ -6901,6 +6915,7 @@
 																				>
 																				<Label
 																					Caption="Notes: @Data.Notes~"
+																					Class="ThemeTextSmall"
 																				/>
 																			</TooltipPanel>
 																		</DataTableColumn>
@@ -7283,7 +7298,7 @@
 																		WidthScale="%"
 																		>
 																		<DataLayer
-																			CellRange="A55:H55"
+																			CellRange="A55:I55"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																			ExcelWorksheet="Actions"
@@ -7318,6 +7333,7 @@
 																				>
 																				<Label
 																					Caption="Notes: @Data.Notes~"
+																					Class="ThemeTextSmall"
 																				/>
 																			</TooltipPanel>
 																		</DataTableColumn>
@@ -7698,7 +7714,7 @@
 																		WidthScale="%"
 																		>
 																		<DataLayer
-																			CellRange="A56:H57"
+																			CellRange="A56:I57"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																			ExcelWorksheet="Actions"
@@ -7742,6 +7758,7 @@
 																				>
 																				<Label
 																					Caption="Notes: @Data.Notes~"
+																					Class="ThemeTextSmall"
 																				/>
 																			</TooltipPanel>
 																		</DataTableColumn>
