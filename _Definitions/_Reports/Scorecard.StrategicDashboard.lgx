@@ -1414,7 +1414,7 @@
 																		WidthScale="%"
 																		>
 																		<DataLayer
-																			CellRange="A6:H7"
+																			CellRange="A6:I7"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																			ExcelWorksheet="Actions"
