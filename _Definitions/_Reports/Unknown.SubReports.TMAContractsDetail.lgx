@@ -39,10 +39,13 @@ WHERE OC.DATA_KEY=&apos;@Request.paramContractKey~&apos; OR (OC.CONTRACT_MAIN=&a
 			/>
 		</DataLayer>
 	</LocalData>
-	<Remark>
-		<ReportHeader>
+	<ReportHeader>
+		<Division
+			ID="divHomeButton"
+			>
 			<Button
-				Caption="Dashboard Home"
+				Caption="TMA Dashboard Home"
+				Class="ThemePanel"
 				ID="buttonHome"
 				>
 				<Action
@@ -54,13 +57,33 @@ WHERE OC.DATA_KEY=&apos;@Request.paramContractKey~&apos; OR (OC.CONTRACT_MAIN=&a
 					/>
 				</Action>
 			</Button>
-		</ReportHeader>
-	</Remark>
-	<IncludeSharedElement
-		DefinitionFile="_Layout.Shared"
-		SharedElementID="shrHeader"
-	/>
+		</Division>
+	</ReportHeader>
 	<Body>
+		<Division
+			ID="divBtnExportExcel"
+			>
+			<LineBreak/>
+			<Button
+				Caption="Export to Excel"
+				ID="buttonExport_Excel"
+				Tooltip="Click to export data to Microsoft Excel"
+				>
+				<Action
+					ID="actionExport_Excel"
+					Type="NativeExcel"
+					>
+					<Target
+						ExcelOutputFormat="Excel2007"
+						ExportFilename="TMAContracts.xlsx"
+						ID="targetExport_Excel"
+						Report="CurrentReport"
+						ShowGridlines="False"
+						Type="NativeExcel"
+					/>
+				</Action>
+			</Button>
+		</Division>
 		<DataTable
 			AccessibleHeaders="True"
 			AccessibleSummary="AnalysisGrid DataTable"
@@ -78,12 +101,9 @@ WHERE OC.DATA_KEY=&apos;@Request.paramContractKey~&apos; OR (OC.CONTRACT_MAIN=&a
 			/>
 			<InteractivePaging
 				CaptionType="Image"
-				HideShowPrevNextCaptions="False"
-				HideWhenOnePage="True"
-				IDnotSupportedHere="pagingTableNumbered"
 				Location="Top"
-				PageRowCount="20"
-				ShowPageNumber="Numbered"
+				PageRowCount="10"
+				ShowPageNumber="True"
 			/>
 			<DataTableColumn
 				Header="Account Number"
@@ -330,7 +350,7 @@ WHERE OC.DATA_KEY=&apos;@Request.paramContractKey~&apos; OR (OC.CONTRACT_MAIN=&a
 				>
 				<Label
 					Caption="@Data.ISSUED_LBS~"
-					Format="###,###,##0.000"
+					Format="###,###,##0.00"
 					ID="colISSUED_LBS"
 				/>
 				<DataColumnSort
@@ -351,6 +371,7 @@ WHERE OC.DATA_KEY=&apos;@Request.paramContractKey~&apos; OR (OC.CONTRACT_MAIN=&a
 					>
 					<Label
 						Caption="@Data.APPLIED_LBS~"
+						Format="###,###,##0.00"
 						ID="colAPPLIED_LBS"
 					/>
 					<DataColumnSort
@@ -372,6 +393,7 @@ WHERE OC.DATA_KEY=&apos;@Request.paramContractKey~&apos; OR (OC.CONTRACT_MAIN=&a
 					>
 					<Label
 						Caption="@Data.ADJUSTED_LBS~"
+						Format="###,###,##0.00"
 						ID="colADJUSTED_LBS"
 					/>
 					<DataColumnSort
@@ -393,6 +415,7 @@ WHERE OC.DATA_KEY=&apos;@Request.paramContractKey~&apos; OR (OC.CONTRACT_MAIN=&a
 					>
 					<Label
 						Caption="@Data.SUB_CONT_LBS~"
+						Format="###,###,##0.00"
 						ID="colSUB_CONT_LBS"
 					/>
 					<DataColumnSort
@@ -413,7 +436,7 @@ WHERE OC.DATA_KEY=&apos;@Request.paramContractKey~&apos; OR (OC.CONTRACT_MAIN=&a
 				>
 				<Label
 					Caption="@Data.REMAINING_LBS~"
-					Format="###,###,##0.000"
+					Format="###,###,##0.00"
 					ID="colREMAINING_LBS"
 				/>
 				<DataColumnSort
@@ -433,7 +456,7 @@ WHERE OC.DATA_KEY=&apos;@Request.paramContractKey~&apos; OR (OC.CONTRACT_MAIN=&a
 				>
 				<Label
 					Caption="@Data.ISSUED_BU~"
-					Format="###,###,##0.000"
+					Format="###,###,##0.00"
 					ID="colISSUED_BU"
 				/>
 				<DataColumnSort
@@ -453,7 +476,7 @@ WHERE OC.DATA_KEY=&apos;@Request.paramContractKey~&apos; OR (OC.CONTRACT_MAIN=&a
 				>
 				<Label
 					Caption="@Data.APPLIED_BU~"
-					Format="###,###,##0.000"
+					Format="###,###,##0.00"
 					ID="colAPPLIED_BU"
 				/>
 				<DataColumnSort
@@ -473,7 +496,7 @@ WHERE OC.DATA_KEY=&apos;@Request.paramContractKey~&apos; OR (OC.CONTRACT_MAIN=&a
 				>
 				<Label
 					Caption="@Data.ADJUSTED_BU~"
-					Format="###,###,##0.000"
+					Format="###,###,##0.00"
 					ID="colADJUSTED_BU"
 				/>
 				<DataColumnSort
@@ -493,7 +516,7 @@ WHERE OC.DATA_KEY=&apos;@Request.paramContractKey~&apos; OR (OC.CONTRACT_MAIN=&a
 				>
 				<Label
 					Caption="@Data.SUB_CONT_BU~"
-					Format="###,###,##0.000"
+					Format="###,###,##0.00"
 					ID="colSUB_CONT_BU"
 				/>
 				<DataColumnSort
@@ -513,7 +536,7 @@ WHERE OC.DATA_KEY=&apos;@Request.paramContractKey~&apos; OR (OC.CONTRACT_MAIN=&a
 				>
 				<Label
 					Caption="@Data.REMAINING_BU~"
-					Format="###,###,##0.000"
+					Format="###,###,##0.00"
 					ID="colREMAINING_BU"
 				/>
 				<DataColumnSort
@@ -534,14 +557,6 @@ WHERE OC.DATA_KEY=&apos;@Request.paramContractKey~&apos; OR (OC.CONTRACT_MAIN=&a
 			/>
 		</DataTable>
 	</Body>
-	<IncludeSharedElement
-		DefinitionFile="_Layout.Shared"
-		SharedElementID="shrFooter"
-	/>
-	<IncludeSharedElement
-		DefinitionFile="_Layout.Shared"
-		SharedElementID="shrFooter"
-	/>
 	<ideTestParams
 		paramContractKey="1_8320618_02_23978"
 		paramContractMain=""
