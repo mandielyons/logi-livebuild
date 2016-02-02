@@ -3,10 +3,13 @@
 	Caption="TMA Contract Detail"
 	ID="Unknown.SubReports.TMAContractsNetDetail"
 	>
-	<Remark>
-		<ReportHeader>
+	<ReportHeader>
+		<Division
+			ID="divHomeButton"
+			>
 			<Button
-				Caption="Dashboard Home"
+				Caption="TMA Dashboard Home"
+				Class="ThemePanel"
 				ID="buttonHome"
 				>
 				<Action
@@ -18,13 +21,33 @@
 					/>
 				</Action>
 			</Button>
-		</ReportHeader>
-	</Remark>
-	<IncludeSharedElement
-		DefinitionFile="_Layout.Shared"
-		SharedElementID="shrHeader"
-	/>
+		</Division>
+	</ReportHeader>
 	<Body>
+		<Division
+			ID="divBtnExportExcel"
+			>
+			<LineBreak/>
+			<Button
+				Caption="Export to Excel"
+				ID="buttonExport_Excel"
+				Tooltip="Click to export data to Microsoft Excel"
+				>
+				<Action
+					ID="actionExport_Excel"
+					Type="NativeExcel"
+					>
+					<Target
+						ExcelOutputFormat="Excel2007"
+						ExportFilename="TMAContracts.xlsx"
+						ID="targetExport_Excel"
+						Report="CurrentReport"
+						ShowGridlines="False"
+						Type="NativeExcel"
+					/>
+				</Action>
+			</Button>
+		</Division>
 		<DataTable
 			AccessibleHeaders="True"
 			AccessibleSummary="AnalysisGrid DataTable"
@@ -48,12 +71,9 @@ AND DELIVERY_END_DATE BETWEEN CASE WHEN &apos;@Request.paramDate~&apos;=&apos;Pr
 			/>
 			<InteractivePaging
 				CaptionType="Image"
-				HideShowPrevNextCaptions="False"
-				HideWhenOnePage="True"
-				IDnotSupportedHere="pagingTableNumbered"
 				Location="Top"
 				PageRowCount="10"
-				ShowPageNumber="Numbered"
+				ShowPageNumber="True"
 			/>
 			<DataTableColumn
 				Header="Contract Type"
@@ -105,7 +125,7 @@ AND DELIVERY_END_DATE BETWEEN CASE WHEN &apos;@Request.paramDate~&apos;=&apos;Pr
 				/>
 			</DataTableColumn>
 			<DataTableColumn
-				Header="DESCRIPTION"
+				Header="Account Contract"
 				ID="colTHEIR_CONTRACT_NUMBER"
 				>
 				<Label
@@ -114,18 +134,6 @@ AND DELIVERY_END_DATE BETWEEN CASE WHEN &apos;@Request.paramDate~&apos;=&apos;Pr
 				/>
 				<DataColumnSort
 					DataColumn="THEIR_CONTRACT_NUMBER"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Commodity Code"
-				ID="colCOMMODITY_CODE"
-				>
-				<Label
-					Caption="@Data.COMMODITY_CODE~"
-					ID="lblCOMMODITY_CODE"
-				/>
-				<DataColumnSort
-					DataColumn="COMMODITY_CODE"
 				/>
 			</DataTableColumn>
 			<DataTableColumn
@@ -138,44 +146,6 @@ AND DELIVERY_END_DATE BETWEEN CASE WHEN &apos;@Request.paramDate~&apos;=&apos;Pr
 				/>
 				<DataColumnSort
 					DataColumn="COMMODITY_DESC"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Group Code"
-				ID="colDPR_GROUP"
-				>
-				<Label
-					Caption="@Data.DPR_GROUP~"
-					ID="lblDPR_GROUP"
-				/>
-				<DataColumnSort
-					DataColumn="DPR_GROUP"
-					DataType="Number"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Group Description"
-				ID="colDPR_GROUP_DESC"
-				>
-				<Label
-					Caption="@Data.DPR_GROUP_DESC~"
-					ID="lblDPR_GROUP_DESC"
-				/>
-				<DataColumnSort
-					DataColumn="DPR_GROUP_DESC"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Branch Number"
-				ID="colBRANCH_NUMBER"
-				>
-				<Label
-					Caption="@Data.BRANCH_NUMBER~"
-					ID="lblBRANCH_NUMBER"
-				/>
-				<DataColumnSort
-					DataColumn="BRANCH_NUMBER"
-					DataType="Number"
 				/>
 			</DataTableColumn>
 			<DataTableColumn
@@ -204,173 +174,12 @@ AND DELIVERY_END_DATE BETWEEN CASE WHEN &apos;@Request.paramDate~&apos;=&apos;Pr
 				/>
 			</DataTableColumn>
 			<DataTableColumn
-				Header="Position Group"
-				ID="colDPR_POSITION_GROUP"
-				>
-				<Label
-					Caption="@Data.DPR_POSITION_GROUP~"
-					ID="lblDPR_POSITION_GROUP"
-				/>
-				<DataColumnSort
-					DataColumn="DPR_POSITION_GROUP"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Date Issued"
-				ID="colISSUED_DATE"
-				>
-				<Label
-					Caption="@Data.ISSUED_DATE~"
-					Format="Short Date"
-					ID="lblISSUED_DATE"
-				/>
-				<DataColumnSort
-					DataColumn="ISSUED_DATE"
-					DataType="Date"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Date Due"
-				ID="colDUE_DATE"
-				>
-				<Label
-					Caption="@Data.DUE_DATE~"
-					Format="Short Date"
-					ID="lblDUE_DATE"
-				/>
-				<DataColumnSort
-					DataColumn="DUE_DATE"
-					DataType="Date"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Issued LBS"
-				ID="colISSUED_LBS"
-				>
-				<Label
-					Caption="@Data.ISSUED_LBS~"
-					ID="lblISSUED_LBS"
-				/>
-				<DataColumnSort
-					DataColumn="ISSUED_LBS"
-					DataType="Number"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Applied LBS"
-				ID="colAPPLIED_LBS"
-				>
-				<Label
-					Caption="@Data.APPLIED_LBS~"
-					ID="lblAPPLIED_LBS"
-				/>
-				<DataColumnSort
-					DataColumn="APPLIED_LBS"
-					DataType="Number"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Adjusted LBS"
-				ID="colADJUSTED_LBS"
-				>
-				<Label
-					Caption="@Data.ADJUSTED_LBS~"
-					ID="lblADJUSTED_LBS"
-				/>
-				<DataColumnSort
-					DataColumn="ADJUSTED_LBS"
-					DataType="Number"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Subcontract LBS"
-				ID="colSUB_CONT_LBS"
-				>
-				<Label
-					Caption="@Data.SUB_CONT_LBS~"
-					ID="lblSUB_CONT_LBS"
-				/>
-				<DataColumnSort
-					DataColumn="SUB_CONT_LBS"
-					DataType="Number"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Remaining LBS"
-				ID="colREMAINING_LBS"
-				>
-				<Label
-					Caption="@Data.REMAINING_LBS~"
-					ID="lblREMAINING_LBS"
-				/>
-				<DataColumnSort
-					DataColumn="REMAINING_LBS"
-					DataType="Number"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Issued BU"
-				ID="colISSUED_BU"
-				>
-				<Label
-					Caption="@Data.ISSUED_BU~"
-					Format="###,###,##0.000"
-					ID="lblISSUED_BU"
-				/>
-				<DataColumnSort
-					DataColumn="ISSUED_BU"
-					DataType="Number"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Applied BU"
-				ID="colAPPLIED_BU"
-				>
-				<Label
-					Caption="@Data.APPLIED_BU~"
-					Format="###,###,##0.000"
-					ID="lblAPPLIED_BU"
-				/>
-				<DataColumnSort
-					DataColumn="APPLIED_BU"
-					DataType="Number"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Adjusted BU"
-				ID="colADJUSTED_BU"
-				>
-				<Label
-					Caption="@Data.ADJUSTED_BU~"
-					Format="###,###,##0.000"
-					ID="lblADJUSTED_BU"
-				/>
-				<DataColumnSort
-					DataColumn="ADJUSTED_BU"
-					DataType="Number"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Subcontract BU"
-				ID="colSUB_CONT_BU"
-				>
-				<Label
-					Caption="@Data.SUB_CONT_BU~"
-					Format="###,###,##0.000"
-					ID="lblSUB_CONT_BU"
-				/>
-				<DataColumnSort
-					DataColumn="SUB_CONT_BU"
-					DataType="Number"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
 				Header="Remaining BU"
 				ID="colREMAINING_BU"
 				>
 				<Label
 					Caption="@Data.REMAINING_BU~"
-					Format="###,###,##0.000"
+					Format="###,###,##0.00"
 					ID="lblREMAINING_BU"
 				/>
 				<DataColumnSort
@@ -385,37 +194,12 @@ AND DELIVERY_END_DATE BETWEEN CASE WHEN &apos;@Request.paramDate~&apos;=&apos;Pr
 				/>
 			</DataTableColumn>
 			<DataTableColumn
-				Header="Subcontract From"
-				ID="colSUB_CONT_FROM"
-				>
-				<Label
-					Caption="@Data.SUB_CONT_FROM~"
-					ID="lblSUB_CONT_FROM"
-				/>
-				<DataColumnSort
-					DataColumn="SUB_CONT_FROM"
-					DataType="Number"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Board Price"
-				ID="colBOARD_PRICE"
-				>
-				<Label
-					Caption="@Data.BOARD_PRICE~"
-					ID="lblBOARD_PRICE"
-				/>
-				<DataColumnSort
-					DataColumn="BOARD_PRICE"
-					DataType="Number"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
 				Header="Basis Price"
 				ID="colBASIS_PRICE"
 				>
 				<Label
 					Caption="@Data.BASIS_PRICE~"
+					Format="###,###,##0.0000"
 					ID="lblBASIS_PRICE"
 				/>
 				<DataColumnSort
@@ -429,62 +213,12 @@ AND DELIVERY_END_DATE BETWEEN CASE WHEN &apos;@Request.paramDate~&apos;=&apos;Pr
 				>
 				<Label
 					Caption="@Data.PRICE~"
+					Format="###,###,##0.0000"
 					ID="lblPRICE"
 				/>
 				<DataColumnSort
 					DataColumn="PRICE"
 					DataType="Number"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Subcontracted"
-				ID="colSUB_CONTRACTED"
-				>
-				<Label
-					Caption="@Data.SUB_CONTRACTED~"
-					ID="lblSUB_CONTRACTED"
-				/>
-				<DataColumnSort
-					DataColumn="SUB_CONTRACTED"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Status"
-				ID="colCONTRACT_STATUS"
-				>
-				<Label
-					Caption="@Data.CONTRACT_STATUS~"
-					ID="lblCONTRACT_STATUS"
-				/>
-				<DataColumnSort
-					DataColumn="CONTRACT_STATUS"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Interest Rate"
-				ID="colANNUAL_INTEREST_RATE"
-				>
-				<Label
-					Caption="@Data.ANNUAL_INTEREST_RATE~"
-					ID="lblANNUAL_INTEREST_RATE"
-				/>
-				<DataColumnSort
-					DataColumn="ANNUAL_INTEREST_RATE"
-					DataType="Number"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Interest Start Date"
-				ID="colINTEREST_START_DATE"
-				>
-				<Label
-					Caption="@Data.INTEREST_START_DATE~"
-					Format="Short Date"
-					ID="lblINTEREST_START_DATE"
-				/>
-				<DataColumnSort
-					DataColumn="INTEREST_START_DATE"
-					DataType="Date"
 				/>
 			</DataTableColumn>
 			<DataTableColumn
@@ -516,98 +250,7 @@ AND DELIVERY_END_DATE BETWEEN CASE WHEN &apos;@Request.paramDate~&apos;=&apos;Pr
 				/>
 			</DataTableColumn>
 			<DataTableColumn
-				Header="Freight"
-				ID="colFREIGHT"
-				>
-				<Label
-					Caption="@Data.FREIGHT~"
-					ID="lblFREIGHT"
-				/>
-				<DataColumnSort
-					DataColumn="FREIGHT"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Frieght Rate"
-				ID="colFREIGHT_RATE"
-				>
-				<Label
-					Caption="@Data.FREIGHT_RATE~"
-					ID="lblFREIGHT_RATE"
-				/>
-				<DataColumnSort
-					DataColumn="FREIGHT_RATE"
-					DataType="Number"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="CONTRACT_GRADE"
-				ID="colCONTRACT_GRADE"
-				>
-				<Label
-					Caption="@Data.CONTRACT_GRADE~"
-					ID="lblCONTRACT_GRADE"
-				/>
-				<DataColumnSort
-					DataColumn="CONTRACT_GRADE"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Signed"
-				ID="colSIGNED"
-				>
-				<Label
-					Caption="@Data.SIGNED~"
-					ID="lblSIGNED"
-				/>
-				<DataColumnSort
-					DataColumn="SIGNED"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="LOW_POSTING_DATE"
-				ID="colLOW_POSTING_DATE"
-				>
-				<Label
-					Caption="@Data.LOW_POSTING_DATE~"
-					Format="Short Date"
-					ID="lblLOW_POSTING_DATE"
-				/>
-				<DataColumnSort
-					DataColumn="LOW_POSTING_DATE"
-					DataType="Date"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="BACKOUT_DATE"
-				ID="colBACKOUT_DATE"
-				>
-				<Label
-					Caption="@Data.BACKOUT_DATE~"
-					Format="Short Date"
-					ID="lblBACKOUT_DATE"
-				/>
-				<DataColumnSort
-					DataColumn="BACKOUT_DATE"
-					DataType="Date"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="BACKOUT_POST_DATE"
-				ID="colBACKOUT_POST_DATE"
-				>
-				<Label
-					Caption="@Data.BACKOUT_POST_DATE~"
-					Format="Short Date"
-					ID="lblBACKOUT_POST_DATE"
-				/>
-				<DataColumnSort
-					DataColumn="BACKOUT_POST_DATE"
-					DataType="Date"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="FUTURES_MONTH"
+				Header="Futures Month"
 				ID="colFUTURES_MONTH"
 				>
 				<Label
@@ -619,109 +262,6 @@ AND DELIVERY_END_DATE BETWEEN CASE WHEN &apos;@Request.paramDate~&apos;=&apos;Pr
 					DataColumn="FUTURES_MONTH"
 				/>
 			</DataTableColumn>
-			<DataTableColumn
-				Header="CMOXDATE"
-				ID="colCMOXDATE"
-				>
-				<Label
-					Caption="@Data.CMOXDATE~"
-					ID="lblCMOXDATE"
-				/>
-				<DataColumnSort
-					DataColumn="CMOXDATE"
-					DataType="Number"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="OFFER_EXPIRE_DATE"
-				ID="colOFFER_EXPIRE_DATE"
-				>
-				<Label
-					Caption="@Data.OFFER_EXPIRE_DATE~"
-					Format="Short Date"
-					ID="lblOFFER_EXPIRE_DATE"
-				/>
-				<DataColumnSort
-					DataColumn="OFFER_EXPIRE_DATE"
-					DataType="Date"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="OFFER_TARGET_POSITION"
-				ID="colOFFER_TARGET_POSITION"
-				>
-				<Label
-					Caption="@Data.OFFER_TARGET_POSITION~"
-					ID="lblOFFER_TARGET_POSITION"
-				/>
-				<DataColumnSort
-					DataColumn="OFFER_TARGET_POSITION"
-					DataType="Number"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="SERVICE_FEE"
-				ID="colSERVICE_FEE"
-				>
-				<Label
-					Caption="@Data.SERVICE_FEE~"
-					ID="lblSERVICE_FEE"
-				/>
-				<DataColumnSort
-					DataColumn="SERVICE_FEE"
-					DataType="Number"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="PRINTED"
-				ID="colPRINTED"
-				>
-				<Label
-					Caption="@Data.PRINTED~"
-					ID="lblPRINTED"
-				/>
-				<DataColumnSort
-					DataColumn="PRINTED"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="BROKER"
-				ID="colBROKER"
-				>
-				<Label
-					Caption="@Data.BROKER~"
-					ID="lblBROKER"
-				/>
-				<DataColumnSort
-					DataColumn="BROKER"
-					DataType="Number"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="BROKER_ACCOUNT"
-				ID="colBROKER_ACCOUNT"
-				>
-				<Label
-					Caption="@Data.BROKER_ACCOUNT~"
-					ID="lblBROKER_ACCOUNT"
-				/>
-				<DataColumnSort
-					DataColumn="BROKER_ACCOUNT"
-					DataType="Number"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="PROFITABILITY"
-				ID="colPROFITABILITY"
-				>
-				<Label
-					Caption="@Data.PROFITABILITY~"
-					ID="lblPROFITABILITY"
-				/>
-				<DataColumnSort
-					DataColumn="PROFITABILITY"
-				/>
-			</DataTableColumn>
 			<SummaryRow
 				Caption="Totals:"
 				ID="SummaryTotals"
@@ -729,10 +269,6 @@ AND DELIVERY_END_DATE BETWEEN CASE WHEN &apos;@Request.paramDate~&apos;=&apos;Pr
 			/>
 		</DataTable>
 	</Body>
-	<IncludeSharedElement
-		DefinitionFile="_Layout.Shared"
-		SharedElementID="shrFooter"
-	/>
 	<ideTestParams
 		paramCommodity="2"
 		paramContractType="Sale"

@@ -3,11 +3,19 @@
 	Caption="TMA Contracts By Ship Date"
 	ID="Unknown.SubReports.TMAContractsByShipDate"
 	>
-	<DefaultRequestParams/>
-	<Remark>
-		<ReportHeader>
+	<DefaultRequestParams
+		Account="ALL"
+		Branch="ALL"
+		Commodity="ALL"
+		Position="ALL"
+	/>
+	<ReportHeader>
+		<Division
+			ID="divHomeButton"
+			>
 			<Button
-				Caption="Dashboard Home"
+				Caption="TMA Dashboard Home"
+				Class="ThemePanel"
 				ID="buttonHome"
 				>
 				<Action
@@ -19,32 +27,69 @@
 					/>
 				</Action>
 			</Button>
-		</ReportHeader>
-	</Remark>
-	<IncludeSharedElement
-		DefinitionFile="_Layout.Shared"
-		SharedElementID="shrHeader"
-	/>
+		</Division>
+	</ReportHeader>
 	<Body
 		ID="bodyTMAContractsByShipDate"
 		>
-		<Label
-			Caption="Commodity Group: "
-		/>
-		<Label
-			Caption="@Request.paramCommodityDesc~"
-		/>
-		<LineBreak/>
-		<Label
-			Caption="Shipment Period: "
-			Format="General Date"
-		/>
-		<Label
-			Caption="@Request.paramShipPeriodDt~"
-			Format="Short Date"
-		/>
-		<LineBreak/>
-		<LineBreak/>
+		<Division
+			ID="divBtnExportExcel"
+			>
+			<LineBreak/>
+			<Button
+				Caption="Export to Excel"
+				ID="buttonExport_Excel"
+				Tooltip="Click to export data to Microsoft Excel"
+				>
+				<Action
+					ID="actionExport_Excel"
+					Type="NativeExcel"
+					>
+					<Target
+						ExcelOutputFormat="Excel2007"
+						ExportFilename="TMAContracts.xlsx"
+						ID="targetExport_Excel"
+						Report="CurrentReport"
+						ShowGridlines="False"
+						Type="NativeExcel"
+					/>
+				</Action>
+			</Button>
+		</Division>
+		<Division
+			ID="divHeader"
+			>
+			<LineBreak
+				LineCount="2"
+			/>
+			<Label
+				Caption="Commodity Group: "
+				Class="ThemeHeader"
+			/>
+			<Spaces
+				Size="4"
+			/>
+			<Label
+				Caption="@Request.paramCommodityDesc~"
+				Class="ThemeHeader, ThemeBold"
+			/>
+			<LineBreak/>
+			<Label
+				Caption="Shipment Period: "
+				Class="ThemeHeader"
+				Format="General Date"
+			/>
+			<Spaces
+				Size="4"
+			/>
+			<Label
+				Caption="@Request.paramShipPeriodDt~"
+				Class="ThemeHeader, ThemeBold"
+				Format="Short Date"
+			/>
+			<LineBreak/>
+			<LineBreak/>
+		</Division>
 		<Division
 			ID="divSelCommodity"
 			>
@@ -68,6 +113,7 @@
 FROM AgTrax_Staging..DM_OpenContracts with(nolock)
 WHERE DELIVERY_END_DATE &lt;= &apos;@Request.paramShipPeriodDt~&apos;
   AND DPR_GROUP = &apos;@Request.paramCommodityCode~&apos;
+  AND CONTRACT_TYPE=2
 ORDER BY COMMODITY"
 					Type="SQL"
 				/>
@@ -76,9 +122,8 @@ ORDER BY COMMODITY"
 					ID="evhOnChange"
 					>
 					<Action
-						ConfirmMessage="Refresh @Request.Commodity~"
-						ElementID="divSelCommodity, dtTMAContractsByShipDate"
-						ID="actRefreshTable"
+						ElementID="divSelCommodity, divSelPosition, divSelAccount, divSelBranch, divDataTable"
+						ID="actRefreshTable-C"
 						Type="RefreshElement"
 					/>
 				</EventHandler>
@@ -98,7 +143,7 @@ ORDER BY COMMODITY"
 				IncludeBlankValue="ALL"
 				MultiSelect="False"
 				OptionCaptionColumn="DPRDESC"
-				OptionValueColumn="DPRPOSITION"
+				OptionValueColumn="DPRDESC"
 				>
 				<DataLayer
 					ConnectionID="connProdGP"
@@ -107,6 +152,7 @@ ORDER BY COMMODITY"
 FROM AgTrax_Staging..DM_OpenContracts with(nolock)
 WHERE DELIVERY_END_DATE &lt;= &apos;@Request.paramShipPeriodDt~&apos;
   AND DPR_GROUP = &apos;@Request.paramCommodityCode~&apos;
+  AND CONTRACT_TYPE=2
 ORDER BY DPRDESC"
 					Type="SQL"
 				/>
@@ -115,7 +161,7 @@ ORDER BY DPRDESC"
 					ID="evhOnChange"
 					>
 					<Action
-						ElementID="dtTMAContractsByShipDate, Commodity, Position, Account, Branch"
+						ElementID="divSelCommodity, divSelPosition, divSelAccount, divSelBranch, divDataTable"
 						ID="actRefreshTable-P"
 						Type="RefreshElement"
 					/>
@@ -128,6 +174,39 @@ ORDER BY DPRDESC"
 			<Label
 				Caption="Account: "
 			/>
+			<Remark>
+				<InputText
+					DefaultValue="@Request.Account~"
+					ID="Account"
+					>
+					<AutoComplete
+						ColumnName="CUSTDESC"
+						ID="AutoCompleteAccountName"
+						>
+						<DataLayer
+							ConnectionID="connProdGP"
+							ID="dlSQLAccount"
+							Source="SELECT DISTINCT CUSTOMER_DESC [CUSTDESC], CUSTOMER [CUSTNMBR], LTRIM(RTRIM(CUSTOMER_DESC))+&apos; - &apos;+LTRIM(RTRIM(CUSTOMER)) [ACCOUNT]
+FROM AgTrax_Staging..DM_OpenContracts with(nolock)
+WHERE DELIVERY_END_DATE &lt;= &apos;@Request.paramShipPeriodDt~&apos;
+  AND DPR_GROUP = &apos;@Request.paramCommodityCode~&apos;
+  AND CONTRACT_TYPE=2
+ORDER BY CUSTDESC"
+							Type="SQL"
+						/>
+					</AutoComplete>
+					<EventHandler
+						DhtmlEvent="onchange"
+						ID="evhOnChange"
+						>
+						<Action
+							ElementID="divSelAccount, dtTMAContractsByShipDate"
+							ID="actRefreshTable-A"
+							Type="RefreshElement"
+						/>
+					</EventHandler>
+				</InputText>
+			</Remark>
 			<InputSelectList
 				DefaultValue="@Request.Account~"
 				ID="Account"
@@ -141,13 +220,11 @@ ORDER BY DPRDESC"
 				<DataLayer
 					ConnectionID="connProdGP"
 					ID="dlSQLAccount"
-					Source="SELECT DISTINCT 
-    CUSTOMER_DESC [CUSTDESC]
-  , CUSTOMER [CUSTNMBR]
-  , LTRIM(RTRIM(CUSTOMER))+&apos; - &apos;+LTRIM(RTRIM(CUSTOMER_DESC)) [ACCOUNT]
+					Source="SELECT DISTINCT CUSTOMER_DESC [CUSTDESC], CUSTOMER [CUSTNMBR], LTRIM(RTRIM(CUSTOMER_DESC))+&apos; - &apos;+LTRIM(RTRIM(CUSTOMER)) [ACCOUNT]
 FROM AgTrax_Staging..DM_OpenContracts with(nolock)
 WHERE DELIVERY_END_DATE &lt;= &apos;@Request.paramShipPeriodDt~&apos;
   AND DPR_GROUP = &apos;@Request.paramCommodityCode~&apos;
+  AND CONTRACT_TYPE=2
 ORDER BY CUSTDESC"
 					Type="SQL"
 				/>
@@ -156,7 +233,7 @@ ORDER BY CUSTDESC"
 					ID="evhOnChange"
 					>
 					<Action
-						ElementID="dtTMAContractsByShipDate, Commodity, Position, Account, Branch"
+						ElementID="divSelCommodity, divSelPosition, divSelAccount, divSelBranch, divDataTable"
 						ID="actRefreshTable-A"
 						Type="RefreshElement"
 					/>
@@ -182,10 +259,11 @@ ORDER BY CUSTDESC"
 				<DataLayer
 					ConnectionID="connProdGP"
 					ID="dlSQLBranch"
-					Source="SELECT DISTINCT BRANCH_NUMBER, BRANCH_DESC, CAST(BRANCH_NUMBER AS NVARCHAR(7))+&apos; - &apos;+BRANCH_DESC [BRANCH]
+					Source="SELECT DISTINCT BRANCH_NUMBER, BRANCH_DESC, BRANCH_DESC+&apos; - &apos;+CAST(BRANCH_NUMBER AS NVARCHAR(7)) [BRANCH]
 FROM AgTrax_Staging..DM_OpenContracts with(nolock)
 WHERE DELIVERY_END_DATE &lt;= &apos;@Request.paramShipPeriodDt~&apos;
   AND DPR_GROUP = &apos;@Request.paramCommodityCode~&apos;
+  AND CONTRACT_TYPE=2
 ORDER BY BRANCH"
 					Type="SQL"
 				/>
@@ -194,41 +272,12 @@ ORDER BY BRANCH"
 					ID="evhOnChange"
 					>
 					<Action
-						ElementID="dtTMAContractsByShipDate, Commodity, Position, Account, Branch"
+						ElementID="divSelCommodity, divSelPosition, divSelAccount, divSelBranch, divDataTable"
 						ID="actRefreshTable-B"
 						Type="RefreshElement"
 					/>
 				</EventHandler>
 			</InputSelectList>
-		</Division>
-		<Division
-			ID="divBtnExportExcel"
-			>
-			<LineBreak/>
-			<Button
-				Caption="Export to Excel"
-				ID="buttonExport_Excel"
-				Tooltip="Click to export data to Microsoft Excel"
-				>
-				<Action
-					ID="actionExport_Excel"
-					Type="NativeExcel"
-					>
-					<Target
-						ExcelOutputFormat="Excel2007"
-						ExportDataTableID="dtTMAContractsByShipDate"
-						ExportFilename="TMAContractsByShipDate.xlsx"
-						ID="targetExport_Excel"
-						Report="CurrentReport"
-						ShowGridlines="True"
-						Type="NativeExcel"
-						>
-						<WaitPage
-							Caption="Exporting to Excel..."
-						/>
-					</Target>
-				</Action>
-			</Button>
 		</Division>
 		<Division
 			ID="divDataTable"
@@ -245,18 +294,18 @@ ORDER BY BRANCH"
 				<DataLayer
 					ConnectionID="connProdGP"
 					ID="dlSQLContracts"
-					Source="SELECT MAX(CUSTOMER_DESC) [CUSTDESC], CUSTOMER [CUSTNMBR], CONTRACT_MAIN AS MAINCONTRACT, CONTRACT_TYPE_DESC [CONTRACTTYPE]
+					Source="SELECT MAX(CUSTOMER_DESC) [CUSTDESC], CUSTOMER [CUSTNMBR], CONTRACT_MAIN [MAINCONTRACT], CONTRACT_TYPE_DESC [CONTRACTTYPE]
  , DPR_POSITION [DPRPOSITION], DPR_POSITION_GROUP [DPRDESC], BRANCH_NUMBER [LOCNMBR], MAX(BRANCH_DESC) [LOCDESC]
- , COMMODITY_CODE [COMMODITYCD], MAX(COMMODITY_DESC) [COMMODITYDESC], DELIVERY_END_DATE [DELIVERY_END_DATE]
+ , COMMODITY_CODE [COMMODITYCD], MAX(COMMODITY_DESC) [COMMODITYDESC], DELIVERY_START_DATE, DELIVERY_END_DATE 
  , SUM(ISSUED_BU) [ISSUED_BU], SUM(REMAINING_BU) [REMAINING_BU]
 FROM AgTrax_Staging..DM_OpenContracts with(nolock)
-WHERE DELIVERY_END_DATE &lt;= &apos;2015-12-31&apos; AND DPR_GROUP = &apos;1&apos; 
- AND (     COMMODITY_CODE = &apos;@Request.Commodity~&apos; OR (&apos;ALL&apos;=&apos;ALL&apos; OR &apos;&apos;=&apos;ALL&apos;)
---       AND DPR_POSITION_GROUP = &apos;@Request.Position~&apos; OR (&apos;ALL&apos;=&apos;ALL&apos; OR &apos;&apos;=&apos;ALL&apos;)
---       AND CUSTOMER = &apos;@Request.Account~&apos; OR (&apos;ALL&apos;=&apos;ALL&apos; OR &apos;&apos;=&apos;ALL&apos;)
---       AND BRANCH_NUMBER = &apos;@Request.Branch~&apos; OR (&apos;ALL&apos;=&apos;ALL&apos; OR &apos;&apos;=&apos;ALL&apos;)
+WHERE CONTRACT_TYPE=2 AND DELIVERY_END_DATE &lt;= &apos;@Request.paramShipPeriodDt~&apos; AND DPR_GROUP = &apos;@Request.paramCommodityCode~&apos; 
+ AND (     (COMMODITY_CODE = &apos;@Request.Commodity~&apos; OR &apos;@Request.Commodity~&apos;=&apos;ALL&apos;)
+       AND (DPR_POSITION_GROUP = &apos;@Request.Position~&apos; OR &apos;@Request.Position~&apos;=&apos;ALL&apos;)
+       AND (CUSTOMER = &apos;@Request.Account~&apos; OR &apos;@Request.Account~&apos;=&apos;ALL&apos;)
+       AND (BRANCH_NUMBER = &apos;@Request.Branch~&apos; OR &apos;@Request.Branch~&apos;=&apos;ALL&apos;)
 	  )
-GROUP BY CUSTOMER, CONTRACT_MAIN, CONTRACT_TYPE_DESC, DPR_POSITION, DPR_POSITION_GROUP, BRANCH_NUMBER, COMMODITY_CODE,DELIVERY_END_DATE 
+GROUP BY CUSTOMER, CONTRACT_MAIN, CONTRACT_TYPE_DESC, DPR_POSITION, DPR_POSITION_GROUP, BRANCH_NUMBER, COMMODITY_CODE,DELIVERY_START_DATE, DELIVERY_END_DATE 
 ORDER BY CUSTDESC, MAINCONTRACT 
 "
 					Type="SQL"
@@ -378,18 +427,6 @@ ORDER BY CUSTDESC, MAINCONTRACT
 					/>
 				</DataTableColumn>
 				<DataTableColumn
-					Header="Commodity Code"
-					ID="colCOMMODITYCD"
-					>
-					<Label
-						Caption="@Data.COMMODITYCD~"
-						ID="lblCOMMODITYCD"
-					/>
-					<DataColumnSort
-						DataColumn="COMMODITYCD"
-					/>
-				</DataTableColumn>
-				<DataTableColumn
 					Header="Commodity Description"
 					ID="colCOMMODITYDESC"
 					>
@@ -402,23 +439,31 @@ ORDER BY CUSTDESC, MAINCONTRACT
 					/>
 				</DataTableColumn>
 				<DataTableColumn
-					Header="Issued BU"
-					ID="colISSUED_BU"
+					Header="Delivery Start Date"
+					ID="colDELIVERY_START_DATE"
 					>
 					<Label
-						Caption="@Data.ISSUED_BU~"
-						Format="###,###,##0.000"
-						ID="lblISSUED_BU"
+						Caption="@Data.DELIVERY_START_DATE~"
+						Format="Short Date"
+						ID="lblDELIVERY_START_DATE"
 					/>
 					<DataColumnSort
-						DataColumn="ISSUED_BU"
-						DataType="Number"
+						DataColumn="DELIVERY_START_DATE"
+						DataType="Date"
 					/>
-					<DataColumnSummary
-						DataColumn="ISSUED_BU"
-						DataType="Number"
-						Function="Sum"
-						ID="totISSUED_BU"
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Delivery End Date"
+					ID="colDELIVERY_END_DATE"
+					>
+					<Label
+						Caption="@Data.DELIVERY_END_DATE~"
+						Format="Short Date"
+						ID="lblDELIVERY_END_DATE"
+					/>
+					<DataColumnSort
+						DataColumn="DELIVERY_END_DATE"
+						DataType="Date"
 					/>
 				</DataTableColumn>
 				<DataTableColumn
@@ -427,7 +472,7 @@ ORDER BY CUSTDESC, MAINCONTRACT
 					>
 					<Label
 						Caption="@Data.REMAINING_BU~"
-						Format="###,###,##0.000"
+						Format="###,###,##0.00"
 						ID="lblREMAINING_BU"
 					/>
 					<DataColumnSort
@@ -449,10 +494,6 @@ ORDER BY CUSTDESC, MAINCONTRACT
 			</DataTable>
 		</Division>
 	</Body>
-	<IncludeSharedElement
-		DefinitionFile="_Layout.Shared"
-		SharedElementID="shrFooter"
-	/>
 	<ideTestParams
 		Account="ALL"
 		Branch="ALL"
