@@ -9,22 +9,17 @@
 		paramCommodityCT="01"
 		paramCommodityDesc="Corn"
 		paramCustNmbr="ALL"
-		paramShipPeriodDt="2015-11-30"
+		paramShipPeriodDt="2000-02-01"
 		Position="Cash"
 	/>
 	<LocalData>
 		<DataLayer
 			ConnectionID="connProdGP"
 			ID="dlSQLShipPeriodDt"
-			Source="SELECT CAST(DATEADD(DAY,-1,CAST(CONVERT(VARCHAR(7),GETDATE(),120)+&apos;-01&apos; AS DATE)) AS VARCHAR(10)) AS [SHIP_PERIOD_DT]
-  , CONVERT(VARCHAR(10),DATEADD(DAY,-1,CAST(CONVERT(VARCHAR(7),GETDATE(),120)+&apos;-01&apos; AS DATE)),110) AS [SHIP_PERIOD_DESC]"
+			Source="SELECT CONVERT(VARCHAR(10),DATEADD(DAY,-1,GETDATE()),120) AS [SHIP_PERIOD_DT], CONVERT(VARCHAR(10),DATEADD(DAY,-1,GETDATE()),110) AS [SHIP_PERIOD_DESC]"
 			Type="SQL"
 		/>
 	</LocalData>
-	<IncludeSharedElement
-		DefinitionFile="_Layout.Shared"
-		SharedElementID="shrHeader"
-	/>
 	<Body>
 		<ResponsiveRow>
 			<ResponsiveColumn
@@ -37,7 +32,7 @@
 					ID="dviContractsbyCommodity"
 					>
 					<ChartCanvas
-						ChartCaption="Ship Period Ending @Local.SHIP_PERIOD_DESC~"
+						ChartCaption="Past Due Sales Ending @Local.SHIP_PERIOD_DESC~"
 						ChartOrientation="Default"
 						ID="ContractsByCommodity"
 						>
@@ -46,11 +41,11 @@
 							ID="SQLDataLayer-ContractsByCommodity"
 							Source="SELECT DPR_GROUP AS [COMMODITYCODE],
   MAX(DPR_GROUP_DESC) AS [COMMODITYDESC],
-  SUM(REMAINING_BU) AS [REMAINING_BU]
+  CAST(SUM(REMAINING_BU) AS DECIMAL(19,2)) AS [REMAINING_BU]
 FROM [Agtrax_Staging]..[DM_OpenContracts] with(nolock) 
-WHERE DELIVERY_END_DATE&lt;=&apos;@Local.SHIP_PERIOD_DT~&apos;
+WHERE CONTRACT_TYPE=2
+  AND DELIVERY_END_DATE&lt;=&apos;@Local.SHIP_PERIOD_DT~&apos;
 GROUP BY DPR_GROUP
-HAVING SUM(REMAINING_BU)&gt;0.0
 ORDER BY COMMODITYCODE
 "
 							Type="SQL"
@@ -61,19 +56,6 @@ ORDER BY COMMODITYCODE
 							ChartYDataColumn="REMAINING_BU"
 							Type="Bar"
 							>
-							<Quicktip>
-								<Remark>
-									<QuicktipRow
-										Caption="Commodity: "
-										Value="@Chart.COMMODITYDESC~"
-									/>
-								</Remark>
-								<QuicktipRow
-									Caption="Remaining BU: "
-									Format="###,###,##0.000"
-									Value="@Chart.REMAINING_BU~"
-								/>
-							</Quicktip>
 							<Action
 								ID="actionReport.TMAContractsByShipDate"
 								Type="Report"
@@ -90,6 +72,9 @@ ORDER BY COMMODITYCODE
 									Type="Report"
 								/>
 							</Action>
+							<DataLabels
+								Format="###,###,##0.00"
+							/>
 						</Series>
 						<ChartXAxis
 							AxisCaption="Commodity"
@@ -131,7 +116,7 @@ ORDER BY COMMODITYCODE
   , MAX(CUSTOMER_DESC) AS [CUSTDESC]
   , COMMODITY_CODE AS [COMMODITYCD]
   , MAX(COMMODITY_DESC) AS [COMMODITYDESC]
-  , SUM(REMAINING_BU) AS [REMAINING_BU]
+  , CAST(SUM(REMAINING_BU) AS DECIMAL(19,2)) AS [REMAINING_BU]
 FROM [AgTrax_Staging]..[DM_OpenContracts] with(nolock)
 GROUP BY DATA_KEY,CONTRACT_MAIN,CUSTOMER,COMMODITY_CODE
 HAVING SUM(REMAINING_BU)&lt;0
@@ -146,12 +131,9 @@ HAVING SUM(REMAINING_BU)&lt;0
 						</DataLayer>
 						<InteractivePaging
 							CaptionType="Image"
-							HideShowPrevNextCaptions="False"
-							HideWhenOnePage="True"
-							IDnotSupportedHere="pagingTableNumbered"
 							Location="Top"
-							PageRowCount="7"
-							ShowPageNumber="Numbered"
+							PageRowCount="10"
+							ShowPageNumber="True"
 						/>
 						<DataTableColumn
 							Header="Contract"
@@ -218,7 +200,7 @@ HAVING SUM(REMAINING_BU)&lt;0
 							>
 							<Label
 								Caption="@Data.REMAINING_BU~"
-								Format="###,###,##0.000"
+								Format="###,###,##0.00"
 								ID="colREMAINING_BU"
 							/>
 							<DataColumnSort
@@ -335,7 +317,7 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 							>
 							<Label
 								Caption="=iif(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)"
-								Format="###,###,##0.000"
+								Format="###,###,##0.00"
 								ID="lblValue"
 								NoWrap="True"
 								>
@@ -990,9 +972,5 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 			</Tabs>
 		</Division>
 	</Body>
-	<IncludeSharedElement
-		DefinitionFile="_Layout.Shared"
-		SharedElementID="shrFooter"
-	/>
 	<ideTestParams/>
 </Report>

@@ -1,0 +1,388 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report
+	Caption="TMA Dispatch"
+	ID="TMAReports.TMADispatch"
+	>
+	<DefaultRequestParams
+		Branch="0"
+	/>
+	<LocalData>
+		<DataLayer
+			ColumnNamesRow="1"
+			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\TMACNTRTSHIPR.xlsx"
+			ExcelWorksheet="TMACNTRTSHIPR"
+			ID="Excel_TMAContractShipperExtra"
+			Type="Excel"
+			>
+			<DataLayerLink
+				ID="xlTmaCntrtShipr"
+			/>
+		</DataLayer>
+		<DataLayer
+			ConnectionID="connProdGP"
+			ID="sqlTMAContracts"
+			Source="SELECT 
+ CASE FREIGHT WHEN &apos;Y&apos; THEN 11 WHEN &apos;N&apos; THEN 110 ELSE &apos;&apos; END AS SHPMTTYP_CODE
+,CASE FREIGHT WHEN &apos;Y&apos; THEN &apos;Ship Type 11&apos; WHEN &apos;N&apos; THEN &apos;FOB Picked Up&apos; ELSE &apos;&apos; END AS SHPMTTYP_DESC
+,CAST(CUSTOMER AS BIGINT) [jCUSTOMER]
+,CAST(CONTRACT_NUMBER AS FLOAT) [jCONTRACT_NUMBER]
+,CUSTOMER
+,CUSTOMER_DESC
+,CONTRACT_NUMBER
+,THEIR_CONTRACT_NUMBER
+,COMMODITY_CODE
+,COMMODITY_DESC
+,BRANCH_NUMBER
+,BRANCH_DESC
+,REMAINING_BU
+FROM Agtrax_Staging..DM_OpenContracts
+WHERE CONTRACT_TYPE=2
+  AND (BRANCH_NUMBER IN(@Request.Branch~) OR &apos;@Request.Branch~&apos;=&apos;0&apos;)"
+			Type="SQL"
+			>
+			<DataLayerLink
+				ID="sqlTMAContracts"
+			/>
+		</DataLayer>
+	</LocalData>
+	<Body>
+		<Division
+			ID="divBtnExportExcel"
+			>
+			<LineBreak/>
+			<Button
+				Caption="Export to Excel"
+				ID="buttonExport_Excel"
+				Tooltip="Click to export data to Microsoft Excel"
+				>
+				<Action
+					ID="actionExport_Excel"
+					Type="NativeExcel"
+					>
+					<Target
+						ExcelOutputFormat="Excel2007"
+						ExportFilename="TMAContracts.xlsx"
+						ID="targetExport_Excel"
+						Report="CurrentReport"
+						ShowGridlines="False"
+						Type="NativeExcel"
+					/>
+				</Action>
+			</Button>
+		</Division>
+		<Division
+			ID="divInput"
+			>
+			<LineBreak
+				LineCount="2"
+			/>
+			<Label
+				Caption="Branch Locations: (Use CRTL+click to select multiple values)"
+				Class="ThemeHeaderSmall, ThemeBold"
+			/>
+			<InputSelectList
+				DefaultValue="@Request.Branch~"
+				ID="Branch"
+				IncludeBlank="True"
+				IncludeBlankCaption="All Locations"
+				IncludeBlankValue="0"
+				InputRows="5"
+				MultiSelect="True"
+				OptionCaptionColumn="BRANCH_LIST"
+				OptionValueColumn="BRANCH_NUMBER"
+				>
+				<DataLayer
+					ConnectionID="connProdGP"
+					ID="sqlBranchList"
+					Source="SELECT DISTINCT CAST(BRANCH_NUMBER AS VARCHAR(20))+&apos; - &apos;+BRANCH_DESC BRANCH_LIST,BRANCH_NUMBER,BRANCH_DESC
+FROM Agtrax_Staging..DM_OpenContracts
+WHERE CONTRACT_TYPE=2
+ORDER BY BRANCH_DESC
+"
+					Type="SQL"
+				/>
+			</InputSelectList>
+			<LineBreak
+				LineCount="1"
+			/>
+			<Button
+				Caption="Update Report"
+				ID="buttonLocations"
+				>
+				<Action
+					ElementID="divInput, divTable"
+					ID="actRefresh"
+					Type="RefreshElement"
+				/>
+			</Button>
+		</Division>
+		<Division
+			ID="divTable"
+			>
+			<DataTable
+				Caption="TMA Branch Dispatch Details"
+				ID="TMAContracts"
+				Layout="Fixed"
+				RememberSort="True"
+				SortArrows="True"
+				>
+				<InteractivePaging
+					CaptionType="Image"
+					HideWhenOnePage="False"
+					Location="Top"
+					NumberedPageCount="5"
+					PageRowCount="12"
+					ShowPageNumber="Numbered"
+				/>
+				<DataLayer
+					ID="dlsqlTMAContracts"
+					LinkedDataLayerID="sqlTMAContracts"
+					Type="Linked"
+					>
+					<Join
+						ID="joinSqlToXl"
+						JoinType="LeftOuterJoin"
+						SortLeftSide="True"
+						SortRightSide="True"
+						>
+						<MatchCondition
+							DataType="Number"
+							ID="joinCustomer"
+							LeftDataColumn="jCUSTOMER"
+							RightDataColumn="CUSTOMER"
+						/>
+						<MatchCondition
+							DataType="Number"
+							ID="joinContract"
+							LeftDataColumn="jCONTRACT_NUMBER"
+							RightDataColumn="CONTRACT_NUMBER"
+						/>
+						<DataLayer
+							ID="dlxlTmaCntrtShipr"
+							LinkedDataLayerID="xlTmaCntrtShipr"
+							Type="Linked"
+						/>
+					</Join>
+				</DataLayer>
+				<DataTableColumn
+					Header="Shipment Type Code"
+					ID="colSHPMTTYP_CODE"
+					>
+					<Label
+						Caption="@Data.SHPMTTYP_CODE~"
+						ID="lblSHPMTTYP_CODE"
+					/>
+					<DataColumnSort
+						DataColumn="SHPMTTYP_CODE"
+						DataType="Number"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Shipment Type Description"
+					ID="colSHPMTTYP_DESC"
+					>
+					<Label
+						Caption="@Data.SHPMTTYP_DESC~"
+						ID="lblSHPMTTYP_DESC"
+					/>
+					<DataColumnSort
+						DataColumn="SHPMTTYP_DESC"
+						DataType="Text"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Account"
+					ID="colCUSTOMER"
+					>
+					<Label
+						Caption="@Data.CUSTOMER~"
+						ID="lblCUSTOMER"
+					/>
+					<DataColumnSort
+						DataColumn="CUSTOMER_DESC"
+						DataType="Text"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Account Description"
+					ID="colCUSTOMER_DESC"
+					>
+					<Label
+						Caption="@Data.CUSTOMER_DESC~"
+						ID="lblCUSTOMER_DESC"
+					/>
+					<DataColumnSort
+						DataColumn="CUSTOMER_DESC"
+						DataType="Text"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Contract Number"
+					ID="colCONTRACT_NUMBER"
+					>
+					<Label
+						Caption="@Data.CONTRACT_NUMBER~"
+						ID="lblCONTRACT_NUMBER"
+					/>
+					<DataColumnSort
+						DataColumn="CONTRACT_NUMBER"
+						DataType="Number"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Account Contract"
+					ID="colTHEIR_CONTRACT_NUMBER"
+					>
+					<Label
+						Caption="@Data.THEIR_CONTRACT_NUMBER~"
+						ID="lblTHEIR_CONTRACT_NUMBER"
+					/>
+					<DataColumnSort
+						DataColumn="THEIR_CONTRACT_NUMBER"
+						DataType="Text"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Commodity Code"
+					ID="colCOMMODITY_CODE"
+					>
+					<Label
+						Caption="@Data.COMMODITY_CODE~"
+						ID="lblCOMMODITY_CODE"
+					/>
+					<DataColumnSort
+						DataColumn="COMMODITY_CODE"
+						DataType="Text"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Commodity Description"
+					ID="colCOMMODITY_DESC"
+					>
+					<Label
+						Caption="@Data.COMMODITY_DESC~"
+						ID="lblCOMMODITY_DESC"
+					/>
+					<DataColumnSort
+						DataColumn="COMMODITY_DESC"
+						DataType="Text"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Branch Number"
+					ID="colBRANCH_NUMBER"
+					>
+					<Label
+						Caption="@Data.BRANCH_NUMBER~"
+						ID="lblBRANCH_NUMBER"
+					/>
+					<DataColumnSort
+						DataColumn="BRANCH_NUMBER"
+						DataType="Number"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Branch Description"
+					ID="colBRANCH_DESC"
+					>
+					<Label
+						Caption="@Data.BRANCH_DESC~"
+						ID="lblBRANCH_DESC"
+					/>
+					<DataColumnSort
+						DataColumn="BRANCH_DESC"
+						DataType="Text"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Remaining BU"
+					ID="colREMAINING_BU"
+					>
+					<Label
+						Caption="@Data.REMAINING_BU~"
+						Format="###,###,##0.00"
+						ID="lblREMAINING_BU"
+					/>
+					<DataColumnSort
+						DataColumn="REMAINING_BU"
+						DataType="Number"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Destination Code"
+					ID="colDEST_CODE"
+					>
+					<Label
+						Caption="@Data.DEST_CODE~"
+						ID="lblDEST_CODE"
+					/>
+					<DataColumnSort
+						DataColumn="DEST_CODE"
+						DataType="Number"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Shipper Description"
+					ID="colSHIPR_DESC"
+					>
+					<Label
+						Caption="@Data.SHIPR_DESC~"
+						ID="lblSHIPR_DESC"
+					/>
+					<DataColumnSort
+						DataColumn="SHIPR_DESC"
+						DataType="Text"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Shipper Number Trucks"
+					ID="colSHIPR_NUMTRCS"
+					>
+					<Label
+						Caption="@Data.SHIPR_NUMTRCS~"
+						ID="lblSHIPR_NUMTRCS"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Shipper Load Description"
+					ID="colSHIPR_LDDESC"
+					>
+					<Label
+						Caption="@Data.SHIPR_LDDESC~"
+						ID="lblSHIPR_LDDESC"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Rate"
+					ID="colSHIPR_RATE"
+					>
+					<Label
+						Caption="@Data.SHIPR_RATE~"
+						ID="lblSHIPR_RATE"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="PAR"
+					ID="colSHIPR_PAR"
+					>
+					<Label
+						Caption="@Data.SHIPR_PAR~"
+						ID="lblSHIPR_PAR"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Notes"
+					ID="colTMANOTES"
+					>
+					<Label
+						Caption="@Data.TMANOTES~"
+						ID="lblTMANOTES"
+					/>
+				</DataTableColumn>
+			</DataTable>
+		</Division>
+	</Body>
+	<ideTestParams
+		Branch="0"
+	/>
+</Report>

@@ -7,46 +7,32 @@
 		<DataLayer
 			ConnectionID="connProdGP"
 			ID="sqlTMAContract"
-			Source="SELECT CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;_&apos;+CT.COMMODITY_CODE+&apos;_&apos;+SUBSTRING(LTRIM(RTRIM(CT.CONTRACT_NUMBER)),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM(CT.CONTRACT_NUMBER)))-1) as [KEY]
-  , LTRIM(RTRIM(CM.NAME)) [CUSTDESC]
-  , LTRIM(RTRIM(CT.CUSTOMER)) [CUSTNMBR]
+			Source="SELECT OC.DATA_KEY [KEY]
+  , OC.CUSTOMER_DESC [CUSTDESC]
+  , LTRIM(RTRIM(OC.CUSTOMER)) [CUSTNMBR]
   , LTRIM(RTRIM(CM.ADDRESS_LINE_1)) [CUSTADDR1]
   , LTRIM(RTRIM(CM.CITY)) [CUSTCITY]
   , LTRIM(RTRIM(CM.[STATE])) [CUSTSTATE]
   , LTRIM(RTRIM(CM.ZIP_CODE)) [CUSTZIPCODE]
-  , SUBSTRING(LTRIM(RTRIM(CT.CONTRACT_NUMBER)),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM(CT.CONTRACT_NUMBER)))-1) AS MAINCONTRACT
-  , SUBSTRING(LTRIM(RTRIM(CT.CONTRACT_NUMBER)),CHARINDEX(&apos;.&apos;,LTRIM(RTRIM(CT.CONTRACT_NUMBER)))+1,3) AS SUBCONTRACT
-  , LTRIM(RTRIM(CT.CONTRACT_NUMBER)) [CONTRACTNMBR]
-  , CAST(CT.ISSUED_DATE AS DATE) [CONTRACTDT]
-  , CAST(CT.DELIVERY_START_DATE AS DATE) [DELIVERY_START_DATE]
-  , CAST(CT.DELIVERY_END_DATE AS DATE) [DELIVERY_END_DATE]
-  , LTRIM(RTRIM(CT.DPR_POSITION)) [DPRPOSITION]
-  , LTRIM(RTRIM(PM.[DESCRIPTION])) [DPRDESC]
-  , LTRIM(RTRIM(CT.BRANCH_NUMBER)) [LOCNMBR]
-  , LTRIM(RTRIM(BM.BRANCH_NAME)) [LOCDESC]
-  , LTRIM(RTRIM(CT.COMMODITY_CODE)) [COMMODITYCD]
-  , LTRIM(RTRIM(IV.[DESCRIPTION])) [COMMODITYDESC]
-  , CT.ISSUED_LBS, CT.APPLIED_LBS, CT.ADJUSTED_LBS, CT.SUB_CONT_LBS
-  , (CT.ISSUED_LBS-CT.APPLIED_LBS+ADJUSTED_LBS-SUB_CONT_LBS) [REMAINING_LBS]
-  , CT.ISSUED_LBS/UM.STANDARD_UNITS_LBS [ISSUED_BU]
-  , CT.APPLIED_LBS/UM.STANDARD_UNITS_LBS [APPLIED_BU]
-  , CT.ADJUSTED_LBS/UM.STANDARD_UNITS_LBS [ADJUSTED_BU]
-  , CT.SUB_CONT_LBS/UM.STANDARD_UNITS_LBS [SUB_CONT_BU]
-  , (CT.ISSUED_LBS-CT.APPLIED_LBS+ADJUSTED_LBS-SUB_CONT_LBS)/UM.STANDARD_UNITS_LBS [REMAINING_BU]
-FROM AgTrax_Staging..CA_CONTRACT_MASTER CT 
-  INNER JOIN AgTrax_Staging..AR_CUSTOMER_MASTER_TMA CM ON CT.CUSTOMER=CM.CUSTOMER
-  LEFT OUTER JOIN AgTrax_Staging..CA_COMMODITY_MASTER IV ON CT.COMMODITY_CODE=IV.COMMODITY_CODE
-  LEFT OUTER JOIN AgTrax_Staging..IV_UNIT_OF_MEASURE UM ON IV.UOM_BUSHELS=UM.UNIT_OF_MEASURE
-  LEFT OUTER JOIN AgTrax_Staging..CA_POSITION_MASTER PM ON CT.DPR_POSITION=PM.DPR_POSITION
-  LEFT OUTER JOIN AgTrax_Staging..IV_BRANCH_MASTER BM ON CT.BRANCH_NUMBER=BM.BRANCH_NUMBER
-WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;_&apos;+CT.COMMODITY_CODE+&apos;_&apos;+SUBSTRING(LTRIM(RTRIM(CT.CONTRACT_NUMBER)),1,CHARINDEX(&apos;.&apos;,LTRIM(RTRIM(CT.CONTRACT_NUMBER)))-1)=&apos;@Request.paramContractKey~&apos;
-  AND CT.CONTRACT_STATUS=&apos;O&apos;
-"
+  , OC.CONTRACT_MAIN [MAINCONTRACT]
+  , OC.CONTRACT_SUB [SUBCONTRACT]
+  , OC.CONTRACT_NUMBER [CONTRACTNMBR]
+  , OC.ISSUED_DATE [CONTRACTDT]
+  , OC.DELIVERY_START_DATE [DELIVERY_START_DATE]
+  , OC.DELIVERY_END_DATE [DELIVERY_END_DATE]
+  , OC.DPR_POSITION [DPRPOSITION]
+  , OC.DPR_POSITION_GROUP [DPRDESC]
+  , OC.BRANCH_NUMBER [LOCNMBR]
+  , OC.BRANCH_DESC [LOCDESC]
+  , OC.COMMODITY_CODE [COMMODITYCD]
+  , OC.COMMODITY_DESC [COMMODITYDESC]
+  , OC.REMAINING_BU
+FROM AgTrax_Staging..DM_OpenContracts OC 
+  INNER JOIN AgTrax_Staging..AR_CUSTOMER_MASTER_TMA CM ON OC.CUSTOMER=CM.CUSTOMER
+WHERE OC.DATA_KEY=&apos;@Request.paramContractKey~&apos;
+ORDER BY CONTRACTNMBR"
 			Type="SQL"
 			>
-			<SortFilter
-				SortColumn="CONTRACTNMBR"
-			/>
 			<AggregateColumn
 				AggregateColumn="REMAINING_BU"
 				AggregateFunction="Sum"
@@ -58,14 +44,13 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 			/>
 		</DataLayer>
 	</LocalData>
-	<IncludeSharedElement
-		DefinitionFile="_Layout.Shared"
-		SharedElementID="shrHeader"
-	/>
-	<Remark>
-		<ReportHeader>
+	<ReportHeader>
+		<Division
+			ID="divHomeButton"
+			>
 			<Button
-				Caption="Dashboard Home"
+				Caption="TMA Dashboard Home"
+				Class="ThemePanel"
 				ID="buttonHome"
 				>
 				<Action
@@ -77,186 +62,218 @@ WHERE CAST([CT].[CONTRACT_TYPE] AS VARCHAR)+&apos;_&apos;+[CT].[CUSTOMER]+&apos;
 					/>
 				</Action>
 			</Button>
-		</ReportHeader>
-	</Remark>
+		</Division>
+	</ReportHeader>
 	<Body>
-		<Button
-			Caption="Export to Excel"
-			ID="buttonExport_Excel"
-			Tooltip="Click to export data to Microsoft Excel"
+		<Division
+			ID="divBtnExportExcel"
 			>
-			<Action
-				ID="actionExport_Excel"
-				Type="NativeExcel"
+			<LineBreak/>
+			<Button
+				Caption="Export to Excel"
+				ID="buttonExport_Excel"
+				Tooltip="Click to export data to Microsoft Excel"
 				>
-				<Target
-					ExcelOutputFormat="Excel2007"
-					ExportDataTableID="DataTable1"
-					ExportFilename="TMAContract.xlsx"
-					ID="targetExport_Excel"
-					Report="CurrentReport"
-					ShowGridlines="True"
+				<Action
+					ID="actionExport_Excel"
 					Type="NativeExcel"
 					>
-					<WaitPage
-						Caption="Exporting to Excel..."
+					<Target
+						ExcelOutputFormat="Excel2007"
+						ExportFilename="TMAContracts.xlsx"
+						ID="targetExport_Excel"
+						Report="CurrentReport"
+						ShowGridlines="False"
+						Type="NativeExcel"
 					/>
-				</Target>
-			</Action>
-		</Button>
-		<LineBreak/>
-		<LineBreak/>
-		<Label
-			Caption="Contract: "
-		/>
-		<Label
-			Caption="@Local.MAINCONTRACT~"
-		/>
-		<LineBreak/>
-		<Label
-			Caption="Commodity: "
-		/>
-		<Label
-			Caption="@Local.COMMODITYDESC~"
-		/>
-		<LineBreak/>
-		<Label
-			Caption="Remaining BU: "
-		/>
-		<Label
-			Caption="@Local.SumRemainingBU~"
-			Format="###,###,##0.000"
-		/>
-		<LineBreak/>
-		<Label
-			Caption="Shipment Period: "
-			Format="General Date"
-		/>
-		<Label
-			Caption="@Local.DELIVERY_END_DATE~"
-			Format="Short Date"
-		/>
-		<LineBreak/>
-		<Label
-			Caption="Account Name: "
-		/>
-		<Label
-			Caption="@Local.CUSTDESC~"
-		/>
-		<LineBreak/>
-		<Label
-			Caption="Account Number: "
-		/>
-		<Label
-			Caption="@Local.CUSTNMBR~"
-		/>
-		<DataTable
-			AccessibleHeaders="True"
-			AccessibleSummary="AnalysisGrid DataTable"
-			Caption="TMA Overshipped Contracts"
-			ID="dtTMAContracts"
-			RememberSort="True"
-			SortArrows="True"
-			TableBorder="0"
+				</Action>
+			</Button>
+		</Division>
+		<Division
+			ID="divHeader"
 			>
-			<DataLayer
-				LinkedDataLayerID="lnkTMAContract"
-				Type="Linked"
+			<LineBreak
+				LineCount="2"
 			/>
-			<InteractivePaging
-				CaptionType="Image"
-				HideShowPrevNextCaptions="False"
-				HideWhenOnePage="True"
-				IDnotSupportedHere="pagingTableNumbered"
-				Location="Top"
-				PageRowCount="20"
-				ShowPageNumber="Numbered"
+			<Label
+				Caption="Contract:"
+				Class="ThemeHeader"
 			/>
-			<DataTableColumn
-				Header="Contract"
-				ID="colCONTRACTNMBR"
+			<Spaces
+				Size="4"
+			/>
+			<Label
+				Caption="@Local.MAINCONTRACT~"
+				Class="ThemeHeader, ThemeBold"
+			/>
+			<LineBreak/>
+			<Label
+				Caption="Commodity:"
+				Class="ThemeHeader"
+			/>
+			<Spaces
+				Size="4"
+			/>
+			<Label
+				Caption="@Local.COMMODITYDESC~"
+				Class="ThemeHeader, ThemeBold"
+			/>
+			<LineBreak/>
+			<Label
+				Caption="Remaining BU:"
+				Class="ThemeHeader"
+			/>
+			<Spaces
+				Size="4"
+			/>
+			<Label
+				Caption="@Local.SumRemainingBU~"
+				Class="ThemeHeader, ThemeBold"
+				Format="###,###,##0.00"
+			/>
+			<LineBreak/>
+			<Label
+				Caption="Shipment Period:"
+				Class="ThemeHeader"
+				Format="General Date"
+			/>
+			<Spaces
+				Size="4"
+			/>
+			<Label
+				Caption="@Local.DELIVERY_END_DATE~"
+				Class="ThemeHeader, ThemeBold"
+				Format="Short Date"
+			/>
+			<LineBreak/>
+			<Label
+				Caption="Account Name:"
+				Class="ThemeHeader"
+			/>
+			<Spaces
+				Size="4"
+			/>
+			<Label
+				Caption="@Local.CUSTDESC~"
+				Class="ThemeHeader, ThemeBold"
+			/>
+			<LineBreak/>
+			<Label
+				Caption="Account Number:"
+				Class="ThemeHeader"
+			/>
+			<Spaces
+				Size="4"
+			/>
+			<Label
+				Caption="@Local.CUSTNMBR~"
+				Class="ThemeHeader, ThemeBold"
+			/>
+		</Division>
+		<Division
+			ID="divTable"
+			>
+			<DataTable
+				AccessibleHeaders="True"
+				AccessibleSummary="AnalysisGrid DataTable"
+				Caption="TMA Overshipped Contracts"
+				ID="dtTMAContracts"
+				RememberSort="True"
+				SortArrows="True"
+				TableBorder="0"
 				>
-				<Label
-					Caption="@Data.CONTRACTNMBR~"
+				<DataLayer
+					LinkedDataLayerID="lnkTMAContract"
+					Type="Linked"
+				/>
+				<InteractivePaging
+					CaptionType="Image"
+					Location="Top"
+					PageRowCount="10"
+					ShowPageNumber="True"
+				/>
+				<DataTableColumn
+					Header="Contract"
 					ID="colCONTRACTNMBR"
-				/>
-				<DataColumnSort
-					DataColumn="CONTRACTNMBR"
-					DataType="Text"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Location Number"
-				ID="colLOCNMBR"
-				>
-				<Label
-					Caption="@Data.LOCNMBR~"
-					ID="colLOCNMBR"
-				/>
-				<DataColumnSort
-					DataColumn="LOCNMBR"
-					DataType="Text"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Location Description"
-				ID="colLOCDESC"
-				>
-				<Label
-					Caption="@Data.LOCDESC~"
-					ID="colLOCDESC"
-				/>
-				<DataColumnSort
-					DataColumn="LOCDESC"
-					DataType="Text"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Remaining BU"
-				ID="colREMAINING_BU"
-				>
-				<Label
-					Caption="@Data.REMAINING_BU~"
-					Format="###,###,##0.000"
-					ID="colREMAINING_BU"
-				/>
-				<DataColumnSort
-					DataColumn="REMAINING_BU"
-					DataType="Number"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				ID="colKPI"
-				>
-				<Label
-					ID="KPI"
 					>
-					<Note
-						Note="KPI Remaining Contract Balance Conditions: Green greater than 2500 BU; Yellow 0 to 2500; Red less than 0"
+					<Label
+						Caption="@Data.CONTRACTNMBR~"
+						ID="colCONTRACTNMBR"
 					/>
-					<ConditionalClass
-						Class="fa fa-arrow-up fa-2x text-success"
-						Condition="@Data.REMAINING_BU~ &gt; 2500"
-						ID="Condition-Green&gt;2500"
+					<DataColumnSort
+						DataColumn="CONTRACTNMBR"
+						DataType="Text"
 					/>
-					<ConditionalClass
-						Class="fa fa-minus fa-2x text-warning"
-						Condition="(@Data.REMAINING_BU~ &gt;=0) And (@Data.REMAINING_BU~ &lt;= 2500)"
-						ID="Condition-Yellow-0-2500"
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Location Number"
+					ID="colLOCNMBR"
+					>
+					<Label
+						Caption="@Data.LOCNMBR~"
+						ID="colLOCNMBR"
 					/>
-					<ConditionalClass
-						Class="fa fa-arrow-down fa-2x text-danger"
-						Condition="@Data.REMAINING_BU~ &lt; 0"
-						ID="Condition-Red&lt;0"
+					<DataColumnSort
+						DataColumn="LOCNMBR"
+						DataType="Text"
 					/>
-				</Label>
-			</DataTableColumn>
-		</DataTable>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Location Description"
+					ID="colLOCDESC"
+					>
+					<Label
+						Caption="@Data.LOCDESC~"
+						ID="colLOCDESC"
+					/>
+					<DataColumnSort
+						DataColumn="LOCDESC"
+						DataType="Text"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Remaining BU"
+					ID="colREMAINING_BU"
+					>
+					<Label
+						Caption="@Data.REMAINING_BU~"
+						Format="###,###,##0.00"
+						ID="colREMAINING_BU"
+					/>
+					<DataColumnSort
+						DataColumn="REMAINING_BU"
+						DataType="Number"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					ID="colKPI"
+					>
+					<Label
+						ID="KPI"
+						>
+						<Note
+							Note="KPI Remaining Contract Balance Conditions: Green greater than 2500 BU; Yellow 0 to 2500; Red less than 0"
+						/>
+						<ConditionalClass
+							Class="fa fa-arrow-up fa-2x text-success"
+							Condition="@Data.REMAINING_BU~ &gt; 2500"
+							ID="Condition-Green&gt;2500"
+						/>
+						<ConditionalClass
+							Class="fa fa-minus fa-2x text-warning"
+							Condition="(@Data.REMAINING_BU~ &gt;=0) And (@Data.REMAINING_BU~ &lt;= 2500)"
+							ID="Condition-Yellow-0-2500"
+						/>
+						<ConditionalClass
+							Class="fa fa-arrow-down fa-2x text-danger"
+							Condition="@Data.REMAINING_BU~ &lt; 0"
+							ID="Condition-Red&lt;0"
+						/>
+					</Label>
+				</DataTableColumn>
+			</DataTable>
+		</Division>
 	</Body>
-	<IncludeSharedElement
-		DefinitionFile="_Layout.Shared"
-		SharedElementID="shrFooter"
-	/>
 	<ideTestParams
 		paramContractKey="1_  40910_02_63977"
 	/>
