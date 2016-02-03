@@ -35,10 +35,9 @@
 					>
 					<ResponsiveColumn>
 						<Label
-							Caption="Add"
-							Class="fa fa-plus fa-2x "
+							Class="fa fa-plus fa-2x"
 							HtmlTag="Div"
-							Tooltip="Add a record"
+							Tooltip="Add a ticket"
 							>
 							<Action
 								Type="Report"
@@ -54,13 +53,12 @@
 							</Action>
 						</Label>
 						<Spaces
-							Size="25"
+							Size="15"
 						/>
 						<Label
-							Caption="Export"
 							Class="fa fa-file-excel-o fa-2x "
 							HtmlTag="Div"
-							Tooltip="Export"
+							Tooltip="Export to Excel"
 							>
 							<Action
 								Type="NativeExcel"
@@ -76,7 +74,7 @@
 							</Action>
 						</Label>
 						<Spaces
-							Size="25"
+							Size="18"
 						/>
 					</ResponsiveColumn>
 				</ResponsiveRow>

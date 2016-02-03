@@ -213,10 +213,10 @@
 								>
 								<MapMarkerImage>
 									<Image
-										Caption="map_blue.png"
-										Height="24"
+										Caption="yellow_pin.gif"
+										Height="20"
 										ID="mapIcon"
-										Width="24"
+										Width="10"
 									/>
 								</MapMarkerImage>
 								<DataLayer
@@ -238,9 +238,19 @@
 											IncludeCondition="@Request.iptCustomer &lt;&gt; &quot;&quot;"
 										/>
 									</Remark>
+									<Remark>
+										<ConditionFilter
+											Condition="InStr(UCase(&quot;@Data.city~&quot;), UCase(&quot;@Request.iptCity~&quot;)) &gt; 0"
+										/>
+									</Remark>
 									<ConditionFilter
-										Condition="InStr(UCase(&quot;@Data.city~&quot;), &quot;@Request.iptCity~&quot;) &gt; 0"
+										Condition="&quot;@Data.capacity~&quot; &lt;&gt; &quot;NULL&quot;"
 									/>
+									<Remark>
+										<ConditionFilter
+											Condition="InStr(UCase(&quot;@Data.UCaseCity~&quot;), UCase(&quot;@Request.iptCity~&quot;)) &gt; 0"
+										/>
+									</Remark>
 								</DataLayer>
 								<Action
 									Type="MapMarkerInfo"
@@ -249,6 +259,9 @@
 										<Label
 											Caption="Customer: "
 											Class="ThemeBold"
+										/>
+										<Spaces
+											Size="2"
 										/>
 										<Label
 											Caption="@Data.companyname~"
@@ -288,23 +301,44 @@
 										</Label>
 										<LineBreak/>
 										<Label
+											Caption="Site ID-Tank ID:"
+											Class="ThemeHidden"
+											>
+											<ConditionalClass
+												Class="ThemeBold"
+												Condition="&quot;@Data.capacity~&quot; &lt;&gt; &quot;NULL&quot;"
+											/>
+										</Label>
+										<Spaces
+											Size="2"
+										/>
+										<Label
+											Caption=" @Data.siteid~ - @Data.tankid~"
+											Class="ThemeHidden"
+											>
+											<ConditionalClass
+												Condition="&quot;@Data.capacity~&quot; &lt;&gt; &quot;NULL&quot;"
+											/>
+										</Label>
+										<LineBreak/>
+										<Label
 											Caption="Tank Capacity:"
 											Class="ThemeHidden"
 											>
 											<ConditionalClass
 												Class="ThemeBold"
-												Condition="&quot;@Data.capacity~&quot; &lt;&gt; &quot;inactive&quot;"
+												Condition="&quot;@Data.capacity~&quot; &lt;&gt; &quot;NULL&quot;"
 											/>
 										</Label>
 										<Spaces
-											Size="1"
+											Size="2"
 										/>
 										<Label
-											Caption="@Data.capacity~"
+											Caption="@Data.capacity~ gallons"
 											Class="ThemeHidden"
 											>
 											<ConditionalClass
-												Condition="&quot;@Data.capacity~&quot; &lt;&gt; &quot;inactive&quot;"
+												Condition="&quot;@Data.capacity~&quot; &lt;&gt; &quot;NULL&quot;"
 											/>
 										</Label>
 									</MapMarkerInfo>
@@ -534,7 +568,6 @@
 		SharedElementID="shrFooter"
 	/>
 	<ideTestParams
-		iptCity=""
 		iptCustomer=""
 		paramLocName=""
 	/>

@@ -54,7 +54,7 @@
 										DefaultValue="@Request.paramLocCd~"
 										ID="iptLocation"
 										IncludeBlank="True"
-										IncludeBlankCaption="Select a location"
+										IncludeBlankCaption="MKC All"
 										OptionCaptionColumn="Location"
 										OptionValueColumn="LocationCode"
 										>
@@ -167,7 +167,6 @@ From MapMKCLocations"
 								ID="divTotals"
 								>
 								<Label
-									Caption="Export"
 									Class="fa fa-file-pdf-o fa-2x"
 									HtmlTag="Div"
 									ID="exportTotals"
@@ -183,7 +182,7 @@ From MapMKCLocations"
 									</Action>
 								</Label>
 								<Spaces
-									Size="20"
+									Size="15"
 								/>
 							</Division>
 							<Division
@@ -218,7 +217,6 @@ From MapMKCLocations"
 								ID="divVolumes"
 								>
 								<Label
-									Caption="Export"
 									Class="fa fa-file-pdf-o fa-2x"
 									HtmlTag="Div"
 									ID="exportVolumes"
@@ -234,7 +232,7 @@ From MapMKCLocations"
 									</Action>
 								</Label>
 								<Spaces
-									Size="20"
+									Size="15"
 								/>
 							</Division>
 							<Division
@@ -269,7 +267,6 @@ From MapMKCLocations"
 								ID="divSales"
 								>
 								<Label
-									Caption="Export"
 									Class="fa fa-file-pdf-o fa-2x "
 									HtmlTag="Div"
 									ID="exportSales"
@@ -285,13 +282,63 @@ From MapMKCLocations"
 									</Action>
 								</Label>
 								<Spaces
-									Size="20"
+									Size="15"
 								/>
 							</Division>
 							<Division
 								Class="panel-body"
 								HtmlDiv="True"
 								ID="divSalesData"
+								>
+								<Note
+									Note="**Add data here**"
+								/>
+							</Division>
+						</Division>
+					</TabPanel>
+					<TabPanel
+						Caption="Operating Income"
+						Class="ThemeTextPositive ThemeHeaderSmall"
+						ID="tabOpIncome"
+						>
+						<Division
+							Class="panel panel-default"
+							HtmlDiv="True"
+							ID="panel-OpIncome"
+							>
+							<Division
+								Class="panel-heading"
+								HtmlDiv="True"
+								ID="divOpIncomeHeading"
+							/>
+							<Division
+								Class="panel-body ThemeAlignRight"
+								HtmlDiv="True"
+								ID="divOpIncome"
+								>
+								<Label
+									Class="fa fa-file-pdf-o fa-2x"
+									HtmlTag="Div"
+									ID="exportOpIncome"
+									Tooltip="Export to PDF"
+									>
+									<Action
+										ID="exportPDFOpIncome"
+										Type="PDF"
+										>
+										<Target
+											Type="PDF"
+										/>
+									</Action>
+								</Label>
+								<Spaces
+									Size="15"
+								/>
+							</Division>
+							<Division
+								Class="panel-body"
+								HtmlDiv="True"
+								ID="divOpIncomeData"
 								>
 								<Note
 									Note="**Add data here**"
@@ -320,7 +367,6 @@ From MapMKCLocations"
 								ID="divPersonnel"
 								>
 								<Label
-									Caption="Export"
 									Class="fa fa-file-pdf-o fa-2x"
 									HtmlTag="Div"
 									ID="exportPersonnel"
@@ -336,7 +382,7 @@ From MapMKCLocations"
 									</Action>
 								</Label>
 								<Spaces
-									Size="20"
+									Size="15"
 								/>
 							</Division>
 							<Division
@@ -371,7 +417,6 @@ From MapMKCLocations"
 								ID="divFixed"
 								>
 								<Label
-									Caption="Export"
 									Class="fa fa-file-pdf-o fa-2x"
 									HtmlTag="Div"
 									ID="exportFixed"
@@ -387,64 +432,13 @@ From MapMKCLocations"
 									</Action>
 								</Label>
 								<Spaces
-									Size="20"
+									Size="15"
 								/>
 							</Division>
 							<Division
 								Class="panel-body"
 								HtmlDiv="True"
 								ID="divFixedData"
-								>
-								<Note
-									Note="**Add data here**"
-								/>
-							</Division>
-						</Division>
-					</TabPanel>
-					<TabPanel
-						Caption="Operating Income"
-						Class="ThemeTextPositive ThemeHeaderSmall"
-						ID="tabOpIncome"
-						>
-						<Division
-							Class="panel panel-default"
-							HtmlDiv="True"
-							ID="panel-OpIncome"
-							>
-							<Division
-								Class="panel-heading"
-								HtmlDiv="True"
-								ID="divOpIncomeHeading"
-							/>
-							<Division
-								Class="panel-body ThemeAlignRight"
-								HtmlDiv="True"
-								ID="divOpIncome"
-								>
-								<Label
-									Caption="Export"
-									Class="fa fa-file-pdf-o fa-2x"
-									HtmlTag="Div"
-									ID="exportOpIncome"
-									Tooltip="Export to PDF"
-									>
-									<Action
-										ID="exportPDFOpIncome"
-										Type="PDF"
-										>
-										<Target
-											Type="PDF"
-										/>
-									</Action>
-								</Label>
-								<Spaces
-									Size="20"
-								/>
-							</Division>
-							<Division
-								Class="panel-body"
-								HtmlDiv="True"
-								ID="divOpIncomeData"
 								>
 								<Note
 									Note="**Add data here**"
@@ -473,7 +467,6 @@ From MapMKCLocations"
 								ID="divOtherCost"
 								>
 								<Label
-									Caption="Export"
 									Class="fa fa-file-pdf-o fa-2x"
 									HtmlTag="Div"
 									ID="exportOtherCost"
@@ -489,7 +482,7 @@ From MapMKCLocations"
 									</Action>
 								</Label>
 								<Spaces
-									Size="20"
+									Size="15"
 								/>
 							</Division>
 							<Division

@@ -54,7 +54,7 @@
 										DefaultValue="@Request.paramLocCd~"
 										ID="iptLocation"
 										IncludeBlank="True"
-										IncludeBlankCaption="Select a location"
+										IncludeBlankCaption="MKC All"
 										OptionCaptionColumn="Location"
 										OptionValueColumn="LocationCode"
 										>
@@ -167,7 +167,6 @@ From MapMKCLocations"
 								ID="divAppByRig"
 								>
 								<Label
-									Caption="Export"
 									Class="fa fa-file-pdf-o fa-2x"
 									HtmlTag="Div"
 									ID="exportAppByRig"
@@ -183,7 +182,7 @@ From MapMKCLocations"
 									</Action>
 								</Label>
 								<Spaces
-									Size="20"
+									Size="15"
 								/>
 							</Division>
 							<Division
@@ -218,7 +217,6 @@ From MapMKCLocations"
 								ID="divAppByEmployee"
 								>
 								<Label
-									Caption="Export"
 									Class="fa fa-file-pdf-o fa-2x"
 									HtmlTag="Div"
 									ID="exportAppByEmployee"
@@ -234,7 +232,7 @@ From MapMKCLocations"
 									</Action>
 								</Label>
 								<Spaces
-									Size="20"
+									Size="15"
 								/>
 							</Division>
 							<Division
@@ -269,7 +267,6 @@ From MapMKCLocations"
 								ID="divTurns"
 								>
 								<Label
-									Caption="Export"
 									Class="fa fa-file-pdf-o fa-2x "
 									HtmlTag="Div"
 									ID="exportTurns"
@@ -285,7 +282,7 @@ From MapMKCLocations"
 									</Action>
 								</Label>
 								<Spaces
-									Size="20"
+									Size="15"
 								/>
 							</Division>
 							<Division
@@ -320,7 +317,6 @@ From MapMKCLocations"
 								ID="divAcres"
 								>
 								<Label
-									Caption="Export"
 									Class="fa fa-file-pdf-o fa-2x"
 									HtmlTag="Div"
 									ID="exportAcres"
@@ -336,7 +332,7 @@ From MapMKCLocations"
 									</Action>
 								</Label>
 								<Spaces
-									Size="20"
+									Size="15"
 								/>
 							</Division>
 							<Division

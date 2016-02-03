@@ -11,7 +11,7 @@
 		background: #F7F7F7;
 		color: #292E3C;
 		font-family: 'Lato', sans-serif;
-		font-size: 1.4em !important;
+		font-size: 1.5em !important;
 		font-weight: normal !important;
 	}
 	
@@ -34,7 +34,7 @@
 	#Header-inner #main-nav div.dropdown a{
 		color: #FFF;
 		text-decoration: none;
-		font-size: 1em;
+		font-size: 1.25em;
 		cursor: pointer;
 	}
 	
@@ -93,7 +93,7 @@
 		border-radius: 0px 0px 4px 4px;
 		border-style: solid;
 		border-width: 0px 2px 2px 2px;
-		min-width: 258px;
+		min-width: 265px;
 		padding: 5px 0px 5px 0px;
 		text-align: left;		
 	}
@@ -475,7 +475,7 @@
 		color: #444;
 		padding: .5em;
 		display: block;
-		font-size: .85em;
+		font-size: 1em;
 		-webkit-transition: all .1s ease .1s, color .1s;
 		transition: all .1s ease 0.1s, color 0.1s;
 		transition-timing-function: cubic-bezier(.1, .1, .1, .1);
@@ -906,7 +906,7 @@
 		display: inline-block;
 		padding: 4px 12px;
 		margin-bottom: 0;
-		font-size: 14px;
+		font-size: 16px;
 		line-height: 20px;
 		text-align: center;
 		vertical-align: middle;
@@ -1026,10 +1026,11 @@
 	
 	.navbar-brand{
 		padding: .5em 1em;
+		font-size: 1.3em!important;
 	}
 	
 	.navbar-brand-txt{
-		padding: 1em;
+		padding: 1.3em!important;
 		color: #FFF!important;
 	}	
 	
@@ -1131,7 +1132,7 @@
 	.rdThemeDataTableMainHeader{
 		color: #fff;
 		background-color: #454d59;
-		font-size: 1.5em;
+		font-size: 1.3em;
 		padding-left: .75em;
 		text-align: left;
 		margin-bottom: 1px;
