@@ -222,7 +222,7 @@
 								<DataLayer
 									ColumnNamesRow="1"
 									ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx"
-									ExcelWorksheet="AllTanks"
+									ExcelWorksheet="Sheet1"
 									ID="dlAFDTanks"
 									Type="Excel"
 									>
@@ -243,14 +243,14 @@
 											Condition="InStr(UCase(&quot;@Data.city~&quot;), UCase(&quot;@Request.iptCity~&quot;)) &gt; 0"
 										/>
 									</Remark>
-									<Remark>
-										<ConditionFilter
-											Condition="&quot;@Data.capacity~&quot; &lt;&gt; &quot;NULL&quot;"
-										/>
-									</Remark>
 									<ConditionFilter
 										Condition="InStr(UCase(&quot;@Data.UCaseCity~&quot;), UCase(&quot;@Request.iptCity~&quot;)) &gt; 0"
 									/>
+									<Remark>
+										<ConditionFilter
+											Condition="InStr(&quot;@Data.capacity~&quot;, &quot;NULL&quot;) &gt; 0"
+										/>
+									</Remark>
 								</DataLayer>
 								<Action
 									Type="MapMarkerInfo"

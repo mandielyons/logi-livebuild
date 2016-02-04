@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Report
-	ID="_Layout.Shared"
+	ID="_Layout.TMA_Shared"
 	>
 	<SharedElement
 		ID="shrHeader"
@@ -37,7 +37,7 @@
 								ID="navbar-brand"
 								>
 								<Image
-									Caption="logo-white.png"
+									Caption="logo.png"
 									Class="main-logo"
 									ID="logo"
 									>
@@ -70,7 +70,7 @@
 									ID="title"
 									>
 									<Label
-										Caption="Dashboard Reports"
+										Caption="MKC Dashboard Tool"
 									/>
 								</Division>
 							</Division>
@@ -96,7 +96,7 @@
 									/>
 								</ResponsiveVisibility>
 								<Label
-									Caption="Home"
+									Caption="MKC Home"
 									>
 									<Action
 										ID="actReport"
@@ -562,7 +562,7 @@
 				ShowModes="rdBrowser"
 				>
 				<Label
-					Caption="© Copyright 2015 - MKC"
+					Caption="© Copyright 2015 - Team Marketing Alliance"
 					Format="HTML"
 				/>
 				<Remark>
