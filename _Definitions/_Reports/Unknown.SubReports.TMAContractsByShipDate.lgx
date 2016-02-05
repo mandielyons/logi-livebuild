@@ -7,9 +7,12 @@
 		Account="ALL"
 		Branch="ALL"
 		Commodity="ALL"
+		ContractType="Sale"
 		Position="ALL"
 	/>
-	<ReportHeader>
+	<Body
+		ID="bodyTMAContractsByShipDate"
+		>
 		<Division
 			ID="divHomeButton"
 			>
@@ -27,11 +30,8 @@
 					/>
 				</Action>
 			</Button>
+			<LineBreak/>
 		</Division>
-	</ReportHeader>
-	<Body
-		ID="bodyTMAContractsByShipDate"
-		>
 		<Division
 			ID="divBtnExportExcel"
 			>
@@ -60,8 +60,21 @@
 			ID="divHeader"
 			>
 			<LineBreak
+				ID="NewLine(2)"
 				LineCount="2"
 			/>
+			<Label
+				Caption="Contract Type: "
+				Class="ThemeHeader"
+			/>
+			<Spaces
+				Size="4"
+			/>
+			<Label
+				Caption="@Request.ContractType~"
+				Class="ThemeHeader, ThemeBold"
+			/>
+			<LineBreak/>
 			<Label
 				Caption="Commodity Group: "
 				Class="ThemeHeader"
@@ -87,8 +100,10 @@
 				Class="ThemeHeader, ThemeBold"
 				Format="Short Date"
 			/>
-			<LineBreak/>
-			<LineBreak/>
+			<LineBreak
+				ID="NewLine(2)"
+				LineCount="2"
+			/>
 		</Division>
 		<Division
 			ID="divSelCommodity"
@@ -111,9 +126,9 @@
 					ID="dlSQLCommodity"
 					Source="SELECT DISTINCT COMMODITY_CODE, COMMODITY_DESC, COMMODITY_CODE+&apos; - &apos;+COMMODITY_DESC [COMMODITY]
 FROM AgTrax_Staging..DM_OpenContracts with(nolock)
-WHERE DELIVERY_END_DATE &lt;= &apos;@Request.paramShipPeriodDt~&apos;
-  AND DPR_GROUP = &apos;@Request.paramCommodityCode~&apos;
-  AND CONTRACT_TYPE=2
+WHERE DELIVERY_END_DATE&lt;=&apos;@Request.paramShipPeriodDt~&apos;
+  AND DPR_GROUP=@Request.paramCommodityCode~
+  AND CONTRACT_TYPE=@Request.ContractType~
 ORDER BY COMMODITY"
 					Type="SQL"
 				/>
@@ -150,9 +165,9 @@ ORDER BY COMMODITY"
 					ID="dlSQLPosition"
 					Source="SELECT DISTINCT DPR_POSITION_GROUP [DPRDESC]
 FROM AgTrax_Staging..DM_OpenContracts with(nolock)
-WHERE DELIVERY_END_DATE &lt;= &apos;@Request.paramShipPeriodDt~&apos;
-  AND DPR_GROUP = &apos;@Request.paramCommodityCode~&apos;
-  AND CONTRACT_TYPE=2
+WHERE DELIVERY_END_DATE&lt;=&apos;@Request.paramShipPeriodDt~&apos;
+  AND DPR_GROUP=@Request.paramCommodityCode~
+  AND CONTRACT_TYPE=@Request.ContractType~
 ORDER BY DPRDESC"
 					Type="SQL"
 				/>
@@ -174,39 +189,6 @@ ORDER BY DPRDESC"
 			<Label
 				Caption="Account: "
 			/>
-			<Remark>
-				<InputText
-					DefaultValue="@Request.Account~"
-					ID="Account"
-					>
-					<AutoComplete
-						ColumnName="CUSTDESC"
-						ID="AutoCompleteAccountName"
-						>
-						<DataLayer
-							ConnectionID="connProdGP"
-							ID="dlSQLAccount"
-							Source="SELECT DISTINCT CUSTOMER_DESC [CUSTDESC], CUSTOMER [CUSTNMBR], LTRIM(RTRIM(CUSTOMER_DESC))+&apos; - &apos;+LTRIM(RTRIM(CUSTOMER)) [ACCOUNT]
-FROM AgTrax_Staging..DM_OpenContracts with(nolock)
-WHERE DELIVERY_END_DATE &lt;= &apos;@Request.paramShipPeriodDt~&apos;
-  AND DPR_GROUP = &apos;@Request.paramCommodityCode~&apos;
-  AND CONTRACT_TYPE=2
-ORDER BY CUSTDESC"
-							Type="SQL"
-						/>
-					</AutoComplete>
-					<EventHandler
-						DhtmlEvent="onchange"
-						ID="evhOnChange"
-						>
-						<Action
-							ElementID="divSelAccount, dtTMAContractsByShipDate"
-							ID="actRefreshTable-A"
-							Type="RefreshElement"
-						/>
-					</EventHandler>
-				</InputText>
-			</Remark>
 			<InputSelectList
 				DefaultValue="@Request.Account~"
 				ID="Account"
@@ -222,9 +204,9 @@ ORDER BY CUSTDESC"
 					ID="dlSQLAccount"
 					Source="SELECT DISTINCT CUSTOMER_DESC [CUSTDESC], CUSTOMER [CUSTNMBR], LTRIM(RTRIM(CUSTOMER_DESC))+&apos; - &apos;+LTRIM(RTRIM(CUSTOMER)) [ACCOUNT]
 FROM AgTrax_Staging..DM_OpenContracts with(nolock)
-WHERE DELIVERY_END_DATE &lt;= &apos;@Request.paramShipPeriodDt~&apos;
-  AND DPR_GROUP = &apos;@Request.paramCommodityCode~&apos;
-  AND CONTRACT_TYPE=2
+WHERE DELIVERY_END_DATE&lt;=&apos;@Request.paramShipPeriodDt~&apos;
+  AND DPR_GROUP=@Request.paramCommodityCode~
+  AND CONTRACT_TYPE=@Request.ContractType~
 ORDER BY CUSTDESC"
 					Type="SQL"
 				/>
@@ -261,9 +243,9 @@ ORDER BY CUSTDESC"
 					ID="dlSQLBranch"
 					Source="SELECT DISTINCT BRANCH_NUMBER, BRANCH_DESC, BRANCH_DESC+&apos; - &apos;+CAST(BRANCH_NUMBER AS NVARCHAR(7)) [BRANCH]
 FROM AgTrax_Staging..DM_OpenContracts with(nolock)
-WHERE DELIVERY_END_DATE &lt;= &apos;@Request.paramShipPeriodDt~&apos;
-  AND DPR_GROUP = &apos;@Request.paramCommodityCode~&apos;
-  AND CONTRACT_TYPE=2
+WHERE DELIVERY_END_DATE&lt;=&apos;@Request.paramShipPeriodDt~&apos;
+  AND DPR_GROUP=@Request.paramCommodityCode~
+  AND CONTRACT_TYPE=@Request.ContractType~
 ORDER BY BRANCH"
 					Type="SQL"
 				/>
@@ -299,13 +281,16 @@ ORDER BY BRANCH"
  , COMMODITY_CODE [COMMODITYCD], MAX(COMMODITY_DESC) [COMMODITYDESC], DELIVERY_START_DATE, DELIVERY_END_DATE 
  , SUM(ISSUED_BU) [ISSUED_BU], SUM(REMAINING_BU) [REMAINING_BU]
 FROM AgTrax_Staging..DM_OpenContracts with(nolock)
-WHERE CONTRACT_TYPE=2 AND DELIVERY_END_DATE &lt;= &apos;@Request.paramShipPeriodDt~&apos; AND DPR_GROUP = &apos;@Request.paramCommodityCode~&apos; 
- AND (     (COMMODITY_CODE = &apos;@Request.Commodity~&apos; OR &apos;@Request.Commodity~&apos;=&apos;ALL&apos;)
-       AND (DPR_POSITION_GROUP = &apos;@Request.Position~&apos; OR &apos;@Request.Position~&apos;=&apos;ALL&apos;)
-       AND (CUSTOMER = &apos;@Request.Account~&apos; OR &apos;@Request.Account~&apos;=&apos;ALL&apos;)
-       AND (BRANCH_NUMBER = &apos;@Request.Branch~&apos; OR &apos;@Request.Branch~&apos;=&apos;ALL&apos;)
-	  )
+WHERE CONTRACT_TYPE_DESC=&apos;@Request.ContractType~&apos;
+  AND DELIVERY_END_DATE &lt;= &apos;@Request.paramShipPeriodDt~&apos; 
+  AND DPR_GROUP = &apos;@Request.paramCommodityCode~&apos;
+  AND (     (COMMODITY_CODE = &apos;@Request.Commodity~&apos; OR &apos;@Request.Commodity~&apos;=&apos;ALL&apos;)
+        AND (DPR_POSITION_GROUP = &apos;@Request.Position~&apos; OR &apos;@Request.Position~&apos;=&apos;ALL&apos;)
+        AND (CUSTOMER = &apos;@Request.Account~&apos; OR &apos;@Request.Account~&apos;=&apos;ALL&apos;)
+        AND (BRANCH_NUMBER = &apos;@Request.Branch~&apos; OR &apos;@Request.Branch~&apos;=&apos;ALL&apos;)
+	   )
 GROUP BY CUSTOMER, CONTRACT_MAIN, CONTRACT_TYPE_DESC, DPR_POSITION, DPR_POSITION_GROUP, BRANCH_NUMBER, COMMODITY_CODE,DELIVERY_START_DATE, DELIVERY_END_DATE 
+HAVING SUM(REMAINING_BU)&lt;&gt;0
 ORDER BY CUSTDESC, MAINCONTRACT 
 "
 					Type="SQL"
@@ -366,18 +351,20 @@ ORDER BY CUSTDESC, MAINCONTRACT
 						DataColumn="MAINCONTRACT"
 					/>
 				</DataTableColumn>
-				<DataTableColumn
-					Header="Contract Type"
-					ID="colCONTRACTTYPE"
-					>
-					<Label
-						Caption="@Data.CONTRACTTYPE~"
-						ID="lblCONTRACTTYPE"
-					/>
-					<DataColumnSort
-						DataColumn="CONTRACTTYPE"
-					/>
-				</DataTableColumn>
+				<Remark>
+					<DataTableColumn
+						Header="Contract Type"
+						ID="colCONTRACTTYPE"
+						>
+						<Label
+							Caption="@Data.CONTRACTTYPE~"
+							ID="lblCONTRACTTYPE"
+						/>
+						<DataColumnSort
+							DataColumn="CONTRACTTYPE"
+						/>
+					</DataTableColumn>
+				</Remark>
 				<DataTableColumn
 					Header="DPR Position"
 					ID="colDPRPOSITION"
@@ -498,6 +485,7 @@ ORDER BY CUSTDESC, MAINCONTRACT
 		Account="ALL"
 		Branch="ALL"
 		Commodity="ALL"
+		ContractType="Sale"
 		paramCommodityCode="01"
 		paramCommodityDesc="Wheat"
 		paramShipPeriodDt="2015-11-30"
