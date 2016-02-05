@@ -182,19 +182,6 @@ ORDER BY BRANCH_DESC
 					/>
 				</DataTableColumn>
 				<DataTableColumn
-					Header="Shipment Type Description"
-					ID="colSHPMTTYP_DESC"
-					>
-					<Label
-						Caption="@Data.SHPMTTYP_DESC~"
-						ID="lblSHPMTTYP_DESC"
-					/>
-					<DataColumnSort
-						DataColumn="SHPMTTYP_DESC"
-						DataType="Text"
-					/>
-				</DataTableColumn>
-				<DataTableColumn
 					Header="Account"
 					ID="colCUSTOMER"
 					>

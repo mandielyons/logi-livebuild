@@ -10,6 +10,7 @@
 	/>
 	<DefaultRequestParams
 		Account="ALL"
+		ContractType="Sale"
 		paramCommodityCode="01"
 		paramCommodityCT="01"
 		paramCommodityDesc="Corn"
@@ -34,10 +35,45 @@
 				ColspanSmallScreen="1"
 				>
 				<Division
+					ID="selContractType"
+					>
+					<Label
+						Caption="Contract Type:"
+					/>
+					<Spaces
+						Size="4"
+					/>
+					<InputRadioButtons
+						DefaultValue="@Request.ContractType~"
+						ID="ContractType"
+						OptionCaptionColumn="CONTRACT_TYPE_DESC"
+						OptionValueColumn="CONTRACT_TYPE_DESC"
+						RadioButtonDirection="Across"
+						>
+						<DataLayer
+							ConnectionID="connProdGP"
+							ID="sqlContractType"
+							Source="SELECT DISTINCT CONTRACT_TYPE, CONTRACT_TYPE_DESC FROM Agtrax_Staging..DM_OpenContracts
+ORDER BY CONTRACT_TYPE DESC"
+							Type="SQL"
+						/>
+						<EventHandler
+							DhtmlEvent="onchange"
+							ID="evhOnChange"
+							>
+							<Action
+								ElementID="dviContractsbyCommodity"
+								ID="actrefBarGraph"
+								Type="RefreshElement"
+							/>
+						</EventHandler>
+					</InputRadioButtons>
+				</Division>
+				<Division
 					ID="dviContractsbyCommodity"
 					>
 					<ChartCanvas
-						ChartCaption="Past Due Sales Ending @Local.SHIP_PERIOD_DESC~"
+						ChartCaption="Past Due @Request.ContractType~s Ending @Local.SHIP_PERIOD_DESC~"
 						ChartOrientation="Default"
 						ID="ContractsByCommodity"
 						>
@@ -48,9 +84,10 @@
   MAX(DPR_GROUP_DESC) AS [COMMODITYDESC],
   CAST(SUM(REMAINING_BU) AS DECIMAL(19,2)) AS [REMAINING_BU]
 FROM [Agtrax_Staging]..[DM_OpenContracts] with(nolock) 
-WHERE CONTRACT_TYPE=2
+WHERE CONTRACT_TYPE_DESC=&apos;@Request.ContractType~&apos;
   AND DELIVERY_END_DATE&lt;=&apos;@Local.SHIP_PERIOD_DT~&apos;
 GROUP BY DPR_GROUP
+HAVING SUM(REMAINING_BU)&lt;&gt;0
 ORDER BY COMMODITYCODE
 "
 							Type="SQL"
@@ -106,7 +143,7 @@ ORDER BY COMMODITYCODE
 					<DataTable
 						AccessibleHeaders="True"
 						AccessibleSummary="AnalysisGrid DataTable"
-						Caption="Overshipped Contracts"
+						Caption="Overshipped Sales Contracts"
 						ID="ContractsOvershipped"
 						KeepScrollPosition="True"
 						RememberSort="True"
@@ -981,5 +1018,7 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 		DefinitionFile="_Layout.TMA_Shared"
 		SharedElementID="shrFooter"
 	/>
-	<ideTestParams/>
+	<ideTestParams
+		ContractType="Sale"
+	/>
 </Report>
