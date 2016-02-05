@@ -2,6 +2,7 @@
 <Report
 	Caption="AFD Tank Locations"
 	ID="Maps.EnergyTanks"
+	SecurityReportRightID="MKC"
 	>
 	<LocalData
 		Condition="&quot;@Request.iptCustomer~&quot;.length &gt; 0"
@@ -35,7 +36,7 @@
 						ID="panel-heading"
 						>
 						<Label
-							Caption="AFD Tank Information"
+							Caption="Active AFD Tank Locations"
 						/>
 					</Division>
 					<Division
@@ -183,18 +184,17 @@
 					HtmlDiv="True"
 					ID="panel-map"
 					>
-					<Division
-						Class="panel-heading"
-						HtmlDiv="True"
-						ID="panel-heading-map"
-						>
-						<Label
-							Caption="AFD Tank Locations"
-						/>
-						<Label
-							Caption="@Request.iptCustomer~"
-						/>
-					</Division>
+					<Remark>
+						<Division
+							Class="panel-heading"
+							HtmlDiv="True"
+							ID="panel-heading-map"
+							>
+							<Label
+								Caption="Active AFD Tank Locations"
+							/>
+						</Division>
+					</Remark>
 					<Division
 						Class="panel-body"
 						HtmlDiv="True"
@@ -203,10 +203,10 @@
 						<GoogleMap
 							GoogleMapTypes="Hybrid"
 							GoogleMapZoomControl="Small"
-							Height="600"
+							Height="800"
 							ID="gmAFDTanks"
 							MapScale="True"
-							Width="800"
+							Width="1024"
 							>
 							<GoogleMapMarkers
 								ID="gmmTank"
@@ -222,7 +222,7 @@
 								<DataLayer
 									ColumnNamesRow="1"
 									ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx"
-									ExcelWorksheet="Sheet1"
+									ExcelWorksheet="AllTanks"
 									ID="dlAFDTanks"
 									Type="Excel"
 									>
@@ -244,13 +244,11 @@
 										/>
 									</Remark>
 									<ConditionFilter
+										Condition="&quot;@Data.capacity~&quot; &lt;&gt; &quot;NULL&quot;"
+									/>
+									<ConditionFilter
 										Condition="InStr(UCase(&quot;@Data.UCaseCity~&quot;), UCase(&quot;@Request.iptCity~&quot;)) &gt; 0"
 									/>
-									<Remark>
-										<ConditionFilter
-											Condition="InStr(&quot;@Data.capacity~&quot;, &quot;NULL&quot;) &gt; 0"
-										/>
-									</Remark>
 								</DataLayer>
 								<Action
 									Type="MapMarkerInfo"
@@ -559,6 +557,9 @@
 							</Division>
 						</Division>
 					</Division>
+					<Label
+						Caption="@Request.iptCustomer~"
+					/>
 				</Division>
 			</ResponsiveColumn>
 		</ResponsiveRow>
