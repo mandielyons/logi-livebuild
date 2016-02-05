@@ -2,6 +2,7 @@
 <Report
 	Caption="AFD Tank Locations"
 	ID="Maps.EnergyTanks"
+	SecurityReportRightID="MKC"
 	>
 	<LocalData
 		Condition="&quot;@Request.iptCustomer~&quot;.length &gt; 0"
@@ -35,7 +36,7 @@
 						ID="panel-heading"
 						>
 						<Label
-							Caption="AFD Tank Information"
+							Caption="Active AFD Tank Locations"
 						/>
 					</Division>
 					<Division
@@ -183,18 +184,17 @@
 					HtmlDiv="True"
 					ID="panel-map"
 					>
-					<Division
-						Class="panel-heading"
-						HtmlDiv="True"
-						ID="panel-heading-map"
-						>
-						<Label
-							Caption="AFD Tank Locations"
-						/>
-						<Label
-							Caption="@Request.iptCustomer~"
-						/>
-					</Division>
+					<Remark>
+						<Division
+							Class="panel-heading"
+							HtmlDiv="True"
+							ID="panel-heading-map"
+							>
+							<Label
+								Caption="Active AFD Tank Locations"
+							/>
+						</Division>
+					</Remark>
 					<Division
 						Class="panel-body"
 						HtmlDiv="True"
@@ -203,26 +203,26 @@
 						<GoogleMap
 							GoogleMapTypes="Hybrid"
 							GoogleMapZoomControl="Small"
-							Height="600"
+							Height="800"
 							ID="gmAFDTanks"
 							MapScale="True"
-							Width="800"
+							Width="1024"
 							>
 							<GoogleMapMarkers
 								ID="gmmTank"
 								>
 								<MapMarkerImage>
 									<Image
-										Caption="map_blue.png"
-										Height="24"
+										Caption="yellow_pin.gif"
+										Height="20"
 										ID="mapIcon"
-										Width="24"
+										Width="10"
 									/>
 								</MapMarkerImage>
 								<DataLayer
 									ColumnNamesRow="1"
 									ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx"
-									ExcelWorksheet="Sheet1"
+									ExcelWorksheet="AllTanks"
 									ID="dlAFDTanks"
 									Type="Excel"
 									>
@@ -238,8 +238,16 @@
 											IncludeCondition="@Request.iptCustomer &lt;&gt; &quot;&quot;"
 										/>
 									</Remark>
+									<Remark>
+										<ConditionFilter
+											Condition="InStr(UCase(&quot;@Data.city~&quot;), UCase(&quot;@Request.iptCity~&quot;)) &gt; 0"
+										/>
+									</Remark>
 									<ConditionFilter
-										Condition="InStr(UCase(&quot;@Data.city~&quot;), &quot;@Request.iptCity~&quot;) &gt; 0"
+										Condition="&quot;@Data.capacity~&quot; &lt;&gt; &quot;NULL&quot;"
+									/>
+									<ConditionFilter
+										Condition="InStr(UCase(&quot;@Data.UCaseCity~&quot;), UCase(&quot;@Request.iptCity~&quot;)) &gt; 0"
 									/>
 								</DataLayer>
 								<Action
@@ -249,6 +257,9 @@
 										<Label
 											Caption="Customer: "
 											Class="ThemeBold"
+										/>
+										<Spaces
+											Size="2"
 										/>
 										<Label
 											Caption="@Data.companyname~"
@@ -288,23 +299,44 @@
 										</Label>
 										<LineBreak/>
 										<Label
+											Caption="Site ID-Tank ID:"
+											Class="ThemeHidden"
+											>
+											<ConditionalClass
+												Class="ThemeBold"
+												Condition="&quot;@Data.capacity~&quot; &lt;&gt; &quot;NULL&quot;"
+											/>
+										</Label>
+										<Spaces
+											Size="2"
+										/>
+										<Label
+											Caption=" @Data.siteid~ - @Data.tankid~"
+											Class="ThemeHidden"
+											>
+											<ConditionalClass
+												Condition="&quot;@Data.capacity~&quot; &lt;&gt; &quot;NULL&quot;"
+											/>
+										</Label>
+										<LineBreak/>
+										<Label
 											Caption="Tank Capacity:"
 											Class="ThemeHidden"
 											>
 											<ConditionalClass
 												Class="ThemeBold"
-												Condition="&quot;@Data.capacity~&quot; &lt;&gt; &quot;inactive&quot;"
+												Condition="&quot;@Data.capacity~&quot; &lt;&gt; &quot;NULL&quot;"
 											/>
 										</Label>
 										<Spaces
-											Size="1"
+											Size="2"
 										/>
 										<Label
-											Caption="@Data.capacity~"
+											Caption="@Data.capacity~ gallons"
 											Class="ThemeHidden"
 											>
 											<ConditionalClass
-												Condition="&quot;@Data.capacity~&quot; &lt;&gt; &quot;inactive&quot;"
+												Condition="&quot;@Data.capacity~&quot; &lt;&gt; &quot;NULL&quot;"
 											/>
 										</Label>
 									</MapMarkerInfo>
@@ -525,6 +557,9 @@
 							</Division>
 						</Division>
 					</Division>
+					<Label
+						Caption="@Request.iptCustomer~"
+					/>
 				</Division>
 			</ResponsiveColumn>
 		</ResponsiveRow>
