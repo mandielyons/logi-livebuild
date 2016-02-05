@@ -2,6 +2,7 @@
 <Report
 	Caption="Branch Dashboard"
 	ID="Reports.MKC_Locations"
+	SecurityReportRightID="MKC"
 	>
 	<IncludeSharedElement
 		DefinitionFile="_Layout.Shared"

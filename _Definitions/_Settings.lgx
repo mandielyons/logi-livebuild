@@ -4,7 +4,7 @@
 	>
 	<Application
 		Caption="Mid-Kansas Coop Dashboards"
-		DefaultReport="Home.MKCReport"
+		DefaultReport="Home.Default"
 	/>
 	<Path
 		AppPath="http://localhost/MKCoop"

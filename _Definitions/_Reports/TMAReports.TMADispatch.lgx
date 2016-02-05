@@ -1,8 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Report
-	Caption="TMA Dispatch"
+	Caption="Dispatch Report"
 	ID="TMAReports.TMADispatch"
 	>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrHeader"
+	/>
 	<DefaultRequestParams
 		Branch="0"
 	/>
@@ -382,6 +386,10 @@ ORDER BY BRANCH_DESC
 			</DataTable>
 		</Division>
 	</Body>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.TMA_Shared"
+		SharedElementID="shrFooter"
+	/>
 	<ideTestParams
 		Branch="0"
 	/>
