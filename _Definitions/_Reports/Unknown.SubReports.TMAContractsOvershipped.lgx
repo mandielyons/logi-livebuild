@@ -3,6 +3,10 @@
 	Caption="TMA Contract Overshipped"
 	ID="Unknown.SubReports.TMAContractsOvershipped"
 	>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrHeader"
+	/>
 	<LocalData>
 		<DataLayer
 			ConnectionID="connProdGP"
@@ -44,50 +48,145 @@ ORDER BY CONTRACTNMBR"
 			/>
 		</DataLayer>
 	</LocalData>
-	<ReportHeader>
-		<Division
-			ID="divHomeButton"
-			>
-			<Button
-				Caption="TMA Dashboard Home"
-				Class="ThemePanel"
-				ID="buttonHome"
-				>
-				<Action
-					Type="Report"
-					>
-					<Target
-						Report="TMAReports.TMAContractsDashboard"
-						Type="Report"
-					/>
-				</Action>
-			</Button>
-		</Division>
-	</ReportHeader>
 	<Body>
 		<Division
 			ID="divBtnExportExcel"
 			>
 			<LineBreak/>
-			<Button
-				Caption="Export to Excel"
-				ID="buttonExport_Excel"
-				Tooltip="Click to export data to Microsoft Excel"
-				>
-				<Action
-					ID="actionExport_Excel"
-					Type="NativeExcel"
+			<Remark>
+				<Button
+					Caption="Export to Excel"
+					ID="buttonExport_Excel"
+					Tooltip="Click to export data to Microsoft Excel"
 					>
-					<Target
-						ExcelOutputFormat="Excel2007"
-						ExportFilename="TMAContracts.xlsx"
-						ID="targetExport_Excel"
-						Report="CurrentReport"
-						ShowGridlines="False"
+					<Action
+						ID="actionExport_Excel"
 						Type="NativeExcel"
-					/>
-				</Action>
-			</Button>
+						>
+						<Target
+							ExcelOutputFormat="Excel2007"
+							ExportFilename="TMAContracts.xlsx"
+							ID="targetExport_Excel"
+							Report="CurrentReport"
+							ShowGridlines="False"
+							Type="NativeExcel"
+						/>
+					</Action>
+				</Button>
+			</Remark>
+			<Remark>
+				<Label
+					Class="fa fa-file-excel-o fa-2x "
+					HtmlTag="Div"
+					Tooltip="Export to Excel"
+					>
+					<Action
+						Type="NativeExcel"
+						>
+						<Target
+							ExcelOutputFormat="Excel2007"
+							FrameID="NewWindow"
+							Report="CurrentReport"
+							RequestForwarding="True"
+							Type="NativeExcel"
+						/>
+					</Action>
+				</Label>
+			</Remark>
+			<ResponsiveRow
+				ID="rrExportToExcel"
+				>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+					>
+					<Label
+						Class="ThemeAlignRight, fa fa-file-excel-o fa-2x"
+						HtmlTag="Div"
+						Tooltip="Export to Excel"
+						>
+						<Action
+							Type="NativeExcel"
+							>
+							<Target
+								ExcelOutputFormat="Excel2007"
+								FrameID="NewWindow"
+								Report="CurrentReport"
+								RequestForwarding="True"
+								Type="NativeExcel"
+							/>
+						</Action>
+					</Label>
+				</ResponsiveColumn>
+			</ResponsiveRow>
 		</Division>
 		<Division
 			ID="divHeader"
@@ -181,6 +280,8 @@ ORDER BY CONTRACTNMBR"
 				RememberSort="True"
 				SortArrows="True"
 				TableBorder="0"
+				Width="100"
+				WidthScale="%"
 				>
 				<DataLayer
 					LinkedDataLayerID="lnkTMAContract"
@@ -188,6 +289,7 @@ ORDER BY CONTRACTNMBR"
 				/>
 				<InteractivePaging
 					CaptionType="Image"
+					Class="ThemeTextSmall"
 					Location="Top"
 					PageRowCount="10"
 					ShowPageNumber="True"
@@ -274,6 +376,10 @@ ORDER BY CONTRACTNMBR"
 			</DataTable>
 		</Division>
 	</Body>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrFooter"
+	/>
 	<ideTestParams
 		paramContractKey="1_  40910_02_63977"
 	/>

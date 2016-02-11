@@ -3,6 +3,10 @@
 	Caption="TMA Dispatch"
 	ID="TMAReports.TMADispatch"
 	>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrHeader"
+	/>
 	<DefaultRequestParams
 		Branch="0"
 	/>
@@ -50,25 +54,44 @@ WHERE CONTRACT_TYPE=2
 			ID="divBtnExportExcel"
 			>
 			<LineBreak/>
-			<Button
-				Caption="Export to Excel"
-				ID="buttonExport_Excel"
-				Tooltip="Click to export data to Microsoft Excel"
+			<Remark>
+				<Button
+					Caption="Export to Excel"
+					ID="buttonExport_Excel"
+					Tooltip="Click to export data to Microsoft Excel"
+					>
+					<Action
+						ID="actionExport_Excel"
+						Type="NativeExcel"
+						>
+						<Target
+							ExcelOutputFormat="Excel2007"
+							ExportFilename="TMADispatch.xlsx"
+							ID="targetExport_Excel"
+							Report="CurrentReport"
+							ShowGridlines="False"
+							Type="NativeExcel"
+						/>
+					</Action>
+				</Button>
+			</Remark>
+			<Label
+				Class="fa fa-file-excel-o fa-2x "
+				HtmlTag="Div"
+				Tooltip="Export to Excel"
 				>
 				<Action
-					ID="actionExport_Excel"
 					Type="NativeExcel"
 					>
 					<Target
 						ExcelOutputFormat="Excel2007"
-						ExportFilename="TMAContracts.xlsx"
-						ID="targetExport_Excel"
+						FrameID="NewWindow"
 						Report="CurrentReport"
-						ShowGridlines="False"
+						RequestForwarding="True"
 						Type="NativeExcel"
 					/>
 				</Action>
-			</Button>
+			</Label>
 		</Division>
 		<Division
 			ID="divInput"
@@ -369,6 +392,10 @@ ORDER BY BRANCH_DESC
 			</DataTable>
 		</Division>
 	</Body>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrFooter"
+	/>
 	<ideTestParams
 		Branch="0"
 	/>
