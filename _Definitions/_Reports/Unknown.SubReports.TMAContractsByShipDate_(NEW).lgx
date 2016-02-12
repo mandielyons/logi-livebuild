@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Report
 	Caption="TMA Contracts By Ship Date"
-	ID="Unknown.SubReports.TMAContractsByShipDate"
+	ID="Unknown.SubReports.TMAContractsByShipDate_(NEW)"
 	>
 	<IncludeSharedElement
 		DefinitionFile="_Layout.Shared"
@@ -377,10 +377,20 @@ ORDER BY BRANCH"
 				<DataLayer
 					ConnectionID="connProdGP"
 					ID="dlSQLContracts"
-					Source="SELECT MAX(CUSTOMER_DESC) [CUSTDESC], CUSTOMER [CUSTNMBR], CONTRACT_MAIN [MAINCONTRACT], CONTRACT_TYPE_DESC [CONTRACTTYPE]
- , DPR_POSITION [DPRPOSITION], DPR_POSITION_GROUP [DPRDESC], BRANCH_NUMBER [LOCNMBR], MAX(BRANCH_DESC) [LOCDESC]
- , COMMODITY_CODE [COMMODITYCD], MAX(COMMODITY_DESC) [COMMODITYDESC], DELIVERY_START_DATE, DELIVERY_END_DATE 
- , SUM(ISSUED_BU) [ISSUED_BU], SUM(REMAINING_BU) [REMAINING_BU]
+					Source="SELECT MAX(CUSTOMER_DESC) [CUSTDESC]
+, CUSTOMER [CUSTNMBR]
+, MAX(CUSTOMER_DESC)+&apos; - &apos;+CUSTOMER AS [Account]
+, CONTRACT_MAIN [MAINCONTRACT]
+, CONTRACT_TYPE_DESC [CONTRACTTYPE]
+, DPR_POSITION [DPRPOSITION]
+, DPR_POSITION_GROUP [DPRDESC]
+, BRANCH_NUMBER [LOCNMBR]
+, MAX(BRANCH_DESC) [LOCDESC]
+, MAX(BRANCH_DESC)+&apos; - &apos;+CAST(BRANCH_NUMBER AS NVARCHAR(20)) AS [Location]
+, COMMODITY_CODE [COMMODITYCD], MAX(COMMODITY_DESC) [COMMODITYDESC]
+, COMMODITY_CODE+&apos; - &apos;+MAX(COMMODITY_DESC) [Commodity]
+, DELIVERY_START_DATE, DELIVERY_END_DATE 
+, SUM(ISSUED_BU) [ISSUED_BU], SUM(REMAINING_BU) [REMAINING_BU]
 FROM AgTrax_Staging..DM_OpenContracts 
 WHERE DELIVERY_END_DATE &lt;= &apos;@Request.paramShipPeriodDt~&apos; 
   AND DPR_GROUP = @Request.paramCommodityCode~
@@ -404,27 +414,15 @@ ORDER BY CUSTDESC, MAINCONTRACT
 					ShowPageNumber="True"
 				/>
 				<DataTableColumn
-					Header="Account Description"
-					ID="colCUSTDESC"
+					Header="Account"
+					ID="colAccount"
 					>
 					<Label
-						Caption="@Data.CUSTDESC~"
-						ID="lblCUSTDESC"
+						Caption="@Data.Account~"
+						ID="lblAccount"
 					/>
 					<DataColumnSort
 						DataColumn="CUSTDESC"
-					/>
-				</DataTableColumn>
-				<DataTableColumn
-					Header="Account Number"
-					ID="colCUSTNMBR"
-					>
-					<Label
-						Caption="@Data.CUSTNMBR~"
-						ID="lblCUSTNMBR"
-					/>
-					<DataColumnSort
-						DataColumn="CUSTNMBR"
 					/>
 				</DataTableColumn>
 				<DataTableColumn
@@ -478,36 +476,24 @@ ORDER BY CUSTDESC, MAINCONTRACT
 					/>
 				</DataTableColumn>
 				<DataTableColumn
-					Header="Location Number"
-					ID="colLOCNMBR"
+					Header="Location"
+					ID="colLocation"
 					>
 					<Label
-						Caption="@Data.LOCNMBR~"
-						ID="lblLOCNMBR"
+						Caption="@Data.Location~"
+						ID="lblLocation"
 					/>
 					<DataColumnSort
 						DataColumn="LOCNMBR"
 					/>
 				</DataTableColumn>
 				<DataTableColumn
-					Header="Location Description"
-					ID="colLOCDESC"
-					>
-					<Label
-						Caption="@Data.LOCDESC~"
-						ID="lblLOCDESC"
-					/>
-					<DataColumnSort
-						DataColumn="LOCDESC"
-					/>
-				</DataTableColumn>
-				<DataTableColumn
 					Header="Commodity"
-					ID="colCOMMODITYDESC"
+					ID="colCommodity"
 					>
 					<Label
-						Caption="@Data.COMMODITYDESC~"
-						ID="lblCOMMODITYDESC"
+						Caption="@Data.Commodity~"
+						ID="lblCommodity"
 					/>
 					<DataColumnSort
 						DataColumn="COMMODITYDESC"
@@ -580,7 +566,7 @@ ORDER BY CUSTDESC, MAINCONTRACT
 		ContractType="Sale"
 		paramCommodityCode="01"
 		paramCommodityDesc="Wheat"
-		paramShipPeriodDt="2015-11-30"
+		paramShipPeriodDt="2016-02-29"
 		Position="ALL"
 	/>
 </Report>

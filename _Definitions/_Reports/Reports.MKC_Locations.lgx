@@ -46,20 +46,38 @@
 								ID="LocationMarker"
 								>
 								<DataLayer
-									ColumnNamesRow="1"
-									ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\LocationData.xlsx"
-									ExcelWorksheet="BranchData"
-									ID="dlBranchLocations"
-									Type="Excel"
+									ConnectionID="connProdGP"
+									ID="dlSQLBranches"
+									Source="SELECT LOCNCODE,Location_Segment,LOCNDSCR,ADDRESS1,CITY,STATE,ZIPCODE,PHONE1,STAXSCHD
+FROM MKCGP..IV40700
+WHERE INACTIVE=0 AND Location_Segment&lt;&gt;&apos;&apos; AND ZIPCODE &gt; 1 "
+									Type="SQL"
 									>
 									<GeocodeColumns
-										CityDataColumn="City"
-										ID="MapPlaceData"
-										PostalCodeDataColumn="Zip"
-										StateProvinceDataColumn="State"
-										StreetDataColumn="Address"
+										CityDataColumn="CITY"
+										ID="mapSQLBranches"
+										PostalCodeDataColumn="ZIPCODE"
+										StateProvinceDataColumn="STATE"
+										StreetDataColumn="ADDRESS1"
 									/>
 								</DataLayer>
+								<Remark>
+									<DataLayer
+										ColumnNamesRow="1"
+										ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\LocationData.xlsx"
+										ExcelWorksheet="BranchData"
+										ID="dlBranchLocations"
+										Type="Excel"
+										>
+										<GeocodeColumns
+											CityDataColumn="City"
+											ID="MapPlaceData"
+											PostalCodeDataColumn="Zip"
+											StateProvinceDataColumn="State"
+											StreetDataColumn="Address"
+										/>
+									</DataLayer>
+								</Remark>
 								<Remark>
 									<DataLayer
 										ConnectionID="connMKC"
@@ -92,8 +110,8 @@ From MapMKCLocations"
 									Type="RefreshElement"
 									>
 									<LinkParams
-										paramLocCd="@Data.LocationCode~"
-										paramLocName="@Data.Location~"
+										paramLocCd="@Data.LOCNCODE~"
+										paramLocName="@Data.LOCNDSCR~"
 									/>
 									<WaitPage/>
 								</Action>
@@ -171,38 +189,38 @@ From MapMKCLocations"
 									<DataTable
 										ID="tblLocationInfo"
 										>
-										<Remark>
-											<DataLayer
-												ConnectionID="connMKC"
-												ID="sqlLocInfo"
-												Source="SELECT DISTINCT 1 AS ID, LOCNDSCR AS AttrValue FROM MAPMKCLOCATIONS WHERE LOCNCODE=&apos;@Request.paramLocCd~&apos;
-union 
-SELECT DISTINCT 2 AS ID, LTRIM(RTRIM(ADDRESS1)) + &apos; &apos; + LTRIM(RTRIM(CITY)) + &apos; &apos; + LTRIM(RTRIM(STATEABBR)) + &apos; &apos; + LTRIM(RTRIM(ZIPCODE)) AS LOCNADDR FROM MAPMKCLOCATIONS WHERE LOCNCODE=&apos;@Request.paramLocCd~&apos;
+										<DataLayer
+											ConnectionID="connMKC"
+											ID="sqlLocInfo"
+											Source="SELECT LOCNDSCR,ADDRESS1,CITY,STATE,ZIPCODE,RTRIM(PHONE1) FROM MKCGP..IV40700 WHERE LOCNCODE=&apos;@Request.paramLocCd~&apos;
 /*union 
+SELECT DISTINCT 2 AS ID, LTRIM(RTRIM(ADDRESS1)) + &apos; &apos; + LTRIM(RTRIM(CITY)) + &apos; &apos; + LTRIM(RTRIM(STATEABBR)) + &apos; &apos; + LTRIM(RTRIM(ZIPCODE)) AS LOCNADDR FROM MAPMKCLOCATIONS WHERE LOCNCODE=&apos;@Request.paramLocCd~&apos;
+union 
 SELECT 3 AS ID, AttrValue FROM MAPMKCLOCATIONS WHERE AttrType=&apos;Employees&apos; and LOCNCODE=&apos;@Request.paramLocCd~&apos;
 union
-SELECT 4 AS ID, AttrValue FROM MAPMKCLOCATIONS WHERE AttrType&lt;&gt;&apos;Employees&apos; and LOCNCODE=&apos;@Request.paramLocCd~&apos;*/
-ORDER BY ID"
-												Type="SQL"
-											/>
+SELECT 4 AS ID, AttrValue FROM MAPMKCLOCATIONS WHERE AttrType&lt;&gt;&apos;Employees&apos; and LOCNCODE=&apos;@Request.paramLocCd~&apos;
+ORDER BY ID */"
+											Type="SQL"
+										/>
+										<Remark>
+											<DataLayer
+												ColumnNamesRow="1"
+												ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\LocationData.xlsx"
+												ExcelWorksheet="BranchData"
+												ID="xlsLocInfo"
+												Type="Excel"
+												>
+												<ConditionFilter
+													Condition="&quot;@Request.paramLocName~&quot; = &quot;@Data.Location~&quot;"
+												/>
+											</DataLayer>
 										</Remark>
-										<DataLayer
-											ColumnNamesRow="1"
-											ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\LocationData.xlsx"
-											ExcelWorksheet="BranchData"
-											ID="xlsLocInfo"
-											Type="Excel"
-											>
-											<ConditionFilter
-												Condition="&quot;@Request.paramLocName~&quot; = &quot;@Data.Location~&quot;"
-											/>
-										</DataLayer>
 										<DataTableColumn
 											Header="Location"
 											ID="colLocation"
 											>
 											<Label
-												Caption="@Data.Location~"
+												Caption="@Data.LOCNDSCR~"
 												ID="lblLocation"
 											/>
 											<Label
@@ -215,30 +233,35 @@ ORDER BY ID"
 											</Label>
 											<LineBreak/>
 											<Label
-												Caption="@Data.Address~"
+												Caption="@Data.ADDRESS1~"
 												ID="lblAddress"
 											/>
 											<LineBreak/>
 											<Label
-												Caption="@Data.City~ @Data.State~ @Data.Zip~"
+												Caption="@Data.CITY~ @Data.STATE~ @Data.ZIPCODE~"
 												ID="lblCity"
 											/>
 											<LineBreak/>
 											<Label
-												Caption="@Data.Phone~"
+												Caption="@Data.PHONE1~"
+												Format="(###) ###-####"
 												ID="lblPhone"
 											/>
 											<LineBreak/>
 											<LineBreak/>
-											<Label
-												Caption="Services:"
-												Class="ThemeBold"
-											/>
+											<Remark>
+												<Label
+													Caption="Services:"
+													Class="ThemeBold"
+												/>
+											</Remark>
 											<LineBreak/>
-											<Label
-												Caption="@Data.Services~"
-												ID="lblServices"
-											/>
+											<Remark>
+												<Label
+													Caption="@Data.Services~"
+													ID="lblServices"
+												/>
+											</Remark>
 											<LineBreak/>
 										</DataTableColumn>
 									</DataTable>
@@ -374,7 +397,7 @@ ORDER BY ID"
 		SharedElementID="shrFooter"
 	/>
 	<ideTestParams
-		paramLocCd=""
+		paramLocCd="ABILENE"
 		paramLocName=""
 	/>
 </Report>
