@@ -349,6 +349,10 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 									CrosstabLabelColumn="CONTRACT_TYPE_DESC"
 									ID="ContractTypeDesc"
 								/>
+								<CrosstabRowSummaryColumn
+									Function="Sum"
+									ID="crsTotal"
+								/>
 							</CrosstabFilter>
 						</DataLayer>
 						<CrosstabTableLabelColumn
@@ -402,7 +406,26 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 									/>
 								</Action>
 							</Label>
+							<DataColumnSummary
+								DataColumn="rdCrosstabColumn"
+								DataType="Number"
+								Function="Sum"
+								ID="fGrandTotal"
+							/>
 						</CrosstabTableValueColumns>
+						<CrosstabTableLabelColumn
+							Header="Total"
+							ID="GrandTotal"
+							Width="1"
+							WidthScale="px"
+							>
+							<Label
+								Caption="@Data.crsTotal~"
+								Class="ThemeAlignRight, ThemeMargin, ThemeTextSmall"
+								Format="###,###,##0"
+								ID="lblGrandTotal"
+							/>
+						</CrosstabTableLabelColumn>
 					</CrosstabTable>
 				</TabPanel>
 				<TabPanel
