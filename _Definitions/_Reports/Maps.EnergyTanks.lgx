@@ -5,16 +5,20 @@
 	SecurityReportRightID="MKC"
 	>
 	<LocalData
-		Condition="&quot;@Request.iptCustomer~&quot;.length &gt; 0"
 		ID="Local-AFDData"
 		>
 		<DataLayer
+			CellRange="A51:N90"
 			ColumnNamesRow="1"
 			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx"
 			ExcelWorksheet="Sheet1"
 			ID="dlGmap-AFDTanks"
 			Type="Excel"
-		/>
+			>
+			<DataLayerLink
+				ID="linkGmap-AFDTanks"
+			/>
+		</DataLayer>
 	</LocalData>
 	<IncludeSharedElement
 		DefinitionFile="_Layout.Shared"
@@ -201,11 +205,12 @@
 						ID="panel-body-map"
 						>
 						<GoogleMap
-							GoogleMapTypes="Hybrid"
+							ConnectionID="gmAPIKey"
+							GoogleMapTypes="Satellite,Map,Hybrid,Terrain"
 							GoogleMapZoomControl="Small"
 							Height="800"
 							ID="gmAFDTanks"
-							MapScale="True"
+							MapScale="False"
 							Width="1024"
 							>
 							<GoogleMapMarkers
@@ -220,29 +225,15 @@
 									/>
 								</MapMarkerImage>
 								<DataLayer
-									ColumnNamesRow="1"
-									ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx"
-									ExcelWorksheet="AllTanks"
-									ID="dlAFDTanks"
-									Type="Excel"
+									ID="dllGmap-AFDTanks"
+									LinkedDataLayerID="linkGmap-AFDTanks"
+									Type="Linked"
 									>
 									<ReverseGeocodeColumns
 										ID="revLookup"
 										LatitudeDataColumn="lat"
 										LongitudeDataColumn="long"
 									/>
-									<Remark>
-										<ConditionFilter
-											Condition="InStr(&quot;@Data.customerid~&quot;, &quot;@Request.iptCustomer~&quot;) &gt; 0
-"
-											IncludeCondition="@Request.iptCustomer &lt;&gt; &quot;&quot;"
-										/>
-									</Remark>
-									<Remark>
-										<ConditionFilter
-											Condition="InStr(UCase(&quot;@Data.city~&quot;), UCase(&quot;@Request.iptCity~&quot;)) &gt; 0"
-										/>
-									</Remark>
 									<ConditionFilter
 										Condition="&quot;@Data.capacity~&quot; &lt;&gt; &quot;NULL&quot;"
 									/>
@@ -250,6 +241,39 @@
 										Condition="InStr(UCase(&quot;@Data.UCaseCity~&quot;), UCase(&quot;@Request.iptCity~&quot;)) &gt; 0"
 									/>
 								</DataLayer>
+								<Remark>
+									<DataLayer
+										ColumnNamesRow="1"
+										ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx"
+										ExcelWorksheet="AllTanks"
+										ID="dlAFDTanks"
+										Type="Excel"
+										>
+										<ReverseGeocodeColumns
+											ID="revLookup"
+											LatitudeDataColumn="lat"
+											LongitudeDataColumn="long"
+										/>
+										<Remark>
+											<ConditionFilter
+												Condition="InStr(&quot;@Data.customerid~&quot;, &quot;@Request.iptCustomer~&quot;) &gt; 0
+"
+												IncludeCondition="@Request.iptCustomer &lt;&gt; &quot;&quot;"
+											/>
+										</Remark>
+										<Remark>
+											<ConditionFilter
+												Condition="InStr(UCase(&quot;@Data.city~&quot;), UCase(&quot;@Request.iptCity~&quot;)) &gt; 0"
+											/>
+										</Remark>
+										<ConditionFilter
+											Condition="&quot;@Data.capacity~&quot; &lt;&gt; &quot;NULL&quot;"
+										/>
+										<ConditionFilter
+											Condition="InStr(UCase(&quot;@Data.UCaseCity~&quot;), UCase(&quot;@Request.iptCity~&quot;)) &gt; 0"
+										/>
+									</DataLayer>
+								</Remark>
 								<Action
 									Type="MapMarkerInfo"
 									>

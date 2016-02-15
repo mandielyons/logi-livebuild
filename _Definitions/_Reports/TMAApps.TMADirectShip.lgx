@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Report
-	Caption="TMA Direct Ship Management"
-	ID="TMAReports.TMADirectShip"
+	Caption="Direct Ship App"
+	ID="TMAApps.TMADirectShip"
+	SecurityReportRightID="TMA,MKC"
 	>
 	<IncludeSharedElement
 		DefinitionFile="_Layout.Shared"

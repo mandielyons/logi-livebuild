@@ -12,7 +12,7 @@ End If %>
 				font-family: Verdana, Arial, Helvetica, sans-serif;
 				font-size: 14px;				
 				margin:50px 0px; padding:0px;
-				background-color: #F1F6D7;				
+				background-color: #F7F7F7;				
 			}	
 			
 			TABLE
@@ -31,7 +31,7 @@ End If %>
 				margin: 0px;
 				padding: 0px;
 				width: 100%;
-				height: 100%;
+				height: 60%;
 			}
 			
 			#mainCell
@@ -43,8 +43,8 @@ End If %>
 			{					
 				width: 300px;
 				margin: auto;
-				background-color: #FBFDF1;
-				border: solid #99C91E 1px;
+				background-color: #F7F7F7;
+				border: solid #d9bc4a 1px;
 				
 				/* Rounding */
 				-webkit-border-radius: 4px;
@@ -63,7 +63,7 @@ End If %>
 			{
 				margin: 0px;
 				padding: 6px;				
-				background-color: #99C91E;
+				background-color: #d9bc4a;
 			}
 			
 			.LogonHeader
@@ -95,7 +95,15 @@ End If %>
 	<body onkeypress="if (event.keyCode==13){frmLogon.submit()}" onload="document.getElementById('rdUsername').focus()" >	
 		<table id="mainTable" cellspacing="0" >
 			<tr>
-				<td id="mainCell" >
+				<td align="center">
+					<img src="_SupportFiles/logo.png" />
+				</td>
+				<td align="center">
+					<img src="_SupportFiles/TMA_LogoStkdK.png" />
+				</td>
+			</tr>
+			<tr>
+				<td id="mainCell" colspan="2" >
 					<div id="logonPanel" >
 						<table cellspacing="0" >
 							<tr>
