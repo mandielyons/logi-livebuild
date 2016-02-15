@@ -1,494 +1,151 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report
-	Caption="TMA Contracts By Ship Date"
-	ID="Unknown.SubReports.TMAContractsByShipDate"
-	>
-	<DefaultRequestParams
-		Account="ALL"
-		Branch="ALL"
-		Commodity="ALL"
-		ContractType="Sale"
-		Position="ALL"
-	/>
-	<Body
-		ID="bodyTMAContractsByShipDate"
-		>
-		<Division
-			ID="divHomeButton"
-			>
-			<Button
-				Caption="TMA Dashboard Home"
-				Class="ThemePanel"
-				ID="buttonHome"
-				>
-				<Action
-					Type="Report"
-					>
-					<Target
-						Report="TMAReports.TMAContractsDashboard"
-						Type="Report"
-					/>
-				</Action>
-			</Button>
-			<LineBreak/>
-		</Division>
-		<Division
-			ID="divBtnExportExcel"
-			>
-			<LineBreak/>
-			<Button
-				Caption="Export to Excel"
-				ID="buttonExport_Excel"
-				Tooltip="Click to export data to Microsoft Excel"
-				>
-				<Action
-					ID="actionExport_Excel"
-					Type="NativeExcel"
-					>
-					<Target
-						ExcelOutputFormat="Excel2007"
-						ExportFilename="TMAContracts.xlsx"
-						ID="targetExport_Excel"
-						Report="CurrentReport"
-						ShowGridlines="False"
-						Type="NativeExcel"
-					/>
-				</Action>
-			</Button>
-		</Division>
-		<Division
-			ID="divHeader"
-			>
-			<LineBreak
-				ID="NewLine(2)"
-				LineCount="2"
-			/>
-			<Label
-				Caption="Contract Type: "
-				Class="ThemeHeader"
-			/>
-			<Spaces
-				Size="4"
-			/>
-			<Label
-				Caption="@Request.ContractType~"
-				Class="ThemeHeader, ThemeBold"
-			/>
-			<LineBreak/>
-			<Label
-				Caption="Commodity Group: "
-				Class="ThemeHeader"
-			/>
-			<Spaces
-				Size="4"
-			/>
-			<Label
-				Caption="@Request.paramCommodityDesc~"
-				Class="ThemeHeader, ThemeBold"
-			/>
-			<LineBreak/>
-			<Label
-				Caption="Shipment Period: "
-				Class="ThemeHeader"
-				Format="General Date"
-			/>
-			<Spaces
-				Size="4"
-			/>
-			<Label
-				Caption="@Request.paramShipPeriodDt~"
-				Class="ThemeHeader, ThemeBold"
-				Format="Short Date"
-			/>
-			<LineBreak
-				ID="NewLine(2)"
-				LineCount="2"
-			/>
-		</Division>
-		<Division
-			ID="divSelCommodity"
-			>
-			<Label
-				Caption="Commodity: "
-			/>
-			<InputSelectList
-				DefaultValue="@Request.Commodity~"
-				ID="Commodity"
-				IncludeBlank="True"
-				IncludeBlankCaption="All Commodities"
-				IncludeBlankValue="ALL"
-				MultiSelect="False"
-				OptionCaptionColumn="COMMODITY"
-				OptionValueColumn="COMMODITY_CODE"
-				>
-				<DataLayer
-					ConnectionID="connProdGP"
-					ID="dlSQLCommodity"
-					Source="SELECT DISTINCT COMMODITY_CODE, COMMODITY_DESC, COMMODITY_CODE+&apos; - &apos;+COMMODITY_DESC [COMMODITY]
-FROM AgTrax_Staging..DM_OpenContracts with(nolock)
-WHERE DELIVERY_END_DATE&lt;=&apos;@Request.paramShipPeriodDt~&apos;
-  AND DPR_GROUP=@Request.paramCommodityCode~
-  AND CONTRACT_TYPE=@Request.ContractType~
-ORDER BY COMMODITY"
-					Type="SQL"
-				/>
-				<EventHandler
-					DhtmlEvent="onchange"
-					ID="evhOnChange"
-					>
-					<Action
-						ElementID="divSelCommodity, divSelPosition, divSelAccount, divSelBranch, divDataTable"
-						ID="actRefreshTable-C"
-						Type="RefreshElement"
-					/>
-				</EventHandler>
-			</InputSelectList>
-		</Division>
-		<Division
-			ID="divSelPosition"
-			>
-			<Label
-				Caption="Position: "
-			/>
-			<InputSelectList
-				DefaultValue="@Request.Position~"
-				ID="Position"
-				IncludeBlank="True"
-				IncludeBlankCaption="All Positions"
-				IncludeBlankValue="ALL"
-				MultiSelect="False"
-				OptionCaptionColumn="DPRDESC"
-				OptionValueColumn="DPRDESC"
-				>
-				<DataLayer
-					ConnectionID="connProdGP"
-					ID="dlSQLPosition"
-					Source="SELECT DISTINCT DPR_POSITION_GROUP [DPRDESC]
-FROM AgTrax_Staging..DM_OpenContracts with(nolock)
-WHERE DELIVERY_END_DATE&lt;=&apos;@Request.paramShipPeriodDt~&apos;
-  AND DPR_GROUP=@Request.paramCommodityCode~
-  AND CONTRACT_TYPE=@Request.ContractType~
-ORDER BY DPRDESC"
-					Type="SQL"
-				/>
-				<EventHandler
-					DhtmlEvent="onchange"
-					ID="evhOnChange"
-					>
-					<Action
-						ElementID="divSelCommodity, divSelPosition, divSelAccount, divSelBranch, divDataTable"
-						ID="actRefreshTable-P"
-						Type="RefreshElement"
-					/>
-				</EventHandler>
-			</InputSelectList>
-		</Division>
-		<Division
-			ID="divSelAccount"
-			>
-			<Label
-				Caption="Account: "
-			/>
-			<InputSelectList
-				DefaultValue="@Request.Account~"
-				ID="Account"
-				IncludeBlank="True"
-				IncludeBlankCaption="All Accounts"
-				IncludeBlankValue="ALL"
-				MultiSelect="False"
-				OptionCaptionColumn="ACCOUNT"
-				OptionValueColumn="CUSTNMBR"
-				>
-				<DataLayer
-					ConnectionID="connProdGP"
-					ID="dlSQLAccount"
-					Source="SELECT DISTINCT CUSTOMER_DESC [CUSTDESC], CUSTOMER [CUSTNMBR], LTRIM(RTRIM(CUSTOMER_DESC))+&apos; - &apos;+LTRIM(RTRIM(CUSTOMER)) [ACCOUNT]
-FROM AgTrax_Staging..DM_OpenContracts with(nolock)
-WHERE DELIVERY_END_DATE&lt;=&apos;@Request.paramShipPeriodDt~&apos;
-  AND DPR_GROUP=@Request.paramCommodityCode~
-  AND CONTRACT_TYPE=@Request.ContractType~
-ORDER BY CUSTDESC"
-					Type="SQL"
-				/>
-				<EventHandler
-					DhtmlEvent="onchange"
-					ID="evhOnChange"
-					>
-					<Action
-						ElementID="divSelCommodity, divSelPosition, divSelAccount, divSelBranch, divDataTable"
-						ID="actRefreshTable-A"
-						Type="RefreshElement"
-					/>
-				</EventHandler>
-			</InputSelectList>
-		</Division>
-		<Division
-			ID="divSelBranch"
-			>
-			<Label
-				Caption="Branch: "
-			/>
-			<InputSelectList
-				DefaultValue="@Request.Branch~"
-				ID="Branch"
-				IncludeBlank="True"
-				IncludeBlankCaption="All Branches"
-				IncludeBlankValue="ALL"
-				MultiSelect="False"
-				OptionCaptionColumn="BRANCH"
-				OptionValueColumn="BRANCH_NUMBER"
-				>
-				<DataLayer
-					ConnectionID="connProdGP"
-					ID="dlSQLBranch"
-					Source="SELECT DISTINCT BRANCH_NUMBER, BRANCH_DESC, BRANCH_DESC+&apos; - &apos;+CAST(BRANCH_NUMBER AS NVARCHAR(7)) [BRANCH]
-FROM AgTrax_Staging..DM_OpenContracts with(nolock)
-WHERE DELIVERY_END_DATE&lt;=&apos;@Request.paramShipPeriodDt~&apos;
-  AND DPR_GROUP=@Request.paramCommodityCode~
-  AND CONTRACT_TYPE=@Request.ContractType~
-ORDER BY BRANCH"
-					Type="SQL"
-				/>
-				<EventHandler
-					DhtmlEvent="onchange"
-					ID="evhOnChange"
-					>
-					<Action
-						ElementID="divSelCommodity, divSelPosition, divSelAccount, divSelBranch, divDataTable"
-						ID="actRefreshTable-B"
-						Type="RefreshElement"
-					/>
-				</EventHandler>
-			</InputSelectList>
-		</Division>
-		<Division
-			ID="divDataTable"
-			>
-			<LineBreak/>
-			<LineBreak/>
-			<DataTable
-				AccessibleHeaders="True"
-				AjaxPaging="True"
-				Caption="TMA Contracts"
-				ID="dtTMAContractsByShipDate"
-				SortArrows="True"
-				>
-				<DataLayer
-					ConnectionID="connProdGP"
-					ID="dlSQLContracts"
-					Source="SELECT MAX(CUSTOMER_DESC) [CUSTDESC], CUSTOMER [CUSTNMBR], CONTRACT_MAIN [MAINCONTRACT], CONTRACT_TYPE_DESC [CONTRACTTYPE]
- , DPR_POSITION [DPRPOSITION], DPR_POSITION_GROUP [DPRDESC], BRANCH_NUMBER [LOCNMBR], MAX(BRANCH_DESC) [LOCDESC]
- , COMMODITY_CODE [COMMODITYCD], MAX(COMMODITY_DESC) [COMMODITYDESC], DELIVERY_START_DATE, DELIVERY_END_DATE 
- , SUM(ISSUED_BU) [ISSUED_BU], SUM(REMAINING_BU) [REMAINING_BU]
-FROM AgTrax_Staging..DM_OpenContracts with(nolock)
-WHERE CONTRACT_TYPE_DESC=&apos;@Request.ContractType~&apos;
-  AND DELIVERY_END_DATE &lt;= &apos;@Request.paramShipPeriodDt~&apos; 
-  AND DPR_GROUP = &apos;@Request.paramCommodityCode~&apos;
-  AND (     (COMMODITY_CODE = &apos;@Request.Commodity~&apos; OR &apos;@Request.Commodity~&apos;=&apos;ALL&apos;)
-        AND (DPR_POSITION_GROUP = &apos;@Request.Position~&apos; OR &apos;@Request.Position~&apos;=&apos;ALL&apos;)
-        AND (CUSTOMER = &apos;@Request.Account~&apos; OR &apos;@Request.Account~&apos;=&apos;ALL&apos;)
-        AND (BRANCH_NUMBER = &apos;@Request.Branch~&apos; OR &apos;@Request.Branch~&apos;=&apos;ALL&apos;)
-	   )
-GROUP BY CUSTOMER, CONTRACT_MAIN, CONTRACT_TYPE_DESC, DPR_POSITION, DPR_POSITION_GROUP, BRANCH_NUMBER, COMMODITY_CODE,DELIVERY_START_DATE, DELIVERY_END_DATE 
-HAVING SUM(REMAINING_BU)&lt;&gt;0
-ORDER BY CUSTDESC, MAINCONTRACT 
-"
-					Type="SQL"
-				/>
-				<InteractivePaging
-					CaptionType="Image"
-					Location="Top"
-					PageRowCount="10"
-					ShowPageNumber="True"
-				/>
-				<DataTableColumn
-					Header="Account Description"
-					ID="colCUSTDESC"
-					>
-					<Label
-						Caption="@Data.CUSTDESC~"
-						ID="lblCUSTDESC"
-					/>
-					<DataColumnSort
-						DataColumn="CUSTDESC"
-					/>
-				</DataTableColumn>
-				<DataTableColumn
-					Header="Account Number"
-					ID="colCUSTNMBR"
-					>
-					<Label
-						Caption="@Data.CUSTNMBR~"
-						ID="lblCUSTNMBR"
-					/>
-					<DataColumnSort
-						DataColumn="CUSTNMBR"
-					/>
-				</DataTableColumn>
-				<DataTableColumn
-					Header="Main Contract"
-					ID="colMAINCONTRACT"
-					>
-					<Label
-						Caption="@Data.MAINCONTRACT~"
-						ID="lblMAINCONTRACT"
-						>
-						<Action
-							ID="actRpt-TMAContractsDetail"
-							Type="Report"
-							>
-							<Target
-								Report="Unknown.SubReports.TMAContractsDetail"
-								Type="Report"
-							/>
-							<LinkParams
-								paramContractMain="@Data.MAINCONTRACT~"
-								paramCustomer="@Data.CUSTNMBR~"
-							/>
-						</Action>
-					</Label>
-					<DataColumnSort
-						DataColumn="MAINCONTRACT"
-					/>
-				</DataTableColumn>
-				<Remark>
-					<DataTableColumn
-						Header="Contract Type"
-						ID="colCONTRACTTYPE"
-						>
-						<Label
-							Caption="@Data.CONTRACTTYPE~"
-							ID="lblCONTRACTTYPE"
-						/>
-						<DataColumnSort
-							DataColumn="CONTRACTTYPE"
-						/>
-					</DataTableColumn>
-				</Remark>
-				<DataTableColumn
-					Header="DPR Position"
-					ID="colDPRPOSITION"
-					>
-					<Label
-						Caption="@Data.DPRPOSITION~"
-						ID="lblDPRPOSITION"
-					/>
-					<DataColumnSort
-						DataColumn="DPRPOSITION"
-					/>
-				</DataTableColumn>
-				<DataTableColumn
-					Header="DPR Description"
-					ID="colDPRDESC"
-					>
-					<Label
-						Caption="@Data.DPRDESC~"
-						ID="lblDPRDESC"
-					/>
-					<DataColumnSort
-						DataColumn="DPRDESC"
-					/>
-				</DataTableColumn>
-				<DataTableColumn
-					Header="Location Number"
-					ID="colLOCNMBR"
-					>
-					<Label
-						Caption="@Data.LOCNMBR~"
-						ID="lblLOCNMBR"
-					/>
-					<DataColumnSort
-						DataColumn="LOCNMBR"
-					/>
-				</DataTableColumn>
-				<DataTableColumn
-					Header="Location Description"
-					ID="colLOCDESC"
-					>
-					<Label
-						Caption="@Data.LOCDESC~"
-						ID="lblLOCDESC"
-					/>
-					<DataColumnSort
-						DataColumn="LOCDESC"
-					/>
-				</DataTableColumn>
-				<DataTableColumn
-					Header="Commodity Description"
-					ID="colCOMMODITYDESC"
-					>
-					<Label
-						Caption="@Data.COMMODITYDESC~"
-						ID="lblCOMMODITYDESC"
-					/>
-					<DataColumnSort
-						DataColumn="COMMODITYDESC"
-					/>
-				</DataTableColumn>
-				<DataTableColumn
-					Header="Delivery Start Date"
-					ID="colDELIVERY_START_DATE"
-					>
-					<Label
-						Caption="@Data.DELIVERY_START_DATE~"
-						Format="Short Date"
-						ID="lblDELIVERY_START_DATE"
-					/>
-					<DataColumnSort
-						DataColumn="DELIVERY_START_DATE"
-						DataType="Date"
-					/>
-				</DataTableColumn>
-				<DataTableColumn
-					Header="Delivery End Date"
-					ID="colDELIVERY_END_DATE"
-					>
-					<Label
-						Caption="@Data.DELIVERY_END_DATE~"
-						Format="Short Date"
-						ID="lblDELIVERY_END_DATE"
-					/>
-					<DataColumnSort
-						DataColumn="DELIVERY_END_DATE"
-						DataType="Date"
-					/>
-				</DataTableColumn>
-				<DataTableColumn
-					Header="Remaining BU"
-					ID="colREMAINING_BU"
-					>
-					<Label
-						Caption="@Data.REMAINING_BU~"
-						Format="###,###,##0.00"
-						ID="lblREMAINING_BU"
-					/>
-					<DataColumnSort
-						DataColumn="REMAINING_BU"
-						DataType="Number"
-					/>
-					<DataColumnSummary
-						DataColumn="REMAINING_BU"
-						DataType="Number"
-						Function="Sum"
-						ID="totREMAINING_BU"
-					/>
-				</DataTableColumn>
-				<SummaryRow
-					Caption="Total: "
-					ID="totSummary"
-					LastPageOnly="False"
-				/>
-			</DataTable>
-		</Division>
-	</Body>
-	<ideTestParams
-		Account="ALL"
-		Branch="ALL"
-		Commodity="ALL"
-		ContractType="Sale"
-		paramCommodityCode="01"
-		paramCommodityDesc="Wheat"
-		paramShipPeriodDt="2015-11-30"
-		Position="ALL"
-	/>
+<Report Caption="TMA Contracts By Ship Date" ID="Unknown.SubReports.TMAContractsByShipDate">
+  <IncludeSharedElement DefinitionFile="_Layout.Shared" SharedElementID="shrHeader" />
+  <DefaultRequestParams Account="ALL" Branch="ALL" Commodity="ALL" ContractType="Sale" Position="ALL" />
+  <Body ID="bodyTMAContractsByShipDate">
+    <ResponsiveRow ID="rrExportToExcel">
+      <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1" />
+      <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1" />
+      <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1" />
+      <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1" />
+      <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1" />
+      <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1" />
+      <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1" />
+      <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1" />
+      <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1" />
+      <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1" />
+      <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1" />
+      <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1">
+        <Label Class="ThemeAlignRight, fa fa-file-excel-o fa-2x" HtmlTag="Div" Tooltip="Export to Excel">
+          <Action Type="NativeExcel">
+            <Target ExcelOutputFormat="Excel2007" FrameID="NewWindow" Report="CurrentReport" RequestForwarding="True" Type="NativeExcel" />
+          </Action>
+        </Label>
+      </ResponsiveColumn>
+    </ResponsiveRow>
+    <ResponsiveRow>
+      <ResponsiveColumn>
+        <Division ID="divHeader">
+          <LineBreak ID="NewLine(2)" LineCount="2" />
+          <Label Caption="Contract Type: " Class="ThemeHeader" />
+          <Spaces Size="4" />
+          <Label Caption="@Request.ContractType~" Class="ThemeHeader, ThemeBold" />
+          <LineBreak />
+          <Label Caption="Commodity Group: " Class="ThemeHeader" />
+          <Spaces Size="4" />
+          <Label Caption="@Request.paramCommodityDesc~" Class="ThemeHeader, ThemeBold" />
+          <LineBreak />
+          <Label Caption="Shipment Period: " Class="ThemeHeader" Format="General Date" />
+          <Spaces Size="4" />
+          <Label Caption="@Request.paramShipPeriodDt~" Class="ThemeHeader, ThemeBold" Format="Short Date" />
+          <LineBreak ID="NewLine(2)" LineCount="2" />
+        </Division>
+      </ResponsiveColumn>
+    </ResponsiveRow>
+    <ResponsiveRow>
+      <ResponsiveColumn ColspanExtraSmallScreen="3" ColspanLargeScreen="3" ColspanMediumScreen="3" ColspanSmallScreen="3">
+        <Division ID="divSelCommodity">
+          <Label Caption="Commodity: " />
+          <InputSelectList DefaultValue="@Request.Commodity~" ID="Commodity" IncludeBlank="True" IncludeBlankCaption="All Commodities" IncludeBlankValue="ALL" MultiSelect="False" OptionCaptionColumn="COMMODITY" OptionValueColumn="COMMODITY_CODE">
+            <DataLayer ConnectionID="connProdGP" ID="dlSQLCommodity" Source="SELECT DISTINCT COMMODITY_CODE, COMMODITY_DESC, COMMODITY_CODE+' - '+COMMODITY_DESC [COMMODITY]&#xD;&#xA;FROM AgTrax_Staging..DM_OpenContracts with(nolock)&#xD;&#xA;WHERE DELIVERY_END_DATE&lt;='@Request.paramShipPeriodDt~'&#xD;&#xA;  AND DPR_GROUP=@Request.paramCommodityCode~&#xD;&#xA;  AND CONTRACT_TYPE_DESC='@Request.ContractType~'&#xD;&#xA;  AND REMAINING_BU&lt;&gt;0&#xD;&#xA;ORDER BY COMMODITY" Type="SQL" />
+            <EventHandler DhtmlEvent="onchange" ID="evhOnChange">
+              <Action ElementID="divSelCommodity, divSelPosition, divSelAccount, divSelBranch, divDataTable" ID="actRefreshTable-C" Type="RefreshElement" />
+            </EventHandler>
+          </InputSelectList>
+        </Division>
+      </ResponsiveColumn>
+    </ResponsiveRow>
+    <ResponsiveRow>
+      <ResponsiveColumn ColspanExtraSmallScreen="3" ColspanLargeScreen="3" ColspanMediumScreen="3" ColspanSmallScreen="3">
+        <Division ID="divSelPosition">
+          <Label Caption="Position: " />
+          <InputSelectList DefaultValue="@Request.Position~" ID="Position" IncludeBlank="True" IncludeBlankCaption="All Positions" IncludeBlankValue="ALL" MultiSelect="False" OptionCaptionColumn="DPRDESC" OptionValueColumn="DPRDESC">
+            <DataLayer ConnectionID="connProdGP" ID="dlSQLPosition" Source="SELECT DISTINCT DPR_POSITION_GROUP [DPRDESC]&#xD;&#xA;FROM AgTrax_Staging..DM_OpenContracts with(nolock)&#xD;&#xA;WHERE DELIVERY_END_DATE&lt;='@Request.paramShipPeriodDt~'&#xD;&#xA;  AND DPR_GROUP=@Request.paramCommodityCode~&#xD;&#xA;  AND CONTRACT_TYPE_DESC='@Request.ContractType~'&#xD;&#xA;  AND REMAINING_BU&lt;&gt;0&#xD;&#xA;ORDER BY DPRDESC" Type="SQL" />
+            <EventHandler DhtmlEvent="onchange" ID="evhOnChange">
+              <Action ElementID="divSelCommodity, divSelPosition, divSelAccount, divSelBranch, divDataTable" ID="actRefreshTable-P" Type="RefreshElement" />
+            </EventHandler>
+          </InputSelectList>
+        </Division>
+      </ResponsiveColumn>
+    </ResponsiveRow>
+    <ResponsiveRow>
+      <ResponsiveColumn ColspanExtraSmallScreen="3" ColspanLargeScreen="3" ColspanMediumScreen="3" ColspanSmallScreen="3">
+        <Division ID="divSelAccount">
+          <Label Caption="Account: " />
+          <InputSelectList DefaultValue="@Request.Account~" ID="Account" IncludeBlank="True" IncludeBlankCaption="All Accounts" IncludeBlankValue="ALL" MultiSelect="False" OptionCaptionColumn="ACCOUNT" OptionValueColumn="CUSTNMBR">
+            <DataLayer ConnectionID="connProdGP" ID="dlSQLAccount" Source="SELECT DISTINCT CUSTOMER_DESC [CUSTDESC], CUSTOMER [CUSTNMBR], LTRIM(RTRIM(CUSTOMER_DESC))+' - '+LTRIM(RTRIM(CUSTOMER)) [ACCOUNT]&#xD;&#xA;FROM AgTrax_Staging..DM_OpenContracts with(nolock)&#xD;&#xA;WHERE DELIVERY_END_DATE&lt;='@Request.paramShipPeriodDt~'&#xD;&#xA;  AND DPR_GROUP=@Request.paramCommodityCode~&#xD;&#xA;  AND CONTRACT_TYPE_DESC='@Request.ContractType~'&#xD;&#xA;  AND REMAINING_BU&lt;&gt;0&#xD;&#xA;ORDER BY CUSTDESC" Type="SQL" />
+            <EventHandler DhtmlEvent="onchange" ID="evhOnChange">
+              <Action ElementID="divSelCommodity, divSelPosition, divSelAccount, divSelBranch, divDataTable" ID="actRefreshTable-A" Type="RefreshElement" />
+            </EventHandler>
+          </InputSelectList>
+        </Division>
+      </ResponsiveColumn>
+    </ResponsiveRow>
+    <ResponsiveRow>
+      <ResponsiveColumn ColspanExtraSmallScreen="3" ColspanLargeScreen="3" ColspanMediumScreen="3" ColspanSmallScreen="3">
+        <Division ID="divSelBranch">
+          <Label Caption="Branch: " />
+          <InputSelectList DefaultValue="@Request.Branch~" ID="Branch" IncludeBlank="True" IncludeBlankCaption="All Branches" IncludeBlankValue="ALL" MultiSelect="False" OptionCaptionColumn="BRANCH" OptionValueColumn="BRANCH_NUMBER">
+            <DataLayer ConnectionID="connProdGP" ID="dlSQLBranch" Source="SELECT DISTINCT BRANCH_NUMBER, BRANCH_DESC, BRANCH_DESC+' - '+CAST(BRANCH_NUMBER AS NVARCHAR(7)) [BRANCH]&#xD;&#xA;FROM AgTrax_Staging..DM_OpenContracts with(nolock)&#xD;&#xA;WHERE DELIVERY_END_DATE&lt;='@Request.paramShipPeriodDt~'&#xD;&#xA;  AND DPR_GROUP=@Request.paramCommodityCode~&#xD;&#xA;  AND CONTRACT_TYPE_DESC='@Request.ContractType~'&#xD;&#xA;  AND REMAINING_BU&lt;&gt;0&#xD;&#xA;ORDER BY BRANCH" Type="SQL" />
+            <EventHandler DhtmlEvent="onchange" ID="evhOnChange">
+              <Action ElementID="divSelCommodity, divSelPosition, divSelAccount, divSelBranch, divDataTable" ID="actRefreshTable-B" Type="RefreshElement" />
+            </EventHandler>
+          </InputSelectList>
+        </Division>
+      </ResponsiveColumn>
+    </ResponsiveRow>
+    <Division ID="divDataTable">
+      <LineBreak />
+      <LineBreak />
+      <DataTable AccessibleHeaders="True" AjaxPaging="True" Caption="TMA Contracts" ID="dtTMAContractsByShipDate" SortArrows="True" Width="100" WidthScale="%">
+        <DataLayer ConnectionID="connProdGP" ID="dlSQLContracts" Source="SELECT MAX(CUSTOMER_DESC) [CUSTDESC]&#xD;&#xA;, CUSTOMER [CUSTNMBR]&#xD;&#xA;, MAX(CUSTOMER_DESC)+' - '+CUSTOMER AS [Account]&#xD;&#xA;, CONTRACT_MAIN [MAINCONTRACT]&#xD;&#xA;, CONTRACT_TYPE_DESC [CONTRACTTYPE]&#xD;&#xA;, DPR_POSITION [DPRPOSITION]&#xD;&#xA;, DPR_POSITION_GROUP [DPRDESC]&#xD;&#xA;, BRANCH_NUMBER [LOCNMBR]&#xD;&#xA;, MAX(BRANCH_DESC) [LOCDESC]&#xD;&#xA;, MAX(BRANCH_DESC)+' - '+CAST(BRANCH_NUMBER AS NVARCHAR(20)) AS [Location]&#xD;&#xA;, COMMODITY_CODE [COMMODITYCD], MAX(COMMODITY_DESC) [COMMODITYDESC]&#xD;&#xA;, COMMODITY_CODE+' - '+MAX(COMMODITY_DESC) [Commodity]&#xD;&#xA;, DELIVERY_START_DATE, DELIVERY_END_DATE &#xD;&#xA;, SUM(ISSUED_BU) [ISSUED_BU], SUM(REMAINING_BU) [REMAINING_BU]&#xD;&#xA;FROM AgTrax_Staging..DM_OpenContracts &#xD;&#xA;WHERE DELIVERY_END_DATE &lt;= '@Request.paramShipPeriodDt~' &#xD;&#xA;  AND DPR_GROUP = @Request.paramCommodityCode~&#xD;&#xA;  AND CONTRACT_TYPE_DESC = '@Request.ContractType~'&#xD;&#xA;  AND (     (COMMODITY_CODE = '@Request.Commodity~' OR '@Request.Commodity~'='ALL')&#xD;&#xA;        AND (DPR_POSITION_GROUP = '@Request.Position~' OR '@Request.Position~'='ALL')&#xD;&#xA;        AND (CUSTOMER = '@Request.Account~' OR '@Request.Account~'='ALL')&#xD;&#xA;        AND (BRANCH_NUMBER = '@Request.Branch~' OR '@Request.Branch~'='ALL')&#xD;&#xA;	   )&#xD;&#xA;GROUP BY CUSTOMER, CONTRACT_MAIN, CONTRACT_TYPE_DESC, DPR_POSITION, DPR_POSITION_GROUP, BRANCH_NUMBER, COMMODITY_CODE,DELIVERY_START_DATE, DELIVERY_END_DATE &#xD;&#xA;HAVING SUM(REMAINING_BU)&lt;&gt;0&#xD;&#xA;ORDER BY CUSTDESC, MAINCONTRACT &#xD;&#xA;" Type="SQL" />
+        <InteractivePaging CaptionType="Image" Class="ThemeTextSmall" Location="Top" PageRowCount="10" ShowPageNumber="True" />
+        <DataTableColumn Header="Account" ID="colAccount">
+          <Label Caption="@Data.Account~" ID="lblAccount" />
+          <DataColumnSort DataColumn="CUSTDESC" />
+        </DataTableColumn>
+        <DataTableColumn Header="Main Contract" ID="colMAINCONTRACT">
+          <Label Caption="@Data.MAINCONTRACT~" ID="lblMAINCONTRACT">
+            <Action ID="actRpt-TMAContractsDetail" Type="Report">
+              <Target Report="Unknown.SubReports.TMAContractsDetail" Type="Report" />
+              <LinkParams paramContractMain="@Data.MAINCONTRACT~" paramCustomer="@Data.CUSTNMBR~" />
+            </Action>
+          </Label>
+          <DataColumnSort DataColumn="MAINCONTRACT" />
+        </DataTableColumn>
+        <DataTableColumn Header="DPR Position" ID="colDPRPOSITION">
+          <Label Caption="@Data.DPRPOSITION~" ID="lblDPRPOSITION" />
+          <DataColumnSort DataColumn="DPRPOSITION" />
+        </DataTableColumn>
+        <DataTableColumn Header="DPR Description" ID="colDPRDESC">
+          <Label Caption="@Data.DPRDESC~" ID="lblDPRDESC" />
+          <DataColumnSort DataColumn="DPRDESC" />
+        </DataTableColumn>
+        <DataTableColumn Header="Location" ID="colLocation">
+          <Label Caption="@Data.Location~" ID="lblLocation" />
+          <DataColumnSort DataColumn="LOCNMBR" />
+        </DataTableColumn>
+        <DataTableColumn Header="Commodity" ID="colCommodity">
+          <Label Caption="@Data.Commodity~" ID="lblCommodity" />
+          <DataColumnSort DataColumn="COMMODITYDESC" />
+        </DataTableColumn>
+        <DataTableColumn Header="Delivery Start Date" ID="colDELIVERY_START_DATE">
+          <Label Caption="@Data.DELIVERY_START_DATE~" Format="Short Date" ID="lblDELIVERY_START_DATE" />
+          <DataColumnSort DataColumn="DELIVERY_START_DATE" DataType="Date" />
+        </DataTableColumn>
+        <DataTableColumn Header="Delivery End Date" ID="colDELIVERY_END_DATE">
+          <Label Caption="@Data.DELIVERY_END_DATE~" Format="Short Date" ID="lblDELIVERY_END_DATE" />
+          <DataColumnSort DataColumn="DELIVERY_END_DATE" DataType="Date" />
+        </DataTableColumn>
+        <DataTableColumn Class="ThemeAlignRight" ColumnHeaderClass="ThemeAlignCenter" Header="Remaining BU" ID="colREMAINING_BU">
+          <Label Caption="@Data.REMAINING_BU~" Format="###,###,##0.00" ID="lblREMAINING_BU" />
+          <DataColumnSort DataColumn="REMAINING_BU" DataType="Number" />
+          <DataColumnSummary DataColumn="REMAINING_BU" DataType="Number" Function="Sum" ID="totREMAINING_BU" />
+        </DataTableColumn>
+        <SummaryRow Caption="Total: " ID="totSummary" LastPageOnly="False" />
+      </DataTable>
+    </Division>
+  </Body>
+  <IncludeSharedElement DefinitionFile="_Layout.Shared" SharedElementID="shrFooter" />
+  <ideTestParams Account="ALL" Branch="ALL" Commodity="ALL" ContractType="Sale" paramCommodityCode="01" paramCommodityDesc="Wheat" paramShipPeriodDt="2016-02-29" Position="ALL" />
 </Report>

@@ -3,6 +3,10 @@
 	Caption="TMA Contracts Dashboard"
 	ID="TMAReports.TMAContractsDashboard"
 	>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrHeader"
+	/>
 	<DefaultRequestParams
 		Account="ALL"
 		ContractType="Sale"
@@ -39,6 +43,7 @@
 						Size="4"
 					/>
 					<InputRadioButtons
+						Class="ThemeTextSmall"
 						DefaultValue="@Request.ContractType~"
 						ID="ContractType"
 						OptionCaptionColumn="CONTRACT_TYPE_DESC"
@@ -168,13 +173,16 @@ HAVING SUM(REMAINING_BU)&lt;0
 						</DataLayer>
 						<InteractivePaging
 							CaptionType="Image"
+							Class="ThemeTextSmall"
 							Location="Top"
-							PageRowCount="10"
+							PageRowCount="6"
 							ShowPageNumber="True"
 						/>
 						<DataTableColumn
 							Header="Contract"
 							ID="colCONTRACTNMBR"
+							Width="5"
+							WidthScale="%"
 							>
 							<Label
 								Caption="@Data.CONTRACTNMBR~"
@@ -200,8 +208,12 @@ HAVING SUM(REMAINING_BU)&lt;0
 							/>
 						</DataTableColumn>
 						<DataTableColumn
+							Class="ThemeAlignCenter"
+							ColumnHeaderClass="ThemeAlignCenter"
 							Header="Account"
 							ID="colCUSTNMBR"
+							Width="15"
+							WidthScale="%"
 							>
 							<Label
 								Caption="@Data.CUSTNMBR~"
@@ -215,12 +227,15 @@ HAVING SUM(REMAINING_BU)&lt;0
 								>
 								<Label
 									Caption="@Data.CUSTDESC~"
+									Class="ThemeTextSmaller, ThemeBold"
 								/>
 							</TooltipPanel>
 						</DataTableColumn>
 						<DataTableColumn
 							Header="Commodity"
 							ID="colCOMMODITYDESC"
+							Width="15"
+							WidthScale="%"
 							>
 							<Label
 								Caption="@Data.COMMODITYDESC~"
@@ -232,8 +247,12 @@ HAVING SUM(REMAINING_BU)&lt;0
 							/>
 						</DataTableColumn>
 						<DataTableColumn
+							Class="ThemeAlignRight"
+							ColumnHeaderClass="ThemeAlignCenter"
 							Header="Remaining BU"
 							ID="colREMAINING_BU"
+							Width="10"
+							WidthScale="%"
 							>
 							<Label
 								Caption="@Data.REMAINING_BU~"
@@ -246,7 +265,10 @@ HAVING SUM(REMAINING_BU)&lt;0
 							/>
 						</DataTableColumn>
 						<DataTableColumn
+							Class="ThemeAlignCenter"
 							ID="colKPI"
+							Width="25"
+							WidthScale="%"
 							>
 							<Label
 								ID="KPI"
@@ -288,12 +310,14 @@ HAVING SUM(REMAINING_BU)&lt;0
 				>
 				<TabPanel
 					Caption="WHEAT"
+					Class="ThemeTextNormal"
 					ID="tabWHEAT"
 					>
 					<CrosstabTable
 						AjaxPaging="True"
+						ColumnHeaderClass="ThemeTextSmall, ThemeBold, ThemeAlignCenter, ThemeNoWrap"
 						ID="Crosstab-WHEAT"
-						TableBorder="1"
+						TableBorder="2"
 						Width="100"
 						WidthScale="%"
 						>
@@ -325,36 +349,45 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 									CrosstabLabelColumn="CONTRACT_TYPE_DESC"
 									ID="ContractTypeDesc"
 								/>
+								<CrosstabRowSummaryColumn
+									Function="Sum"
+									ID="crsTotal"
+								/>
 							</CrosstabFilter>
 						</DataLayer>
 						<CrosstabTableLabelColumn
 							Header="Contract Type"
 							ID="colContractType"
-							Width="20"
+							Width="1"
 							WidthScale="px"
 							>
 							<Label
 								Caption="@Data.ContractTypeDesc~"
+								Class="ThemeMargin, ThemeBold, ThemeTextSmall"
 								NoWrap="True"
 							/>
 						</CrosstabTableLabelColumn>
 						<CrosstabTableLabelColumn
 							Header="Commodity"
 							ID="colCommodityDesc"
-							Width="20"
+							Width="1"
 							WidthScale="px"
 							>
 							<Label
 								Caption="@Data.CommodityDesc~"
+								Class="ThemeMargin, ThemeBold, ThemeTextSmall"
 							/>
 						</CrosstabTableLabelColumn>
 						<CrosstabTableValueColumns
 							Header="@Data.rdCrosstabColumn~"
 							ID="colHeaderMonth"
+							Width="50"
+							WidthScale="px"
 							>
 							<Label
-								Caption="=iif(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)"
-								Format="###,###,##0.00"
+								Caption="=IIf(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)"
+								Class="ThemeMargin, ThemeTextSmall"
+								Format="###,###,##0"
 								ID="lblValue"
 								NoWrap="True"
 								>
@@ -373,15 +406,38 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 									/>
 								</Action>
 							</Label>
+							<DataColumnSummary
+								DataColumn="rdCrosstabColumn"
+								DataType="Number"
+								Function="Sum"
+								ID="fGrandTotal"
+							/>
 						</CrosstabTableValueColumns>
+						<CrosstabTableLabelColumn
+							Class="ThemeAlignRight"
+							Header="Total"
+							HeaderType="Text"
+							ID="GrandTotal"
+							Width="1"
+							WidthScale="px"
+							>
+							<Label
+								Caption="@Data.crsTotal~"
+								Class="ThemeAlignRight, ThemeMargin, ThemeTextSmall"
+								Format="###,###,##0"
+								ID="lblGrandTotal"
+							/>
+						</CrosstabTableLabelColumn>
 					</CrosstabTable>
 				</TabPanel>
 				<TabPanel
 					Caption="MILO"
+					Class="ThemeTextNormal"
 					ID="tabMILO"
 					>
 					<CrosstabTable
 						AjaxPaging="True"
+						CellSpacing="5"
 						ID="Crosstab-MILO"
 						TableBorder="1"
 						Width="100"
@@ -441,10 +497,12 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 						<CrosstabTableValueColumns
 							Header="@Data.rdCrosstabColumn~"
 							ID="colHeaderMonth"
+							Width="20"
+							WidthScale="px"
 							>
 							<Label
 								Caption="=iif(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)"
-								Format="###,###,##0.000"
+								Format="###,###,##0"
 								ID="lblValue"
 								NoWrap="True"
 								>
@@ -468,10 +526,12 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 				</TabPanel>
 				<TabPanel
 					Caption="SOYBEANS"
+					Class="ThemeTextNormal"
 					ID="tabSOYBEANS"
 					>
 					<CrosstabTable
 						AjaxPaging="True"
+						CellSpacing="5"
 						ID="Crosstab-SOYBEANS"
 						TableBorder="1"
 						Width="100"
@@ -534,7 +594,7 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 							>
 							<Label
 								Caption="=iif(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)"
-								Format="###,###,##0.000"
+								Format="###,###,##0"
 								ID="lblValue"
 								NoWrap="True"
 								>
@@ -558,10 +618,12 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 				</TabPanel>
 				<TabPanel
 					Caption="CORN"
+					Class="ThemeTextNormal"
 					ID="tabCORN"
 					>
 					<CrosstabTable
 						AjaxPaging="True"
+						CellSpacing="5"
 						ID="Crosstab-CORN"
 						TableBorder="1"
 						Width="100"
@@ -648,10 +710,12 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 				</TabPanel>
 				<TabPanel
 					Caption="OATS"
+					Class="ThemeTextNormal"
 					ID="tabOATS"
 					>
 					<CrosstabTable
 						AjaxPaging="True"
+						CellSpacing="5"
 						ID="Crosstab-OATS"
 						TableBorder="1"
 						Width="100"
@@ -714,7 +778,7 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 							>
 							<Label
 								Caption="=iif(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)"
-								Format="###,###,##0.000"
+								Format="###,###,##0"
 								ID="lblValue"
 								NoWrap="True"
 								>
@@ -738,10 +802,12 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 				</TabPanel>
 				<TabPanel
 					Caption="BARLEY"
+					Class="ThemeTextNormal"
 					ID="tabBARLEY"
 					>
 					<CrosstabTable
 						AjaxPaging="True"
+						CellSpacing="5"
 						ID="Crosstab-BARLEY"
 						TableBorder="1"
 						Width="100"
@@ -804,7 +870,7 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 							>
 							<Label
 								Caption="=iif(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)"
-								Format="###,###,##0.000"
+								Format="###,###,##0"
 								ID="lblValue"
 								NoWrap="True"
 								>
@@ -828,10 +894,12 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 				</TabPanel>
 				<TabPanel
 					Caption="SUNFLOWERS"
+					Class="ThemeTextNormal"
 					ID="tabSUNFLOWERS"
 					>
 					<CrosstabTable
 						AjaxPaging="True"
+						CellSpacing="5"
 						ID="Crosstab-SUNFLOWERS"
 						TableBorder="1"
 						Width="100"
@@ -894,7 +962,7 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 							>
 							<Label
 								Caption="=iif(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)"
-								Format="###,###,##0.000"
+								Format="###,###,##0"
 								ID="lblValue"
 								NoWrap="True"
 								>
@@ -918,10 +986,12 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 				</TabPanel>
 				<TabPanel
 					Caption="CANOLA"
+					Class="ThemeTextNormal"
 					ID="tabCANOLA"
 					>
 					<CrosstabTable
 						AjaxPaging="True"
+						CellSpacing="5"
 						ID="Crosstab-CANOLA"
 						TableBorder="1"
 						Width="100"
@@ -984,7 +1054,7 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 							>
 							<Label
 								Caption="=iif(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)"
-								Format="###,###,##0.000"
+								Format="###,###,##0"
 								ID="lblValue"
 								NoWrap="True"
 								>
@@ -1007,8 +1077,15 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 					</CrosstabTable>
 				</TabPanel>
 			</Tabs>
+			<LineBreak/>
 		</Division>
 	</Body>
+	<ReportFooter>
+		<IncludeSharedElement
+			DefinitionFile="_Layout.Shared"
+			SharedElementID="shrFooter"
+		/>
+	</ReportFooter>
 	<ideTestParams
 		ContractType="Sale"
 	/>

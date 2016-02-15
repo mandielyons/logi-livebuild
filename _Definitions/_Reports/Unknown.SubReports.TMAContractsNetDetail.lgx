@@ -3,50 +3,120 @@
 	Caption="TMA Contract Detail"
 	ID="Unknown.SubReports.TMAContractsNetDetail"
 	>
-	<ReportHeader>
-		<Division
-			ID="divHomeButton"
-			>
-			<Button
-				Caption="TMA Dashboard Home"
-				Class="ThemePanel"
-				ID="buttonHome"
-				>
-				<Action
-					Type="Report"
-					>
-					<Target
-						Report="TMAReports.TMAContractsDashboard"
-						Type="Report"
-					/>
-				</Action>
-			</Button>
-		</Division>
-	</ReportHeader>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrHeader"
+	/>
 	<Body>
 		<Division
 			ID="divBtnExportExcel"
 			>
-			<LineBreak/>
-			<Button
-				Caption="Export to Excel"
-				ID="buttonExport_Excel"
-				Tooltip="Click to export data to Microsoft Excel"
+			<ResponsiveRow
+				ID="rrExportToExcel"
 				>
-				<Action
-					ID="actionExport_Excel"
-					Type="NativeExcel"
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
 					>
-					<Target
-						ExcelOutputFormat="Excel2007"
-						ExportFilename="TMAContracts.xlsx"
-						ID="targetExport_Excel"
-						Report="CurrentReport"
-						ShowGridlines="False"
-						Type="NativeExcel"
-					/>
-				</Action>
-			</Button>
+					<Label
+						Class="ThemeAlignRight, fa fa-file-excel-o fa-2x"
+						HtmlTag="Div"
+						Tooltip="Export to Excel"
+						>
+						<Action
+							Type="NativeExcel"
+							>
+							<Target
+								ExcelOutputFormat="Excel2007"
+								FrameID="NewWindow"
+								Report="CurrentReport"
+								RequestForwarding="True"
+								Type="NativeExcel"
+							/>
+						</Action>
+					</Label>
+				</ResponsiveColumn>
+			</ResponsiveRow>
+			<Label
+				Caption="Contract Type:"
+				Class="ThemeHeader"
+			/>
+			<Spaces
+				Size="4"
+			/>
+			<Label
+				Caption="@Request.paramContractType~"
+				Class="ThemeHeader, ThemeBold"
+			/>
+			<LineBreak/>
 		</Division>
 		<DataTable
 			AccessibleHeaders="True"
@@ -55,60 +125,42 @@
 			ID="dtTMAContractsNetDetail"
 			KeepScrollPosition="True"
 			RememberSort="True"
-			ResizableColumns="True"
+			ResizableColumns="False"
 			SortArrows="True"
-			TableBorder="0"
+			Width="100"
+			WidthScale="%"
 			>
 			<DataLayer
 				ConnectionID="connProdGP"
 				ID="sqlTMAOpenContractsNetDetail"
-				Source="SELECT DATA_KEY,CONTRACT_TYPE,CONTRACT_TYPE_DESC,CUSTOMER,CUSTOMER_DESC,CONTRACT_NUMBER,CONTRACT_MAIN,CONTRACT_SUB,THEIR_CONTRACT_NUMBER,COMMODITY_CODE,COMMODITY_DESC,DPR_GROUP,DPR_GROUP_DESC,BRANCH_NUMBER,BRANCH_DESC,DPR_POSITION,DPR_POSITION_GROUP,ISSUED_DATE,POSTING_DATE,SYSTEM_DATE,DUE_DATE,CONTRACT_MASTER_SERIAL_ID,ISSUED_LBS,APPLIED_LBS,ADJUSTED_LBS,SUB_CONT_LBS,REMAINING_LBS,ISSUED_BU,APPLIED_BU,ADJUSTED_BU,SUB_CONT_BU,REMAINING_BU,SUB_CONT_FROM,BOARD_PRICE,BASIS_PRICE,PRICE,SUB_CONTRACTED,CONTRACT_STATUS,ANNUAL_INTEREST_RATE,INTEREST_START_DATE,CMDELST,DELIVERY_START_DATE,CMDELEN,DELIVERY_END_DATE,FREIGHT,FREIGHT_RATE,CONTRACT_GRADE,SIGNED,LOW_POSTING_DATE,BACKOUT_DATE,BACKOUT_POST_DATE,FUTURES_MONTH,CMOXDATE,OFFER_EXPIRE_DATE,OFFER_TARGET_POSITION,SERVICE_FEE,PRINTED,BROKER,BROKER_ACCOUNT,PROFITABILITY
+				Source="SELECT LTRIM(RTRIM(CUSTOMER_DESC))+&apos; - &apos;+LTRIM(RTRIM(CUSTOMER)) AS [Account]
+     , LTRIM(RTRIM(BRANCH_DESC))+&apos; - &apos;+CAST(BRANCH_NUMBER AS NVARCHAR(20)) AS [Location]
+     , LTRIM(RTRIM(COMMODITY_CODE))+&apos; - &apos;+LTRIM(RTRIM(COMMODITY_DESC)) [Commodity]
+,CUSTOMER,CUSTOMER_DESC,CONTRACT_NUMBER,CONTRACT_MAIN,CONTRACT_SUB,THEIR_CONTRACT_NUMBER,COMMODITY_CODE,COMMODITY_DESC,DPR_GROUP,DPR_GROUP_DESC,BRANCH_NUMBER,BRANCH_DESC,DPR_POSITION,DPR_POSITION_GROUP,ISSUED_DATE,POSTING_DATE,SYSTEM_DATE,DUE_DATE,REMAINING_BU,BOARD_PRICE,BASIS_PRICE,PRICE,DELIVERY_START_DATE,DELIVERY_END_DATE,FUTURES_MONTH
 FROM AgTrax_Staging..DM_OpenContracts
-WHERE CONTRACT_TYPE_DESC=&apos;@Request.paramContractType~&apos;
+WHERE REMAINING_BU&lt;&gt;0
+AND CONTRACT_TYPE_DESC=&apos;@Request.paramContractType~&apos;
 AND DPR_GROUP=&apos;@Request.paramCommodity~&apos;
-AND DELIVERY_END_DATE BETWEEN CASE WHEN &apos;@Request.paramDate~&apos;=&apos;Prior&apos; THEN &apos;1900-01-01&apos; ELSE CAST(&apos;@Request.paramDate~&apos; AS DATE) END  AND   CASE WHEN &apos;@Request.paramDate~&apos;=&apos;Prior&apos; THEN DATEADD(DAY,-1,CAST(CONVERT(VARCHAR(7),DATEADD(MONTH,-1,GETDATE()),120)+&apos;-01&apos; AS DATE)) ELSE DATEADD(DAY,-1,DATEADD(MONTH,1,CAST(&apos;@Request.paramDate~&apos; AS DATE))) END"
+AND DELIVERY_END_DATE BETWEEN CASE WHEN &apos;@Request.paramDate~&apos;=&apos;Prior&apos; THEN &apos;1900-01-01&apos; WHEN &apos;@Request.paramDate~&apos;=&apos;Extended&apos; THEN CAST(CONVERT(VARCHAR(7),DATEADD(MONTH,11,GETDATE()),120)+&apos;-01&apos; AS DATE) ELSE CAST(&apos;@Request.paramDate~&apos; AS DATE) END AND CASE WHEN &apos;@Request.paramDate~&apos;=&apos;Prior&apos; THEN DATEADD(DAY,-1,CAST(CONVERT(VARCHAR(7),DATEADD(MONTH,-1,GETDATE()),120)+&apos;-01&apos; AS DATE)) WHEN &apos;@Request.paramDate~&apos;=&apos;Extended&apos; THEN &apos;9999-12-31&apos; ELSE DATEADD(DAY,-1,DATEADD(MONTH,1,CAST(&apos;@Request.paramDate~&apos; AS DATE))) END"
 				Type="SQL"
 			/>
 			<InteractivePaging
 				CaptionType="Image"
+				Class="ThemeTextSmall"
 				Location="Top"
 				PageRowCount="10"
 				ShowPageNumber="True"
 			/>
 			<DataTableColumn
-				Header="Contract Type"
-				ID="colCONTRACT_TYPE_DESC"
-				>
-				<Label
-					Caption="@Data.CONTRACT_TYPE_DESC~"
-					ID="lblCONTRACT_TYPE_DESC"
-				/>
-				<DataColumnSort
-					DataColumn="CONTRACT_TYPE_DESC"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
 				Header="Account"
-				ID="colCUSTOMER"
+				ID="colAccount"
 				>
 				<Label
-					Caption="@Data.CUSTOMER~"
-					ID="lblCUSTOMER"
+					Caption="@Data.Account~"
+					ID="lblAccount"
 				/>
 				<DataColumnSort
 					DataColumn="CUSTOMER"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Account Name"
-				ID="colCUSTOMER_DESC"
-				>
-				<Label
-					Caption="@Data.CUSTOMER_DESC~"
-					ID="lblCUSTOMER_DESC"
-				/>
-				<DataColumnSort
-					DataColumn="CUSTOMER_DESC"
 				/>
 			</DataTableColumn>
 			<DataTableColumn
@@ -138,23 +190,23 @@ AND DELIVERY_END_DATE BETWEEN CASE WHEN &apos;@Request.paramDate~&apos;=&apos;Pr
 			</DataTableColumn>
 			<DataTableColumn
 				Header="Commodity"
-				ID="colCOMMODITY_DESC"
+				ID="colCommodity"
 				>
 				<Label
-					Caption="@Data.COMMODITY_DESC~"
-					ID="lblCOMMODITY_DESC"
+					Caption="@Data.Commodity~"
+					ID="lblCommodity"
 				/>
 				<DataColumnSort
 					DataColumn="COMMODITY_DESC"
 				/>
 			</DataTableColumn>
 			<DataTableColumn
-				Header="Branch Description"
-				ID="colBRANCH_DESC"
+				Header="Location"
+				ID="colLocation"
 				>
 				<Label
-					Caption="@Data.BRANCH_DESC~"
-					ID="lblBRANCH_DESC"
+					Caption="@Data.Location~"
+					ID="lblLocation"
 				/>
 				<DataColumnSort
 					DataColumn="BRANCH_DESC"
@@ -174,6 +226,8 @@ AND DELIVERY_END_DATE BETWEEN CASE WHEN &apos;@Request.paramDate~&apos;=&apos;Pr
 				/>
 			</DataTableColumn>
 			<DataTableColumn
+				Class="ThemeMargin, ThemeAlignRight"
+				ColumnHeaderClass="ThemeAlignCenter"
 				Header="Remaining BU"
 				ID="colREMAINING_BU"
 				>
@@ -269,6 +323,10 @@ AND DELIVERY_END_DATE BETWEEN CASE WHEN &apos;@Request.paramDate~&apos;=&apos;Pr
 			/>
 		</DataTable>
 	</Body>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrFooter"
+	/>
 	<ideTestParams
 		paramCommodity="2"
 		paramContractType="Sale"

@@ -3,11 +3,18 @@
 	Caption="TMA Contract Detail"
 	ID="Unknown.SubReports.TMAContractsDetail"
 	>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrHeader"
+	/>
 	<LocalData>
 		<DataLayer
 			ConnectionID="connProdGP"
 			ID="sqlTMAContract"
 			Source="SELECT OC.DATA_KEY AS [KEY]
+  , LTRIM(RTRIM(OC.CUSTOMER_DESC))+&apos; - &apos;+LTRIM(RTRIM(OC.CUSTOMER)) AS [Account]
+  , LTRIM(RTRIM(OC.BRANCH_DESC))+&apos; - &apos;+CAST(BRANCH_NUMBER AS NVARCHAR(20)) AS [Location]
+  , LTRIM(RTRIM(OC.COMMODITY_CODE))+&apos; - &apos;+LTRIM(RTRIM(COMMODITY_DESC)) [Commodity]
   , OC.CUSTOMER_DESC AS [CUSTDESC]
   , OC.CUSTOMER AS [CUSTNMBR]
   , LTRIM(RTRIM(CM.ADDRESS_LINE_1)) AS [CUSTADDR1]
@@ -39,50 +46,104 @@ WHERE OC.DATA_KEY=&apos;@Request.paramContractKey~&apos; OR (OC.CONTRACT_MAIN=&a
 			/>
 		</DataLayer>
 	</LocalData>
-	<ReportHeader>
-		<Division
-			ID="divHomeButton"
-			>
-			<Button
-				Caption="TMA Dashboard Home"
-				Class="ThemePanel"
-				ID="buttonHome"
-				>
-				<Action
-					Type="Report"
-					>
-					<Target
-						Report="TMAReports.TMAContractsDashboard"
-						Type="Report"
-					/>
-				</Action>
-			</Button>
-		</Division>
-	</ReportHeader>
 	<Body>
 		<Division
 			ID="divBtnExportExcel"
 			>
-			<LineBreak/>
-			<Button
-				Caption="Export to Excel"
-				ID="buttonExport_Excel"
-				Tooltip="Click to export data to Microsoft Excel"
+			<ResponsiveRow
+				ID="rrExportToExcel"
 				>
-				<Action
-					ID="actionExport_Excel"
-					Type="NativeExcel"
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
 					>
-					<Target
-						ExcelOutputFormat="Excel2007"
-						ExportFilename="TMAContracts.xlsx"
-						ID="targetExport_Excel"
-						Report="CurrentReport"
-						ShowGridlines="False"
-						Type="NativeExcel"
-					/>
-				</Action>
-			</Button>
+					<Label
+						Class="ThemeAlignRight, fa fa-file-excel-o fa-2x"
+						HtmlTag="Div"
+						Tooltip="Export to Excel"
+						>
+						<Action
+							Type="NativeExcel"
+							>
+							<Target
+								ExcelOutputFormat="Excel2007"
+								FrameID="NewWindow"
+								Report="CurrentReport"
+								RequestForwarding="True"
+								Type="NativeExcel"
+							/>
+						</Action>
+					</Label>
+				</ResponsiveColumn>
+			</ResponsiveRow>
 		</Division>
 		<DataTable
 			AccessibleHeaders="True"
@@ -93,7 +154,8 @@ WHERE OC.DATA_KEY=&apos;@Request.paramContractKey~&apos; OR (OC.CONTRACT_MAIN=&a
 			RememberSort="True"
 			ResizableColumns="True"
 			SortArrows="True"
-			TableBorder="0"
+			Width="100"
+			WidthScale="%"
 			>
 			<DataLayer
 				LinkedDataLayerID="lnkTMAContract"
@@ -101,17 +163,19 @@ WHERE OC.DATA_KEY=&apos;@Request.paramContractKey~&apos; OR (OC.CONTRACT_MAIN=&a
 			/>
 			<InteractivePaging
 				CaptionType="Image"
+				Class="ThemeTextSmall"
 				Location="Top"
 				PageRowCount="10"
 				ShowPageNumber="True"
 			/>
 			<DataTableColumn
-				Header="Account Number"
-				ID="colCUSTNMBR"
+				Class="ThemeMargin"
+				Header="Account"
+				ID="colAccount"
 				>
 				<Label
-					Caption="@Data.CUSTNMBR~"
-					ID="colCUSTNMBR"
+					Caption="@Data.Account~"
+					ID="colAccount"
 				/>
 				<DataColumnSort
 					DataColumn="CUSTNMBR"
@@ -119,123 +183,16 @@ WHERE OC.DATA_KEY=&apos;@Request.paramContractKey~&apos; OR (OC.CONTRACT_MAIN=&a
 				/>
 			</DataTableColumn>
 			<DataTableColumn
-				Header="Account"
-				ID="colCUSTDESC"
+				Header="Contract"
+				ID="colCONTRACTNMBR"
 				>
 				<Label
-					Caption="@Data.CUSTDESC~"
-					ID="colCUSTDESC"
-				/>
-				<DataColumnSort
-					DataColumn="CUSTDESC"
-					DataType="Text"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Address"
-				ID="colCUSTADDR1"
-				>
-				<Label
-					Caption="@Data.CUSTADDR1~"
-					ID="colCUSTADDR1"
-				/>
-				<DataColumnSort
-					DataColumn="CUSTADDR1"
-					DataType="Text"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="City"
-				ID="colCUSTCITY"
-				>
-				<Label
-					Caption="@Data.CUSTCITY~"
-					ID="colCUSTCITY"
-				/>
-				<DataColumnSort
-					DataColumn="CUSTCITY"
-					DataType="Text"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="State"
-				ID="colCUSTSTATE"
-				>
-				<Label
-					Caption="@Data.CUSTSTATE~"
-					ID="colCUSTSTATE"
-				/>
-				<DataColumnSort
-					DataColumn="CUSTSTATE"
-					DataType="Text"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Postal Code"
-				ID="colCUSTZIPCODE"
-				>
-				<Label
-					Caption="@Data.CUSTZIPCODE~"
-					ID="colCUSTZIPCODE"
-				/>
-				<DataColumnSort
-					DataColumn="CUSTZIPCODE"
-					DataType="Text"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Contract Main"
-				ID="colMAINCONTRACT"
-				>
-				<Label
-					Caption="@Data.MAINCONTRACT~"
-					ID="colMAINCONTRACT"
-				/>
-				<DataColumnSort
-					DataColumn="MAINCONTRACT"
-					DataType="Text"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Sub Contract"
-				ID="colSUBCONTRACT"
-				>
-				<Label
-					Caption="@Data.SUBCONTRACT~"
-					ID="colSUBCONTRACT"
-				/>
-				<DataColumnSort
-					DataColumn="SUBCONTRACT"
-					DataType="Text"
-				/>
-			</DataTableColumn>
-			<Remark>
-				<DataTableColumn
-					Header="CONTRACTNMBR"
+					Caption="@Data.CONTRACTNMBR~"
 					ID="colCONTRACTNMBR"
-					>
-					<Label
-						Caption="@Data.CONTRACTNMBR~"
-						ID="colCONTRACTNMBR"
-					/>
-					<DataColumnSort
-						DataColumn="CONTRACTNMBR"
-						DataType="Text"
-					/>
-				</DataTableColumn>
-			</Remark>
-			<DataTableColumn
-				Header="Contract Date"
-				ID="colCONTRACTDT"
-				>
-				<Label
-					Caption="@Data.CONTRACTDT~"
-					Format="Short Date"
-					ID="colCONTRACTDT"
 				/>
 				<DataColumnSort
-					DataColumn="CONTRACTDT"
-					DataType="Date"
+					DataColumn="CONTRACTNMBR"
+					DataType="Text"
 				/>
 			</DataTableColumn>
 			<DataTableColumn
@@ -294,243 +251,33 @@ WHERE OC.DATA_KEY=&apos;@Request.paramContractKey~&apos; OR (OC.CONTRACT_MAIN=&a
 			</DataTableColumn>
 			<DataTableColumn
 				Header="Location"
-				ID="colLOCNMBR"
+				ID="colLocation"
 				>
 				<Label
-					Caption="@Data.LOCNMBR~"
-					ID="colLOCNMBR"
+					Caption="@Data.Location~"
+					ID="colLocation"
 				/>
 				<DataColumnSort
-					DataColumn="LOCNMBR"
+					DataColumn="CUSTNMBR"
 					DataType="Text"
 				/>
 			</DataTableColumn>
 			<DataTableColumn
-				Header="Location Description"
-				ID="colLOCDESC"
+				Header="Commodity"
+				ID="colCommodity"
 				>
 				<Label
-					Caption="@Data.LOCDESC~"
-					ID="colLOCDESC"
+					Caption="@Data.Commodity~"
+					ID="colCommodity"
 				/>
 				<DataColumnSort
-					DataColumn="LOCDESC"
+					DataColumn="CUSTNMBR"
 					DataType="Text"
 				/>
 			</DataTableColumn>
 			<DataTableColumn
-				Header="Commodity Code"
-				ID="colCOMMODITYCD"
-				>
-				<Label
-					Caption="@Data.COMMODITYCD~"
-					ID="colCOMMODITYCD"
-				/>
-				<DataColumnSort
-					DataColumn="COMMODITYCD"
-					DataType="Text"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Commodity Description"
-				ID="colCOMMODITYDESC"
-				>
-				<Label
-					Caption="@Data.COMMODITYDESC~"
-					ID="colCOMMODITYDESC"
-				/>
-				<DataColumnSort
-					DataColumn="COMMODITYDESC"
-					DataType="Text"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Issued LB"
-				ID="colISSUED_LBS"
-				>
-				<Label
-					Caption="@Data.ISSUED_LBS~"
-					Format="###,###,##0.00"
-					ID="colISSUED_LBS"
-				/>
-				<DataColumnSort
-					DataColumn="ISSUED_LBS"
-					DataType="Number"
-				/>
-				<DataColumnSummary
-					DataColumn="ISSUED_LBS"
-					DataType="Number"
-					Function="Sum"
-					ID="totISSUED_LBS"
-				/>
-			</DataTableColumn>
-			<Remark>
-				<DataTableColumn
-					Header="APPLIED_LBS"
-					ID="colAPPLIED_LBS"
-					>
-					<Label
-						Caption="@Data.APPLIED_LBS~"
-						Format="###,###,##0.00"
-						ID="colAPPLIED_LBS"
-					/>
-					<DataColumnSort
-						DataColumn="APPLIED_LBS"
-						DataType="Number"
-					/>
-					<DataColumnSummary
-						DataColumn="APPLIED_LBS"
-						DataType="Number"
-						Function="Sum"
-						ID="totAPPLIED_LBS"
-					/>
-				</DataTableColumn>
-			</Remark>
-			<Remark>
-				<DataTableColumn
-					Header="ADJUSTED_LBS"
-					ID="colADJUSTED_LBS"
-					>
-					<Label
-						Caption="@Data.ADJUSTED_LBS~"
-						Format="###,###,##0.00"
-						ID="colADJUSTED_LBS"
-					/>
-					<DataColumnSort
-						DataColumn="ADJUSTED_LBS"
-						DataType="Number"
-					/>
-					<DataColumnSummary
-						DataColumn="ADJUSTED_LBS"
-						DataType="Number"
-						Function="Sum"
-						ID="totADJUSTED_LBS"
-					/>
-				</DataTableColumn>
-			</Remark>
-			<Remark>
-				<DataTableColumn
-					Header="SUB_CONT_LBS"
-					ID="colSUB_CONT_LBS"
-					>
-					<Label
-						Caption="@Data.SUB_CONT_LBS~"
-						Format="###,###,##0.00"
-						ID="colSUB_CONT_LBS"
-					/>
-					<DataColumnSort
-						DataColumn="SUB_CONT_LBS"
-						DataType="Number"
-					/>
-					<DataColumnSummary
-						DataColumn="SUB_CONT_LBS"
-						DataType="Number"
-						Function="Sum"
-						ID="totSUB_CONT_LBS"
-					/>
-				</DataTableColumn>
-			</Remark>
-			<DataTableColumn
-				Header="Remaining LB"
-				ID="colREMAINING_LBS"
-				>
-				<Label
-					Caption="@Data.REMAINING_LBS~"
-					Format="###,###,##0.00"
-					ID="colREMAINING_LBS"
-				/>
-				<DataColumnSort
-					DataColumn="REMAINING_LBS"
-					DataType="Number"
-				/>
-				<DataColumnSummary
-					DataColumn="REMAINING_LBS"
-					DataType="Number"
-					Function="Sum"
-					ID="totREMAINING_LBS"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Issued BU"
-				ID="colISSUED_BU"
-				>
-				<Label
-					Caption="@Data.ISSUED_BU~"
-					Format="###,###,##0.00"
-					ID="colISSUED_BU"
-				/>
-				<DataColumnSort
-					DataColumn="ISSUED_BU"
-					DataType="Number"
-				/>
-				<DataColumnSummary
-					DataColumn="ISSUED_BU"
-					DataType="Number"
-					Function="Sum"
-					ID="totISSUED_BU"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Applied BU"
-				ID="colAPPLIED_BU"
-				>
-				<Label
-					Caption="@Data.APPLIED_BU~"
-					Format="###,###,##0.00"
-					ID="colAPPLIED_BU"
-				/>
-				<DataColumnSort
-					DataColumn="APPLIED_BU"
-					DataType="Number"
-				/>
-				<DataColumnSummary
-					DataColumn="APPLIED_BU"
-					DataType="Number"
-					Function="Sum"
-					ID="totAPPLIED_BU"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="Adjusted BU"
-				ID="colADJUSTED_BU"
-				>
-				<Label
-					Caption="@Data.ADJUSTED_BU~"
-					Format="###,###,##0.00"
-					ID="colADJUSTED_BU"
-				/>
-				<DataColumnSort
-					DataColumn="ADJUSTED_BU"
-					DataType="Number"
-				/>
-				<DataColumnSummary
-					DataColumn="ADJUSTED_BU"
-					DataType="Number"
-					Function="Sum"
-					ID="totADJUSTED_BU"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
-				Header="SubContracted BU"
-				ID="colSUB_CONT_BU"
-				>
-				<Label
-					Caption="@Data.SUB_CONT_BU~"
-					Format="###,###,##0.00"
-					ID="colSUB_CONT_BU"
-				/>
-				<DataColumnSort
-					DataColumn="SUB_CONT_BU"
-					DataType="Number"
-				/>
-				<DataColumnSummary
-					DataColumn="SUB_CONT_BU"
-					DataType="Number"
-					Function="Sum"
-					ID="totSUB_CONT_BU"
-				/>
-			</DataTableColumn>
-			<DataTableColumn
+				Class="ThemeMargin, ThemeAlignRight"
+				ColumnHeaderClass="ThemeAlignCenter"
 				Header="Remaining BU"
 				ID="colREMAINING_BU"
 				>
@@ -557,6 +304,10 @@ WHERE OC.DATA_KEY=&apos;@Request.paramContractKey~&apos; OR (OC.CONTRACT_MAIN=&a
 			/>
 		</DataTable>
 	</Body>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrFooter"
+	/>
 	<ideTestParams
 		paramContractKey="1_8320618_02_23978"
 		paramContractMain=""
