@@ -438,9 +438,9 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 					>
 					<CrosstabTable
 						AjaxPaging="True"
-						CellSpacing="5"
+						ColumnHeaderClass="ThemeTextSmall, ThemeBold, ThemeAlignCenter, ThemeNoWrap"
 						ID="Crosstab-MILO"
-						TableBorder="1"
+						TableBorder="2"
 						Width="100"
 						WidthScale="%"
 						>
@@ -472,37 +472,44 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 									CrosstabLabelColumn="CONTRACT_TYPE_DESC"
 									ID="ContractTypeDesc"
 								/>
+								<CrosstabRowSummaryColumn
+									Function="Sum"
+									ID="crsTotal"
+								/>
 							</CrosstabFilter>
 						</DataLayer>
 						<CrosstabTableLabelColumn
 							Header="Contract Type"
 							ID="colContractType"
-							Width="20"
+							Width="1"
 							WidthScale="px"
 							>
 							<Label
 								Caption="@Data.ContractTypeDesc~"
+								Class="ThemeMargin, ThemeBold, ThemeTextSmall"
 								NoWrap="True"
 							/>
 						</CrosstabTableLabelColumn>
 						<CrosstabTableLabelColumn
 							Header="Commodity"
 							ID="colCommodityDesc"
-							Width="20"
+							Width="1"
 							WidthScale="px"
 							>
 							<Label
 								Caption="@Data.CommodityDesc~"
+								Class="ThemeMargin, ThemeBold, ThemeTextSmall"
 							/>
 						</CrosstabTableLabelColumn>
 						<CrosstabTableValueColumns
 							Header="@Data.rdCrosstabColumn~"
 							ID="colHeaderMonth"
-							Width="20"
+							Width="50"
 							WidthScale="px"
 							>
 							<Label
-								Caption="=iif(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)"
+								Caption="=IIf(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)"
+								Class="ThemeMargin, ThemeTextSmall"
 								Format="###,###,##0"
 								ID="lblValue"
 								NoWrap="True"
@@ -522,7 +529,28 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 									/>
 								</Action>
 							</Label>
+							<DataColumnSummary
+								DataColumn="rdCrosstabColumn"
+								DataType="Number"
+								Function="Sum"
+								ID="fGrandTotal"
+							/>
 						</CrosstabTableValueColumns>
+						<CrosstabTableLabelColumn
+							Class="ThemeAlignRight"
+							Header="Total"
+							HeaderType="Text"
+							ID="GrandTotal"
+							Width="1"
+							WidthScale="px"
+							>
+							<Label
+								Caption="@Data.crsTotal~"
+								Class="ThemeAlignRight, ThemeMargin, ThemeTextSmall"
+								Format="###,###,##0"
+								ID="lblGrandTotal"
+							/>
+						</CrosstabTableLabelColumn>
 					</CrosstabTable>
 				</TabPanel>
 				<TabPanel
@@ -532,9 +560,9 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 					>
 					<CrosstabTable
 						AjaxPaging="True"
-						CellSpacing="5"
+						ColumnHeaderClass="ThemeTextSmall, ThemeBold, ThemeAlignCenter, ThemeNoWrap"
 						ID="Crosstab-SOYBEANS"
-						TableBorder="1"
+						TableBorder="2"
 						Width="100"
 						WidthScale="%"
 						>
@@ -566,35 +594,44 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 									CrosstabLabelColumn="CONTRACT_TYPE_DESC"
 									ID="ContractTypeDesc"
 								/>
+								<CrosstabRowSummaryColumn
+									Function="Sum"
+									ID="crsTotal"
+								/>
 							</CrosstabFilter>
 						</DataLayer>
 						<CrosstabTableLabelColumn
 							Header="Contract Type"
 							ID="colContractType"
-							Width="20"
+							Width="1"
 							WidthScale="px"
 							>
 							<Label
 								Caption="@Data.ContractTypeDesc~"
+								Class="ThemeMargin, ThemeBold, ThemeTextSmall"
 								NoWrap="True"
 							/>
 						</CrosstabTableLabelColumn>
 						<CrosstabTableLabelColumn
 							Header="Commodity"
 							ID="colCommodityDesc"
-							Width="20"
+							Width="1"
 							WidthScale="px"
 							>
 							<Label
 								Caption="@Data.CommodityDesc~"
+								Class="ThemeMargin, ThemeBold, ThemeTextSmall"
 							/>
 						</CrosstabTableLabelColumn>
 						<CrosstabTableValueColumns
 							Header="@Data.rdCrosstabColumn~"
 							ID="colHeaderMonth"
+							Width="50"
+							WidthScale="px"
 							>
 							<Label
-								Caption="=iif(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)"
+								Caption="=IIf(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)"
+								Class="ThemeMargin, ThemeTextSmall"
 								Format="###,###,##0"
 								ID="lblValue"
 								NoWrap="True"
@@ -614,7 +651,28 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 									/>
 								</Action>
 							</Label>
+							<DataColumnSummary
+								DataColumn="rdCrosstabColumn"
+								DataType="Number"
+								Function="Sum"
+								ID="fGrandTotal"
+							/>
 						</CrosstabTableValueColumns>
+						<CrosstabTableLabelColumn
+							Class="ThemeAlignRight"
+							Header="Total"
+							HeaderType="Text"
+							ID="GrandTotal"
+							Width="1"
+							WidthScale="px"
+							>
+							<Label
+								Caption="@Data.crsTotal~"
+								Class="ThemeAlignRight, ThemeMargin, ThemeTextSmall"
+								Format="###,###,##0"
+								ID="lblGrandTotal"
+							/>
+						</CrosstabTableLabelColumn>
 					</CrosstabTable>
 				</TabPanel>
 				<TabPanel
@@ -624,9 +682,9 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 					>
 					<CrosstabTable
 						AjaxPaging="True"
-						CellSpacing="5"
+						ColumnHeaderClass="ThemeTextSmall, ThemeBold, ThemeAlignCenter, ThemeNoWrap"
 						ID="Crosstab-CORN"
-						TableBorder="1"
+						TableBorder="2"
 						Width="100"
 						WidthScale="%"
 						>
@@ -658,36 +716,45 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 									CrosstabLabelColumn="CONTRACT_TYPE_DESC"
 									ID="ContractTypeDesc"
 								/>
+								<CrosstabRowSummaryColumn
+									Function="Sum"
+									ID="crsTotal"
+								/>
 							</CrosstabFilter>
 						</DataLayer>
 						<CrosstabTableLabelColumn
 							Header="Contract Type"
 							ID="colContractType"
-							Width="20"
+							Width="1"
 							WidthScale="px"
 							>
 							<Label
 								Caption="@Data.ContractTypeDesc~"
+								Class="ThemeMargin, ThemeBold, ThemeTextSmall"
 								NoWrap="True"
 							/>
 						</CrosstabTableLabelColumn>
 						<CrosstabTableLabelColumn
 							Header="Commodity"
 							ID="colCommodityDesc"
-							Width="20"
+							Width="1"
 							WidthScale="px"
 							>
 							<Label
 								Caption="@Data.CommodityDesc~"
+								Class="ThemeMargin, ThemeBold, ThemeTextSmall"
 							/>
 						</CrosstabTableLabelColumn>
 						<CrosstabTableValueColumns
 							Header="@Data.rdCrosstabColumn~"
 							ID="colHeaderMonth"
+							Width="50"
+							WidthScale="px"
 							>
 							<Label
-								Caption="=iif(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)"
-								Format="###,###,##0.000"
+								Caption="=IIf(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)"
+								Class="ThemeMargin, ThemeTextSmall"
+								Format="###,###,##0"
 								ID="lblValue"
 								NoWrap="True"
 								>
@@ -706,7 +773,28 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 									/>
 								</Action>
 							</Label>
+							<DataColumnSummary
+								DataColumn="rdCrosstabColumn"
+								DataType="Number"
+								Function="Sum"
+								ID="fGrandTotal"
+							/>
 						</CrosstabTableValueColumns>
+						<CrosstabTableLabelColumn
+							Class="ThemeAlignRight"
+							Header="Total"
+							HeaderType="Text"
+							ID="GrandTotal"
+							Width="1"
+							WidthScale="px"
+							>
+							<Label
+								Caption="@Data.crsTotal~"
+								Class="ThemeAlignRight, ThemeMargin, ThemeTextSmall"
+								Format="###,###,##0"
+								ID="lblGrandTotal"
+							/>
+						</CrosstabTableLabelColumn>
 					</CrosstabTable>
 				</TabPanel>
 				<TabPanel
@@ -716,9 +804,9 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 					>
 					<CrosstabTable
 						AjaxPaging="True"
-						CellSpacing="5"
+						ColumnHeaderClass="ThemeTextSmall, ThemeBold, ThemeAlignCenter, ThemeNoWrap"
 						ID="Crosstab-OATS"
-						TableBorder="1"
+						TableBorder="2"
 						Width="100"
 						WidthScale="%"
 						>
@@ -750,35 +838,44 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 									CrosstabLabelColumn="CONTRACT_TYPE_DESC"
 									ID="ContractTypeDesc"
 								/>
+								<CrosstabRowSummaryColumn
+									Function="Sum"
+									ID="crsTotal"
+								/>
 							</CrosstabFilter>
 						</DataLayer>
 						<CrosstabTableLabelColumn
 							Header="Contract Type"
 							ID="colContractType"
-							Width="20"
+							Width="1"
 							WidthScale="px"
 							>
 							<Label
 								Caption="@Data.ContractTypeDesc~"
+								Class="ThemeMargin, ThemeBold, ThemeTextSmall"
 								NoWrap="True"
 							/>
 						</CrosstabTableLabelColumn>
 						<CrosstabTableLabelColumn
 							Header="Commodity"
 							ID="colCommodityDesc"
-							Width="20"
+							Width="1"
 							WidthScale="px"
 							>
 							<Label
 								Caption="@Data.CommodityDesc~"
+								Class="ThemeMargin, ThemeBold, ThemeTextSmall"
 							/>
 						</CrosstabTableLabelColumn>
 						<CrosstabTableValueColumns
 							Header="@Data.rdCrosstabColumn~"
 							ID="colHeaderMonth"
+							Width="50"
+							WidthScale="px"
 							>
 							<Label
-								Caption="=iif(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)"
+								Caption="=IIf(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)"
+								Class="ThemeMargin, ThemeTextSmall"
 								Format="###,###,##0"
 								ID="lblValue"
 								NoWrap="True"
@@ -798,7 +895,28 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 									/>
 								</Action>
 							</Label>
+							<DataColumnSummary
+								DataColumn="rdCrosstabColumn"
+								DataType="Number"
+								Function="Sum"
+								ID="fGrandTotal"
+							/>
 						</CrosstabTableValueColumns>
+						<CrosstabTableLabelColumn
+							Class="ThemeAlignRight"
+							Header="Total"
+							HeaderType="Text"
+							ID="GrandTotal"
+							Width="1"
+							WidthScale="px"
+							>
+							<Label
+								Caption="@Data.crsTotal~"
+								Class="ThemeAlignRight, ThemeMargin, ThemeTextSmall"
+								Format="###,###,##0"
+								ID="lblGrandTotal"
+							/>
+						</CrosstabTableLabelColumn>
 					</CrosstabTable>
 				</TabPanel>
 				<TabPanel
@@ -808,9 +926,9 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 					>
 					<CrosstabTable
 						AjaxPaging="True"
-						CellSpacing="5"
+						ColumnHeaderClass="ThemeTextSmall, ThemeBold, ThemeAlignCenter, ThemeNoWrap"
 						ID="Crosstab-BARLEY"
-						TableBorder="1"
+						TableBorder="2"
 						Width="100"
 						WidthScale="%"
 						>
@@ -842,35 +960,44 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 									CrosstabLabelColumn="CONTRACT_TYPE_DESC"
 									ID="ContractTypeDesc"
 								/>
+								<CrosstabRowSummaryColumn
+									Function="Sum"
+									ID="crsTotal"
+								/>
 							</CrosstabFilter>
 						</DataLayer>
 						<CrosstabTableLabelColumn
 							Header="Contract Type"
 							ID="colContractType"
-							Width="20"
+							Width="1"
 							WidthScale="px"
 							>
 							<Label
 								Caption="@Data.ContractTypeDesc~"
+								Class="ThemeMargin, ThemeBold, ThemeTextSmall"
 								NoWrap="True"
 							/>
 						</CrosstabTableLabelColumn>
 						<CrosstabTableLabelColumn
 							Header="Commodity"
 							ID="colCommodityDesc"
-							Width="20"
+							Width="1"
 							WidthScale="px"
 							>
 							<Label
 								Caption="@Data.CommodityDesc~"
+								Class="ThemeMargin, ThemeBold, ThemeTextSmall"
 							/>
 						</CrosstabTableLabelColumn>
 						<CrosstabTableValueColumns
 							Header="@Data.rdCrosstabColumn~"
 							ID="colHeaderMonth"
+							Width="50"
+							WidthScale="px"
 							>
 							<Label
-								Caption="=iif(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)"
+								Caption="=IIf(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)"
+								Class="ThemeMargin, ThemeTextSmall"
 								Format="###,###,##0"
 								ID="lblValue"
 								NoWrap="True"
@@ -890,7 +1017,28 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 									/>
 								</Action>
 							</Label>
+							<DataColumnSummary
+								DataColumn="rdCrosstabColumn"
+								DataType="Number"
+								Function="Sum"
+								ID="fGrandTotal"
+							/>
 						</CrosstabTableValueColumns>
+						<CrosstabTableLabelColumn
+							Class="ThemeAlignRight"
+							Header="Total"
+							HeaderType="Text"
+							ID="GrandTotal"
+							Width="1"
+							WidthScale="px"
+							>
+							<Label
+								Caption="@Data.crsTotal~"
+								Class="ThemeAlignRight, ThemeMargin, ThemeTextSmall"
+								Format="###,###,##0"
+								ID="lblGrandTotal"
+							/>
+						</CrosstabTableLabelColumn>
 					</CrosstabTable>
 				</TabPanel>
 				<TabPanel
@@ -900,9 +1048,9 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 					>
 					<CrosstabTable
 						AjaxPaging="True"
-						CellSpacing="5"
+						ColumnHeaderClass="ThemeTextSmall, ThemeBold, ThemeAlignCenter, ThemeNoWrap"
 						ID="Crosstab-SUNFLOWERS"
-						TableBorder="1"
+						TableBorder="2"
 						Width="100"
 						WidthScale="%"
 						>
@@ -934,35 +1082,44 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 									CrosstabLabelColumn="CONTRACT_TYPE_DESC"
 									ID="ContractTypeDesc"
 								/>
+								<CrosstabRowSummaryColumn
+									Function="Sum"
+									ID="crsTotal"
+								/>
 							</CrosstabFilter>
 						</DataLayer>
 						<CrosstabTableLabelColumn
 							Header="Contract Type"
 							ID="colContractType"
-							Width="20"
+							Width="1"
 							WidthScale="px"
 							>
 							<Label
 								Caption="@Data.ContractTypeDesc~"
+								Class="ThemeMargin, ThemeBold, ThemeTextSmall"
 								NoWrap="True"
 							/>
 						</CrosstabTableLabelColumn>
 						<CrosstabTableLabelColumn
 							Header="Commodity"
 							ID="colCommodityDesc"
-							Width="20"
+							Width="1"
 							WidthScale="px"
 							>
 							<Label
 								Caption="@Data.CommodityDesc~"
+								Class="ThemeMargin, ThemeBold, ThemeTextSmall"
 							/>
 						</CrosstabTableLabelColumn>
 						<CrosstabTableValueColumns
 							Header="@Data.rdCrosstabColumn~"
 							ID="colHeaderMonth"
+							Width="50"
+							WidthScale="px"
 							>
 							<Label
-								Caption="=iif(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)"
+								Caption="=IIf(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)"
+								Class="ThemeMargin, ThemeTextSmall"
 								Format="###,###,##0"
 								ID="lblValue"
 								NoWrap="True"
@@ -982,7 +1139,28 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 									/>
 								</Action>
 							</Label>
+							<DataColumnSummary
+								DataColumn="rdCrosstabColumn"
+								DataType="Number"
+								Function="Sum"
+								ID="fGrandTotal"
+							/>
 						</CrosstabTableValueColumns>
+						<CrosstabTableLabelColumn
+							Class="ThemeAlignRight"
+							Header="Total"
+							HeaderType="Text"
+							ID="GrandTotal"
+							Width="1"
+							WidthScale="px"
+							>
+							<Label
+								Caption="@Data.crsTotal~"
+								Class="ThemeAlignRight, ThemeMargin, ThemeTextSmall"
+								Format="###,###,##0"
+								ID="lblGrandTotal"
+							/>
+						</CrosstabTableLabelColumn>
 					</CrosstabTable>
 				</TabPanel>
 				<TabPanel
@@ -992,9 +1170,9 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 					>
 					<CrosstabTable
 						AjaxPaging="True"
-						CellSpacing="5"
+						ColumnHeaderClass="ThemeTextSmall, ThemeBold, ThemeAlignCenter, ThemeNoWrap"
 						ID="Crosstab-CANOLA"
-						TableBorder="1"
+						TableBorder="2"
 						Width="100"
 						WidthScale="%"
 						>
@@ -1026,35 +1204,44 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 									CrosstabLabelColumn="CONTRACT_TYPE_DESC"
 									ID="ContractTypeDesc"
 								/>
+								<CrosstabRowSummaryColumn
+									Function="Sum"
+									ID="crsTotal"
+								/>
 							</CrosstabFilter>
 						</DataLayer>
 						<CrosstabTableLabelColumn
 							Header="Contract Type"
 							ID="colContractType"
-							Width="20"
+							Width="1"
 							WidthScale="px"
 							>
 							<Label
 								Caption="@Data.ContractTypeDesc~"
+								Class="ThemeMargin, ThemeBold, ThemeTextSmall"
 								NoWrap="True"
 							/>
 						</CrosstabTableLabelColumn>
 						<CrosstabTableLabelColumn
 							Header="Commodity"
 							ID="colCommodityDesc"
-							Width="20"
+							Width="1"
 							WidthScale="px"
 							>
 							<Label
 								Caption="@Data.CommodityDesc~"
+								Class="ThemeMargin, ThemeBold, ThemeTextSmall"
 							/>
 						</CrosstabTableLabelColumn>
 						<CrosstabTableValueColumns
 							Header="@Data.rdCrosstabColumn~"
 							ID="colHeaderMonth"
+							Width="50"
+							WidthScale="px"
 							>
 							<Label
-								Caption="=iif(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)"
+								Caption="=IIf(@Data.rdCrosstabValCount~=0,&quot;&quot;,&quot;@Data.rdCrosstabValue~&quot;)"
+								Class="ThemeMargin, ThemeTextSmall"
 								Format="###,###,##0"
 								ID="lblValue"
 								NoWrap="True"
@@ -1074,7 +1261,28 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 									/>
 								</Action>
 							</Label>
+							<DataColumnSummary
+								DataColumn="rdCrosstabColumn"
+								DataType="Number"
+								Function="Sum"
+								ID="fGrandTotal"
+							/>
 						</CrosstabTableValueColumns>
+						<CrosstabTableLabelColumn
+							Class="ThemeAlignRight"
+							Header="Total"
+							HeaderType="Text"
+							ID="GrandTotal"
+							Width="1"
+							WidthScale="px"
+							>
+							<Label
+								Caption="@Data.crsTotal~"
+								Class="ThemeAlignRight, ThemeMargin, ThemeTextSmall"
+								Format="###,###,##0"
+								ID="lblGrandTotal"
+							/>
+						</CrosstabTableLabelColumn>
 					</CrosstabTable>
 				</TabPanel>
 			</Tabs>
