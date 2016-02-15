@@ -7,10 +7,12 @@
 		ID="updateRow"
 		>
 		<Procedure
-			ConnectionID="connMKC"
+			ConnectionID="connProdGP"
 			ID="procUpdateRow"
-			SqlCommand="UPDATE AGTRAX_STAGING.dbo.DM_DSTicketTracking SET DM_DSTicketTracking.DropOffDate = &apos;@Request.dteDropOff~&apos;, DM_DSTicketTracking.CUSTOMER = &apos;@Request.iptCustomer~&apos;, DM_DSTicketTracking.BRANCH_NUMBER = &apos;@Request.iptBranch~&apos;, DM_DSTicketTracking.TotalTickets = &apos;@Request.iptTickets~&apos;, DM_DSTicketTracking.EnteredDate = &apos;@Request.dteEntered~&apos;, DM_DSTicketTracking.UserID = &apos;mlyons@mkcoop.com&apos;, DM_DSTicketTracking.CompletedDate = &apos;@Request.iptCompleteDate~&apos;
-WHERE DM_DSTicketTracking.EntryID = &apos;@Request.iptEntryId~&apos;"
+			SqlCommand="UPDATE AGTRAX_STAGING.dbo.DM_DSTicketTracking SET DM_DSTicketTracking.DropOffDate = &apos;@Request.dteDropOff~&apos;, DM_DSTicketTracking.CUSTOMER = &apos;@Request.iptCustomer~&apos;, DM_DSTicketTracking.BRANCH_NUMBER = &apos;@Request.iptBranch~&apos;, DM_DSTicketTracking.TotalTickets = &apos;@Request.iptTickets~&apos;, DM_DSTicketTracking.EnteredDate = &apos;@Request.dteEntered~&apos;, DM_DSTicketTracking.UserID = &apos;@Function.UserID~&apos;, DM_DSTicketTracking.CompletedDate = &apos;@Request.iptCompleteDate~&apos;
+WHERE DM_DSTicketTracking.EntryID = &apos;@Request.iptEntryId~&apos;
+
+"
 			Type="SQL"
 			>
 			<IfError
@@ -37,11 +39,35 @@ WHERE DM_DSTicketTracking.EntryID = &apos;@Request.iptEntryId~&apos;"
 				</Procedure>
 			</IfError>
 		</Procedure>
+		<Procedure
+			Expression="InStr(&quot;@Request.iptCompleteDate~&quot;,&quot;1900-01-01&quot;) &lt; 0 Or &quot;@Request.iptCompleteDate~&quot; &lt;&gt; &quot;&quot;"
+			ID="ifCompleteSendMailUpdate"
+			Type="If"
+			>
+			<Procedure
+				CcEmailAddress="mlyons@mkcoop.com"
+				ConnectionID="connSMTP"
+				EmailBody="The customer transaction below has been completed.
+
+Customer: @Request.iptCustomer~
+Location: @Request.iptBranch~
+Dropped Off: @Request.dteDropOff~
+AgTrax Entered: @Request.dteEntered~
+Completed: @Request.iptCompleteDate~
+User: @Request.User~"
+				EmailBodyType="PlainText"
+				EmailSubject="DS Transaction Complete"
+				FromEmailAddress="noreply-directship@tmagrain.com"
+				ID="sendUpdateEmail"
+				ToEmailAddress="@Function.UserID~@tmagrain.com"
+				Type="SendMail"
+			/>
+		</Procedure>
 		<Response
 			Type="Report"
 			>
 			<Target
-				Report="TMAReports.TMADirectShip"
+				Report="TMAApps.TMADirectShip"
 				Type="Report"
 				>
 				<WaitPage/>
@@ -56,12 +82,10 @@ WHERE DM_DSTicketTracking.EntryID = &apos;@Request.iptEntryId~&apos;"
 		ID="insertRow"
 		>
 		<Procedure
-			ConnectionID="connMKC"
+			ConnectionID="connProdGP"
 			ID="procInsertRow"
-			SqlCommand="INSERT INTO AGTRAX_STAGING.dbo.DM_DSTicketTracking (DM_DSTicketTracking.DropOffDate,DM_DSTicketTracking.CUSTOMER,DM_DSTicketTracking.BRANCH_NUMBER,DM_DSTicketTracking.TotalTickets,DM_DSTicketTracking.EnteredDate,DM_DSTicketTracking.UserID)
-VALUES (&apos;@Request.dteDropOff~&apos;,&apos;@Request.iptCustomer~&apos;,&apos;@Request.iptBranch~&apos;,&apos;@Request.iptTickets~&apos;,&apos;@Request.dteEntered~&apos;,&apos;mlyons@mkcoop.com&apos;)
-
-"
+			SqlCommand="INSERT INTO AGTRAX_STAGING.dbo.DM_DSTicketTracking (DM_DSTicketTracking.DropOffDate,DM_DSTicketTracking.CUSTOMER,DM_DSTicketTracking.BRANCH_NUMBER,DM_DSTicketTracking.TotalTickets,DM_DSTicketTracking.EnteredDate,DM_DSTicketTracking.UserID,DM_DSTicketTracking.CompletedDate)
+VALUES (&apos;@Request.dteDropOff~&apos;,&apos;@Request.iptCustomer~&apos;,&apos;@Request.iptBranch~&apos;,&apos;@Request.iptTickets~&apos;,&apos;@Request.dteEntered~&apos;,&apos;@Function.UserID~&apos;,&apos;@Request.iptCompleteDate~&apos;)"
 			SqlReturnType="RowsAffected"
 			Type="SQL"
 			>
@@ -89,11 +113,35 @@ VALUES (&apos;@Request.dteDropOff~&apos;,&apos;@Request.iptCustomer~&apos;,&apos
 				</Procedure>
 			</IfError>
 		</Procedure>
+		<Procedure
+			Expression="InStr(&quot;@Request.iptCompleteDate~&quot;,&quot;1900-01-01&quot;) &lt; 0 Or &quot;@Request.iptCompleteDate~&quot; &lt;&gt; &quot;&quot;"
+			ID="ifCompleteSendMailInsert"
+			Type="If"
+			>
+			<Procedure
+				CcEmailAddress="mlyons@mkcoop.com"
+				ConnectionID="connSMTP"
+				EmailBody="The customer transaction below has been completed.
+
+Customer: @Request.iptCustomer~
+Location: @Request.iptBranch~
+Dropped Off: @Request.dteDropOff~
+AgTrax Entered: @Request.dteEntered~
+Completed: @Request.iptCompleteDate~
+User: @Request.User~"
+				EmailBodyType="PlainText"
+				EmailSubject="DS Transaction Complete"
+				FromEmailAddress="noreply-directship@tmagrain.com"
+				ID="sendInsertEmail"
+				ToEmailAddress="@Function.UserID~@tmagrain.com"
+				Type="SendMail"
+			/>
+		</Procedure>
 		<Response
 			Type="Report"
 			>
 			<Target
-				Report="TMAReports.TMADirectShip"
+				Report="TMAApps.TMADirectShip"
 				Type="Report"
 				>
 				<WaitPage/>
@@ -113,5 +161,6 @@ VALUES (&apos;@Request.dteDropOff~&apos;,&apos;@Request.iptCustomer~&apos;,&apos
 		iptEntryId=""
 		iptTickets=""
 		rdTaskID=""
+		User=""
 	/>
 </Process>

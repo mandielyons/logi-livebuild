@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report
+	ID="Home.Default"
+	SecurityReportRightID="MKC,TMA,OC"
+	>
+	<DefaultRequestParams
+		paramCust="CHS INC"
+	/>
+	<LocalData>
+		<DataLayer
+			ConnectionID="connProdGP"
+			ID="SQLWheat"
+			Source="Select IV.DESCRIPTION As COMMODITYDESC,
+  Sum((CM.ISSUED_LBS - CM.APPLIED_LBS + CM.ADJUSTED_LBS - CM.SUB_CONT_LBS) /
+  UOM.STANDARD_UNITS_LBS) As RemainBalanceWheat
+From CA_CONTRACT_MASTER As CM
+  Join CA_COMMODITY_MASTER As IV On CM.COMMODITY_CODE = IV.COMMODITY_CODE
+  Join IV_UNIT_OF_MEASURE As UOM On IV.UOM_BUSHELS = UOM.UNIT_OF_MEASURE
+Where CM.CONTRACT_STATUS = &apos;O&apos; And CM.COMMODITY_CODE = &apos;01&apos;
+Group By IV.DESCRIPTION"
+			Type="SQL"
+		/>
+	</LocalData>
+	<LocalData>
+		<DataLayer
+			ConnectionID="connProdGP"
+			ID="SQLSoybean"
+			Source="Select IV.DESCRIPTION As COMMODITYDESC,
+  Sum((CM.ISSUED_LBS - CM.APPLIED_LBS + CM.ADJUSTED_LBS - CM.SUB_CONT_LBS) /
+  UOM.STANDARD_UNITS_LBS) As RemainBalanceSoybean
+From CA_CONTRACT_MASTER As CM
+  Join CA_COMMODITY_MASTER As IV On CM.COMMODITY_CODE = IV.COMMODITY_CODE
+  Join IV_UNIT_OF_MEASURE As UOM On IV.UOM_BUSHELS = UOM.UNIT_OF_MEASURE
+Where CM.CONTRACT_STATUS = &apos;O&apos; And CM.COMMODITY_CODE = &apos;03&apos;
+Group By IV.DESCRIPTION"
+			Type="SQL"
+		/>
+	</LocalData>
+	<LocalData>
+		<DataLayer
+			ConnectionID="connProdGP"
+			ID="SQLCorn"
+			Source="Select IV.DESCRIPTION As COMMODITYDESC,
+  Sum((CM.ISSUED_LBS - CM.APPLIED_LBS + CM.ADJUSTED_LBS - CM.SUB_CONT_LBS) /
+  UOM.STANDARD_UNITS_LBS) As RemainBalanceCorn
+From CA_CONTRACT_MASTER As CM
+  Join CA_COMMODITY_MASTER As IV On CM.COMMODITY_CODE = IV.COMMODITY_CODE
+  Join IV_UNIT_OF_MEASURE As UOM On IV.UOM_BUSHELS = UOM.UNIT_OF_MEASURE
+Where CM.CONTRACT_STATUS = &apos;O&apos; And CM.COMMODITY_CODE = &apos;04&apos;
+Group By IV.DESCRIPTION"
+			Type="SQL"
+		/>
+	</LocalData>
+	<LocalData>
+		<DataLayer
+			ConnectionID="connProdGP"
+			ID="SQLMilo"
+			Source="Select IV.DESCRIPTION As COMMODITYDESC,
+  Sum((CM.ISSUED_LBS - CM.APPLIED_LBS + CM.ADJUSTED_LBS - CM.SUB_CONT_LBS) /
+  UOM.STANDARD_UNITS_LBS) As RemainBalanceMilo
+From CA_CONTRACT_MASTER As CM
+  Join CA_COMMODITY_MASTER As IV On CM.COMMODITY_CODE = IV.COMMODITY_CODE
+  Join IV_UNIT_OF_MEASURE As UOM On IV.UOM_BUSHELS = UOM.UNIT_OF_MEASURE
+Where CM.CONTRACT_STATUS = &apos;O&apos; And CM.COMMODITY_CODE = &apos;02&apos;
+Group By IV.DESCRIPTION"
+			Type="SQL"
+		/>
+	</LocalData>
+	<LocalData>
+		<DataLayer
+			ConnectionID="connMKC"
+			ID="lContractsOvershipped"
+			Source="Select SUBSTRING(GaugeAgTraxContracts.CONTRACTNMBR,1,CHARINDEX(&apos;.&apos;,GaugeAgTraxContracts.CONTRACTNMBR)-1) CONTRACTNMBR,
+  Sum(GaugeAgTraxContracts.REMAINING_BU) As REMAINING_BU,
+  GaugeAgTraxContracts.COMMODITYDESC
+From GaugeAgTraxContracts
+Where GaugeAgTraxContracts.REMAINING_BU &lt; 0
+Group By SUBSTRING(GaugeAgTraxContracts.CONTRACTNMBR,1,CHARINDEX(&apos;.&apos;,GaugeAgTraxContracts.CONTRACTNMBR)-1),
+  GaugeAgTraxContracts.COMMODITYDESC
+Order By REMAINING_BU
+"
+			Type="SQL"
+			>
+			<DataLayerLink
+				ID="linkContractsOvershipped"
+			/>
+		</DataLayer>
+	</LocalData>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrHeader"
+	/>
+	<DefaultRequestParams
+		paramContract="@Local.CONTRACTNMBR~"
+	/>
+	<Body>
+		<ResponsiveRow>
+			<ResponsiveColumn
+				Class="ThemeAlignCenter"
+				>
+				<LineBreak
+					LineCount="5"
+				/>
+				<Image
+					Caption="logo.png"
+					ID="imgMKCLogo"
+					SecurityRightID="MKC"
+				/>
+				<LineBreak
+					LineCount="5"
+				/>
+				<Image
+					Caption="TMA_LogoStkdK.png"
+					ID="imgTMALogo"
+					SecurityRightID="TMA,MKC"
+				/>
+			</ResponsiveColumn>
+		</ResponsiveRow>
+	</Body>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrFooter"
+	/>
+	<ideTestParams/>
+</Report>

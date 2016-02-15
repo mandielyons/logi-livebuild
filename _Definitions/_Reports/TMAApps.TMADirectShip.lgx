@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Report
-	Caption="TMA Direct Ship Management"
-	ID="TMAReports.TMADirectShip"
+	Caption="Direct Ship App"
+	ID="TMAApps.TMADirectShip"
+	SecurityReportRightID="TMA,MKC"
 	>
 	<IncludeSharedElement
 		DefinitionFile="_Layout.Shared"
@@ -67,7 +68,7 @@
 									ExcelOutputFormat="Excel2007"
 									ExportDataTableID="dtTicketTracking"
 									FrameID="NewWindow"
-									Report="TMAReports.TMADirectShip"
+									Report="TMAApps.TMADirectShip"
 									RequestForwarding="True"
 									Type="NativeExcel"
 								/>
@@ -111,7 +112,7 @@
 							TableBorder="0"
 							>
 							<DataLayer
-								ConnectionID="connAgTrax"
+								ConnectionID="connProdGP"
 								ID="dlTicketTracking"
 								Source="Select DM_DSTicketTracking.EntryID,
   DM_DSTicketTracking.DropOffDate,
@@ -123,11 +124,13 @@
   DM_DSTicketTracking.CompletedDate,
   IV_BRANCH_MASTER.BRANCH_NAME,
   AR_CUSTOMER_MASTER_TMA.NAME
-From DM_DSTicketTracking
+From DM_DSTicketTracking 
   Inner Join IV_BRANCH_MASTER On DM_DSTicketTracking.BRANCH_NUMBER =
     IV_BRANCH_MASTER.BRANCH_NUMBER
   Inner Join AR_CUSTOMER_MASTER_TMA On DM_DSTicketTracking.CUSTOMER =
-    AR_CUSTOMER_MASTER_TMA.CUSTOMER"
+    AR_CUSTOMER_MASTER_TMA.CUSTOMER
+Order By DM_DSTicketTracking.DropOffDate ASC
+"
 								Type="SQL"
 							/>
 							<InteractivePaging
