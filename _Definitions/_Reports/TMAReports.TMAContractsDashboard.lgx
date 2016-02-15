@@ -109,7 +109,7 @@ ORDER BY COMMODITYCODE
 									paramShipPeriodDt="@Local.SHIP_PERIOD_DT~"
 								/>
 								<Target
-									Report="Unknown.SubReports.TMAContractsByShipDate_(NEW)"
+									Report="Unknown.SubReports.TMAContractsByShipDate"
 									RequestForwarding="True"
 									Type="Report"
 								/>
@@ -414,7 +414,9 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 							/>
 						</CrosstabTableValueColumns>
 						<CrosstabTableLabelColumn
+							Class="ThemeAlignRight"
 							Header="Total"
+							HeaderType="Text"
 							ID="GrandTotal"
 							Width="1"
 							WidthScale="px"

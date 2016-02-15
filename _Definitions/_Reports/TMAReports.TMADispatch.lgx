@@ -32,12 +32,15 @@
 ,CAST(CONTRACT_NUMBER AS FLOAT) [jCONTRACT_NUMBER]
 ,CUSTOMER
 ,CUSTOMER_DESC
+,LTRIM(RTRIM(CUSTOMER_DESC))+&apos; - &apos;+LTRIM(RTRIM(CUSTOMER)) [Account]
 ,CONTRACT_NUMBER
 ,THEIR_CONTRACT_NUMBER
 ,COMMODITY_CODE
 ,COMMODITY_DESC
+,LTRIM(RTRIM(COMMODITY_CODE))+&apos;-&apos;+LTRIM(RTRIM(COMMODITY_DESC)) [Commodity]
 ,BRANCH_NUMBER
 ,BRANCH_DESC
+,LTRIM(RTRIM(BRANCH_DESC))+&apos; - &apos;+LTRIM(RTRIM(BRANCH_NUMBER)) [Location]
 ,REMAINING_BU
 FROM Agtrax_Staging..DM_OpenContracts
 WHERE CONTRACT_TYPE=2
@@ -53,95 +56,159 @@ WHERE CONTRACT_TYPE=2
 		<Division
 			ID="divBtnExportExcel"
 			>
-			<LineBreak/>
-			<Remark>
-				<Button
-					Caption="Export to Excel"
-					ID="buttonExport_Excel"
-					Tooltip="Click to export data to Microsoft Excel"
-					>
-					<Action
-						ID="actionExport_Excel"
-						Type="NativeExcel"
-						>
-						<Target
-							ExcelOutputFormat="Excel2007"
-							ExportFilename="TMADispatch.xlsx"
-							ID="targetExport_Excel"
-							Report="CurrentReport"
-							ShowGridlines="False"
-							Type="NativeExcel"
-						/>
-					</Action>
-				</Button>
-			</Remark>
-			<Label
-				Class="fa fa-file-excel-o fa-2x "
-				HtmlTag="Div"
-				Tooltip="Export to Excel"
+			<ResponsiveRow
+				ID="rrExportToExcel"
 				>
-				<Action
-					Type="NativeExcel"
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
+				/>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="1"
+					ColspanLargeScreen="1"
+					ColspanMediumScreen="1"
+					ColspanSmallScreen="1"
 					>
-					<Target
-						ExcelOutputFormat="Excel2007"
-						FrameID="NewWindow"
-						Report="CurrentReport"
-						RequestForwarding="True"
-						Type="NativeExcel"
-					/>
-				</Action>
-			</Label>
+					<Label
+						Class="ThemeAlignRight, fa fa-file-excel-o fa-2x"
+						HtmlTag="Div"
+						Tooltip="Export to Excel"
+						>
+						<Action
+							Type="NativeExcel"
+							>
+							<Target
+								ExcelOutputFormat="Excel2007"
+								FrameID="NewWindow"
+								Report="CurrentReport"
+								RequestForwarding="True"
+								Type="NativeExcel"
+							/>
+						</Action>
+					</Label>
+				</ResponsiveColumn>
+			</ResponsiveRow>
 		</Division>
 		<Division
 			ID="divInput"
 			>
-			<LineBreak
-				LineCount="2"
-			/>
-			<Label
-				Caption="Branch Locations: (Use CRTL+click to select multiple values)"
-				Class="ThemeHeaderSmall, ThemeBold"
-			/>
-			<InputSelectList
-				DefaultValue="@Request.Branch~"
-				ID="Branch"
-				IncludeBlank="True"
-				IncludeBlankCaption="All Locations"
-				IncludeBlankValue="0"
-				InputRows="5"
-				MultiSelect="True"
-				OptionCaptionColumn="BRANCH_LIST"
-				OptionValueColumn="BRANCH_NUMBER"
-				>
-				<DataLayer
-					ConnectionID="connProdGP"
-					ID="sqlBranchList"
-					Source="SELECT DISTINCT CAST(BRANCH_NUMBER AS VARCHAR(20))+&apos; - &apos;+BRANCH_DESC BRANCH_LIST,BRANCH_NUMBER,BRANCH_DESC
+			<ResponsiveRow>
+				<ResponsiveColumn
+					ColspanExtraSmallScreen="3"
+					ColspanLargeScreen="3"
+					ColspanMediumScreen="3"
+					ColspanSmallScreen="3"
+					>
+					<Label
+						Caption="Branch Locations: (Use CRTL+click to select multiple values)"
+						Class="ThemeHeaderSmall, ThemeBold"
+					/>
+					<InputSelectList
+						DefaultValue="@Request.Branch~"
+						ID="Branch"
+						IncludeBlank="True"
+						IncludeBlankCaption="All Locations"
+						IncludeBlankValue="0"
+						InputRows="5"
+						MultiSelect="True"
+						OptionCaptionColumn="BRANCH_LIST"
+						OptionValueColumn="BRANCH_NUMBER"
+						>
+						<DataLayer
+							ConnectionID="connProdGP"
+							ID="sqlBranchList"
+							Source="SELECT DISTINCT CAST(BRANCH_NUMBER AS VARCHAR(20))+&apos; - &apos;+BRANCH_DESC BRANCH_LIST,BRANCH_NUMBER,BRANCH_DESC
 FROM Agtrax_Staging..DM_OpenContracts
 WHERE CONTRACT_TYPE=2
 ORDER BY BRANCH_DESC
 "
-					Type="SQL"
-				/>
-			</InputSelectList>
-			<LineBreak
-				LineCount="1"
-			/>
-			<Button
-				Caption="Update Report"
-				ID="buttonLocations"
-				>
-				<Action
-					ElementID="divInput, divTable"
-					ID="actRefresh"
-					Type="RefreshElement"
-				/>
-			</Button>
+							Type="SQL"
+						/>
+					</InputSelectList>
+					<LineBreak
+						LineCount="1"
+					/>
+					<Button
+						Caption="Update Report"
+						ID="buttonLocations"
+						>
+						<Action
+							ElementID="divInput, divTable"
+							ID="actRefresh"
+							Type="RefreshElement"
+						/>
+					</Button>
+				</ResponsiveColumn>
+			</ResponsiveRow>
 		</Division>
 		<Division
 			ID="divTable"
 			>
+			<LineBreak
+				LineCount="1"
+			/>
 			<DataTable
 				Caption="TMA Branch Dispatch Details"
 				ID="TMAContracts"
@@ -151,11 +218,12 @@ ORDER BY BRANCH_DESC
 				>
 				<InteractivePaging
 					CaptionType="Image"
+					Class="ThemeTextSmall"
 					HideWhenOnePage="False"
 					Location="Top"
-					NumberedPageCount="5"
+					PageNrCaption="Page  "
 					PageRowCount="12"
-					ShowPageNumber="Numbered"
+					ShowPageNumber="True"
 				/>
 				<DataLayer
 					ID="dlsqlTMAContracts"
@@ -202,32 +270,19 @@ ORDER BY BRANCH_DESC
 				</DataTableColumn>
 				<DataTableColumn
 					Header="Account"
-					ID="colCUSTOMER"
+					ID="colAccount"
 					>
 					<Label
-						Caption="@Data.CUSTOMER~"
-						ID="lblCUSTOMER"
+						Caption="@Data.Account~"
+						ID="lblAccount"
 					/>
 					<DataColumnSort
-						DataColumn="CUSTOMER_DESC"
-						DataType="Text"
+						DataColumn="SHPMTTYP_CODE"
+						DataType="Number"
 					/>
 				</DataTableColumn>
 				<DataTableColumn
-					Header="Account Description"
-					ID="colCUSTOMER_DESC"
-					>
-					<Label
-						Caption="@Data.CUSTOMER_DESC~"
-						ID="lblCUSTOMER_DESC"
-					/>
-					<DataColumnSort
-						DataColumn="CUSTOMER_DESC"
-						DataType="Text"
-					/>
-				</DataTableColumn>
-				<DataTableColumn
-					Header="Contract Number"
+					Header="Contract"
 					ID="colCONTRACT_NUMBER"
 					>
 					<Label
@@ -253,58 +308,34 @@ ORDER BY BRANCH_DESC
 					/>
 				</DataTableColumn>
 				<DataTableColumn
-					Header="Commodity Code"
-					ID="colCOMMODITY_CODE"
+					Header="Commodity"
+					ID="colCommodity"
 					>
 					<Label
-						Caption="@Data.COMMODITY_CODE~"
-						ID="lblCOMMODITY_CODE"
+						Caption="@Data.Commodity~"
+						ID="lblCommodity"
 					/>
 					<DataColumnSort
-						DataColumn="COMMODITY_CODE"
-						DataType="Text"
-					/>
-				</DataTableColumn>
-				<DataTableColumn
-					Header="Commodity Description"
-					ID="colCOMMODITY_DESC"
-					>
-					<Label
-						Caption="@Data.COMMODITY_DESC~"
-						ID="lblCOMMODITY_DESC"
-					/>
-					<DataColumnSort
-						DataColumn="COMMODITY_DESC"
-						DataType="Text"
-					/>
-				</DataTableColumn>
-				<DataTableColumn
-					Header="Branch Number"
-					ID="colBRANCH_NUMBER"
-					>
-					<Label
-						Caption="@Data.BRANCH_NUMBER~"
-						ID="lblBRANCH_NUMBER"
-					/>
-					<DataColumnSort
-						DataColumn="BRANCH_NUMBER"
+						DataColumn="SHPMTTYP_CODE"
 						DataType="Number"
 					/>
 				</DataTableColumn>
 				<DataTableColumn
-					Header="Branch Description"
-					ID="colBRANCH_DESC"
+					Header="Location"
+					ID="colLocation"
 					>
 					<Label
-						Caption="@Data.BRANCH_DESC~"
-						ID="lblBRANCH_DESC"
+						Caption="@Data.Location~"
+						ID="lblLocation"
 					/>
 					<DataColumnSort
-						DataColumn="BRANCH_DESC"
-						DataType="Text"
+						DataColumn="SHPMTTYP_CODE"
+						DataType="Number"
 					/>
 				</DataTableColumn>
 				<DataTableColumn
+					Class="ThemeMargin, ThemeAlignRight"
+					ColumnHeaderClass="ThemeAlignCenter"
 					Header="Remaining BU"
 					ID="colREMAINING_BU"
 					>
@@ -317,9 +348,15 @@ ORDER BY BRANCH_DESC
 						DataColumn="REMAINING_BU"
 						DataType="Number"
 					/>
+					<DataColumnSummary
+						DataColumn="REMAINING_BU"
+						DataType="Number"
+						Function="Sum"
+						ID="dcsRemainingBU"
+					/>
 				</DataTableColumn>
 				<DataTableColumn
-					Header="Destination Code"
+					Header="Dest Code"
 					ID="colDEST_CODE"
 					>
 					<Label
@@ -389,6 +426,11 @@ ORDER BY BRANCH_DESC
 						ID="lblTMANOTES"
 					/>
 				</DataTableColumn>
+				<SummaryRow
+					Caption="Total: "
+					ID="srSummary"
+					LastPageOnly="False"
+				/>
 			</DataTable>
 		</Division>
 	</Body>
