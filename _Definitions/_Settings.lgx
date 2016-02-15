@@ -93,6 +93,16 @@
 			SqlServerUser="BIOperations"
 			Type="SqlServer"
 		/>
+		<Connection
+			GoogleMapsUseHTTPS="False"
+			ID="gmAPIKey"
+			Type="GoogleMaps"
+		/>
+		<Connection
+			ID="connSMTP"
+			SmtpServer="relay.mkcoop.com"
+			Type="Smtp"
+		/>
 	</Connections>
 	<Security
 		AuthenticationSource="Standard"

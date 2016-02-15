@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Report
-	Caption="TMA Contracts Dashboard"
+	Caption="Contracts Dashboard"
 	ID="TMAReports.TMAContractsDashboard"
+	SecurityReportRightID="TMA,MKC"
 	>
 	<IncludeSharedElement
 		DefinitionFile="_Layout.Shared"
@@ -1080,6 +1081,7 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 			<LineBreak/>
 		</Division>
 	</Body>
+
 	<ReportFooter>
 		<IncludeSharedElement
 			DefinitionFile="_Layout.Shared"
