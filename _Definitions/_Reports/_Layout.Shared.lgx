@@ -57,26 +57,24 @@
 								<Note
 									Note="**Comment back in for security**"
 								/>
-								<Remark>
-									<Image
-										Caption="TMA_LogoStkdWht.png"
-										Class="main-logo"
-										ID="tmalogo"
-										SecurityRightID="TMA"
+								<Image
+									Caption="TMA_LogoStkdWht.png"
+									Class="main-logo"
+									ID="tmalogo"
+									SecurityRightID="TMA"
+									>
+									<Action
+										ID="actHomeLink"
+										Type="Report"
 										>
-										<Action
-											ID="actHomeLink"
+										<Target
+											Report="TMAReports.TMAContractsDashboard"
 											Type="Report"
 											>
-											<Target
-												Report="TMAReports.TMAContractsDashboard"
-												Type="Report"
-												>
-												<WaitPage/>
-											</Target>
-										</Action>
-									</Image>
-								</Remark>
+											<WaitPage/>
+										</Target>
+									</Action>
+								</Image>
 							</Division>
 							<Division
 								Class="navbar-brand navbar-brand-txt"
@@ -340,92 +338,94 @@
 										ID="pipe-spacer"
 									/>
 								</Division>
-								<Division
-									ID="tma-apps-container"
-									SecurityRightID="TMA,MKC"
-									>
+								<Remark>
 									<Division
-										Class="dropdown"
-										HtmlDiv="True"
-										ID="tma-reports"
+										ID="tma-apps-container"
+										SecurityRightID="TMA,MKC"
 										>
-										<Label
-											Caption="TMA Apps"
-											>
-											<Action
-												ID="actBlank"
-												Javascript="void(0)"
-												Type="Javascript"
-											/>
-											<ConditionalClass
-												Class="selected-menu"
-												Condition="&quot;@Request.rdReport~&quot;.indexOf(&quot;TMAReports&quot;)&lt;&gt;&quot;-1&quot;"
-											/>
-										</Label>
-										<Label
-											Class="caret"
-											>
-											<Action
-												ID="actBlank"
-												Javascript="void(0)"
-												Type="Javascript"
-											/>
-											<ConditionalClass
-												Class="caret selected-menu"
-												Condition="&quot;@Request.rdReport~&quot;.indexOf(&quot;Reports&quot;)&lt;&gt;&quot;-1&quot;"
-											/>
-										</Label>
 										<Division
-											Class="submenu"
+											Class="dropdown"
 											HtmlDiv="True"
-											ID="submenu-tma-reports"
+											ID="tma-reports"
 											>
-											<DataList
-												ID="lstTMAApps"
+											<Label
+												Caption="TMA Apps"
 												>
-												<DataLayer
-													ID="dlNav-TMAApps"
-													Type="DefinitionList"
+												<Action
+													ID="actBlank"
+													Javascript="void(0)"
+													Type="Javascript"
+												/>
+												<ConditionalClass
+													Class="selected-menu"
+													Condition="&quot;@Request.rdReport~&quot;.indexOf(&quot;TMAReports&quot;)&lt;&gt;&quot;-1&quot;"
+												/>
+											</Label>
+											<Label
+												Class="caret"
+												>
+												<Action
+													ID="actBlank"
+													Javascript="void(0)"
+													Type="Javascript"
+												/>
+												<ConditionalClass
+													Class="caret selected-menu"
+													Condition="&quot;@Request.rdReport~&quot;.indexOf(&quot;Reports&quot;)&lt;&gt;&quot;-1&quot;"
+												/>
+											</Label>
+											<Division
+												Class="submenu"
+												HtmlDiv="True"
+												ID="submenu-tma-reports"
+												>
+												<DataList
+													ID="lstTMAApps"
 													>
-													<CompareFilter
-														CaseSensitive="True"
-														CompareType="="
-														CompareValue="TMAApps"
-														DataColumn="Folder1"
-														DataType="Text"
-														ID="fTMAApps"
-													/>
-												</DataLayer>
-												<ListItem>
-													<Label
-														Caption="@Data.Caption~"
+													<DataLayer
+														ID="dlNav-TMAApps"
+														Type="DefinitionList"
 														>
-														<Action
-															ID="actReport"
-															Type="Report"
+														<CompareFilter
+															CaseSensitive="True"
+															CompareType="="
+															CompareValue="TMAApps"
+															DataColumn="Folder1"
+															DataType="Text"
+															ID="fTMAApps"
+														/>
+													</DataLayer>
+													<ListItem>
+														<Label
+															Caption="@Data.Caption~"
 															>
-															<Target
-																Report="@Data.ID~"
+															<Action
+																ID="actReport"
 																Type="Report"
 																>
-																<WaitPage/>
-															</Target>
-														</Action>
-														<ConditionalClass
-															Class="selected-menu"
-															Condition="&quot;@Request.rdReport~&quot;==&quot;@Data.ID~&quot;"
-														/>
-													</Label>
-												</ListItem>
-											</DataList>
+																<Target
+																	Report="@Data.ID~"
+																	Type="Report"
+																	>
+																	<WaitPage/>
+																</Target>
+															</Action>
+															<ConditionalClass
+																Class="selected-menu"
+																Condition="&quot;@Request.rdReport~&quot;==&quot;@Data.ID~&quot;"
+															/>
+														</Label>
+													</ListItem>
+												</DataList>
+											</Division>
 										</Division>
+										<Label
+											Caption="|"
+											Class="pipe-spacer"
+											ID="pipe-spacer"
+										/>
 									</Division>
-									<Label
-										Caption="|"
-										Class="pipe-spacer"
-										ID="pipe-spacer"
-									/>
-								</Division>
+								</Remark>
 								<Division
 									ID="maps-container"
 									SecurityRightID="MKC"
@@ -700,12 +700,12 @@
 				ShowModes="rdBrowser"
 				>
 				<Label
-					Caption="© Copyright 2015 - MKC. Shared growth. Shared success."
+					Caption="© Copyright 2015 - MKC. Shared growth. Shared success. All rights reserved."
 					Format="HTML"
 					SecurityRightID="MKC"
 				/>
 				<Label
-					Caption="© Copyright 2015 - Team Marketing Alliance"
+					Caption="© Copyright 2015 - Team Marketing Alliance. All rights reserved."
 					Format="HTML"
 					SecurityRightID="TMA"
 				/>

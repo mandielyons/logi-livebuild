@@ -8,6 +8,7 @@
 		ID="Local-AFDData"
 		>
 		<DataLayer
+			CellRange="A51:N90"
 			ColumnNamesRow="1"
 			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx"
 			ExcelWorksheet="Sheet1"
@@ -204,6 +205,7 @@
 						ID="panel-body-map"
 						>
 						<GoogleMap
+							ConnectionID="gmAPIKey"
 							GoogleMapTypes="Satellite,Map,Hybrid,Terrain"
 							GoogleMapZoomControl="Small"
 							Height="800"

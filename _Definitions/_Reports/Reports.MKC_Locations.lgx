@@ -4,6 +4,22 @@
 	ID="Reports.MKC_Locations"
 	SecurityReportRightID="MKC"
 	>
+	<LocalData
+		ID="Local-BranchData"
+		>
+		<DataLayer
+			ConnectionID="connProdGP"
+			ID="dlSQLBranchData"
+			Source="SELECT LOCNCODE,Location_Segment,LOCNDSCR,ADDRESS1,CITY,STATE,ZIPCODE,PHONE1,STAXSCHD
+FROM MKCGP..IV40700
+WHERE INACTIVE=0 AND Location_Segment&lt;&gt;&apos;&apos; AND ZIPCODE &gt; 1 "
+			Type="SQL"
+			>
+			<DataLayerLink
+				ID="dllBranchData"
+			/>
+		</DataLayer>
+	</LocalData>
 	<IncludeSharedElement
 		DefinitionFile="_Layout.Shared"
 		SharedElementID="shrHeader"
@@ -46,21 +62,37 @@
 								ID="LocationMarker"
 								>
 								<DataLayer
-									ConnectionID="connProdGP"
-									ID="dlSQLBranches"
-									Source="SELECT LOCNCODE,Location_Segment,LOCNDSCR,ADDRESS1,CITY,STATE,ZIPCODE,PHONE1,STAXSCHD
-FROM MKCGP..IV40700
-WHERE INACTIVE=0 AND Location_Segment&lt;&gt;&apos;&apos; AND ZIPCODE &gt; 1 "
-									Type="SQL"
+									ID="dllBranchData"
+									LinkedDataLayerID="dllBranchData"
+									Type="Linked"
 									>
 									<GeocodeColumns
 										CityDataColumn="CITY"
+										ConnectionID="gmAPIKey"
 										ID="mapSQLBranches"
 										PostalCodeDataColumn="ZIPCODE"
 										StateProvinceDataColumn="STATE"
 										StreetDataColumn="ADDRESS1"
 									/>
 								</DataLayer>
+								<Remark>
+									<DataLayer
+										ConnectionID="connProdGP"
+										ID="dlSQLBranches"
+										Source="SELECT LOCNCODE,Location_Segment,LOCNDSCR,ADDRESS1,CITY,STATE,ZIPCODE,PHONE1,STAXSCHD
+FROM MKCGP..IV40700
+WHERE INACTIVE=0 AND Location_Segment&lt;&gt;&apos;&apos; AND ZIPCODE &gt; 1 "
+										Type="SQL"
+										>
+										<GeocodeColumns
+											CityDataColumn="CITY"
+											ID="mapSQLBranches"
+											PostalCodeDataColumn="ZIPCODE"
+											StateProvinceDataColumn="STATE"
+											StreetDataColumn="ADDRESS1"
+										/>
+									</DataLayer>
+								</Remark>
 								<Remark>
 									<DataLayer
 										ColumnNamesRow="1"
@@ -397,7 +429,7 @@ ORDER BY ID */"
 		SharedElementID="shrFooter"
 	/>
 	<ideTestParams
-		paramLocCd="ABILENE"
+		paramLocCd=""
 		paramLocName=""
 	/>
 </Report>
