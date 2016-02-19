@@ -41,6 +41,8 @@
 ,BRANCH_NUMBER
 ,BRANCH_DESC
 ,LTRIM(RTRIM(BRANCH_DESC))+&apos; - &apos;+LTRIM(RTRIM(BRANCH_NUMBER)) [Location]
+,DELIVERY_START_DATE
+,DELIVERY_END_DATE
 ,REMAINING_BU
 FROM Agtrax_Staging..DM_OpenContracts
 WHERE CONTRACT_TYPE=2
@@ -331,6 +333,34 @@ ORDER BY BRANCH_DESC
 					<DataColumnSort
 						DataColumn="SHPMTTYP_CODE"
 						DataType="Number"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Delivery Start Date"
+					ID="colDELIVERY_START_DATE"
+					>
+					<Label
+						Caption="@Data.DELIVERY_START_DATE~"
+						Format="Short Date"
+						ID="lblDELIVERY_START_DATE"
+					/>
+					<DataColumnSort
+						DataColumn="DELIVERY_START_DATE"
+						DataType="Date"
+					/>
+				</DataTableColumn>
+				<DataTableColumn
+					Header="Delivery End Date"
+					ID="colDELIVERY_END_DATE"
+					>
+					<Label
+						Caption="@Data.DELIVERY_END_DATE~"
+						Format="Short Date"
+						ID="lblDELIVERY_END_DATE"
+					/>
+					<DataColumnSort
+						DataColumn="DELIVERY_END_DATE"
+						DataType="Date"
 					/>
 				</DataTableColumn>
 				<DataTableColumn
