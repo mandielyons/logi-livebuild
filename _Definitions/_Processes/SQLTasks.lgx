@@ -9,7 +9,7 @@
 		<Procedure
 			ConnectionID="connMKC"
 			ID="procUpdateRow"
-			SqlCommand="UPDATE AGTRAX_STAGING.dbo.DM_DSTicketTracking SET DM_DSTicketTracking.DropOffDate = &apos;@Request.dteDropOff~&apos;, DM_DSTicketTracking.CUSTOMER = &apos;@Request.iptCustomer~&apos;, DM_DSTicketTracking.BRANCH_NUMBER = &apos;@Request.iptBranch~&apos;, DM_DSTicketTracking.TotalTickets = &apos;@Request.iptTickets~&apos;, DM_DSTicketTracking.EnteredDate = &apos;@Request.dteEntered~&apos;, DM_DSTicketTracking.UserID = &apos;mlyons@mkcoop.com&apos;, DM_DSTicketTracking.CompletedDate = &apos;@Request.iptCompleteDate~&apos;
+			SqlCommand="UPDATE AGTRAX_STAGING.dbo.DM_DSTicketTracking SET DM_DSTicketTracking.DropOffDate = &apos;@Request.dteDropOff~&apos;, DM_DSTicketTracking.CUSTOMER = &apos;@Request.iptCustomer~&apos;, DM_DSTicketTracking.BRANCH_NUMBER = &apos;@Request.iptBranch~&apos;, DM_DSTicketTracking.TotalTickets = &apos;@Request.iptTickets~&apos;, DM_DSTicketTracking.EnteredDate = &apos;@Request.dteEntered~&apos;, DM_DSTicketTracking.ElectronicTicket = &apos;@Request.iptElectronic~&apos;, DM_DSTicketTracking.UserID = &apos;@Function.UserID~&apos;, DM_DSTicketTracking.CompletedDate = &apos;@Request.iptCompleteDate~&apos;
 WHERE DM_DSTicketTracking.EntryID = &apos;@Request.iptEntryId~&apos;"
 			Type="SQL"
 			>
@@ -41,7 +41,7 @@ WHERE DM_DSTicketTracking.EntryID = &apos;@Request.iptEntryId~&apos;"
 			Type="Report"
 			>
 			<Target
-				Report="TMAReports.TMADirectShip"
+				Report="TMAApps.TMADirectShip"
 				Type="Report"
 				>
 				<WaitPage/>
@@ -58,8 +58,8 @@ WHERE DM_DSTicketTracking.EntryID = &apos;@Request.iptEntryId~&apos;"
 		<Procedure
 			ConnectionID="connMKC"
 			ID="procInsertRow"
-			SqlCommand="INSERT INTO AGTRAX_STAGING.dbo.DM_DSTicketTracking (DM_DSTicketTracking.DropOffDate,DM_DSTicketTracking.CUSTOMER,DM_DSTicketTracking.BRANCH_NUMBER,DM_DSTicketTracking.TotalTickets,DM_DSTicketTracking.EnteredDate,DM_DSTicketTracking.UserID)
-VALUES (&apos;@Request.dteDropOff~&apos;,&apos;@Request.iptCustomer~&apos;,&apos;@Request.iptBranch~&apos;,&apos;@Request.iptTickets~&apos;,&apos;@Request.dteEntered~&apos;,&apos;mlyons@mkcoop.com&apos;)
+			SqlCommand="INSERT INTO AGTRAX_STAGING.dbo.DM_DSTicketTracking (DM_DSTicketTracking.DropOffDate,DM_DSTicketTracking.CUSTOMER,DM_DSTicketTracking.BRANCH_NUMBER,DM_DSTicketTracking.TotalTickets,DM_DSTicketTracking.EnteredDate,DM_DSTicketTracking.UserID,DM_DSTicketTracking.ElectronicTicket)
+VALUES (&apos;@Request.dteDropOff~&apos;,&apos;@Request.iptCustomer~&apos;,&apos;@Request.iptBranch~&apos;,&apos;@Request.iptTickets~&apos;,&apos;@Request.dteEntered~&apos;,&apos;@Function.UserID~&apos;,&apos;@Request.iptElectronic~&apos;)
 
 "
 			SqlReturnType="RowsAffected"
@@ -93,7 +93,7 @@ VALUES (&apos;@Request.dteDropOff~&apos;,&apos;@Request.iptCustomer~&apos;,&apos
 			Type="Report"
 			>
 			<Target
-				Report="TMAReports.TMADirectShip"
+				Report="TMAApps.TMADirectShip"
 				Type="Report"
 				>
 				<WaitPage/>
@@ -110,6 +110,7 @@ VALUES (&apos;@Request.dteDropOff~&apos;,&apos;@Request.iptCustomer~&apos;,&apos
 		iptBranch=""
 		iptCompleteDate=""
 		iptCustomer=""
+		iptElectronic=""
 		iptEntryId=""
 		iptTickets=""
 		rdTaskID=""

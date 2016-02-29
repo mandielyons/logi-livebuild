@@ -112,7 +112,7 @@
 							TableBorder="0"
 							>
 							<DataLayer
-								ConnectionID="connAgTrax"
+								ConnectionID="connProdGP"
 								ID="dlTicketTracking"
 								Source="Select DM_DSTicketTracking.EntryID,
   DM_DSTicketTracking.DropOffDate,
@@ -123,7 +123,8 @@
   DM_DSTicketTracking.UserID,
   DM_DSTicketTracking.CompletedDate,
   IV_BRANCH_MASTER.BRANCH_NAME,
-  AR_CUSTOMER_MASTER_TMA.NAME
+  AR_CUSTOMER_MASTER_TMA.NAME,
+  DM_DSTicketTracking.ElectronicTicket
 From DM_DSTicketTracking
   Inner Join IV_BRANCH_MASTER On DM_DSTicketTracking.BRANCH_NUMBER =
     IV_BRANCH_MASTER.BRANCH_NUMBER
@@ -315,6 +316,25 @@ From DM_DSTicketTracking
 								<DataColumnSort
 									DataColumn="CompletedDate"
 									DataType="Date"
+								/>
+							</DataTableColumn>
+							<DataTableColumn
+								ColumnHeaderClass=" "
+								Header="Electronic Tickets"
+								ID="colElectronic"
+								>
+								<Label
+									Class="fa fa-check"
+									ID="colElectronic"
+									>
+									<ConditionalClass
+										Class="ThemeHidden"
+										Condition="@Data.ElectronicTicket~ = 0"
+									/>
+								</Label>
+								<DataColumnSort
+									DataColumn="ElectronicTicket"
+									DataType="Number"
 								/>
 							</DataTableColumn>
 							<DataTableColumn>

@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Caption="AFD Tank Locations" ID="Unknown.EnergyTanks_2" SecurityReportRightID="MKC">
+  <LocalData ID="Local-AFDData">
+    <DataLayer CellRange="A51:N90" ColumnNamesRow="1" ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx" ExcelWorksheet="Sheet1" ID="dlGmap-AFDTanks" Type="Excel">
+      <DataLayerLink ID="linkGmap-AFDTanks" />
+    </DataLayer>
+  </LocalData>
+  <IncludeSharedElement DefinitionFile="_Layout.Shared" SharedElementID="shrHeader" />
+  <Body>
+    <ResponsiveRow CollisionBehavior="Wrap">
+      <ResponsiveColumn>
+        <Division Class="panel panel-default" HtmlDiv="True" ID="panel">
+          <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
+            <Label Caption="Active AFD Tank Locations" />
+          </Division>
+          <Division Class="panel-body" ID="panel-body">
+            <Rows Width="100" WidthScale="%">
+              <Row>
+                <Column>
+                  <Spaces Size="5" />
+                </Column>
+                <Column>
+                  <Label Caption="Filter By Location:" />
+                </Column>
+                <Column>
+                  <InputSelectList Class="chosen-select" ID="iptCity" MultiSelect="True" OptionCaptionColumn="CITY" OptionValueColumn="CITY">
+                    <DataLayer CellRange="A2:A106" ColumnNamesRow="1" ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx" ExcelWorksheet="Cities" ID="dlCities" Type="Excel" />
+                  </InputSelectList>
+                  <Image Caption="_theme_files.1x1.gif" Class="ThemeHidden">
+                    <EventHandler DhtmlEvent="onload">
+                      <Action ID="jsChosen" Javascript="$( document ).ready(function() {&#xD;&#xA;  $(&quot;.chosen-select&quot;).chosen({&#xD;&#xA;    	search_contains:true,&#xD;&#xA;		display_selected_options:false&#xD;&#xA;  });&#xD;&#xA;});" Type="Javascript" />
+                    </EventHandler>
+                  </Image>
+                  <Remark>
+                    <InputSelectList Class="chosen-select" DefaultValue="@Request.iptCustomer~" ID="iptCustomer" MultiSelect="True" OptionCaptionColumn="companyname" OptionValueColumn="customerid">
+                      <DataLayer CellRange="B2:C103" ColumnNamesRow="1" ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx" ExcelWorksheet="Sheet1" ID="dlTanksData" Type="Excel">
+                        <SortFilter DataType="Text" SortColumn="companyname" SortSequence="Ascending" />
+                        <CompareFilter CaseSensitive="True" CompareType="&lt;&gt;" CompareValue="NULL" DataColumn="companyname" DataType="Text" ID="compareNull" />
+                      </DataLayer>
+                    </InputSelectList>
+                  </Remark>
+                </Column>
+                <Column>
+                  <Spaces Size="5" />
+                </Column>
+                <Column>
+                  <Label Caption="Apply" Class="btn btn-default pull-right">
+                    <EventHandler DhtmlEvent="onclick">
+                      <Action ID="actRefreshReport" Type="Report">
+                        <Target Type="Report">
+                          <WaitPage />
+                        </Target>
+                        <LinkParams cacheExpirationNow="False" />
+                      </Action>
+                    </EventHandler>
+                  </Label>
+                </Column>
+                <Column>
+                  <Spaces Size="5" />
+                </Column>
+              </Row>
+            </Rows>
+            <LineBreak />
+            <LineBreak />
+          </Division>
+        </Division>
+      </ResponsiveColumn>
+    </ResponsiveRow>
+    <ResponsiveRow CollisionBehavior="HorizontalScrollbar">
+      <ResponsiveColumn ColspanExtraSmallScreen="12" ColspanLargeScreen="12" ColspanMediumScreen="12" ColspanSmallScreen="12">
+        <Division Class="panel panel-default" HtmlDiv="True" ID="panel-map">
+          <Remark>
+            <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading-map">
+              <Label Caption="Active AFD Tank Locations" />
+            </Division>
+          </Remark>
+          <Division Class="panel-body" HtmlDiv="True" ID="panel-body-map">
+            <GoogleMap ConnectionID="gmAPIKey" GoogleMapTypes="Satellite,Map,Hybrid,Terrain" GoogleMapZoomControl="Small" Height="800" ID="gmAFDTanks" MapScale="False" SecurityRightID="MKC" Width="1024">
+              <GoogleMapMarkers ID="gmmTank">
+                <MapMarkerImage>
+                  <Image Caption="yellow_pin.gif" Height="20" ID="mapIcon" Width="10" />
+                </MapMarkerImage>
+                <DataLayer ID="dllGmap-AFDTanks" LinkedDataLayerID="linkGmap-AFDTanks" Type="Linked">
+                  <ReverseGeocodeColumns ID="revLookup" LatitudeDataColumn="lat" LongitudeDataColumn="long" />
+                  <ConditionFilter Condition="&quot;@Data.capacity~&quot; &lt;&gt; &quot;NULL&quot;" />
+                  <ConditionFilter Condition="InStr(UCase(&quot;@Data.UCaseCity~&quot;), UCase(&quot;@Request.iptCity~&quot;)) &gt; 0" />
+                </DataLayer>
+                <Remark>
+                  <DataLayer ColumnNamesRow="1" ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx" ExcelWorksheet="AllTanks" ID="dlAFDTanks" Type="Excel">
+                    <ReverseGeocodeColumns ID="revLookup" LatitudeDataColumn="lat" LongitudeDataColumn="long" />
+                    <Remark>
+                      <ConditionFilter Condition="InStr(&quot;@Data.customerid~&quot;, &quot;@Request.iptCustomer~&quot;) &gt; 0&#xD;&#xA;" IncludeCondition="@Request.iptCustomer &lt;&gt; &quot;&quot;" />
+                    </Remark>
+                    <Remark>
+                      <ConditionFilter Condition="InStr(UCase(&quot;@Data.city~&quot;), UCase(&quot;@Request.iptCity~&quot;)) &gt; 0" />
+                    </Remark>
+                    <ConditionFilter Condition="&quot;@Data.capacity~&quot; &lt;&gt; &quot;NULL&quot;" />
+                    <ConditionFilter Condition="InStr(UCase(&quot;@Data.UCaseCity~&quot;), UCase(&quot;@Request.iptCity~&quot;)) &gt; 0" />
+                  </DataLayer>
+                </Remark>
+                <Action Type="MapMarkerInfo">
+                  <MapMarkerInfo>
+                    <Label Caption="Customer: " Class="ThemeBold" />
+                    <Spaces Size="2" />
+                    <Label Caption="@Data.companyname~">
+                      <ConditionalClass Class="ThemeHidden" Condition="InStr(&quot;@Data.companyname~&quot;, &quot;NULL&quot;) &gt; 0" />
+                    </Label>
+                    <Label Caption=" / ">
+                      <ConditionalClass Class="ThemeHidden" Condition="InStr(&quot;@Data.firstname~&quot;, &quot;NULL&quot;) &gt; 0" />
+                      <ConditionalClass Class="ThemeHidden" Condition="InStr(&quot;@Data.lastname~&quot;, &quot;NULL&quot;) &gt; 0" />
+                      <ConditionalClass Class="ThemeHidden" Condition="InStr(&quot;@Data.companyname~&quot;, &quot;NULL&quot;) &gt; 0" />
+                    </Label>
+                    <Label Caption="@Data.firstname~ @Data.lastname~">
+                      <ConditionalClass Class="ThemeHidden" Condition="InStr(&quot;@Data.firstname~&quot;, &quot;NULL&quot;) &gt; 0" />
+                      <ConditionalClass Class="ThemeHidden" Condition="InStr(&quot;@Data.lastname~&quot;, &quot;NULL&quot;) &gt; 0" />
+                    </Label>
+                    <LineBreak />
+                    <Label Caption="Site ID-Tank ID:" Class="ThemeHidden">
+                      <ConditionalClass Class="ThemeBold" Condition="&quot;@Data.capacity~&quot; &lt;&gt; &quot;NULL&quot;" />
+                    </Label>
+                    <Spaces Size="2" />
+                    <Label Caption=" @Data.siteid~ - @Data.tankid~" Class="ThemeHidden">
+                      <ConditionalClass Condition="&quot;@Data.capacity~&quot; &lt;&gt; &quot;NULL&quot;" />
+                    </Label>
+                    <LineBreak />
+                    <Label Caption="Tank Capacity:" Class="ThemeHidden">
+                      <ConditionalClass Class="ThemeBold" Condition="&quot;@Data.capacity~&quot; &lt;&gt; &quot;NULL&quot;" />
+                    </Label>
+                    <Spaces Size="2" />
+                    <Label Caption="@Data.capacity~ gallons" Class="ThemeHidden">
+                      <ConditionalClass Condition="&quot;@Data.capacity~&quot; &lt;&gt; &quot;NULL&quot;" />
+                    </Label>
+                  </MapMarkerInfo>
+                </Action>
+              </GoogleMapMarkers>
+            </GoogleMap>
+            <LineBreak />
+            <Division HtmlDiv="True" ID="panel-detail-container">
+              <Division Class="panel panel-default" Condition="&quot;@Request.paramLocName~&quot;.length &gt; 0" HtmlDiv="True" ID="panel-detail">
+                <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading-detail">
+                  <ResponsiveRow CollisionBehavior="Overlap">
+                    <ResponsiveColumn />
+                  </ResponsiveRow>
+                </Division>
+                <Remark>
+                  <Division Class="panel-body" HtmlDiv="True" ID="panel-body-detail">
+                    <ResponsiveRow>
+                      <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1">
+                        <Remark>
+                          <DataTable AccessibleHeaders="True" AccessibleSummary="AnalysisGrid DataTable" ID="DataTable1" KeepScrollPosition="True" RememberSort="True" ResizableColumns="True" SortArrows="True" TableBorder="0">
+                            <DataLayer ColumnNamesRow="1" ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx" ExcelWorksheet="Sheet1" ID="dlAFDSpreadsheet" Type="Excel" />
+                            <InteractivePaging CaptionType="Image" HideShowPrevNextCaptions="False" HideWhenOnePage="True" IDnotSupportedHere="pagingTableNumbered" Location="Top" PageRowCount="20" ShowPageNumber="Numbered" />
+                            <DataTableColumn Header="coopid" ID="colcoopid">
+                              <Label Caption="@Data.coopid~" ID="colcoopid" />
+                              <DataColumnSort DataColumn="coopid" DataType="Number" />
+                            </DataTableColumn>
+                            <DataTableColumn Header="customerid" ID="colcustomerid">
+                              <Label Caption="@Data.customerid~" ID="colcustomerid" />
+                              <DataColumnSort DataColumn="customerid" DataType="Number" />
+                            </DataTableColumn>
+                            <DataTableColumn Header="companyname" ID="colcompanyname">
+                              <Label Caption="@Data.companyname~" ID="colcompanyname" />
+                              <DataColumnSort DataColumn="companyname" DataType="Text" />
+                            </DataTableColumn>
+                            <DataTableColumn Header="firstname" ID="colfirstname">
+                              <Label Caption="@Data.firstname~" ID="colfirstname" />
+                              <DataColumnSort DataColumn="firstname" DataType="Text" />
+                            </DataTableColumn>
+                            <DataTableColumn Header="lastname" ID="collastname">
+                              <Label Caption="@Data.lastname~" ID="collastname" />
+                              <DataColumnSort DataColumn="lastname" DataType="Text" />
+                            </DataTableColumn>
+                            <DataTableColumn Header="city" ID="colcity">
+                              <Label Caption="@Data.city~" ID="colcity" />
+                              <DataColumnSort DataColumn="city" DataType="Text" />
+                            </DataTableColumn>
+                            <DataTableColumn Header="siteid" ID="colsiteid">
+                              <Label Caption="@Data.siteid~" ID="colsiteid" />
+                              <DataColumnSort DataColumn="siteid" DataType="Number" />
+                            </DataTableColumn>
+                            <DataTableColumn Header="long" ID="collong">
+                              <Label Caption="@Data.long~" ID="collong" />
+                              <DataColumnSort DataColumn="long" DataType="Number" />
+                            </DataTableColumn>
+                            <DataTableColumn Header="lat" ID="collat">
+                              <Label Caption="@Data.lat~" ID="collat" />
+                              <DataColumnSort DataColumn="lat" DataType="Number" />
+                            </DataTableColumn>
+                            <DataTableColumn Header="tankid" ID="coltankid">
+                              <Label Caption="@Data.tankid~" ID="coltankid" />
+                              <DataColumnSort DataColumn="tankid" DataType="Number" />
+                            </DataTableColumn>
+                            <DataTableColumn Header="probeid" ID="colprobeid">
+                              <Label Caption="@Data.probeid~" ID="colprobeid" />
+                              <DataColumnSort DataColumn="probeid" DataType="Number" />
+                            </DataTableColumn>
+                          </DataTable>
+                        </Remark>
+                      </ResponsiveColumn>
+                    </ResponsiveRow>
+                  </Division>
+                </Remark>
+              </Division>
+            </Division>
+          </Division>
+          <Label Caption="@Request.iptCustomer~" />
+        </Division>
+      </ResponsiveColumn>
+    </ResponsiveRow>
+  </Body>
+  <IncludeSharedElement DefinitionFile="_Layout.Shared" SharedElementID="shrFooter" />
+  <ideTestParams iptCity="" iptCustomer="" paramLocName="" />
+</Report>

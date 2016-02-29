@@ -8,7 +8,7 @@
 	/>
 	<LocalData>
 		<DataLayer
-			ConnectionID="connAgTrax"
+			ConnectionID="connProdGP"
 			ID="dlDSEntryIDRecord"
 			Source="Select AGTRAX_STAGING.dbo.DM_DSTicketTracking.EntryID,
   AGTRAX_STAGING.dbo.DM_DSTicketTracking.DropOffDate,
@@ -17,7 +17,8 @@
   AGTRAX_STAGING.dbo.DM_DSTicketTracking.EnteredDate,
   AGTRAX_STAGING.dbo.DM_DSTicketTracking.UserID,
   AGTRAX_STAGING.dbo.DM_DSTicketTracking.CompletedDate,
-  AGTRAX_STAGING.dbo.DM_DSTicketTracking.BRANCH_NUMBER
+  AGTRAX_STAGING.dbo.DM_DSTicketTracking.BRANCH_NUMBER,
+  AGTRAX_STAGING.dbo.DM_DSTicketTracking.ElectronicTicket
 From AGTRAX_STAGING.dbo.DM_DSTicketTracking
 Where AGTRAX_STAGING.dbo.DM_DSTicketTracking.EntryID = &apos;@Request.EntryId~&apos;"
 			Type="SQL"
@@ -66,7 +67,7 @@ Where AGTRAX_STAGING.dbo.DM_DSTicketTracking.EntryID = &apos;@Request.EntryId~&a
 								<Target
 									FrameID="Self"
 									ID="viewReport"
-									Report="TMAReports.TMADirectShip"
+									Report="TMAApps.TMADirectShip"
 									Type="Report"
 								/>
 							</Action>
@@ -91,6 +92,7 @@ Where AGTRAX_STAGING.dbo.DM_DSTicketTracking.EntryID = &apos;@Request.EntryId~&a
 								Condition="InStr(&quot;@Request.StatusMsg~&quot;,&quot;Success:&quot;) &gt; 0"
 							/>
 						</Label>
+						<LineBreak/>
 						<LineBreak/>
 						<LineBreak/>
 					</ResponsiveColumn>
@@ -231,6 +233,36 @@ ORDER BY BRANCHNO"
 							/>
 						</InputDate>
 						<LineBreak/>
+						<LineBreak/>
+						<LineBreak/>
+					</ResponsiveColumn>
+				</ResponsiveRow>
+				<ResponsiveRow>
+					<ResponsiveColumn
+						Class="ThemeAlignLeft"
+						>
+						<InputCheckbox
+							Caption="Electronic Tickets:"
+							ID="chkElectronic"
+							>
+							<EventHandler
+								DhtmlEvent="onchange"
+								>
+								<Action
+									ID="jsElectronicCheckChanged"
+									Javascript="var etickets = document.getElementById(&quot;iptElectronic&quot;);
+var electronic = document.getElementById(&quot;chkElectronic&quot;);
+
+if (electronic.checked){etickets.value = &quot;1&quot;;}
+else {etickets.value = &quot;0&quot;;}"
+									Type="Javascript"
+								/>
+							</EventHandler>
+						</InputCheckbox>
+						<InputHidden
+							DefaultValue="@Local.ElectronicTicket~"
+							ID="iptElectronic"
+						/>
 						<LineBreak/>
 						<LineBreak/>
 					</ResponsiveColumn>
@@ -390,9 +422,14 @@ var dteDrop = document.getElementById(&quot;dteDropOff&quot;);
 var dteEntry = document.getElementById(&quot;dteEntered&quot;);
 var strComplete = complete.value;
 var n = strComplete.search(&quot;1900-01-01&quot;);
+var electronic = document.getElementById(&quot;iptElectronic&quot;);
+var etickets = document.getElementById(&quot;chkElectronic&quot;);
 
 if (n &gt; -1) {done.checked = false;}
 else {done.checked = true;}
+
+if (electronic.value == &quot;1&quot;) {etickets.checked = true;}
+else {etickets.checked = false;}
 
 if (entry.value == &quot;&quot;){
 	entry.value = &quot;0&quot;;
