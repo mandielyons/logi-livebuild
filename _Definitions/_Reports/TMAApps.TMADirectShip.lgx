@@ -68,7 +68,7 @@
 									ExcelOutputFormat="Excel2007"
 									ExportDataTableID="dtTicketTracking"
 									FrameID="NewWindow"
-									Report="TMAApps.TMADirectShip"
+									Report="TMAReports.TMADirectShip"
 									RequestForwarding="True"
 									Type="NativeExcel"
 								/>
@@ -123,8 +123,9 @@
   DM_DSTicketTracking.UserID,
   DM_DSTicketTracking.CompletedDate,
   IV_BRANCH_MASTER.BRANCH_NAME,
-  AR_CUSTOMER_MASTER_TMA.NAME
-From DM_DSTicketTracking 
+  AR_CUSTOMER_MASTER_TMA.NAME,
+  DM_DSTicketTracking.ElectronicTicket
+From DM_DSTicketTracking
   Inner Join IV_BRANCH_MASTER On DM_DSTicketTracking.BRANCH_NUMBER =
     IV_BRANCH_MASTER.BRANCH_NUMBER
   Inner Join AR_CUSTOMER_MASTER_TMA On DM_DSTicketTracking.CUSTOMER =
@@ -317,6 +318,25 @@ Order By DM_DSTicketTracking.DropOffDate ASC
 								<DataColumnSort
 									DataColumn="CompletedDate"
 									DataType="Date"
+								/>
+							</DataTableColumn>
+							<DataTableColumn
+								ColumnHeaderClass=" "
+								Header="Electronic Tickets"
+								ID="colElectronic"
+								>
+								<Label
+									Class="fa fa-check"
+									ID="colElectronic"
+									>
+									<ConditionalClass
+										Class="ThemeHidden"
+										Condition="@Data.ElectronicTicket~ = 0"
+									/>
+								</Label>
+								<DataColumnSort
+									DataColumn="ElectronicTicket"
+									DataType="Number"
 								/>
 							</DataTableColumn>
 							<DataTableColumn>

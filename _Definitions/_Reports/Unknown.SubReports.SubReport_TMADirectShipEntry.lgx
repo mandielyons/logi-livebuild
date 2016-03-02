@@ -2,6 +2,7 @@
 <Report
 	Caption="TMA Direct Ship Management"
 	ID="Unknown.SubReports.SubReport_TMADirectShipEntry"
+	SecurityReportRightID="TMA,MKC"
 	>
 	<DefaultRequestParams
 		StatusMsg=""
@@ -17,7 +18,8 @@
   AGTRAX_STAGING.dbo.DM_DSTicketTracking.EnteredDate,
   AGTRAX_STAGING.dbo.DM_DSTicketTracking.UserID,
   AGTRAX_STAGING.dbo.DM_DSTicketTracking.CompletedDate,
-  AGTRAX_STAGING.dbo.DM_DSTicketTracking.BRANCH_NUMBER
+  AGTRAX_STAGING.dbo.DM_DSTicketTracking.BRANCH_NUMBER,
+  AGTRAX_STAGING.dbo.DM_DSTicketTracking.ElectronicTicket
 From AGTRAX_STAGING.dbo.DM_DSTicketTracking
 Where AGTRAX_STAGING.dbo.DM_DSTicketTracking.EntryID = &apos;@Request.EntryId~&apos;"
 			Type="SQL"
@@ -93,6 +95,7 @@ Where AGTRAX_STAGING.dbo.DM_DSTicketTracking.EntryID = &apos;@Request.EntryId~&a
 						</Label>
 						<LineBreak/>
 						<LineBreak/>
+						<LineBreak/>
 					</ResponsiveColumn>
 				</ResponsiveRow>
 				<ResponsiveRow>
@@ -152,9 +155,24 @@ Where AR_CUSTOMER_MISC_FLAG_TMA.MISC_FLAG_NUMBER = &apos;99&apos; And
 Order By CUSTNMBR"
 								Type="SQL"
 							/>
+							<EventHandler
+								DhtmlEvent="onchange"
+								>
+								<Action
+									ID="jsCustChanged"
+									Javascript="var customer = document.getElementById(&quot;iptCustomer&quot;);
+var hiddenCust = document.getElementById(&quot;iptAccount&quot;);
+
+hiddenCust.value = customer.options[customer.selectedIndex].text;"
+									Type="Javascript"
+								/>
+							</EventHandler>
 						</InputSelectList>
 						<LineBreak/>
 						<LineBreak/>
+						<InputHidden
+							ID="iptAccount"
+						/>
 					</ResponsiveColumn>
 				</ResponsiveRow>
 				<ResponsiveRow>
@@ -173,7 +191,7 @@ Order By CUSTNMBR"
 							>
 							<DataLayer
 								ColumnNamesRow="1"
-								ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\DSRange.xlsx"
+								ExcelFile="C:\inetpub\wwwroot\LiveBuild\UploadedFiles\DSRange.xlsx"
 								ExcelWorksheet="Sheet1"
 								ID="dlTicketRange"
 								Type="Excel"
@@ -242,6 +260,36 @@ ORDER BY BRANCHNO"
 						Class="ThemeAlignLeft"
 						>
 						<InputCheckbox
+							Caption="Electronic Tickets:"
+							ID="chkElectronic"
+							>
+							<EventHandler
+								DhtmlEvent="onchange"
+								>
+								<Action
+									ID="jsElectronicCheckChanged"
+									Javascript="var etickets = document.getElementById(&quot;iptElectronic&quot;);
+var electronic = document.getElementById(&quot;chkElectronic&quot;);
+
+if (electronic.checked){etickets.value = &quot;1&quot;;}
+else {etickets.value = &quot;0&quot;;}"
+									Type="Javascript"
+								/>
+							</EventHandler>
+						</InputCheckbox>
+						<InputHidden
+							DefaultValue="@Local.ElectronicTicket~"
+							ID="iptElectronic"
+						/>
+						<LineBreak/>
+						<LineBreak/>
+					</ResponsiveColumn>
+				</ResponsiveRow>
+				<ResponsiveRow>
+					<ResponsiveColumn
+						Class="ThemeAlignLeft"
+						>
+						<InputCheckbox
 							Caption="Completed per Request:"
 							ID="chkComplete"
 							>
@@ -274,6 +322,10 @@ else {complete.value = &quot;&quot;;}
 						<LineBreak/>
 						<LineBreak/>
 						<LineBreak/>
+						<InputHidden
+							DefaultValue="@Local.UserID~"
+							ID="iptUserID"
+						/>
 					</ResponsiveColumn>
 				</ResponsiveRow>
 				<ResponsiveRow>
@@ -414,9 +466,14 @@ var dteEntry = document.getElementById(&quot;dteEntered&quot;);
 var dteHidden = document.getElementById(&quot;dteEntered_Hidden&quot;);
 var strComplete = complete.value;
 var n = strComplete.search(&quot;1900-01-01&quot;);
+var electronic = document.getElementById(&quot;iptElectronic&quot;);
+var etickets = document.getElementById(&quot;chkElectronic&quot;);
 
 if (n &gt; -1) {done.checked = false;}
 else {done.checked = true;}
+
+if (electronic.value == &quot;1&quot;) {etickets.checked = true;}
+else {etickets.checked = false;}
 
 if (entry.value == &quot;&quot;){
 	entry.value = &quot;0&quot;;
@@ -432,7 +489,11 @@ else if (entry.value &gt; 0){
 	//if (dteEntry.value == &quot;1/1/1900&quot;) {dteEntry.value = today.value;}
 	if (dteEntry.value == &quot;1/1/1900&quot;) {dteEntry.value = &quot;&quot;; dteHidden.value = today.value;}
 }
-"
+
+var customer = document.getElementById(&quot;iptCustomer&quot;);
+var hiddenCust = document.getElementById(&quot;iptAccount&quot;);
+
+hiddenCust.value = customer.options[customer.selectedIndex].text;"
 		/>
 	</Body>
 	<IncludeSharedElement

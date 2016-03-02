@@ -21,7 +21,7 @@
 						ID="panel-heading-perspectives"
 						>
 						<Label
-							Caption="2015 MKC Balanced Scorecard Perspectives"
+							Caption="2016 MKC Balanced Scorecard Perspectives"
 						/>
 					</Division>
 					<Division
@@ -43,7 +43,7 @@
 										HtmlTag="H4"
 									/>
 									<Label
-										Caption="4 Initiatives "
+										Caption="2 Initiatives "
 									/>
 									<Spaces
 										Size="2"
@@ -55,7 +55,7 @@
 										Size="2"
 									/>
 									<Label
-										Caption=" 12 Actions "
+										Caption="6 Actions "
 									/>
 									<Spaces
 										Size="2"
@@ -67,7 +67,7 @@
 										Size="2"
 									/>
 									<Label
-										Caption=" 30 Tasks "
+										Caption="15 Tasks "
 									/>
 									<LineBreak/>
 									<LineBreak/>
@@ -135,7 +135,7 @@
 										<GaugeRing
 											Color="#CC0000"
 											ID="RingRed"
-											RingEndValue="30"
+											RingEndValue="10"
 											RingRadius="40"
 											RingStartValue="0"
 											RingThickness="8"
@@ -143,39 +143,35 @@
 										<GaugeRing
 											Color="#F1C232"
 											ID="RingYellow"
-											RingEndValue="60"
+											RingEndValue="35"
 											RingRadius="40"
-											RingStartValue="30"
+											RingStartValue="10"
 											RingThickness="8"
 										/>
 										<GaugeRing
 											Color="#6AA84F"
 											ID="RingGreen"
-											RingEndValue="100"
+											RingEndValue="75"
 											RingRadius="40"
-											RingStartValue="60"
+											RingStartValue="35"
 											RingThickness="8"
 										/>
-										<Remark>
-											<GaugeRing
-												Color="#F1C232"
-												ID="RingYellow2"
-												RingEndValue="90"
-												RingRadius="40"
-												RingStartValue="70"
-												RingThickness="8"
-											/>
-										</Remark>
-										<Remark>
-											<GaugeRing
-												Color="#CC0000"
-												ID="RingRed2"
-												RingEndValue="100"
-												RingRadius="40"
-												RingStartValue="90"
-												RingThickness="8"
-											/>
-										</Remark>
+										<GaugeRing
+											Color="#F1C232"
+											ID="RingYellow2"
+											RingEndValue="90"
+											RingRadius="40"
+											RingStartValue="75"
+											RingThickness="8"
+										/>
+										<GaugeRing
+											Color="#CC0000"
+											ID="RingRed2"
+											RingEndValue="100"
+											RingRadius="40"
+											RingStartValue="90"
+											RingThickness="8"
+										/>
 									</Gauge>
 									<EventHandler
 										DhtmlEvent="onclick"
@@ -218,7 +214,7 @@
 										Size="2"
 									/>
 									<Label
-										Caption=" 20 Actions "
+										Caption="18 Actions "
 									/>
 									<Spaces
 										Size="2"
@@ -230,7 +226,7 @@
 										Size="2"
 									/>
 									<Label
-										Caption=" 67 Tasks "
+										Caption=" 62 Tasks "
 									/>
 									<LineBreak/>
 									<LineBreak/>
@@ -298,7 +294,7 @@
 										<GaugeRing
 											Color="#CC0000"
 											ID="RingRed"
-											RingEndValue="30"
+											RingEndValue="10"
 											RingRadius="40"
 											RingStartValue="0"
 											RingThickness="8"
@@ -306,39 +302,35 @@
 										<GaugeRing
 											Color="#F1C232"
 											ID="RingYellow"
-											RingEndValue="60"
+											RingEndValue="35"
 											RingRadius="40"
-											RingStartValue="30"
+											RingStartValue="10"
 											RingThickness="8"
 										/>
 										<GaugeRing
 											Color="#6AA84F"
 											ID="RingGreen"
-											RingEndValue="100"
+											RingEndValue="75"
 											RingRadius="40"
-											RingStartValue="60"
+											RingStartValue="35"
 											RingThickness="8"
 										/>
-										<Remark>
-											<GaugeRing
-												Color="#F1C232"
-												ID="RingYellow2"
-												RingEndValue="90"
-												RingRadius="40"
-												RingStartValue="70"
-												RingThickness="8"
-											/>
-										</Remark>
-										<Remark>
-											<GaugeRing
-												Color="#CC0000"
-												ID="RingRed2"
-												RingEndValue="100"
-												RingRadius="40"
-												RingStartValue="90"
-												RingThickness="8"
-											/>
-										</Remark>
+										<GaugeRing
+											Color="#F1C232"
+											ID="RingYellow2"
+											RingEndValue="90"
+											RingRadius="40"
+											RingStartValue="75"
+											RingThickness="8"
+										/>
+										<GaugeRing
+											Color="#CC0000"
+											ID="RingRed2"
+											RingEndValue="100"
+											RingRadius="40"
+											RingStartValue="90"
+											RingThickness="8"
+										/>
 									</Gauge>
 									<EventHandler
 										DhtmlEvent="onclick"
@@ -381,7 +373,7 @@
 										Size="2"
 									/>
 									<Label
-										Caption=" 18 Actions "
+										Caption=" 17 Actions "
 									/>
 									<Spaces
 										Size="2"
@@ -393,7 +385,7 @@
 										Size="2"
 									/>
 									<Label
-										Caption=" 55 Tasks "
+										Caption=" 50 Tasks "
 									/>
 									<LineBreak/>
 									<LineBreak/>
@@ -461,7 +453,7 @@
 										<GaugeRing
 											Color="#CC0000"
 											ID="RingRed"
-											RingEndValue="30"
+											RingEndValue="10"
 											RingRadius="40"
 											RingStartValue="0"
 											RingThickness="8"
@@ -469,39 +461,35 @@
 										<GaugeRing
 											Color="#F1C232"
 											ID="RingYellow"
-											RingEndValue="60"
+											RingEndValue="35"
 											RingRadius="40"
-											RingStartValue="30"
+											RingStartValue="10"
 											RingThickness="8"
 										/>
 										<GaugeRing
 											Color="#6AA84F"
 											ID="RingGreen"
-											RingEndValue="100"
+											RingEndValue="75"
 											RingRadius="40"
-											RingStartValue="60"
+											RingStartValue="35"
 											RingThickness="8"
 										/>
-										<Remark>
-											<GaugeRing
-												Color="#F1C232"
-												ID="RingYellow2"
-												RingEndValue="90"
-												RingRadius="40"
-												RingStartValue="70"
-												RingThickness="8"
-											/>
-										</Remark>
-										<Remark>
-											<GaugeRing
-												Color="#CC0000"
-												ID="RingRed2"
-												RingEndValue="100"
-												RingRadius="40"
-												RingStartValue="90"
-												RingThickness="8"
-											/>
-										</Remark>
+										<GaugeRing
+											Color="#F1C232"
+											ID="RingYellow2"
+											RingEndValue="90"
+											RingRadius="40"
+											RingStartValue="75"
+											RingThickness="8"
+										/>
+										<GaugeRing
+											Color="#CC0000"
+											ID="RingRed2"
+											RingEndValue="100"
+											RingRadius="40"
+											RingStartValue="90"
+											RingThickness="8"
+										/>
 									</Gauge>
 									<EventHandler
 										DhtmlEvent="onclick"
@@ -532,7 +520,7 @@
 										/>
 									</Remark>
 									<Label
-										Caption="4 Initiatives "
+										Caption="6 Initiatives "
 									/>
 									<Spaces
 										Size="2"
@@ -544,7 +532,7 @@
 										Size="2"
 									/>
 									<Label
-										Caption=" 7 Actions "
+										Caption=" 17 Actions "
 									/>
 									<Spaces
 										Size="2"
@@ -556,7 +544,7 @@
 										Size="2"
 									/>
 									<Label
-										Caption=" 18 Tasks "
+										Caption="30 Tasks "
 									/>
 									<LineBreak/>
 									<LineBreak/>
@@ -624,7 +612,7 @@
 										<GaugeRing
 											Color="#CC0000"
 											ID="RingRed"
-											RingEndValue="30"
+											RingEndValue="10"
 											RingRadius="40"
 											RingStartValue="0"
 											RingThickness="8"
@@ -632,39 +620,35 @@
 										<GaugeRing
 											Color="#F1C232"
 											ID="RingYellow"
-											RingEndValue="60"
+											RingEndValue="35"
 											RingRadius="40"
-											RingStartValue="30"
+											RingStartValue="10"
 											RingThickness="8"
 										/>
 										<GaugeRing
 											Color="#6AA84F"
 											ID="RingGreen"
-											RingEndValue="100"
+											RingEndValue="75"
 											RingRadius="40"
-											RingStartValue="60"
+											RingStartValue="35"
 											RingThickness="8"
 										/>
-										<Remark>
-											<GaugeRing
-												Color="#F1C232"
-												ID="RingYellow2"
-												RingEndValue="90"
-												RingRadius="40"
-												RingStartValue="70"
-												RingThickness="8"
-											/>
-										</Remark>
-										<Remark>
-											<GaugeRing
-												Color="#CC0000"
-												ID="RingRed2"
-												RingEndValue="100"
-												RingRadius="40"
-												RingStartValue="90"
-												RingThickness="8"
-											/>
-										</Remark>
+										<GaugeRing
+											Color="#F1C232"
+											ID="RingYellow2"
+											RingEndValue="90"
+											RingRadius="40"
+											RingStartValue="75"
+											RingThickness="8"
+										/>
+										<GaugeRing
+											Color="#CC0000"
+											ID="RingRed2"
+											RingEndValue="100"
+											RingRadius="40"
+											RingStartValue="90"
+											RingThickness="8"
+										/>
 									</Gauge>
 									<EventHandler
 										DhtmlEvent="onclick"
@@ -822,7 +806,7 @@
 																		WidthScale="%"
 																		>
 																		<DataLayer
-																			CellRange="A2:I5"
+																			CellRange="A2:I4"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																			ExcelWorksheet="Actions"
@@ -953,7 +937,7 @@
 																					ID="sdlGrowthTasks"
 																					>
 																					<DataLayer
-																						CellRange="A2:J9"
+																						CellRange="A2:I7"
 																						ColumnNamesRow="1"
 																						ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																						ExcelWorksheet="Tasks"
@@ -1168,7 +1152,7 @@
 																				TableBorder="0"
 																				>
 																				<DataLayer
-																					CellRange="A2:I3"
+																					CellRange="A2:I7"
 																					ColumnNamesRow="1"
 																					ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																					ExcelWorksheet="Tasks"
@@ -1420,7 +1404,7 @@
 																		WidthScale="%"
 																		>
 																		<DataLayer
-																			CellRange="A6:I7"
+																			CellRange="A5:I7"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																			ExcelWorksheet="Actions"
@@ -1559,7 +1543,7 @@
 																					ID="sdlExpenseTasks"
 																					>
 																					<DataLayer
-																						CellRange="A10:J16"
+																						CellRange="A8:J16"
 																						ColumnNamesRow="1"
 																						ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																						ExcelWorksheet="Tasks"
@@ -1744,844 +1728,846 @@
 												</Division>
 											</ResponsiveColumn>
 										</ResponsiveRow>
-										<ResponsiveRow>
-											<ResponsiveColumn>
-												<Division
-													Class="panel panel-default"
-													HtmlDiv="True"
-													ID="panel"
-													>
+										<Remark>
+											<ResponsiveRow>
+												<ResponsiveColumn>
 													<Division
-														Class="panel-heading"
+														Class="panel panel-default"
 														HtmlDiv="True"
-														ID="panel-heading"
+														ID="panel"
 														>
-														<Label
-															Caption="Board Initiative - Criteria for voting membership"
-															Tooltip="Click for Detail Report"
-														/>
 														<Division
-															Class="ThemeAlignRight"
-															ID="divShowVoting"
+															Class="panel-heading"
+															HtmlDiv="True"
+															ID="panel-heading"
 															>
-															<Spaces
-																Size="5"
+															<Label
+																Caption="Board Initiative - Criteria for voting membership"
+																Tooltip="Click for Detail Report"
 															/>
-															<ToggleImage
-																AltText="Show/Hide More Details..."
-																Class="ThemeTextSmall"
-																ElementID="divVotingDetails"
-																FalseImage="plus.png"
-																Height="20"
-																ID="showVotingDetails"
-																Tooltip="Show/Hide Action Details..."
-																TrueImage="minus.png"
-																Width="20"
-															/>
+															<Division
+																Class="ThemeAlignRight"
+																ID="divShowVoting"
+																>
+																<Spaces
+																	Size="5"
+																/>
+																<ToggleImage
+																	AltText="Show/Hide More Details..."
+																	Class="ThemeTextSmall"
+																	ElementID="divVotingDetails"
+																	FalseImage="plus.png"
+																	Height="20"
+																	ID="showVotingDetails"
+																	Tooltip="Show/Hide Action Details..."
+																	TrueImage="minus.png"
+																	Width="20"
+																/>
+															</Division>
 														</Division>
-													</Division>
-													<Division
-														Class="panel-body"
-														HtmlDiv="True"
-														ID="panel-body"
-														>
-														<ResponsiveRow>
-															<ResponsiveColumn>
-																<Gauge
-																	BulletColor="#363b42"
-																	CaptionColor="SaddleBrown"
-																	ChartHeight="80"
-																	FontBold="False"
-																	FontName="Arial"
-																	FontSize="11"
-																	ID="BulletBar"
-																	MarkerColor="Black"
-																	MarkerValue="@Data.Progress~"
-																	Type="BulletBar"
-																	Value="@Data.Progress~"
-																	>
-																	<DataLayer
-																		CellRange="D4"
-																		ColumnNamesRow="1"
-																		ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
-																		ExcelWorksheet="Initiatives"
-																		ID="dlFinanceInit3"
-																		Type="Excel"
-																	/>
-																	<GaugeRange
-																		Color="#CC0000"
-																		RangeEndValue="30"
-																	/>
-																	<GaugeRange
-																		Color="#F1C232"
-																		RangeEndValue="60"
-																	/>
-																	<GaugeRange
-																		Color="#6AA84F"
-																		RangeEndValue="100"
-																	/>
-																	<Quicktip>
-																		<QuicktipRow
-																			Caption="Progress:"
-																			Value="@Data.Progress~%"
-																		/>
-																	</Quicktip>
-																</Gauge>
-															</ResponsiveColumn>
-														</ResponsiveRow>
-														<ResponsiveRow>
-															<ResponsiveColumn>
-																<Division
-																	ID="divVotingDetails"
-																	ShowModes="None"
-																	>
-																	<HR/>
-																	<DataTable
-																		AccessibleHeaders="True"
-																		AccessibleSummary="AnalysisGrid DataTable"
-																		Caption="Actions for Board Initiative - Criteria for voting membership"
-																		DraggableColumns="False"
-																		HideWhenZeroRows="True"
-																		ID="dtVotingActions"
-																		KeepScrollPosition="True"
-																		SortArrows="True"
-																		TableBorder="1"
-																		Width="100"
-																		WidthScale="%"
+														<Division
+															Class="panel-body"
+															HtmlDiv="True"
+															ID="panel-body"
+															>
+															<ResponsiveRow>
+																<ResponsiveColumn>
+																	<Gauge
+																		BulletColor="#363b42"
+																		CaptionColor="SaddleBrown"
+																		ChartHeight="80"
+																		FontBold="False"
+																		FontName="Arial"
+																		FontSize="11"
+																		ID="BulletBar"
+																		MarkerColor="Black"
+																		MarkerValue="@Data.Progress~"
+																		Type="BulletBar"
+																		Value="@Data.Progress~"
 																		>
 																		<DataLayer
-																			CellRange="A8:I9"
+																			CellRange="D4"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
-																			ExcelWorksheet="Actions"
-																			ID="dlVotingActions"
+																			ExcelWorksheet="Initiatives"
+																			ID="dlFinanceInit3"
 																			Type="Excel"
 																		/>
-																		<Remark>
-																			<InteractivePaging
-																				CaptionType="Image"
-																				HideShowPrevNextCaptions="False"
-																				HideWhenOnePage="True"
-																				IDnotSupportedHere="pagingTableNumbered"
-																				Location="Top"
-																				PageRowCount="20"
-																				ShowPageNumber="Numbered"
+																		<GaugeRange
+																			Color="#CC0000"
+																			RangeEndValue="30"
+																		/>
+																		<GaugeRange
+																			Color="#F1C232"
+																			RangeEndValue="60"
+																		/>
+																		<GaugeRange
+																			Color="#6AA84F"
+																			RangeEndValue="100"
+																		/>
+																		<Quicktip>
+																			<QuicktipRow
+																				Caption="Progress:"
+																				Value="@Data.Progress~%"
 																			/>
-																		</Remark>
-																		<DataTableColumn
-																			Header="Description"
-																			ID="colDescription"
+																		</Quicktip>
+																	</Gauge>
+																</ResponsiveColumn>
+															</ResponsiveRow>
+															<ResponsiveRow>
+																<ResponsiveColumn>
+																	<Division
+																		ID="divVotingDetails"
+																		ShowModes="None"
+																		>
+																		<HR/>
+																		<DataTable
+																			AccessibleHeaders="True"
+																			AccessibleSummary="AnalysisGrid DataTable"
+																			Caption="Actions for Board Initiative - Criteria for voting membership"
+																			DraggableColumns="False"
+																			HideWhenZeroRows="True"
+																			ID="dtVotingActions"
+																			KeepScrollPosition="True"
+																			SortArrows="True"
+																			TableBorder="1"
+																			Width="100"
+																			WidthScale="%"
 																			>
-																			<Label
-																				Caption="@Data.Description~"
+																			<DataLayer
+																				CellRange="A8:I9"
+																				ColumnNamesRow="1"
+																				ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
+																				ExcelWorksheet="Actions"
+																				ID="dlVotingActions"
+																				Type="Excel"
+																			/>
+																			<Remark>
+																				<InteractivePaging
+																					CaptionType="Image"
+																					HideShowPrevNextCaptions="False"
+																					HideWhenOnePage="True"
+																					IDnotSupportedHere="pagingTableNumbered"
+																					Location="Top"
+																					PageRowCount="20"
+																					ShowPageNumber="Numbered"
+																				/>
+																			</Remark>
+																			<DataTableColumn
+																				Header="Description"
 																				ID="colDescription"
-																			/>
-																			<DataColumnSort
-																				DataColumn="Description"
-																				DataType="Text"
-																			/>
-																			<TooltipPanel
-																				Height="5"
-																				HeightScale="%"
-																				ID="colDescVotTT"
-																				Width="50"
-																				WidthScale="%"
 																				>
 																				<Label
-																					Caption="Notes: @Data.Notes~"
-																					Class="ThemeTextSmall"
+																					Caption="@Data.Description~"
+																					ID="colDescription"
 																				/>
-																			</TooltipPanel>
-																		</DataTableColumn>
-																		<DataTableColumn
-																			Header="Champion"
-																			ID="colChampion"
-																			>
-																			<Label
-																				Caption="@Data.Champion~"
+																				<DataColumnSort
+																					DataColumn="Description"
+																					DataType="Text"
+																				/>
+																				<TooltipPanel
+																					Height="5"
+																					HeightScale="%"
+																					ID="colDescVotTT"
+																					Width="50"
+																					WidthScale="%"
+																					>
+																					<Label
+																						Caption="Notes: @Data.Notes~"
+																						Class="ThemeTextSmall"
+																					/>
+																				</TooltipPanel>
+																			</DataTableColumn>
+																			<DataTableColumn
+																				Header="Champion"
 																				ID="colChampion"
-																			/>
-																			<DataColumnSort
-																				DataColumn="Champion"
-																				DataType="Text"
-																			/>
-																		</DataTableColumn>
-																		<DataTableColumn
-																			Header="Team"
-																			ID="colTeam"
-																			>
-																			<Label
-																				Caption="@Data.Team~"
+																				>
+																				<Label
+																					Caption="@Data.Champion~"
+																					ID="colChampion"
+																				/>
+																				<DataColumnSort
+																					DataColumn="Champion"
+																					DataType="Text"
+																				/>
+																			</DataTableColumn>
+																			<DataTableColumn
+																				Header="Team"
 																				ID="colTeam"
-																			/>
-																			<DataColumnSort
-																				DataColumn="Team"
-																				DataType="Text"
-																			/>
-																		</DataTableColumn>
-																		<DataTableColumn
-																			Header="Due Date"
-																			ID="colDue"
-																			>
-																			<Label
-																				Caption="@Data.Due Date~"
+																				>
+																				<Label
+																					Caption="@Data.Team~"
+																					ID="colTeam"
+																				/>
+																				<DataColumnSort
+																					DataColumn="Team"
+																					DataType="Text"
+																				/>
+																			</DataTableColumn>
+																			<DataTableColumn
+																				Header="Due Date"
 																				ID="colDue"
-																			/>
-																			<DataColumnSort
-																				DataColumn="Due Date"
-																				DataType="Date"
-																			/>
-																		</DataTableColumn>
-																		<DataTableColumn
-																			Header="Progress"
-																			ID="colProgress"
-																			>
-																			<Label
-																				Caption="@Data.Progress~%"
+																				>
+																				<Label
+																					Caption="@Data.Due Date~"
+																					ID="colDue"
+																				/>
+																				<DataColumnSort
+																					DataColumn="Due Date"
+																					DataType="Date"
+																				/>
+																			</DataTableColumn>
+																			<DataTableColumn
+																				Header="Progress"
 																				ID="colProgress"
 																				>
-																				<ConditionalClass
-																					Class="fa fa-arrow-up text-success"
-																					Condition="@Data.Progress~ &gt; 80"
+																				<Label
+																					Caption="@Data.Progress~%"
+																					ID="colProgress"
+																					>
+																					<ConditionalClass
+																						Class="fa fa-arrow-up text-success"
+																						Condition="@Data.Progress~ &gt; 80"
+																					/>
+																					<ConditionalClass
+																						Class="fa fa-star text-warning"
+																						Condition="@Data.Progress~ &gt; 50 "
+																					/>
+																					<ConditionalClass
+																						Class="fa fa-arrow-down text-danger"
+																						Condition="@Data.Progress~ &lt;= 50"
+																					/>
+																					<Action
+																						Display="Toggle"
+																						ElementID="miVotingTasks"
+																						ID="showVotingTasks"
+																						Type="ShowElement"
+																					/>
+																				</Label>
+																				<DataColumnSort
+																					DataColumn="Progress"
+																					DataType="Number"
 																				/>
-																				<ConditionalClass
-																					Class="fa fa-star text-warning"
-																					Condition="@Data.Progress~ &gt; 50 "
-																				/>
-																				<ConditionalClass
-																					Class="fa fa-arrow-down text-danger"
-																					Condition="@Data.Progress~ &lt;= 50"
-																				/>
-																				<Action
-																					Display="Toggle"
-																					ElementID="miVotingTasks"
-																					ID="showVotingTasks"
-																					Type="ShowElement"
-																				/>
-																			</Label>
-																			<DataColumnSort
-																				DataColumn="Progress"
-																				DataType="Number"
-																			/>
-																		</DataTableColumn>
-																		<MoreInfoRow
-																			ID="miVotingTasks"
-																			ShowModes="None"
-																			>
-																			<SubDataTable
-																				ColumnHeaderClass="ThemeBold"
-																				ID="sdtVotingTasks"
-																				TableBorder="1"
-																				Width="100"
-																				WidthScale="%"
+																			</DataTableColumn>
+																			<MoreInfoRow
+																				ID="miVotingTasks"
+																				ShowModes="None"
 																				>
-																				<SubDataLayer
-																					ID="sdlVotingTasks"
+																				<SubDataTable
+																					ColumnHeaderClass="ThemeBold"
+																					ID="sdtVotingTasks"
+																					TableBorder="1"
+																					Width="100"
+																					WidthScale="%"
 																					>
-																					<DataLayer
-																						CellRange="A17:J22"
-																						ColumnNamesRow="1"
-																						ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
-																						ExcelWorksheet="Tasks"
-																						ID="dlVotingTasks"
-																						Type="Excel"
-																					/>
-																					<SubDataLayerRelationColumn
-																						ChildColumn="ACTID"
-																						ID="relActionID"
-																						ParentColumn="ACTID"
-																					/>
-																					<SubDataLayerRelationColumn
-																						ChildColumn="INID"
-																						ID="relInitID"
-																						ParentColumn="INID"
-																					/>
-																					<SubDataLayerRelationColumn
-																						ChildColumn="PID"
-																						ID="relPersId"
-																						ParentColumn="PID"
-																					/>
-																				</SubDataLayer>
-																				<DataTableColumn
-																					ID="colTaskDescription"
-																					>
-																					<Label
-																						Caption="@Data.Description~"
+																					<SubDataLayer
+																						ID="sdlVotingTasks"
+																						>
+																						<DataLayer
+																							CellRange="A17:J22"
+																							ColumnNamesRow="1"
+																							ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
+																							ExcelWorksheet="Tasks"
+																							ID="dlVotingTasks"
+																							Type="Excel"
+																						/>
+																						<SubDataLayerRelationColumn
+																							ChildColumn="ACTID"
+																							ID="relActionID"
+																							ParentColumn="ACTID"
+																						/>
+																						<SubDataLayerRelationColumn
+																							ChildColumn="INID"
+																							ID="relInitID"
+																							ParentColumn="INID"
+																						/>
+																						<SubDataLayerRelationColumn
+																							ChildColumn="PID"
+																							ID="relPersId"
+																							ParentColumn="PID"
+																						/>
+																					</SubDataLayer>
+																					<DataTableColumn
 																						ID="colTaskDescription"
-																					/>
-																				</DataTableColumn>
-																				<DataTableColumn
-																					ID="colDueDate"
-																					>
-																					<Label
-																						Caption="@Data.Due Date~"
+																						>
+																						<Label
+																							Caption="@Data.Description~"
+																							ID="colTaskDescription"
+																						/>
+																					</DataTableColumn>
+																					<DataTableColumn
 																						ID="colDueDate"
-																					/>
-																				</DataTableColumn>
-																				<DataTableColumn
-																					ID="colComplete"
-																					>
-																					<Label
-																						Caption=" "
+																						>
+																						<Label
+																							Caption="@Data.Due Date~"
+																							ID="colDueDate"
+																						/>
+																					</DataTableColumn>
+																					<DataTableColumn
 																						ID="colComplete"
 																						>
-																						<ConditionalClass
-																							Class="fa fa-check text-success"
-																							Condition="@Data.Complete~ = 1"
+																						<Label
+																							Caption=" "
+																							ID="colComplete"
+																							>
+																							<ConditionalClass
+																								Class="fa fa-check text-success"
+																								Condition="@Data.Complete~ = 1"
+																							/>
+																							<ConditionalClass
+																								Class="fa fa-ban text-danger"
+																								Condition="@Data.Complete~ &lt; 1"
+																							/>
+																						</Label>
+																					</DataTableColumn>
+																					<Remark>
+																						<DataTableColumn
+																							ID="colNotes"
+																							>
+																							<Label
+																								Caption="@Data.Notes~"
+																								ID="colNotes"
+																								>
+																								<ConditionalClass/>
+																							</Label>
+																						</DataTableColumn>
+																					</Remark>
+																				</SubDataTable>
+																			</MoreInfoRow>
+																		</DataTable>
+																		<Remark>
+																			<Division
+																				Class="panel-body"
+																				HtmlDiv="True"
+																				ID="panel-notes"
+																				>
+																				<DataTable
+																					AccessibleHeaders="True"
+																					AccessibleSummary="AnalysisGrid DataTable"
+																					ID="dtVoting"
+																					KeepScrollPosition="True"
+																					RememberSort="True"
+																					ResizableColumns="False"
+																					SortArrows="True"
+																					TableBorder="0"
+																					Width="100"
+																					WidthScale="%"
+																					>
+																					<DataLayer
+																						ColumnNamesRow="1"
+																						ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
+																						ExcelWorksheet="Initiatives"
+																						ID="dlVoting"
+																						Type="Excel"
+																						>
+																						<ConditionFilter
+																							Condition="@Data.PID~ = 1 AND @Data.INID~ = 3"
 																						/>
-																						<ConditionalClass
-																							Class="fa fa-ban text-danger"
-																							Condition="@Data.Complete~ &lt; 1"
-																						/>
-																					</Label>
-																				</DataTableColumn>
-																				<Remark>
+																					</DataLayer>
+																					<Remark>
+																						<DataTableColumn
+																							Header="PID"
+																							ID="colPID"
+																							>
+																							<Label
+																								Caption="@Data.PID~"
+																								ID="colPID"
+																							/>
+																							<DataColumnSort
+																								DataColumn="PID"
+																								DataType="Number"
+																							/>
+																						</DataTableColumn>
+																					</Remark>
+																					<Remark>
+																						<DataTableColumn
+																							Header="INID"
+																							ID="colINID"
+																							>
+																							<Label
+																								Caption="@Data.INID~"
+																								ID="colINID"
+																							/>
+																							<DataColumnSort
+																								DataColumn="INID"
+																								DataType="Number"
+																							/>
+																						</DataTableColumn>
+																					</Remark>
+																					<Remark>
+																						<DataTableColumn
+																							Header="Description"
+																							ID="colDescription"
+																							>
+																							<Label
+																								Caption="@Data.Description~"
+																								ID="colDescription"
+																							/>
+																							<DataColumnSort
+																								DataColumn="Description"
+																								DataType="Text"
+																							/>
+																						</DataTableColumn>
+																					</Remark>
+																					<Remark>
+																						<DataTableColumn
+																							Header="Progress"
+																							ID="colProgress"
+																							>
+																							<Label
+																								Caption="@Data.Progress~"
+																								ID="colProgress"
+																							/>
+																							<DataColumnSort
+																								DataColumn="Progress"
+																								DataType="Number"
+																							/>
+																						</DataTableColumn>
+																					</Remark>
 																					<DataTableColumn
+																						Header="Notes"
 																						ID="colNotes"
 																						>
 																						<Label
 																							Caption="@Data.Notes~"
 																							ID="colNotes"
-																							>
-																							<ConditionalClass/>
-																						</Label>
+																						/>
+																						<Remark>
+																							<DataColumnSort
+																								DataColumn="Notes"
+																								DataType="Text"
+																							/>
+																						</Remark>
 																					</DataTableColumn>
-																				</Remark>
-																			</SubDataTable>
-																		</MoreInfoRow>
-																	</DataTable>
-																	<Remark>
-																		<Division
-																			Class="panel-body"
-																			HtmlDiv="True"
-																			ID="panel-notes"
+																				</DataTable>
+																			</Division>
+																		</Remark>
+																	</Division>
+																</ResponsiveColumn>
+															</ResponsiveRow>
+														</Division>
+													</Division>
+												</ResponsiveColumn>
+												<ResponsiveColumn>
+													<Division
+														Class="panel panel-default"
+														HtmlDiv="True"
+														ID="panel"
+														>
+														<Division
+															Class="panel-heading"
+															HtmlDiv="True"
+															ID="panel-heading"
+															>
+															<Label
+																Caption="Telling the MKC Story"
+																Tooltip="Click for Detail Report"
+															/>
+															<Division
+																Class="ThemeAlignRight"
+																ID="divShowStory"
+																>
+																<Spaces
+																	Size="5"
+																/>
+																<ToggleImage
+																	AltText="Show/Hide More Details..."
+																	Class="ThemeTextSmall"
+																	ElementID="divStoryDetails"
+																	FalseImage="plus.png"
+																	Height="20"
+																	ID="showStoryDetails"
+																	Tooltip="Show/Hide Action Details..."
+																	TrueImage="minus.png"
+																	Width="20"
+																/>
+															</Division>
+														</Division>
+														<Division
+															Class="panel-body"
+															HtmlDiv="True"
+															ID="panel-body"
+															>
+															<ResponsiveRow>
+																<ResponsiveColumn>
+																	<Gauge
+																		BulletColor="#363b42"
+																		CaptionColor="SaddleBrown"
+																		ChartHeight="80"
+																		FontBold="False"
+																		FontName="Arial"
+																		FontSize="11"
+																		ID="BulletBar"
+																		MarkerColor="Black"
+																		MarkerValue="@Data.Progress~"
+																		Type="BulletBar"
+																		Value="@Data.Progress~"
+																		>
+																		<DataLayer
+																			CellRange="D5"
+																			ColumnNamesRow="1"
+																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
+																			ExcelWorksheet="Initiatives"
+																			ID="dlFinanceInit4"
+																			Type="Excel"
+																		/>
+																		<GaugeRange
+																			Color="#CC0000"
+																			RangeEndValue="30"
+																		/>
+																		<GaugeRange
+																			Color="#F1C232"
+																			RangeEndValue="60"
+																		/>
+																		<GaugeRange
+																			Color="#6AA84F"
+																			RangeEndValue="100"
+																		/>
+																		<Quicktip>
+																			<QuicktipRow
+																				Caption="Progress:"
+																				Value="@Data.Progress~%"
+																			/>
+																		</Quicktip>
+																	</Gauge>
+																</ResponsiveColumn>
+															</ResponsiveRow>
+															<ResponsiveRow>
+																<ResponsiveColumn>
+																	<Division
+																		ID="divStoryDetails"
+																		ShowModes="None"
+																		>
+																		<HR/>
+																		<DataTable
+																			AccessibleHeaders="True"
+																			AccessibleSummary="AnalysisGrid DataTable"
+																			Caption="Actions for Telling the MKC Story"
+																			DraggableColumns="False"
+																			HideWhenZeroRows="True"
+																			ID="dtStory"
+																			KeepScrollPosition="True"
+																			SortArrows="True"
+																			TableBorder="1"
+																			Width="100"
+																			WidthScale="%"
 																			>
-																			<DataTable
-																				AccessibleHeaders="True"
-																				AccessibleSummary="AnalysisGrid DataTable"
-																				ID="dtVoting"
-																				KeepScrollPosition="True"
-																				RememberSort="True"
-																				ResizableColumns="False"
-																				SortArrows="True"
-																				TableBorder="0"
-																				Width="100"
-																				WidthScale="%"
+																			<DataLayer
+																				CellRange="A10:I12"
+																				ColumnNamesRow="1"
+																				ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
+																				ExcelWorksheet="Actions"
+																				ID="dlStory"
+																				Type="Excel"
+																			/>
+																			<Remark>
+																				<InteractivePaging
+																					CaptionType="Image"
+																					HideShowPrevNextCaptions="False"
+																					HideWhenOnePage="True"
+																					IDnotSupportedHere="pagingTableNumbered"
+																					Location="Top"
+																					PageRowCount="20"
+																					ShowPageNumber="Numbered"
+																				/>
+																			</Remark>
+																			<DataTableColumn
+																				Header="Description"
+																				ID="colDescription"
 																				>
-																				<DataLayer
-																					ColumnNamesRow="1"
-																					ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
-																					ExcelWorksheet="Initiatives"
-																					ID="dlVoting"
-																					Type="Excel"
+																				<Label
+																					Caption="@Data.Description~"
+																					ID="colDescription"
+																				/>
+																				<DataColumnSort
+																					DataColumn="Description"
+																					DataType="Text"
+																				/>
+																				<TooltipPanel
+																					Height="5"
+																					HeightScale="%"
+																					ID="colDescStoryTT"
+																					Width="50"
+																					WidthScale="%"
 																					>
-																					<ConditionFilter
-																						Condition="@Data.PID~ = 1 AND @Data.INID~ = 3"
+																					<Label
+																						Caption="Notes: @Data.Notes~"
+																						Class="ThemeTextSmall"
 																					/>
-																				</DataLayer>
-																				<Remark>
-																					<DataTableColumn
-																						Header="PID"
-																						ID="colPID"
+																				</TooltipPanel>
+																			</DataTableColumn>
+																			<DataTableColumn
+																				Header="Champion"
+																				ID="colChampion"
+																				>
+																				<Label
+																					Caption="@Data.Champion~"
+																					ID="colChampion"
+																				/>
+																				<DataColumnSort
+																					DataColumn="Champion"
+																					DataType="Text"
+																				/>
+																			</DataTableColumn>
+																			<DataTableColumn
+																				Header="Team"
+																				ID="colTeam"
+																				>
+																				<Label
+																					Caption="@Data.Team~"
+																					ID="colTeam"
+																				/>
+																				<DataColumnSort
+																					DataColumn="Team"
+																					DataType="Text"
+																				/>
+																			</DataTableColumn>
+																			<DataTableColumn
+																				Header="Due Date"
+																				ID="colDue"
+																				>
+																				<Label
+																					Caption="@Data.Due Date~"
+																					ID="colDue"
+																				/>
+																				<DataColumnSort
+																					DataColumn="Due Date"
+																					DataType="Date"
+																				/>
+																			</DataTableColumn>
+																			<DataTableColumn
+																				Header="Progress"
+																				ID="colProgress"
+																				>
+																				<Label
+																					Caption="@Data.Progress~%"
+																					ID="colProgress"
+																					>
+																					<ConditionalClass
+																						Class="fa fa-arrow-up text-success"
+																						Condition="@Data.Progress~ &gt; 80"
+																					/>
+																					<ConditionalClass
+																						Class="fa fa-star text-warning"
+																						Condition="@Data.Progress~ &gt; 50 "
+																					/>
+																					<ConditionalClass
+																						Class="fa fa-arrow-down text-danger"
+																						Condition="@Data.Progress~ &lt;= 50"
+																					/>
+																					<Action
+																						Display="Toggle"
+																						ElementID="miStoryTasks"
+																						ID="showStoryTasks"
+																						Type="ShowElement"
+																					/>
+																				</Label>
+																				<DataColumnSort
+																					DataColumn="Progress"
+																					DataType="Number"
+																				/>
+																			</DataTableColumn>
+																			<MoreInfoRow
+																				ID="miStoryTasks"
+																				ShowModes="None"
+																				>
+																				<SubDataTable
+																					ColumnHeaderClass="ThemeBold"
+																					ID="sdtStoryTasks"
+																					TableBorder="1"
+																					Width="100"
+																					WidthScale="%"
+																					>
+																					<SubDataLayer
+																						ID="sdlStoryTasks"
 																						>
-																						<Label
-																							Caption="@Data.PID~"
-																							ID="colPID"
+																						<DataLayer
+																							CellRange="A23:J31"
+																							ColumnNamesRow="1"
+																							ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
+																							ExcelWorksheet="Tasks"
+																							ID="dlStoryTasks"
+																							Type="Excel"
 																						/>
-																						<DataColumnSort
-																							DataColumn="PID"
-																							DataType="Number"
+																						<SubDataLayerRelationColumn
+																							ChildColumn="ACTID"
+																							ID="relActionID"
+																							ParentColumn="ACTID"
 																						/>
-																					</DataTableColumn>
-																				</Remark>
-																				<Remark>
+																						<SubDataLayerRelationColumn
+																							ChildColumn="INID"
+																							ID="relInitID"
+																							ParentColumn="INID"
+																						/>
+																						<SubDataLayerRelationColumn
+																							ChildColumn="PID"
+																							ID="relPersId"
+																							ParentColumn="PID"
+																						/>
+																					</SubDataLayer>
 																					<DataTableColumn
-																						Header="INID"
-																						ID="colINID"
-																						>
-																						<Label
-																							Caption="@Data.INID~"
-																							ID="colINID"
-																						/>
-																						<DataColumnSort
-																							DataColumn="INID"
-																							DataType="Number"
-																						/>
-																					</DataTableColumn>
-																				</Remark>
-																				<Remark>
-																					<DataTableColumn
-																						Header="Description"
-																						ID="colDescription"
+																						ID="colTaskDescription"
 																						>
 																						<Label
 																							Caption="@Data.Description~"
-																							ID="colDescription"
-																						/>
-																						<DataColumnSort
-																							DataColumn="Description"
-																							DataType="Text"
+																							ID="colTaskDescription"
 																						/>
 																					</DataTableColumn>
-																				</Remark>
-																				<Remark>
 																					<DataTableColumn
-																						Header="Progress"
-																						ID="colProgress"
+																						ID="colDueDate"
 																						>
 																						<Label
-																							Caption="@Data.Progress~"
-																							ID="colProgress"
-																						/>
-																						<DataColumnSort
-																							DataColumn="Progress"
-																							DataType="Number"
+																							Caption="@Data.Due Date~"
+																							ID="colDueDate"
 																						/>
 																					</DataTableColumn>
-																				</Remark>
-																				<DataTableColumn
-																					Header="Notes"
-																					ID="colNotes"
-																					>
-																					<Label
-																						Caption="@Data.Notes~"
-																						ID="colNotes"
-																					/>
-																					<Remark>
-																						<DataColumnSort
-																							DataColumn="Notes"
-																							DataType="Text"
-																						/>
-																					</Remark>
-																				</DataTableColumn>
-																			</DataTable>
-																		</Division>
-																	</Remark>
-																</Division>
-															</ResponsiveColumn>
-														</ResponsiveRow>
-													</Division>
-												</Division>
-											</ResponsiveColumn>
-											<ResponsiveColumn>
-												<Division
-													Class="panel panel-default"
-													HtmlDiv="True"
-													ID="panel"
-													>
-													<Division
-														Class="panel-heading"
-														HtmlDiv="True"
-														ID="panel-heading"
-														>
-														<Label
-															Caption="Telling the MKC Story"
-															Tooltip="Click for Detail Report"
-														/>
-														<Division
-															Class="ThemeAlignRight"
-															ID="divShowStory"
-															>
-															<Spaces
-																Size="5"
-															/>
-															<ToggleImage
-																AltText="Show/Hide More Details..."
-																Class="ThemeTextSmall"
-																ElementID="divStoryDetails"
-																FalseImage="plus.png"
-																Height="20"
-																ID="showStoryDetails"
-																Tooltip="Show/Hide Action Details..."
-																TrueImage="minus.png"
-																Width="20"
-															/>
-														</Division>
-													</Division>
-													<Division
-														Class="panel-body"
-														HtmlDiv="True"
-														ID="panel-body"
-														>
-														<ResponsiveRow>
-															<ResponsiveColumn>
-																<Gauge
-																	BulletColor="#363b42"
-																	CaptionColor="SaddleBrown"
-																	ChartHeight="80"
-																	FontBold="False"
-																	FontName="Arial"
-																	FontSize="11"
-																	ID="BulletBar"
-																	MarkerColor="Black"
-																	MarkerValue="@Data.Progress~"
-																	Type="BulletBar"
-																	Value="@Data.Progress~"
-																	>
-																	<DataLayer
-																		CellRange="D5"
-																		ColumnNamesRow="1"
-																		ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
-																		ExcelWorksheet="Initiatives"
-																		ID="dlFinanceInit4"
-																		Type="Excel"
-																	/>
-																	<GaugeRange
-																		Color="#CC0000"
-																		RangeEndValue="30"
-																	/>
-																	<GaugeRange
-																		Color="#F1C232"
-																		RangeEndValue="60"
-																	/>
-																	<GaugeRange
-																		Color="#6AA84F"
-																		RangeEndValue="100"
-																	/>
-																	<Quicktip>
-																		<QuicktipRow
-																			Caption="Progress:"
-																			Value="@Data.Progress~%"
-																		/>
-																	</Quicktip>
-																</Gauge>
-															</ResponsiveColumn>
-														</ResponsiveRow>
-														<ResponsiveRow>
-															<ResponsiveColumn>
-																<Division
-																	ID="divStoryDetails"
-																	ShowModes="None"
-																	>
-																	<HR/>
-																	<DataTable
-																		AccessibleHeaders="True"
-																		AccessibleSummary="AnalysisGrid DataTable"
-																		Caption="Actions for Telling the MKC Story"
-																		DraggableColumns="False"
-																		HideWhenZeroRows="True"
-																		ID="dtStory"
-																		KeepScrollPosition="True"
-																		SortArrows="True"
-																		TableBorder="1"
-																		Width="100"
-																		WidthScale="%"
-																		>
-																		<DataLayer
-																			CellRange="A10:I12"
-																			ColumnNamesRow="1"
-																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
-																			ExcelWorksheet="Actions"
-																			ID="dlStory"
-																			Type="Excel"
-																		/>
-																		<Remark>
-																			<InteractivePaging
-																				CaptionType="Image"
-																				HideShowPrevNextCaptions="False"
-																				HideWhenOnePage="True"
-																				IDnotSupportedHere="pagingTableNumbered"
-																				Location="Top"
-																				PageRowCount="20"
-																				ShowPageNumber="Numbered"
-																			/>
-																		</Remark>
-																		<DataTableColumn
-																			Header="Description"
-																			ID="colDescription"
-																			>
-																			<Label
-																				Caption="@Data.Description~"
-																				ID="colDescription"
-																			/>
-																			<DataColumnSort
-																				DataColumn="Description"
-																				DataType="Text"
-																			/>
-																			<TooltipPanel
-																				Height="5"
-																				HeightScale="%"
-																				ID="colDescStoryTT"
-																				Width="50"
-																				WidthScale="%"
-																				>
-																				<Label
-																					Caption="Notes: @Data.Notes~"
-																					Class="ThemeTextSmall"
-																				/>
-																			</TooltipPanel>
-																		</DataTableColumn>
-																		<DataTableColumn
-																			Header="Champion"
-																			ID="colChampion"
-																			>
-																			<Label
-																				Caption="@Data.Champion~"
-																				ID="colChampion"
-																			/>
-																			<DataColumnSort
-																				DataColumn="Champion"
-																				DataType="Text"
-																			/>
-																		</DataTableColumn>
-																		<DataTableColumn
-																			Header="Team"
-																			ID="colTeam"
-																			>
-																			<Label
-																				Caption="@Data.Team~"
-																				ID="colTeam"
-																			/>
-																			<DataColumnSort
-																				DataColumn="Team"
-																				DataType="Text"
-																			/>
-																		</DataTableColumn>
-																		<DataTableColumn
-																			Header="Due Date"
-																			ID="colDue"
-																			>
-																			<Label
-																				Caption="@Data.Due Date~"
-																				ID="colDue"
-																			/>
-																			<DataColumnSort
-																				DataColumn="Due Date"
-																				DataType="Date"
-																			/>
-																		</DataTableColumn>
-																		<DataTableColumn
-																			Header="Progress"
-																			ID="colProgress"
-																			>
-																			<Label
-																				Caption="@Data.Progress~%"
-																				ID="colProgress"
-																				>
-																				<ConditionalClass
-																					Class="fa fa-arrow-up text-success"
-																					Condition="@Data.Progress~ &gt; 80"
-																				/>
-																				<ConditionalClass
-																					Class="fa fa-star text-warning"
-																					Condition="@Data.Progress~ &gt; 50 "
-																				/>
-																				<ConditionalClass
-																					Class="fa fa-arrow-down text-danger"
-																					Condition="@Data.Progress~ &lt;= 50"
-																				/>
-																				<Action
-																					Display="Toggle"
-																					ElementID="miStoryTasks"
-																					ID="showStoryTasks"
-																					Type="ShowElement"
-																				/>
-																			</Label>
-																			<DataColumnSort
-																				DataColumn="Progress"
-																				DataType="Number"
-																			/>
-																		</DataTableColumn>
-																		<MoreInfoRow
-																			ID="miStoryTasks"
-																			ShowModes="None"
-																			>
-																			<SubDataTable
-																				ColumnHeaderClass="ThemeBold"
-																				ID="sdtStoryTasks"
-																				TableBorder="1"
-																				Width="100"
-																				WidthScale="%"
-																				>
-																				<SubDataLayer
-																					ID="sdlStoryTasks"
-																					>
-																					<DataLayer
-																						CellRange="A23:J31"
-																						ColumnNamesRow="1"
-																						ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
-																						ExcelWorksheet="Tasks"
-																						ID="dlStoryTasks"
-																						Type="Excel"
-																					/>
-																					<SubDataLayerRelationColumn
-																						ChildColumn="ACTID"
-																						ID="relActionID"
-																						ParentColumn="ACTID"
-																					/>
-																					<SubDataLayerRelationColumn
-																						ChildColumn="INID"
-																						ID="relInitID"
-																						ParentColumn="INID"
-																					/>
-																					<SubDataLayerRelationColumn
-																						ChildColumn="PID"
-																						ID="relPersId"
-																						ParentColumn="PID"
-																					/>
-																				</SubDataLayer>
-																				<DataTableColumn
-																					ID="colTaskDescription"
-																					>
-																					<Label
-																						Caption="@Data.Description~"
-																						ID="colTaskDescription"
-																					/>
-																				</DataTableColumn>
-																				<DataTableColumn
-																					ID="colDueDate"
-																					>
-																					<Label
-																						Caption="@Data.Due Date~"
-																						ID="colDueDate"
-																					/>
-																				</DataTableColumn>
-																				<DataTableColumn
-																					ID="colComplete"
-																					>
-																					<Label
-																						Caption=" "
+																					<DataTableColumn
 																						ID="colComplete"
 																						>
-																						<ConditionalClass
-																							Class="fa fa-check text-success"
-																							Condition="@Data.Complete~ = 1"
+																						<Label
+																							Caption=" "
+																							ID="colComplete"
+																							>
+																							<ConditionalClass
+																								Class="fa fa-check text-success"
+																								Condition="@Data.Complete~ = 1"
+																							/>
+																							<ConditionalClass
+																								Class="fa fa-ban text-danger"
+																								Condition="@Data.Complete~ &lt; 1"
+																							/>
+																						</Label>
+																					</DataTableColumn>
+																					<Remark>
+																						<DataTableColumn
+																							ID="colNotes"
+																							>
+																							<Label
+																								Caption="@Data.Notes~"
+																								ID="colNotes"
+																								>
+																								<ConditionalClass/>
+																							</Label>
+																						</DataTableColumn>
+																					</Remark>
+																				</SubDataTable>
+																			</MoreInfoRow>
+																		</DataTable>
+																		<Remark>
+																			<Division
+																				Class="panel-body"
+																				HtmlDiv="True"
+																				ID="panel-notes"
+																				>
+																				<DataTable
+																					AccessibleHeaders="True"
+																					AccessibleSummary="AnalysisGrid DataTable"
+																					ID="dtStory"
+																					KeepScrollPosition="True"
+																					RememberSort="True"
+																					ResizableColumns="False"
+																					SortArrows="True"
+																					TableBorder="0"
+																					Width="100"
+																					WidthScale="%"
+																					>
+																					<DataLayer
+																						ColumnNamesRow="1"
+																						ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
+																						ExcelWorksheet="Initiatives"
+																						ID="dlStory"
+																						Type="Excel"
+																						>
+																						<ConditionFilter
+																							Condition="@Data.PID~ = 1 AND @Data.INID~ = 4"
 																						/>
-																						<ConditionalClass
-																							Class="fa fa-ban text-danger"
-																							Condition="@Data.Complete~ &lt; 1"
-																						/>
-																					</Label>
-																				</DataTableColumn>
-																				<Remark>
+																					</DataLayer>
+																					<Remark>
+																						<DataTableColumn
+																							Header="PID"
+																							ID="colPID"
+																							>
+																							<Label
+																								Caption="@Data.PID~"
+																								ID="colPID"
+																							/>
+																							<DataColumnSort
+																								DataColumn="PID"
+																								DataType="Number"
+																							/>
+																						</DataTableColumn>
+																					</Remark>
+																					<Remark>
+																						<DataTableColumn
+																							Header="INID"
+																							ID="colINID"
+																							>
+																							<Label
+																								Caption="@Data.INID~"
+																								ID="colINID"
+																							/>
+																							<DataColumnSort
+																								DataColumn="INID"
+																								DataType="Number"
+																							/>
+																						</DataTableColumn>
+																					</Remark>
+																					<Remark>
+																						<DataTableColumn
+																							Header="Description"
+																							ID="colDescription"
+																							>
+																							<Label
+																								Caption="@Data.Description~"
+																								ID="colDescription"
+																							/>
+																							<DataColumnSort
+																								DataColumn="Description"
+																								DataType="Text"
+																							/>
+																						</DataTableColumn>
+																					</Remark>
+																					<Remark>
+																						<DataTableColumn
+																							Header="Progress"
+																							ID="colProgress"
+																							>
+																							<Label
+																								Caption="@Data.Progress~"
+																								ID="colProgress"
+																							/>
+																							<DataColumnSort
+																								DataColumn="Progress"
+																								DataType="Number"
+																							/>
+																						</DataTableColumn>
+																					</Remark>
 																					<DataTableColumn
+																						Header="Notes"
 																						ID="colNotes"
 																						>
 																						<Label
 																							Caption="@Data.Notes~"
 																							ID="colNotes"
-																							>
-																							<ConditionalClass/>
-																						</Label>
+																						/>
+																						<Remark>
+																							<DataColumnSort
+																								DataColumn="Notes"
+																								DataType="Text"
+																							/>
+																						</Remark>
 																					</DataTableColumn>
-																				</Remark>
-																			</SubDataTable>
-																		</MoreInfoRow>
-																	</DataTable>
-																	<Remark>
-																		<Division
-																			Class="panel-body"
-																			HtmlDiv="True"
-																			ID="panel-notes"
-																			>
-																			<DataTable
-																				AccessibleHeaders="True"
-																				AccessibleSummary="AnalysisGrid DataTable"
-																				ID="dtStory"
-																				KeepScrollPosition="True"
-																				RememberSort="True"
-																				ResizableColumns="False"
-																				SortArrows="True"
-																				TableBorder="0"
-																				Width="100"
-																				WidthScale="%"
-																				>
-																				<DataLayer
-																					ColumnNamesRow="1"
-																					ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
-																					ExcelWorksheet="Initiatives"
-																					ID="dlStory"
-																					Type="Excel"
-																					>
-																					<ConditionFilter
-																						Condition="@Data.PID~ = 1 AND @Data.INID~ = 4"
-																					/>
-																				</DataLayer>
-																				<Remark>
-																					<DataTableColumn
-																						Header="PID"
-																						ID="colPID"
-																						>
-																						<Label
-																							Caption="@Data.PID~"
-																							ID="colPID"
-																						/>
-																						<DataColumnSort
-																							DataColumn="PID"
-																							DataType="Number"
-																						/>
-																					</DataTableColumn>
-																				</Remark>
-																				<Remark>
-																					<DataTableColumn
-																						Header="INID"
-																						ID="colINID"
-																						>
-																						<Label
-																							Caption="@Data.INID~"
-																							ID="colINID"
-																						/>
-																						<DataColumnSort
-																							DataColumn="INID"
-																							DataType="Number"
-																						/>
-																					</DataTableColumn>
-																				</Remark>
-																				<Remark>
-																					<DataTableColumn
-																						Header="Description"
-																						ID="colDescription"
-																						>
-																						<Label
-																							Caption="@Data.Description~"
-																							ID="colDescription"
-																						/>
-																						<DataColumnSort
-																							DataColumn="Description"
-																							DataType="Text"
-																						/>
-																					</DataTableColumn>
-																				</Remark>
-																				<Remark>
-																					<DataTableColumn
-																						Header="Progress"
-																						ID="colProgress"
-																						>
-																						<Label
-																							Caption="@Data.Progress~"
-																							ID="colProgress"
-																						/>
-																						<DataColumnSort
-																							DataColumn="Progress"
-																							DataType="Number"
-																						/>
-																					</DataTableColumn>
-																				</Remark>
-																				<DataTableColumn
-																					Header="Notes"
-																					ID="colNotes"
-																					>
-																					<Label
-																						Caption="@Data.Notes~"
-																						ID="colNotes"
-																					/>
-																					<Remark>
-																						<DataColumnSort
-																							DataColumn="Notes"
-																							DataType="Text"
-																						/>
-																					</Remark>
-																				</DataTableColumn>
-																			</DataTable>
-																		</Division>
-																	</Remark>
-																</Division>
-															</ResponsiveColumn>
-														</ResponsiveRow>
+																				</DataTable>
+																			</Division>
+																		</Remark>
+																	</Division>
+																</ResponsiveColumn>
+															</ResponsiveRow>
+														</Division>
 													</Division>
-												</Division>
-											</ResponsiveColumn>
-										</ResponsiveRow>
+												</ResponsiveColumn>
+											</ResponsiveRow>
+										</Remark>
 									</TabPanel>
 									<TabPanel
 										Caption="Customer"
@@ -2645,7 +2631,7 @@
 																	Value="@Data.Progress~"
 																	>
 																	<DataLayer
-																		CellRange="D6"
+																		CellRange="D4"
 																		ColumnNamesRow="1"
 																		ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																		ExcelWorksheet="Initiatives"
@@ -2694,7 +2680,7 @@
 																		WidthScale="%"
 																		>
 																		<DataLayer
-																			CellRange="A13:I17"
+																			CellRange="A8:I11"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																			ExcelWorksheet="Actions"
@@ -2821,7 +2807,7 @@
 																					ID="sdlCustTasks1"
 																					>
 																					<DataLayer
-																						CellRange="A32:J46"
+																						CellRange="A17:J30"
 																						ColumnNamesRow="1"
 																						ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																						ExcelWorksheet="Tasks"
@@ -3069,7 +3055,7 @@
 																	Value="@Data.Progress~"
 																	>
 																	<DataLayer
-																		CellRange="D7"
+																		CellRange="D5"
 																		ColumnNamesRow="1"
 																		ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																		ExcelWorksheet="Initiatives"
@@ -3118,7 +3104,7 @@
 																		WidthScale="%"
 																		>
 																		<DataLayer
-																			CellRange="A18:I25"
+																			CellRange="A12:I18"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																			ExcelWorksheet="Actions"
@@ -3249,7 +3235,7 @@
 																					ID="sdlCustTasks2"
 																					>
 																					<DataLayer
-																						CellRange="A47:J72"
+																						CellRange="A31:J56"
 																						ColumnNamesRow="1"
 																						ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																						ExcelWorksheet="Tasks"
@@ -3491,7 +3477,7 @@
 																	Value="@Data.Progress~"
 																	>
 																	<DataLayer
-																		CellRange="D8"
+																		CellRange="D6"
 																		ColumnNamesRow="1"
 																		ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																		ExcelWorksheet="Initiatives"
@@ -3539,7 +3525,7 @@
 																		WidthScale="%"
 																		>
 																		<DataLayer
-																			CellRange="A26:I29"
+																			CellRange="A19:I21"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																			ExcelWorksheet="Actions"
@@ -3670,7 +3656,7 @@
 																					ID="sdlCustTasks3"
 																					>
 																					<DataLayer
-																						CellRange="A73:J87"
+																						CellRange="A57:J67"
 																						ColumnNamesRow="1"
 																						ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																						ExcelWorksheet="Tasks"
@@ -3910,7 +3896,7 @@
 																	Value="@Data.Progress~"
 																	>
 																	<DataLayer
-																		CellRange="D9"
+																		CellRange="D7"
 																		ColumnNamesRow="1"
 																		ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																		ExcelWorksheet="Initiatives"
@@ -3959,7 +3945,7 @@
 																		WidthScale="%"
 																		>
 																		<DataLayer
-																			CellRange="A30:I32"
+																			CellRange="A22:I25"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																			ExcelWorksheet="Actions"
@@ -4090,7 +4076,7 @@
 																					ID="sdlCustTasks4"
 																					>
 																					<DataLayer
-																						CellRange="A88:J96"
+																						CellRange="A69:J81"
 																						ColumnNamesRow="1"
 																						ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																						ExcelWorksheet="Tasks"
@@ -4294,7 +4280,7 @@
 														ID="panel-heading"
 														>
 														<Label
-															Caption="Communicate the Strategic Plan"
+															Caption="Communicate the Strategic Plan/Incorporate into Incentive Plan"
 															Tooltip="Click for Detail Report"
 														/>
 														<Division
@@ -4338,7 +4324,7 @@
 																	Value="@Data.Progress~"
 																	>
 																	<DataLayer
-																		CellRange="D10"
+																		CellRange="D8"
 																		ColumnNamesRow="1"
 																		ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																		ExcelWorksheet="Initiatives"
@@ -4376,7 +4362,7 @@
 																	<DataTable
 																		AccessibleHeaders="True"
 																		AccessibleSummary="AnalysisGrid DataTable"
-																		Caption="Actions for Communicate the Strategic Plan"
+																		Caption="Actions for Communicate the Strategic Plan/Incorporate into Incentive Plan"
 																		DraggableColumns="False"
 																		HideWhenZeroRows="True"
 																		ID="dtEmpAction1"
@@ -4387,7 +4373,7 @@
 																		WidthScale="%"
 																		>
 																		<DataLayer
-																			CellRange="A33:I35"
+																			CellRange="A26:I27"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																			ExcelWorksheet="Actions"
@@ -4518,7 +4504,7 @@
 																					ID="sdlEmployeeTasks1"
 																					>
 																					<DataLayer
-																						CellRange="A97:J106"
+																						CellRange="A82:J87"
 																						ColumnNamesRow="1"
 																						ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																						ExcelWorksheet="Tasks"
@@ -4766,7 +4752,7 @@
 																	Value="@Data.Progress~"
 																	>
 																	<DataLayer
-																		CellRange="D11"
+																		CellRange="D9"
 																		ColumnNamesRow="1"
 																		ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																		ExcelWorksheet="Initiatives"
@@ -4815,7 +4801,7 @@
 																		WidthScale="%"
 																		>
 																		<DataLayer
-																			CellRange="A36:I39"
+																			CellRange="A28:I31"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																			ExcelWorksheet="Actions"
@@ -4946,7 +4932,7 @@
 																					ID="sdlEmployeeTasks2"
 																					>
 																					<DataLayer
-																						CellRange="A107:J120"
+																						CellRange="A88:J96"
 																						ColumnNamesRow="1"
 																						ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																						ExcelWorksheet="Tasks"
@@ -5188,7 +5174,7 @@
 																	Value="@Data.Progress~"
 																	>
 																	<DataLayer
-																		CellRange="D12"
+																		CellRange="D10"
 																		ColumnNamesRow="1"
 																		ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																		ExcelWorksheet="Initiatives"
@@ -5237,7 +5223,7 @@
 																		WidthScale="%"
 																		>
 																		<DataLayer
-																			CellRange="A40:I44"
+																			CellRange="A32:I35"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																			ExcelWorksheet="Actions"
@@ -5368,7 +5354,7 @@
 																					ID="sdlEmployeeTasks3"
 																					>
 																					<DataLayer
-																						CellRange="A121:J136"
+																						CellRange="A97:J110"
 																						ColumnNamesRow="1"
 																						ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																						ExcelWorksheet="Tasks"
@@ -5608,7 +5594,7 @@
 																	Value="@Data.Progress~"
 																	>
 																	<DataLayer
-																		CellRange="D13"
+																		CellRange="D11"
 																		ColumnNamesRow="1"
 																		ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																		ExcelWorksheet="Initiatives"
@@ -5657,7 +5643,7 @@
 																		WidthScale="%"
 																		>
 																		<DataLayer
-																			CellRange="A45:I49"
+																			CellRange="A36:I38"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																			ExcelWorksheet="Actions"
@@ -5788,7 +5774,7 @@
 																					ID="sdlEmployeeTasks4"
 																					>
 																					<DataLayer
-																						CellRange="A137:J148"
+																						CellRange="A111:J116"
 																						ColumnNamesRow="1"
 																						ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																						ExcelWorksheet="Tasks"
@@ -6030,7 +6016,7 @@
 																	Value="@Data.Progress~"
 																	>
 																	<DataLayer
-																		CellRange="D14"
+																		CellRange="D12"
 																		ColumnNamesRow="1"
 																		ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																		ExcelWorksheet="Initiatives"
@@ -6079,7 +6065,7 @@
 																		WidthScale="%"
 																		>
 																		<DataLayer
-																			CellRange="A50:I50"
+																			CellRange="A39:I42"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																			ExcelWorksheet="Actions"
@@ -6209,7 +6195,7 @@
 																					ID="sdlEmployeeTasks2"
 																					>
 																					<DataLayer
-																						CellRange="A149:J151"
+																						CellRange="A117:J132"
 																						ColumnNamesRow="1"
 																						ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																						ExcelWorksheet="Tasks"
@@ -7262,7 +7248,7 @@
 														ID="panel-heading"
 														>
 														<Label
-															Caption="Education and Control for Grain Handling"
+															Caption="Develop Strategy for Locations Affected By TMA Structure Change"
 															Tooltip="Click for Detail Report"
 														/>
 														<Division
@@ -7306,7 +7292,7 @@
 																	Value="@Data.Progress~"
 																	>
 																	<DataLayer
-																		CellRange="D17"
+																		CellRange="D15"
 																		ColumnNamesRow="1"
 																		ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																		ExcelWorksheet="Initiatives"
@@ -7344,7 +7330,7 @@
 																	<DataTable
 																		AccessibleHeaders="True"
 																		AccessibleSummary="AnalysisGrid DataTable"
-																		Caption="Actions for Education and Control for Grain Handling"
+																		Caption="Actions for Develop Strategy for Locations per TMA Structure Change"
 																		DraggableColumns="False"
 																		HideWhenZeroRows="True"
 																		ID="dtRenewalAction3"
@@ -7355,7 +7341,7 @@
 																		WidthScale="%"
 																		>
 																		<DataLayer
-																			CellRange="A55:I55"
+																			CellRange="A49:I50"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																			ExcelWorksheet="Actions"
@@ -7486,7 +7472,7 @@
 																					ID="sdlRenewalTasks3"
 																					>
 																					<DataLayer
-																						CellRange="A162:J165"
+																						CellRange="A144:J146"
 																						ColumnNamesRow="1"
 																						ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																						ExcelWorksheet="Tasks"
@@ -7682,7 +7668,7 @@
 														ID="panel-heading"
 														>
 														<Label
-															Caption="Analyze Feed Operations"
+															Caption="Develop Sumner County Business Plan"
 															Tooltip="Click for Detail Report"
 														/>
 														<Division
@@ -7726,7 +7712,7 @@
 																	Value="@Data.Progress~"
 																	>
 																	<DataLayer
-																		CellRange="D18"
+																		CellRange="D16"
 																		ColumnNamesRow="1"
 																		ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																		ExcelWorksheet="Initiatives"
@@ -7764,7 +7750,7 @@
 																	<DataTable
 																		AccessibleHeaders="True"
 																		AccessibleSummary="AnalysisGrid DataTable"
-																		Caption="Actions for Analyze Feed Operations"
+																		Caption="Actions for Develop Sumner County Business Plan"
 																		DraggableColumns="False"
 																		HideWhenZeroRows="True"
 																		ID="dtRenewalAction4"
@@ -7775,7 +7761,7 @@
 																		WidthScale="%"
 																		>
 																		<DataLayer
-																			CellRange="A56:I57"
+																			CellRange="A51:I55"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																			ExcelWorksheet="Actions"
@@ -7915,11 +7901,871 @@
 																					ID="sdlRenewalTasks4"
 																					>
 																					<DataLayer
-																						CellRange="A166:J170"
+																						CellRange="A147:J158"
 																						ColumnNamesRow="1"
 																						ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																						ExcelWorksheet="Tasks"
 																						ID="dlRenewalTasks4"
+																						Type="Excel"
+																					/>
+																					<SubDataLayerRelationColumn
+																						ChildColumn="ACTID"
+																						ID="relActionID"
+																						ParentColumn="ACTID"
+																					/>
+																					<SubDataLayerRelationColumn
+																						ChildColumn="INID"
+																						ID="relInitID"
+																						ParentColumn="INID"
+																					/>
+																					<SubDataLayerRelationColumn
+																						ChildColumn="PID"
+																						ID="relPersId"
+																						ParentColumn="PID"
+																					/>
+																				</SubDataLayer>
+																				<DataTableColumn
+																					ID="colTaskDescription"
+																					>
+																					<Label
+																						Caption="@Data.Description~"
+																						ID="colTaskDescription"
+																					/>
+																				</DataTableColumn>
+																				<DataTableColumn
+																					ID="colDueDate"
+																					>
+																					<Label
+																						Caption="@Data.Due Date~"
+																						ID="colDueDate"
+																					/>
+																				</DataTableColumn>
+																				<DataTableColumn
+																					ID="colComplete"
+																					>
+																					<Label
+																						Caption=" "
+																						ID="colComplete"
+																						>
+																						<ConditionalClass
+																							Class="fa fa-check text-success"
+																							Condition="@Data.Complete~ = 1"
+																						/>
+																						<ConditionalClass
+																							Class="fa fa-ban text-danger"
+																							Condition="@Data.Complete~ &lt; 1"
+																						/>
+																					</Label>
+																				</DataTableColumn>
+																				<Remark>
+																					<DataTableColumn
+																						ID="colNotes"
+																						>
+																						<Label
+																							Caption="@Data.Notes~"
+																							ID="colNotes"
+																							>
+																							<ConditionalClass/>
+																						</Label>
+																					</DataTableColumn>
+																				</Remark>
+																			</SubDataTable>
+																		</MoreInfoRow>
+																	</DataTable>
+																	<Remark>
+																		<Division
+																			Class="panel-body"
+																			HtmlDiv="True"
+																			ID="panel-notes"
+																			>
+																			<DataTable
+																				AccessibleHeaders="True"
+																				AccessibleSummary="AnalysisGrid DataTable"
+																				ID="dtFeed"
+																				KeepScrollPosition="True"
+																				RememberSort="True"
+																				ResizableColumns="False"
+																				SortArrows="True"
+																				TableBorder="0"
+																				Width="100"
+																				WidthScale="%"
+																				>
+																				<DataLayer
+																					ColumnNamesRow="1"
+																					ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
+																					ExcelWorksheet="Initiatives"
+																					ID="dlFeed"
+																					Type="Excel"
+																					>
+																					<ConditionFilter
+																						Condition="@Data.PID~ = 4 AND @Data.INID~ = 4"
+																					/>
+																				</DataLayer>
+																				<Remark>
+																					<DataTableColumn
+																						Header="PID"
+																						ID="colPID"
+																						>
+																						<Label
+																							Caption="@Data.PID~"
+																							ID="colPID"
+																						/>
+																						<DataColumnSort
+																							DataColumn="PID"
+																							DataType="Number"
+																						/>
+																					</DataTableColumn>
+																				</Remark>
+																				<Remark>
+																					<DataTableColumn
+																						Header="INID"
+																						ID="colINID"
+																						>
+																						<Label
+																							Caption="@Data.INID~"
+																							ID="colINID"
+																						/>
+																						<DataColumnSort
+																							DataColumn="INID"
+																							DataType="Number"
+																						/>
+																					</DataTableColumn>
+																				</Remark>
+																				<Remark>
+																					<DataTableColumn
+																						Header="Description"
+																						ID="colDescription"
+																						>
+																						<Label
+																							Caption="@Data.Description~"
+																							ID="colDescription"
+																						/>
+																						<DataColumnSort
+																							DataColumn="Description"
+																							DataType="Text"
+																						/>
+																					</DataTableColumn>
+																				</Remark>
+																				<Remark>
+																					<DataTableColumn
+																						Header="Progress"
+																						ID="colProgress"
+																						>
+																						<Label
+																							Caption="@Data.Progress~"
+																							ID="colProgress"
+																						/>
+																						<DataColumnSort
+																							DataColumn="Progress"
+																							DataType="Number"
+																						/>
+																					</DataTableColumn>
+																				</Remark>
+																				<DataTableColumn
+																					Header="Notes"
+																					ID="colNotes"
+																					>
+																					<Label
+																						Caption="@Data.Notes~"
+																						ID="colNotes"
+																					/>
+																					<Remark>
+																						<DataColumnSort
+																							DataColumn="Notes"
+																							DataType="Text"
+																						/>
+																					</Remark>
+																				</DataTableColumn>
+																			</DataTable>
+																		</Division>
+																	</Remark>
+																</Division>
+															</ResponsiveColumn>
+														</ResponsiveRow>
+													</Division>
+												</Division>
+											</ResponsiveColumn>
+										</ResponsiveRow>
+										<ResponsiveRow>
+											<ResponsiveColumn>
+												<Division
+													Class="panel panel-default"
+													HtmlDiv="True"
+													ID="panel"
+													>
+													<Division
+														Class="panel-heading"
+														HtmlDiv="True"
+														ID="panel-heading"
+														>
+														<Label
+															Caption="Prepare for Hybrid Wheat Opportunity"
+															Tooltip="Click for Detail Report"
+														/>
+														<Division
+															Class="ThemeAlignRight"
+															ID="divShowFeed"
+															>
+															<Spaces
+																Size="5"
+															/>
+															<ToggleImage
+																AltText="Show/Hide More Details..."
+																Class="ThemeTextSmall"
+																ElementID="divRenewal5Details"
+																FalseImage="plus.png"
+																Height="20"
+																ID="showRenewal5Details"
+																Tooltip="Show/Hide Action Details..."
+																TrueImage="minus.png"
+																Width="20"
+															/>
+														</Division>
+													</Division>
+													<Division
+														Class="panel-body"
+														HtmlDiv="True"
+														ID="panel-body"
+														>
+														<ResponsiveRow>
+															<ResponsiveColumn>
+																<Gauge
+																	BulletColor="#363b42"
+																	CaptionColor="SaddleBrown"
+																	ChartHeight="80"
+																	FontBold="False"
+																	FontName="Arial"
+																	FontSize="11"
+																	ID="BulletBar"
+																	MarkerColor="Black"
+																	MarkerValue="@Data.Progress~"
+																	Type="BulletBar"
+																	Value="@Data.Progress~"
+																	>
+																	<DataLayer
+																		CellRange="D17"
+																		ColumnNamesRow="1"
+																		ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
+																		ExcelWorksheet="Initiatives"
+																		ID="dlRenewaltInitiatives5"
+																		Type="Excel"
+																	/>
+																	<GaugeRange
+																		Color="#CC0000"
+																		RangeEndValue="30"
+																	/>
+																	<GaugeRange
+																		Color="#F1C232"
+																		RangeEndValue="60"
+																	/>
+																	<GaugeRange
+																		Color="#6AA84F"
+																		RangeEndValue="100"
+																	/>
+																	<Quicktip>
+																		<QuicktipRow
+																			Caption="Progress:"
+																			Value="@Data.Progress~%"
+																		/>
+																	</Quicktip>
+																</Gauge>
+															</ResponsiveColumn>
+														</ResponsiveRow>
+														<ResponsiveRow>
+															<ResponsiveColumn>
+																<Division
+																	ID="divRenewal5Details"
+																	ShowModes="None"
+																	>
+																	<HR/>
+																	<DataTable
+																		AccessibleHeaders="True"
+																		AccessibleSummary="AnalysisGrid DataTable"
+																		Caption="Actions for Prepare for Hybrid Wheat Opportunity"
+																		DraggableColumns="False"
+																		HideWhenZeroRows="True"
+																		ID="dtRenewalAction5"
+																		KeepScrollPosition="True"
+																		SortArrows="True"
+																		TableBorder="1"
+																		Width="100"
+																		WidthScale="%"
+																		>
+																		<DataLayer
+																			CellRange="A56:I57"
+																			ColumnNamesRow="1"
+																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
+																			ExcelWorksheet="Actions"
+																			ID="dlRenewalAction5"
+																			Type="Excel"
+																		/>
+																		<Remark>
+																			<InteractivePaging
+																				CaptionType="Image"
+																				HideShowPrevNextCaptions="False"
+																				HideWhenOnePage="True"
+																				IDnotSupportedHere="pagingTableNumbered"
+																				Location="Top"
+																				PageRowCount="20"
+																				ShowPageNumber="Numbered"
+																			/>
+																		</Remark>
+																		<Remark>
+																			<DataTableColumn
+																				ID="colACTID"
+																				>
+																				<Label
+																					Caption="@Data.ACTID~"
+																				/>
+																			</DataTableColumn>
+																		</Remark>
+																		<DataTableColumn
+																			Header="Description"
+																			ID="colDescription"
+																			>
+																			<Label
+																				Caption="@Data.Description~"
+																				ID="colDescription"
+																			/>
+																			<DataColumnSort
+																				DataColumn="Description"
+																				DataType="Text"
+																			/>
+																			<TooltipPanel
+																				Height="5"
+																				HeightScale="%"
+																				ID="colDescRen5TT"
+																				Width="50"
+																				WidthScale="%"
+																				>
+																				<Label
+																					Caption="Notes: @Data.Notes~"
+																					Class="ThemeTextSmall"
+																				/>
+																			</TooltipPanel>
+																		</DataTableColumn>
+																		<DataTableColumn
+																			Header="Champion"
+																			ID="colChampion"
+																			>
+																			<Label
+																				Caption="@Data.Champion~"
+																				ID="colChampion"
+																			/>
+																			<DataColumnSort
+																				DataColumn="Champion"
+																				DataType="Text"
+																			/>
+																		</DataTableColumn>
+																		<DataTableColumn
+																			Header="Team"
+																			ID="colTeam"
+																			>
+																			<Label
+																				Caption="@Data.Team~"
+																				ID="colTeam"
+																			/>
+																			<DataColumnSort
+																				DataColumn="Team"
+																				DataType="Text"
+																			/>
+																		</DataTableColumn>
+																		<DataTableColumn
+																			Header="Due Date"
+																			ID="colDue"
+																			Width="15"
+																			WidthScale="%"
+																			>
+																			<Label
+																				Caption="@Data.Due Date~"
+																				ID="colDue"
+																			/>
+																			<DataColumnSort
+																				DataColumn="Due Date"
+																				DataType="Date"
+																			/>
+																		</DataTableColumn>
+																		<DataTableColumn
+																			Header="Progress"
+																			ID="colProgress"
+																			>
+																			<Label
+																				Caption="@Data.Progress~%"
+																				ID="colProgress"
+																				>
+																				<ConditionalClass
+																					Class="fa fa-arrow-up text-success"
+																					Condition="@Data.Progress~ &gt; 80"
+																				/>
+																				<ConditionalClass
+																					Class="fa fa-star text-warning"
+																					Condition="@Data.Progress~ &gt; 50 "
+																				/>
+																				<ConditionalClass
+																					Class="fa fa-arrow-down text-danger"
+																					Condition="@Data.Progress~ &lt;= 50"
+																				/>
+																				<Action
+																					Display="Toggle"
+																					ElementID="miRenewalTasks5"
+																					ID="showRenewalTasks5"
+																					Type="ShowElement"
+																				/>
+																			</Label>
+																			<DataColumnSort
+																				DataColumn="Progress"
+																				DataType="Number"
+																			/>
+																		</DataTableColumn>
+																		<MoreInfoRow
+																			ID="miRenewalTasks5"
+																			ShowModes="None"
+																			>
+																			<SubDataTable
+																				ColumnHeaderClass="ThemeBold"
+																				ID="sdtRenewalTasks5"
+																				TableBorder="1"
+																				Width="100"
+																				WidthScale="%"
+																				>
+																				<SubDataLayer
+																					ID="sdlRenewalTasks5"
+																					>
+																					<DataLayer
+																						CellRange="A159:J160"
+																						ColumnNamesRow="1"
+																						ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
+																						ExcelWorksheet="Tasks"
+																						ID="dlRenewalTasks5"
+																						Type="Excel"
+																					/>
+																					<SubDataLayerRelationColumn
+																						ChildColumn="ACTID"
+																						ID="relActionID"
+																						ParentColumn="ACTID"
+																					/>
+																					<SubDataLayerRelationColumn
+																						ChildColumn="INID"
+																						ID="relInitID"
+																						ParentColumn="INID"
+																					/>
+																					<SubDataLayerRelationColumn
+																						ChildColumn="PID"
+																						ID="relPersId"
+																						ParentColumn="PID"
+																					/>
+																				</SubDataLayer>
+																				<DataTableColumn
+																					ID="colTaskDescription"
+																					>
+																					<Label
+																						Caption="@Data.Description~"
+																						ID="colTaskDescription"
+																					/>
+																				</DataTableColumn>
+																				<DataTableColumn
+																					ID="colDueDate"
+																					>
+																					<Label
+																						Caption="@Data.Due Date~"
+																						ID="colDueDate"
+																					/>
+																				</DataTableColumn>
+																				<DataTableColumn
+																					ID="colComplete"
+																					>
+																					<Label
+																						Caption=" "
+																						ID="colComplete"
+																						>
+																						<ConditionalClass
+																							Class="fa fa-check text-success"
+																							Condition="@Data.Complete~ = 1"
+																						/>
+																						<ConditionalClass
+																							Class="fa fa-ban text-danger"
+																							Condition="@Data.Complete~ &lt; 1"
+																						/>
+																					</Label>
+																				</DataTableColumn>
+																				<Remark>
+																					<DataTableColumn
+																						ID="colNotes"
+																						>
+																						<Label
+																							Caption="@Data.Notes~"
+																							ID="colNotes"
+																							>
+																							<ConditionalClass/>
+																						</Label>
+																					</DataTableColumn>
+																				</Remark>
+																			</SubDataTable>
+																		</MoreInfoRow>
+																	</DataTable>
+																	<Remark>
+																		<Division
+																			Class="panel-body"
+																			HtmlDiv="True"
+																			ID="panel-notes"
+																			>
+																			<DataTable
+																				AccessibleHeaders="True"
+																				AccessibleSummary="AnalysisGrid DataTable"
+																				ID="dtFeed"
+																				KeepScrollPosition="True"
+																				RememberSort="True"
+																				ResizableColumns="False"
+																				SortArrows="True"
+																				TableBorder="0"
+																				Width="100"
+																				WidthScale="%"
+																				>
+																				<DataLayer
+																					ColumnNamesRow="1"
+																					ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
+																					ExcelWorksheet="Initiatives"
+																					ID="dlFeed"
+																					Type="Excel"
+																					>
+																					<ConditionFilter
+																						Condition="@Data.PID~ = 4 AND @Data.INID~ = 4"
+																					/>
+																				</DataLayer>
+																				<Remark>
+																					<DataTableColumn
+																						Header="PID"
+																						ID="colPID"
+																						>
+																						<Label
+																							Caption="@Data.PID~"
+																							ID="colPID"
+																						/>
+																						<DataColumnSort
+																							DataColumn="PID"
+																							DataType="Number"
+																						/>
+																					</DataTableColumn>
+																				</Remark>
+																				<Remark>
+																					<DataTableColumn
+																						Header="INID"
+																						ID="colINID"
+																						>
+																						<Label
+																							Caption="@Data.INID~"
+																							ID="colINID"
+																						/>
+																						<DataColumnSort
+																							DataColumn="INID"
+																							DataType="Number"
+																						/>
+																					</DataTableColumn>
+																				</Remark>
+																				<Remark>
+																					<DataTableColumn
+																						Header="Description"
+																						ID="colDescription"
+																						>
+																						<Label
+																							Caption="@Data.Description~"
+																							ID="colDescription"
+																						/>
+																						<DataColumnSort
+																							DataColumn="Description"
+																							DataType="Text"
+																						/>
+																					</DataTableColumn>
+																				</Remark>
+																				<Remark>
+																					<DataTableColumn
+																						Header="Progress"
+																						ID="colProgress"
+																						>
+																						<Label
+																							Caption="@Data.Progress~"
+																							ID="colProgress"
+																						/>
+																						<DataColumnSort
+																							DataColumn="Progress"
+																							DataType="Number"
+																						/>
+																					</DataTableColumn>
+																				</Remark>
+																				<DataTableColumn
+																					Header="Notes"
+																					ID="colNotes"
+																					>
+																					<Label
+																						Caption="@Data.Notes~"
+																						ID="colNotes"
+																					/>
+																					<Remark>
+																						<DataColumnSort
+																							DataColumn="Notes"
+																							DataType="Text"
+																						/>
+																					</Remark>
+																				</DataTableColumn>
+																			</DataTable>
+																		</Division>
+																	</Remark>
+																</Division>
+															</ResponsiveColumn>
+														</ResponsiveRow>
+													</Division>
+												</Division>
+											</ResponsiveColumn>
+											<ResponsiveColumn>
+												<Division
+													Class="panel panel-default"
+													HtmlDiv="True"
+													ID="panel"
+													>
+													<Division
+														Class="panel-heading"
+														HtmlDiv="True"
+														ID="panel-heading"
+														>
+														<Label
+															Caption="Develop Plans Involving Strategic Partnerships"
+															Tooltip="Click for Detail Report"
+														/>
+														<Division
+															Class="ThemeAlignRight"
+															ID="divShowFeed"
+															>
+															<Spaces
+																Size="5"
+															/>
+															<ToggleImage
+																AltText="Show/Hide More Details..."
+																Class="ThemeTextSmall"
+																ElementID="divRenewal6Details"
+																FalseImage="plus.png"
+																Height="20"
+																ID="showRenewal6Details"
+																Tooltip="Show/Hide Action Details..."
+																TrueImage="minus.png"
+																Width="20"
+															/>
+														</Division>
+													</Division>
+													<Division
+														Class="panel-body"
+														HtmlDiv="True"
+														ID="panel-body"
+														>
+														<ResponsiveRow>
+															<ResponsiveColumn>
+																<Gauge
+																	BulletColor="#363b42"
+																	CaptionColor="SaddleBrown"
+																	ChartHeight="80"
+																	FontBold="False"
+																	FontName="Arial"
+																	FontSize="11"
+																	ID="BulletBar"
+																	MarkerColor="Black"
+																	MarkerValue="@Data.Progress~"
+																	Type="BulletBar"
+																	Value="@Data.Progress~"
+																	>
+																	<DataLayer
+																		CellRange="D17"
+																		ColumnNamesRow="1"
+																		ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
+																		ExcelWorksheet="Initiatives"
+																		ID="dlRenewaltInitiatives5"
+																		Type="Excel"
+																	/>
+																	<GaugeRange
+																		Color="#CC0000"
+																		RangeEndValue="30"
+																	/>
+																	<GaugeRange
+																		Color="#F1C232"
+																		RangeEndValue="60"
+																	/>
+																	<GaugeRange
+																		Color="#6AA84F"
+																		RangeEndValue="100"
+																	/>
+																	<Quicktip>
+																		<QuicktipRow
+																			Caption="Progress:"
+																			Value="@Data.Progress~%"
+																		/>
+																	</Quicktip>
+																</Gauge>
+															</ResponsiveColumn>
+														</ResponsiveRow>
+														<ResponsiveRow>
+															<ResponsiveColumn>
+																<Division
+																	ID="divRenewal6Details"
+																	ShowModes="None"
+																	>
+																	<HR/>
+																	<DataTable
+																		AccessibleHeaders="True"
+																		AccessibleSummary="AnalysisGrid DataTable"
+																		Caption="Actions for Develop Plans Involving Strategic Partnerships"
+																		DraggableColumns="False"
+																		HideWhenZeroRows="True"
+																		ID="dtRenewalAction6"
+																		KeepScrollPosition="True"
+																		SortArrows="True"
+																		TableBorder="1"
+																		Width="100"
+																		WidthScale="%"
+																		>
+																		<DataLayer
+																			CellRange="A58:I59"
+																			ColumnNamesRow="1"
+																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
+																			ExcelWorksheet="Actions"
+																			ID="dlRenewalAction6"
+																			Type="Excel"
+																		/>
+																		<Remark>
+																			<InteractivePaging
+																				CaptionType="Image"
+																				HideShowPrevNextCaptions="False"
+																				HideWhenOnePage="True"
+																				IDnotSupportedHere="pagingTableNumbered"
+																				Location="Top"
+																				PageRowCount="20"
+																				ShowPageNumber="Numbered"
+																			/>
+																		</Remark>
+																		<Remark>
+																			<DataTableColumn
+																				ID="colACTID"
+																				>
+																				<Label
+																					Caption="@Data.ACTID~"
+																				/>
+																			</DataTableColumn>
+																		</Remark>
+																		<DataTableColumn
+																			Header="Description"
+																			ID="colDescription"
+																			>
+																			<Label
+																				Caption="@Data.Description~"
+																				ID="colDescription"
+																			/>
+																			<DataColumnSort
+																				DataColumn="Description"
+																				DataType="Text"
+																			/>
+																			<TooltipPanel
+																				Height="5"
+																				HeightScale="%"
+																				ID="colDescRen6TT"
+																				Width="50"
+																				WidthScale="%"
+																				>
+																				<Label
+																					Caption="Notes: @Data.Notes~"
+																					Class="ThemeTextSmall"
+																				/>
+																			</TooltipPanel>
+																		</DataTableColumn>
+																		<DataTableColumn
+																			Header="Champion"
+																			ID="colChampion"
+																			>
+																			<Label
+																				Caption="@Data.Champion~"
+																				ID="colChampion"
+																			/>
+																			<DataColumnSort
+																				DataColumn="Champion"
+																				DataType="Text"
+																			/>
+																		</DataTableColumn>
+																		<DataTableColumn
+																			Header="Team"
+																			ID="colTeam"
+																			>
+																			<Label
+																				Caption="@Data.Team~"
+																				ID="colTeam"
+																			/>
+																			<DataColumnSort
+																				DataColumn="Team"
+																				DataType="Text"
+																			/>
+																		</DataTableColumn>
+																		<DataTableColumn
+																			Header="Due Date"
+																			ID="colDue"
+																			Width="15"
+																			WidthScale="%"
+																			>
+																			<Label
+																				Caption="@Data.Due Date~"
+																				ID="colDue"
+																			/>
+																			<DataColumnSort
+																				DataColumn="Due Date"
+																				DataType="Date"
+																			/>
+																		</DataTableColumn>
+																		<DataTableColumn
+																			Header="Progress"
+																			ID="colProgress"
+																			>
+																			<Label
+																				Caption="@Data.Progress~%"
+																				ID="colProgress"
+																				>
+																				<ConditionalClass
+																					Class="fa fa-arrow-up text-success"
+																					Condition="@Data.Progress~ &gt; 80"
+																				/>
+																				<ConditionalClass
+																					Class="fa fa-star text-warning"
+																					Condition="@Data.Progress~ &gt; 50 "
+																				/>
+																				<ConditionalClass
+																					Class="fa fa-arrow-down text-danger"
+																					Condition="@Data.Progress~ &lt;= 50"
+																				/>
+																				<Action
+																					Display="Toggle"
+																					ElementID="miRenewalTasks6"
+																					ID="showRenewalTasks6"
+																					Type="ShowElement"
+																				/>
+																			</Label>
+																			<DataColumnSort
+																				DataColumn="Progress"
+																				DataType="Number"
+																			/>
+																		</DataTableColumn>
+																		<MoreInfoRow
+																			ID="miRenewalTasks6"
+																			ShowModes="None"
+																			>
+																			<SubDataTable
+																				ColumnHeaderClass="ThemeBold"
+																				ID="sdtRenewalTasks6"
+																				TableBorder="1"
+																				Width="100"
+																				WidthScale="%"
+																				>
+																				<SubDataLayer
+																					ID="sdlRenewalTasks6"
+																					>
+																					<DataLayer
+																						CellRange="A161:J162"
+																						ColumnNamesRow="1"
+																						ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
+																						ExcelWorksheet="Tasks"
+																						ID="dlRenewalTasks6"
 																						Type="Excel"
 																					/>
 																					<SubDataLayerRelationColumn
