@@ -2,7 +2,6 @@
 <Report
 	Caption="AR Aging"
 	ID="Reports.AR_Aging"
-	SecurityReportRightID="MKC"
 	>
 	<IncludeSharedElement
 		DefinitionFile="_Layout.Shared"

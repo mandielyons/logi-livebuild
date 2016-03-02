@@ -2,7 +2,6 @@
 <Report
 	Caption="Branch Dashboard"
 	ID="Reports.MKC_Locations"
-	SecurityReportRightID="MKC"
 	>
 	<LocalData
 		ID="Local-BranchData"
