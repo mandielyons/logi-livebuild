@@ -609,38 +609,36 @@
 										ID="pipe-spacer"
 									/>
 								</Division>
-								<Remark>
-									<Division
-										ID="scorecard-container"
-										SecurityRightID="MKC"
+								<Division
+									ID="scorecard-container"
+									SecurityRightID="SRMGMT"
+									>
+									<Label
+										Caption="Scorecard"
 										>
-										<Label
-											Caption="Scorecard"
+										<Action
+											ID="actReport"
+											Type="Report"
 											>
-											<Action
-												ID="actReport"
+											<Target
+												ID="tgtReport"
+												Report="Scorecard.StrategicDashboard"
 												Type="Report"
 												>
-												<Target
-													ID="tgtReport"
-													Report="Scorecard.StrategicDashboard"
-													Type="Report"
-													>
-													<WaitPage/>
-												</Target>
-											</Action>
-											<ConditionalClass
-												Class="selected-menu"
-												Condition="&quot;@Request.rdReport~&quot;==&quot;Scorecard.StrategicDashboard&quot;"
-											/>
-										</Label>
-										<Label
-											Caption="|"
-											Class="pipe-spacer"
-											ID="pipe-spacer"
+												<WaitPage/>
+											</Target>
+										</Action>
+										<ConditionalClass
+											Class="selected-menu"
+											Condition="&quot;@Request.rdReport~&quot;==&quot;Scorecard.StrategicDashboard&quot;"
 										/>
-									</Division>
-								</Remark>
+									</Label>
+									<Label
+										Caption="|"
+										Class="pipe-spacer"
+										ID="pipe-spacer"
+									/>
+								</Division>
 								<Division
 									ID="admin-container"
 									>
