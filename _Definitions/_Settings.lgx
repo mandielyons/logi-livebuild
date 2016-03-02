@@ -12,7 +12,7 @@
 	<General
 		DoctypeDeclaration="Html5"
 		LogErrors="@Function.AppPhysicalPath~\_ErrorLogs"
-		rdDebuggerStyle="NoDetail"
+		rdDebuggerStyle="DebuggerLinks"
 		RedirectErrorUrl="rdPage.aspx?rdReport=_Layout.Error"
 		RepoFriendly="True"
 	/>
@@ -360,6 +360,35 @@ AND USERNAME = @iptUsername"
 					/>
 					<CalculatedColumn
 						Formula="&quot;TMA Dashboard&quot;"
+						ID="cRole"
+					/>
+				</DataLayer>
+			</RightFromRole>
+			<RightFromRole
+				ID="SRMGMT"
+				RolesDataColumn="cRole"
+				>
+				<DataLayer
+					CacheKey="dlcLdapUserRights"
+					ExpirationTimeSpan="00:05"
+					ID="dlcLdapUserRights"
+					Type="Cached"
+					>
+					<Note
+						Note="*** BRIEFLY caching to improve performance ***"
+					/>
+					<DataLayer
+						ConnectionID="mkcLDAP"
+						ID="dlLdapRights"
+						LdapSource="SELECT memberOf, sAMAccountName, title, name, userPrincipalName, ADsPath, DisplayName, givenName, sn, mail FROM &apos;DC=midkscoop,DC=lan&apos; WHERE SamAccountName=&apos;@Function.UserName~&apos; and objectClass=&apos;person&apos;"
+						Type="Ldap"
+					/>
+					<ConditionFilter
+						Condition="&quot;@Data.memberOf~&quot;.indexOf(&quot;Dashboard Sr Mgmt&quot;)!=&quot;-1&quot;"
+						ID="fSRMGMT"
+					/>
+					<CalculatedColumn
+						Formula="&quot;Dashboard Sr Mgmt&quot;"
 						ID="cRole"
 					/>
 				</DataLayer>

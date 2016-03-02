@@ -514,7 +514,7 @@
 								</Division>
 								<Division
 									ID="scorecard-container"
-									SecurityRightID="MKC"
+									SecurityRightID="SRMGMT"
 									>
 									<Label
 										Caption="Scorecard"
