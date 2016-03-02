@@ -2,7 +2,6 @@
 <Report
 	Caption="AFD Tank Locations"
 	ID="Maps.EnergyTanks"
-	SecurityReportRightID="MKC"
 	>
 	<LocalData
 		ID="Local-AFDData"

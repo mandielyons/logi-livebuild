@@ -2,7 +2,6 @@
 <Report
 	Caption="New Member Business"
 	ID="Reports.NewMemberBusiness"
-	SecurityReportRightID="MKC"
 	>
 	<Remark>
 		<LocalData>

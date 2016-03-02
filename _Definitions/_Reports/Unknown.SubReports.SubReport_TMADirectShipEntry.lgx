@@ -2,6 +2,7 @@
 <Report
 	Caption="TMA Direct Ship Management"
 	ID="Unknown.SubReports.SubReport_TMADirectShipEntry"
+	SecurityReportRightID="TMA,MKC"
 	>
 	<DefaultRequestParams
 		StatusMsg=""
@@ -135,9 +136,10 @@ Where AGTRAX_STAGING.dbo.DM_DSTicketTracking.EntryID = &apos;@Request.EntryId~&a
 							OptionCaptionColumn="ACCOUNT"
 							OptionTooltipColumn="Select a customer"
 							OptionValueColumn="CUSTNMBR"
+							SaveInCookie="True"
 							>
 							<DataLayer
-								ConnectionID="connAgTrax"
+								ConnectionID="connProdGP"
 								ID="dlCustomer"
 								Source="Select Distinct AR_CUSTOMER_MASTER_TMA.CUSTOMER CUSTNMBR,
   AR_CUSTOMER_MASTER_TMA.NAME CUSTNAME,
@@ -153,9 +155,24 @@ Where AR_CUSTOMER_MISC_FLAG_TMA.MISC_FLAG_NUMBER = &apos;99&apos; And
 Order By CUSTNMBR"
 								Type="SQL"
 							/>
+							<EventHandler
+								DhtmlEvent="onchange"
+								>
+								<Action
+									ID="jsCustChanged"
+									Javascript="var customer = document.getElementById(&quot;iptCustomer&quot;);
+var hiddenCust = document.getElementById(&quot;iptAccount&quot;);
+
+hiddenCust.value = customer.options[customer.selectedIndex].text;"
+									Type="Javascript"
+								/>
+							</EventHandler>
 						</InputSelectList>
 						<LineBreak/>
 						<LineBreak/>
+						<InputHidden
+							ID="iptAccount"
+						/>
 					</ResponsiveColumn>
 				</ResponsiveRow>
 				<ResponsiveRow>
@@ -174,7 +191,7 @@ Order By CUSTNMBR"
 							>
 							<DataLayer
 								ColumnNamesRow="1"
-								ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\DSRange.xlsx"
+								ExcelFile="C:\inetpub\wwwroot\LiveBuild\UploadedFiles\DSRange.xlsx"
 								ExcelWorksheet="Sheet1"
 								ID="dlTicketRange"
 								Type="Excel"
@@ -198,7 +215,7 @@ Order By CUSTNMBR"
 							OptionValueColumn="BRANCHNO"
 							>
 							<DataLayer
-								ConnectionID="connAgTrax"
+								ConnectionID="connProdGP"
 								ID="dlLocation"
 								Source="SELECT DISTINCT 
 	BRANCH_NUMBER [BRANCHNO]
@@ -220,6 +237,7 @@ ORDER BY BRANCHNO"
 						>
 						<InputDate
 							Caption="AgTrax Entry Date:"
+							DefaultValue="@Local.EnteredDate~"
 							ID="dteEntered"
 							Tooltip="Enter the date ticketes were entered into AgTrax"
 							>
@@ -304,6 +322,10 @@ else {complete.value = &quot;&quot;;}
 						<LineBreak/>
 						<LineBreak/>
 						<LineBreak/>
+						<InputHidden
+							DefaultValue="@Local.UserID~"
+							ID="iptUserID"
+						/>
 					</ResponsiveColumn>
 				</ResponsiveRow>
 				<ResponsiveRow>
@@ -311,7 +333,7 @@ else {complete.value = &quot;&quot;;}
 						Class="ThemeAlignLeft"
 						>
 						<Button
-							Caption="Submit"
+							Caption="Save"
 							ID="btnUpdate"
 							>
 							<Action
@@ -325,7 +347,7 @@ else {complete.value = &quot;&quot;;}
 							</Action>
 						</Button>
 						<Button
-							Caption="Submit"
+							Caption="Save"
 							ID="btnAdd"
 							>
 							<Action
@@ -336,6 +358,27 @@ else {complete.value = &quot;&quot;;}
 								>
 								<WaitPage/>
 								<LinkParams/>
+							</Action>
+						</Button>
+						<Spaces
+							Size="15"
+						/>
+						<Button
+							Caption="Cancel"
+							ID="btnCancel"
+							>
+							<Action
+								ConfirmMessage="Changes will be lost. Continue without saving?"
+								ID="returnReport"
+								Type="Report"
+								Validate="True"
+								>
+								<Target
+									Report="TMAApps.TMADirectShip"
+									Type="Report"
+									>
+									<WaitPage/>
+								</Target>
 							</Action>
 						</Button>
 					</ResponsiveColumn>
@@ -420,6 +463,7 @@ var add = document.getElementById(&quot;btnAdd&quot;);
 var update = document.getElementById(&quot;btnUpdate&quot;);
 var dteDrop = document.getElementById(&quot;dteDropOff&quot;);
 var dteEntry = document.getElementById(&quot;dteEntered&quot;);
+var dteHidden = document.getElementById(&quot;dteEntered_Hidden&quot;);
 var strComplete = complete.value;
 var n = strComplete.search(&quot;1900-01-01&quot;);
 var electronic = document.getElementById(&quot;iptElectronic&quot;);
@@ -442,9 +486,14 @@ else if (entry.value &gt; 0){
 	update.style.display = &quot;&quot;;
 	add.style.display = &quot;none&quot;;
 	//remove default date
-	if (dteEntry.value == &quot;1/1/1900&quot;) {dteEntry.value = today.value;}
+	//if (dteEntry.value == &quot;1/1/1900&quot;) {dteEntry.value = today.value;}
+	if (dteEntry.value == &quot;1/1/1900&quot;) {dteEntry.value = &quot;&quot;; dteHidden.value = today.value;}
 }
-"
+
+var customer = document.getElementById(&quot;iptCustomer&quot;);
+var hiddenCust = document.getElementById(&quot;iptAccount&quot;);
+
+hiddenCust.value = customer.options[customer.selectedIndex].text;"
 		/>
 	</Body>
 	<IncludeSharedElement

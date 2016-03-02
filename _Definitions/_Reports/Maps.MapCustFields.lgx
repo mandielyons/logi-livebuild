@@ -2,7 +2,6 @@
 <Report
 	Caption="Customer Fields"
 	ID="Maps.MapCustFields"
-	SecurityReportRightID="MKC"
 	>
 	<LocalData
 		Condition="&quot;@Request.iptCustomer~&quot;.length &gt; 0"

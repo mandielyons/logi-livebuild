@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Caption="TMA Direct Ship App" ID="Unknown.TMADirectShip">
+  <IncludeSharedElement DefinitionFile="_Layout.Shared" SharedElementID="shrHeader" />
+  <DefaultRequestParams EntryID="" />
+  <Body>
+    <Division Class="panel panel-default" HtmlDiv="True" ID="panel-ds">
+      <Division Class="panel-heading" HtmlDiv="True" ID="panel-ds-header">
+        <Label Caption="TMA Direct Ship Management" />
+      </Division>
+      <Division Class="panel-body" HtmlDiv="True" ID="panel-ds-report">
+        <ResponsiveRow Class="ThemeAlignRight">
+          <ResponsiveColumn>
+            <Label Class="fa fa-plus fa-2x" HtmlTag="Div" Tooltip="Add a ticket">
+              <Action Type="Report">
+                <Target FrameID="Self" ID="lnkEntry" Report="Unknown.SubReports.SubReport_TMADirectShipEntry" Type="Report">
+                  <WaitPage />
+                </Target>
+              </Action>
+            </Label>
+            <Spaces Size="15" />
+            <Label Class="fa fa-file-excel-o fa-2x " HtmlTag="Div" Tooltip="Export to Excel">
+              <Action Type="NativeExcel">
+                <Target ExcelOutputFormat="Excel2007" ExportDataTableID="dtTicketTracking" FrameID="NewWindow" Report="TMAReports.TMADirectShip" RequestForwarding="True" Type="NativeExcel" />
+              </Action>
+            </Label>
+            <Spaces Size="18" />
+          </ResponsiveColumn>
+        </ResponsiveRow>
+        <ResponsiveRow>
+          <ResponsiveColumn>
+            <LineBreak />
+            <Label Caption="@Request.StatusMsg~" ID="lblStatus">
+              <ConditionalClass Class="ThemeErrorText" Condition="InStr(&quot;@Request.StatusMsg~&quot;,&quot;Error:&quot;) &gt; 0" />
+              <ConditionalClass Class="ThemeTextNegative" Condition="InStr(&quot;@Request.StatusMsg~&quot;,&quot;Success:&quot;) &gt; 0" />
+            </Label>
+            <LineBreak />
+            <LineBreak />
+          </ResponsiveColumn>
+        </ResponsiveRow>
+        <ResponsiveRow>
+          <ResponsiveColumn>
+            <DataTable AccessibleHeaders="True" AccessibleSummary="AnalysisGrid DataTable" ID="dtTicketTracking" KeepScrollPosition="True" RememberSort="True" ResizableColumns="True" SortArrows="True" TableBorder="0">
+              <DataLayer ConnectionID="connAgTrax" ID="dlTicketTracking" Source="Select DM_DSTicketTracking.EntryID,&#xD;&#xA;  DM_DSTicketTracking.DropOffDate,&#xD;&#xA;  DM_DSTicketTracking.CUSTOMER,&#xD;&#xA;  DM_DSTicketTracking.BRANCH_NUMBER,&#xD;&#xA;  DM_DSTicketTracking.TotalTickets,&#xD;&#xA;  DM_DSTicketTracking.EnteredDate,&#xD;&#xA;  DM_DSTicketTracking.UserID,&#xD;&#xA;  DM_DSTicketTracking.CompletedDate,&#xD;&#xA;  IV_BRANCH_MASTER.BRANCH_NAME,&#xD;&#xA;  AR_CUSTOMER_MASTER_TMA.NAME&#xD;&#xA;From DM_DSTicketTracking&#xD;&#xA;  Inner Join IV_BRANCH_MASTER On DM_DSTicketTracking.BRANCH_NUMBER =&#xD;&#xA;    IV_BRANCH_MASTER.BRANCH_NUMBER&#xD;&#xA;  Inner Join AR_CUSTOMER_MASTER_TMA On DM_DSTicketTracking.CUSTOMER =&#xD;&#xA;    AR_CUSTOMER_MASTER_TMA.CUSTOMER" Type="SQL" />
+              <InteractivePaging CaptionType="Image" HideShowPrevNextCaptions="False" HideWhenOnePage="True" IDnotSupportedHere="pagingTableNumbered" Location="Top" PageRowCount="20" ShowPageNumber="Numbered" />
+              <Remark>
+                <DataTableColumn Header="EntryID" ID="colEntryID">
+                  <Label Caption="@Data.EntryID~" ID="colEntryID" />
+                  <DataColumnSort DataColumn="EntryID" DataType="Number" />
+                </DataTableColumn>
+              </Remark>
+              <DataTableColumn Header="Tickets Received" ID="colDropOffDate">
+                <Label Caption="@Data.DropOffDate~" Format="Short Date" ID="colDropOffDate" />
+                <DataColumnSort DataColumn="DropOffDate" DataType="Date" />
+              </DataTableColumn>
+              <DataTableColumn Header="Customer" ID="colCUSTOMER">
+                <Label Caption="@Data.CUSTOMER~ - @Data.NAME~" ID="colCUSTOMER" />
+                <DataColumnSort DataColumn="CUSTOMER" DataType="Text" />
+              </DataTableColumn>
+              <DataTableColumn Header="Branch " ID="colBRANCH_NUMBER">
+                <Label Caption="@Data.BRANCH_NUMBER~ - @Data.BRANCH_NAME~" ID="colBRANCH_NUMBER" />
+                <DataColumnSort DataColumn="BRANCH_NUMBER" DataType="Number" />
+              </DataTableColumn>
+              <DataTableColumn Header="Total Tickets" ID="colTotalTickets">
+                <Label Caption="0 - 10" Class="ThemeHidden">
+                  <ConditionalClass Condition="@Data.TotalTickets~ = 1" />
+                </Label>
+                <Label Caption="&gt; 10" Class="ThemeHidden">
+                  <ConditionalClass Condition="@Data.TotalTickets~ = 2" />
+                </Label>
+                <Label Caption="&gt; 25" Class="ThemeHidden">
+                  <ConditionalClass Condition="@Data.TotalTickets~ = 3" />
+                </Label>
+                <Label Caption="&gt; 50" Class="ThemeHidden">
+                  <ConditionalClass Condition="@Data.TotalTickets~ = 4" />
+                </Label>
+                <Label Caption="&gt; 75" Class="ThemeHidden">
+                  <ConditionalClass Condition="@Data.TotalTickets~ = 5" />
+                </Label>
+                <Label Caption="&gt; 100" Class="ThemeHidden">
+                  <ConditionalClass Condition="@Data.TotalTickets~ = 6" />
+                </Label>
+                <Remark>
+                  <Label Caption="@Data.TotalTickets~" ID="colTotalTickets" />
+                </Remark>
+                <DataColumnSort DataColumn="TotalTickets" DataType="Text" />
+              </DataTableColumn>
+              <DataTableColumn Header="AgTrax Entered Date" ID="colEnteredDate">
+                <Label Caption="@Data.EnteredDate~" Format="Short Date" ID="colEnteredDate">
+                  <ConditionalClass Class="ThemeHidden" Condition="InStr(&quot;@Data.EnteredDate~&quot;, &quot;1900-01-01&quot;) &gt; 0" />
+                </Label>
+                <DataColumnSort DataColumn="EnteredDate" DataType="Date" />
+              </DataTableColumn>
+              <DataTableColumn Header="Entered By" ID="colUserID">
+                <Label Caption="@Data.UserID~" ID="colUserID" />
+                <DataColumnSort DataColumn="UserID" DataType="Text" />
+              </DataTableColumn>
+              <DataTableColumn Header="Completed" ID="colCompletedDate">
+                <Label Class="fa fa-check">
+                  <ConditionalClass Class="ThemeHidden" Condition="InStr(&quot;@Data.CompletedDate~&quot;, &quot;1900-01-01&quot;) &gt; 0" />
+                </Label>
+                <Label Caption="@Data.CompletedDate~" Format="Short Date" ID="colCompletedDate">
+                  <ConditionalClass Class="ThemeHidden" Condition="InStr(&quot;@Data.CompletedDate~&quot;, &quot;1900-01-01&quot;) &gt; 0" />
+                </Label>
+                <DataColumnSort DataColumn="CompletedDate" DataType="Date" />
+              </DataTableColumn>
+              <DataTableColumn>
+                <Label Class="fa fa-edit fa-2x ">
+                  <Action ID="actEdit" Type="Report">
+                    <Target FrameID="Self" Report="Unknown.SubReports.SubReport_TMADirectShipEntry" Type="Report">
+                      <WaitPage />
+                    </Target>
+                    <LinkParams EntryId="@Data.EntryID~" />
+                  </Action>
+                </Label>
+              </DataTableColumn>
+            </DataTable>
+          </ResponsiveColumn>
+        </ResponsiveRow>
+      </Division>
+    </Division>
+  </Body>
+  <IncludeSharedElement DefinitionFile="_Layout.Shared" SharedElementID="shrFooter" />
+  <ideTestParams StatusMsg="" />
+</Report>

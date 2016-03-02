@@ -129,7 +129,9 @@ From DM_DSTicketTracking
   Inner Join IV_BRANCH_MASTER On DM_DSTicketTracking.BRANCH_NUMBER =
     IV_BRANCH_MASTER.BRANCH_NUMBER
   Inner Join AR_CUSTOMER_MASTER_TMA On DM_DSTicketTracking.CUSTOMER =
-    AR_CUSTOMER_MASTER_TMA.CUSTOMER"
+    AR_CUSTOMER_MASTER_TMA.CUSTOMER
+Order By DM_DSTicketTracking.DropOffDate ASC
+"
 								Type="SQL"
 							/>
 							<InteractivePaging
