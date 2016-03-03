@@ -13,7 +13,7 @@ End If %>
 				font-size: 14px;				
 				margin:50px 0px; padding:0px;
 				/*background-color: #F7F7F7;*/
-				background-image: url("_SupportFiles/Wheat.jpg");
+				background: url("_SupportFiles/Wheat.jpg");
 				background-size: 100%;			
 			}	
 			
