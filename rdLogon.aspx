@@ -39,6 +39,7 @@ End If %>
 			#mainCell
 			{
 				margin: 20px;
+				padding-top: 200px;
 				text-align: center;
 			}
 												
