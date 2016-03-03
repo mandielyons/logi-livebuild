@@ -12,7 +12,9 @@ End If %>
 				font-family: Verdana, Arial, Helvetica, sans-serif;
 				font-size: 14px;				
 				margin:50px 0px; padding:0px;
-				background-color: #F7F7F7;				
+				/*background-color: #F7F7F7;*/
+				background-image: url("_SupportFiles/Wheat.jpg");
+				background-size: 100%;			
 			}	
 			
 			TABLE
@@ -31,11 +33,12 @@ End If %>
 				margin: 0px;
 				padding: 0px;
 				width: 100%;
-				height: 60%;
+				height: 100%;
 			}
 			
 			#mainCell
 			{
+				margin: 20px;
 				text-align: center;
 			}
 												
@@ -88,20 +91,20 @@ End If %>
 				text-align: center;
 				padding-top: 5px;
 				color: #790619;				
-			}		
+			}
+			#footer
+			{
+				text-align: center;
+				vertical-align: bottom;
+				color: #ffffff;
+			}
+
 			
 		</style>	
 	</head>
-	<body onkeypress="if (event.keyCode==13){frmLogon.submit()}" onload="document.getElementById('rdUsername').focus()" >	
+	<body onkeypress="if (event.keyCode==13){frmLogon.submit()}" onload="document.getElementById('rdUsername').focus()" >
+		
 		<table id="mainTable" cellspacing="0" >
-			<tr>
-				<td align="center">
-					<img src="_SupportFiles/logo.png" />
-				</td>
-				<td align="center">
-					<img src="_SupportFiles/TMA_LogoStkdK.png" />
-				</td>
-			</tr>
 			<tr>
 				<td id="mainCell" colspan="2" >
 					<div id="logonPanel" >
@@ -138,6 +141,11 @@ End If %>
 							</tr>
 						</table>						
 					</div>
+				</td>
+			</tr>
+			<tr>
+				<td id="footer" colspan="2">
+					<span>© Copyright 2016-2017 Team Marketing Alliance. All rights reserved.</span>
 				</td>
 			</tr>
 		</table>
