@@ -2,7 +2,7 @@
 <Report
 	Caption="User Management"
 	ID="Admin.UserManagement"
-	SecurityReportRightID="MKC"
+	SecurityReportRightID="ADMIN"
 	>
 	<DefaultRequestParams
 		cacheExpirationNow="False"
@@ -164,38 +164,42 @@ From USERS"
 					HtmlDiv="True"
 					ID="panel"
 					>
-					<Division
-						Class="panel-heading"
-						HtmlDiv="True"
-						ID="panel-heading"
-						>
-						<ResponsiveRow
-							CollisionBehavior="Overlap"
+					<Remark>
+						<Division
+							Class="panel-heading"
+							HtmlDiv="True"
+							ID="panel-heading"
 							>
-							<ResponsiveColumn>
-								<Label
-									Caption="Current User"
-									Class="fa fa-user fa-2x"
+							<ResponsiveRow
+								CollisionBehavior="Overlap"
+								>
+								<ResponsiveColumn>
+									<Label
+										Caption="Current User"
+										Class="fa fa-user fa-2x"
+									/>
+								</ResponsiveColumn>
+							</ResponsiveRow>
+						</Division>
+					</Remark>
+					<Remark>
+						<Division
+							Class="panel-body"
+							HtmlDiv="True"
+							ID="panel-body"
+							>
+							<DataTable
+								ID="dtCurrentUser"
+								>
+								<AutoColumns/>
+								<DataLayer
+									ID="dllCurrentUser"
+									LinkedDataLayerID="linkCurrentUser"
+									Type="Linked"
 								/>
-							</ResponsiveColumn>
-						</ResponsiveRow>
-					</Division>
-					<Division
-						Class="panel-body"
-						HtmlDiv="True"
-						ID="panel-body"
-						>
-						<DataTable
-							ID="dtCurrentUser"
-							>
-							<AutoColumns/>
-							<DataLayer
-								ID="dllCurrentUser"
-								LinkedDataLayerID="linkCurrentUser"
-								Type="Linked"
-							/>
-						</DataTable>
-					</Division>
+							</DataTable>
+						</Division>
+					</Remark>
 				</Division>
 			</ResponsiveColumn>
 		</ResponsiveRow>
@@ -223,7 +227,7 @@ From USERS"
 								ColspanSmallScreen="3"
 								>
 								<Label
-									Caption="OC Users"
+									Caption="User Management"
 									Class="fa fa-users fa-2x"
 								/>
 							</ResponsiveColumn>

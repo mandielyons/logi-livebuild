@@ -104,7 +104,7 @@ Order By REMAINING_BU
 				<Image
 					Caption="logo.png"
 					ID="imgMKCLogo"
-					SecurityRightID="MKC"
+					SecurityRightID="MKC,SRMGMT"
 				/>
 				<LineBreak
 					LineCount="5"
@@ -112,7 +112,7 @@ Order By REMAINING_BU
 				<Image
 					Caption="TMA_LogoStkdK.png"
 					ID="imgTMALogo"
-					SecurityRightID="TMA,MKC"
+					SecurityRightID="TMA"
 				/>
 			</ResponsiveColumn>
 		</ResponsiveRow>
