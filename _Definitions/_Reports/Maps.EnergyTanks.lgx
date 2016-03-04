@@ -231,14 +231,16 @@
 										Condition="InStr(UCase(&quot;@Data.UCaseCity~&quot;), UCase(&quot;@Request.iptCity~&quot;)) &gt; 0"
 									/>
 								</DataLayer>
-								<MapMarkerImage>
-									<Image
-										Caption="mkcpin.png"
-										Height="32"
-										ID="mapIcon"
-										Width="32"
-									/>
-								</MapMarkerImage>
+								<Remark>
+									<MapMarkerImage>
+										<Image
+											Caption="mkcpin.png"
+											Height="32"
+											ID="mapIcon"
+											Width="32"
+										/>
+									</MapMarkerImage>
+								</Remark>
 								<Action
 									Type="MapMarkerInfo"
 									>
