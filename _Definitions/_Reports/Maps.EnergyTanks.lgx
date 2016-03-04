@@ -64,6 +64,7 @@
 								<Column>
 									<InputSelectList
 										Class="chosen-select"
+										DefaultValue="@Request.iptCity~"
 										ID="iptCity"
 										MultiSelect="True"
 										OptionCaptionColumn="CITY"
