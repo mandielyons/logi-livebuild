@@ -2,7 +2,7 @@
 <Report
 	Caption="User Management"
 	ID="Admin.UserManagement"
-	SecurityReportRightID="MKC"
+	SecurityReportRightID="ADMIN"
 	>
 	<DefaultRequestParams
 		cacheExpirationNow="False"
@@ -159,12 +159,12 @@ From USERS"
 			CollisionBehavior="Overlap"
 			>
 			<ResponsiveColumn>
-				<Remark>
-					<Division
-						Class="panel panel-default"
-						HtmlDiv="True"
-						ID="panel"
-						>
+				<Division
+					Class="panel panel-default"
+					HtmlDiv="True"
+					ID="panel"
+					>
+					<Remark>
 						<Division
 							Class="panel-heading"
 							HtmlDiv="True"
@@ -181,6 +181,8 @@ From USERS"
 								</ResponsiveColumn>
 							</ResponsiveRow>
 						</Division>
+					</Remark>
+					<Remark>
 						<Division
 							Class="panel-body"
 							HtmlDiv="True"
@@ -197,8 +199,8 @@ From USERS"
 								/>
 							</DataTable>
 						</Division>
-					</Division>
-				</Remark>
+					</Remark>
+				</Division>
 			</ResponsiveColumn>
 		</ResponsiveRow>
 		<ResponsiveRow
@@ -227,9 +229,6 @@ From USERS"
 								<Label
 									Caption="User Management"
 									Class="fa fa-users fa-2x"
-								/>
-								<Note
-									Note="*** Manage other Coop users ***"
 								/>
 							</ResponsiveColumn>
 							<ResponsiveColumn

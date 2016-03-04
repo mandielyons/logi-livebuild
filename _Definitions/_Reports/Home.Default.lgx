@@ -104,7 +104,7 @@ Order By REMAINING_BU
 				<Image
 					Caption="logo.png"
 					ID="imgMKCLogo"
-					SecurityRightID="MKC"
+					SecurityRightID="MKC,SRMGMT"
 				/>
 				<LineBreak
 					LineCount="5"

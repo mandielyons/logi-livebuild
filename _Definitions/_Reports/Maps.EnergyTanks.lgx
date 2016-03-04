@@ -2,6 +2,7 @@
 <Report
 	Caption="AFD Tank Locations"
 	ID="Maps.EnergyTanks"
+	SecurityReportRightID="MKC"
 	>
 	<LocalData
 		ID="Local-AFDData"
@@ -213,25 +214,16 @@
 							>
 							<GoogleMapMarkers
 								ID="gmmTank"
+								Latitude="@Data.lat~"
+								Longitude="@Data.long~"
 								>
-								<MapMarkerImage>
-									<Image
-										Caption="yellow_pin.gif"
-										Height="26"
-										ID="mapIcon"
-										Width="12"
-									/>
-								</MapMarkerImage>
 								<DataLayer
-									ID="dllGmap-AFDTanks"
-									LinkedDataLayerID="linkGmap-AFDTanks"
-									Type="Linked"
+									ColumnNamesRow="1"
+									ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx"
+									ExcelWorksheet="AllTanks"
+									ID="dlAFDTankData"
+									Type="Excel"
 									>
-									<ReverseGeocodeColumns
-										ID="revLookup"
-										LatitudeDataColumn="lat"
-										LongitudeDataColumn="long"
-									/>
 									<ConditionFilter
 										Condition="&quot;@Data.capacity~&quot; &lt;&gt; &quot;NULL&quot;"
 									/>
@@ -239,39 +231,14 @@
 										Condition="InStr(UCase(&quot;@Data.UCaseCity~&quot;), UCase(&quot;@Request.iptCity~&quot;)) &gt; 0"
 									/>
 								</DataLayer>
-								<Remark>
-									<DataLayer
-										ColumnNamesRow="1"
-										ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\AFDTanks.xlsx"
-										ExcelWorksheet="AllTanks"
-										ID="dlAFDTanks"
-										Type="Excel"
-										>
-										<ReverseGeocodeColumns
-											ID="revLookup"
-											LatitudeDataColumn="lat"
-											LongitudeDataColumn="long"
-										/>
-										<Remark>
-											<ConditionFilter
-												Condition="InStr(&quot;@Data.customerid~&quot;, &quot;@Request.iptCustomer~&quot;) &gt; 0
-"
-												IncludeCondition="@Request.iptCustomer &lt;&gt; &quot;&quot;"
-											/>
-										</Remark>
-										<Remark>
-											<ConditionFilter
-												Condition="InStr(UCase(&quot;@Data.city~&quot;), UCase(&quot;@Request.iptCity~&quot;)) &gt; 0"
-											/>
-										</Remark>
-										<ConditionFilter
-											Condition="&quot;@Data.capacity~&quot; &lt;&gt; &quot;NULL&quot;"
-										/>
-										<ConditionFilter
-											Condition="InStr(UCase(&quot;@Data.UCaseCity~&quot;), UCase(&quot;@Request.iptCity~&quot;)) &gt; 0"
-										/>
-									</DataLayer>
-								</Remark>
+								<MapMarkerImage>
+									<Image
+										Caption="mkcpin.png"
+										Height="32"
+										ID="mapIcon"
+										Width="32"
+									/>
+								</MapMarkerImage>
 								<Action
 									Type="MapMarkerInfo"
 									>
@@ -585,6 +552,64 @@
 				</Division>
 			</ResponsiveColumn>
 		</ResponsiveRow>
+		<Remark>
+			<IncludeScript
+				ID="jsOnLoad"
+				IncludedScript="  function drawMarkers(map, markers) {
+    var _this = this,
+        geocoder = new google.maps.Geocoder(),
+        geocode_filetrs;
+
+    _this.key = 0;
+
+    _this.interval = setInterval(function() {
+        _this.markerData = markers[_this.key];
+
+        geocoder.geocode({ address: _this.markerData.address }, yourCallback(_this.markerData));
+
+        _this.key++;
+
+        if ( ! markers[_this.key]) {
+            clearInterval(_this.interval);
+        }
+
+    }, 300);
+}
+  
+  // ====== Geocoding ======
+  function getAddress(search, next) {
+    geo.geocode({address:search}, function (results,status)
+      { 
+        // If that was successful
+        if (status == google.maps.GeocoderStatus.OK) {
+          // Lets assume that the first marker is the one we want
+          var p = results[0].geometry.location;
+          var lat=p.lat();
+          var lng=p.lng();
+          // Output the data
+            var msg = &apos;address=&quot;&apos; + search + &apos;&quot; lat=&apos; +lat+ &apos; lng=&apos; +lng+ &apos;(delay=&apos;+delay+&apos;ms)&lt;br&gt;&apos;;
+            document.getElementById(&quot;messages&quot;).innerHTML += msg;
+          // Create a marker
+          createMarker(search,lat,lng);
+        }
+        // ====== Decode the error status ======
+        else {
+          // === if we were sending the requests to fast, try this one again and increase the delay
+          if (status == google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
+            nextAddress--;
+            delay++;
+          } else {
+            var reason=&quot;Code &quot;+status;
+            var msg = &apos;address=&quot;&apos; + search + &apos;&quot; error=&apos; +reason+ &apos;(delay=&apos;+delay+&apos;ms)&lt;br&gt;&apos;;
+            document.getElementById(&quot;messages&quot;).innerHTML += msg;
+          }   
+        }
+        next();
+      }
+    );
+  }"
+			/>
+		</Remark>
 	</Body>
 	<IncludeSharedElement
 		DefinitionFile="_Layout.Shared"

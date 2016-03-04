@@ -3,7 +3,7 @@
 	ID="_settings"
 	>
 	<Application
-		Caption="Mid-Kansas Coop Dashboards"
+		Caption="TMA Grain Dashboards"
 		DefaultReport="Home.Default"
 	/>
 	<Path
@@ -389,6 +389,64 @@ AND USERNAME = @iptUsername"
 					/>
 					<CalculatedColumn
 						Formula="&quot;Dashboard Sr Mgmt&quot;"
+						ID="cRole"
+					/>
+				</DataLayer>
+			</RightFromRole>
+			<RightFromRole
+				ID="STRATEGICPLAN"
+				RolesDataColumn="cRole"
+				>
+				<DataLayer
+					CacheKey="dlcLdapUserRights"
+					ExpirationTimeSpan="00:05"
+					ID="dlcLdapUserRights"
+					Type="Cached"
+					>
+					<Note
+						Note="*** BRIEFLY caching to improve performance ***"
+					/>
+					<DataLayer
+						ConnectionID="mkcLDAP"
+						ID="dlLdapRights"
+						LdapSource="SELECT memberOf, sAMAccountName, title, name, userPrincipalName, ADsPath, DisplayName, givenName, sn, mail FROM &apos;DC=midkscoop,DC=lan&apos; WHERE SamAccountName=&apos;@Function.UserName~&apos; and objectClass=&apos;person&apos;"
+						Type="Ldap"
+					/>
+					<ConditionFilter
+						Condition="&quot;@Data.memberOf~&quot;.indexOf(&quot;Dashboard Strategic Planning&quot;)!=&quot;-1&quot;"
+						ID="fSTRATEGICPLAN"
+					/>
+					<CalculatedColumn
+						Formula="&quot;Dashboard Strategic Planning&quot;"
+						ID="cRole"
+					/>
+				</DataLayer>
+			</RightFromRole>
+			<RightFromRole
+				ID="ADMIN"
+				RolesDataColumn="cRole"
+				>
+				<DataLayer
+					CacheKey="dlcLdapUserRights"
+					ExpirationTimeSpan="00:05"
+					ID="dlcLdapUserRights"
+					Type="Cached"
+					>
+					<Note
+						Note="*** BRIEFLY caching to improve performance ***"
+					/>
+					<DataLayer
+						ConnectionID="mkcLDAP"
+						ID="dlLdapRights"
+						LdapSource="SELECT memberOf, sAMAccountName, title, name, userPrincipalName, ADsPath, DisplayName, givenName, sn, mail FROM &apos;DC=midkscoop,DC=lan&apos; WHERE SamAccountName=&apos;@Function.UserName~&apos; and objectClass=&apos;person&apos;"
+						Type="Ldap"
+					/>
+					<ConditionFilter
+						Condition="&quot;@Data.memberOf~&quot;.indexOf(&quot;Domain Admin&quot;)!=&quot;-1&quot;"
+						ID="fADMIN"
+					/>
+					<CalculatedColumn
+						Formula="&quot;Domain Admin&quot;"
 						ID="cRole"
 					/>
 				</DataLayer>
