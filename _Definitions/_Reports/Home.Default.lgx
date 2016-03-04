@@ -112,7 +112,7 @@ Order By REMAINING_BU
 				<Image
 					Caption="TMA_LogoStkdK.png"
 					ID="imgTMALogo"
-					SecurityRightID="TMA,MKC"
+					SecurityRightID="TMA"
 				/>
 			</ResponsiveColumn>
 		</ResponsiveRow>

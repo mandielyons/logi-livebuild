@@ -159,44 +159,46 @@ From USERS"
 			CollisionBehavior="Overlap"
 			>
 			<ResponsiveColumn>
-				<Division
-					Class="panel panel-default"
-					HtmlDiv="True"
-					ID="panel"
-					>
+				<Remark>
 					<Division
-						Class="panel-heading"
+						Class="panel panel-default"
 						HtmlDiv="True"
-						ID="panel-heading"
+						ID="panel"
 						>
-						<ResponsiveRow
-							CollisionBehavior="Overlap"
+						<Division
+							Class="panel-heading"
+							HtmlDiv="True"
+							ID="panel-heading"
 							>
-							<ResponsiveColumn>
-								<Label
-									Caption="Current User"
-									Class="fa fa-user fa-2x"
+							<ResponsiveRow
+								CollisionBehavior="Overlap"
+								>
+								<ResponsiveColumn>
+									<Label
+										Caption="Current User"
+										Class="fa fa-user fa-2x"
+									/>
+								</ResponsiveColumn>
+							</ResponsiveRow>
+						</Division>
+						<Division
+							Class="panel-body"
+							HtmlDiv="True"
+							ID="panel-body"
+							>
+							<DataTable
+								ID="dtCurrentUser"
+								>
+								<AutoColumns/>
+								<DataLayer
+									ID="dllCurrentUser"
+									LinkedDataLayerID="linkCurrentUser"
+									Type="Linked"
 								/>
-							</ResponsiveColumn>
-						</ResponsiveRow>
+							</DataTable>
+						</Division>
 					</Division>
-					<Division
-						Class="panel-body"
-						HtmlDiv="True"
-						ID="panel-body"
-						>
-						<DataTable
-							ID="dtCurrentUser"
-							>
-							<AutoColumns/>
-							<DataLayer
-								ID="dllCurrentUser"
-								LinkedDataLayerID="linkCurrentUser"
-								Type="Linked"
-							/>
-						</DataTable>
-					</Division>
-				</Division>
+				</Remark>
 			</ResponsiveColumn>
 		</ResponsiveRow>
 		<ResponsiveRow
@@ -223,8 +225,11 @@ From USERS"
 								ColspanSmallScreen="3"
 								>
 								<Label
-									Caption="OC Users"
+									Caption="User Management"
 									Class="fa fa-users fa-2x"
+								/>
+								<Note
+									Note="*** Manage other Coop users ***"
 								/>
 							</ResponsiveColumn>
 							<ResponsiveColumn
