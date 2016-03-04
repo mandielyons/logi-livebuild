@@ -58,7 +58,7 @@
 								</Column>
 								<Column>
 									<Label
-										Caption="Filter By Location:"
+										Caption="Filter By City/Town:"
 									/>
 								</Column>
 								<Column>
