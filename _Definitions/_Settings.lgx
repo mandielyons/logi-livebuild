@@ -143,7 +143,7 @@ FROM USERS
 WHERE 
 ACTIVE = 1
 AND USERNAME = @iptUsername
-AND PASSWORD = @iptPassword
+AND PASSWORD = HASHBYTES(&apos;SHA1&apos;,N&apos;@Request.rdPassword~&apos;)
 "
 				Type="SQL"
 				>

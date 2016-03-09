@@ -1289,7 +1289,6 @@ ORDER BY CONTRACT_TYPE, DELIVERY_END_DATE
 			<LineBreak/>
 		</Division>
 	</Body>
-
 	<ReportFooter>
 		<IncludeSharedElement
 			DefinitionFile="_Layout.Shared"
