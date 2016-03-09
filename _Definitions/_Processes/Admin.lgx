@@ -24,7 +24,7 @@ USERNAME
 VALUES 
 (
 @iptUsername
-,@iptPassword
+,HASHBYTES(&apos;SHA1&apos;,N@iptPassword)
 ,@iptEmail
 ,1
 )
@@ -102,9 +102,9 @@ VALUES
 				ID="procEditUserSQL"
 				SqlCommand="UPDATE USERS
 SET
-PASSWORD = @iptPassword
-,EMAIL = @iptEmail
-WHERE USERNAME = @iptUsername"
+PASSWORD = HASHBYTES(&apos;SHA1&apos;,N&apos;@Request.iptPassword~&apos;)
+,EMAIL = &apos;@Request.iptEmail~&apos;
+WHERE USERNAME = &apos;@Request.iptUserHidden~&apos;"
 				SqlReturnType="RowsAffected"
 				Type="SQL"
 				>
@@ -141,7 +141,7 @@ WHERE USERNAME = @iptUsername"
 						<WaitPage/>
 					</Target>
 					<LinkParams
-						respMessage="User, @Request.iptUsername~, Successfully Edited"
+						respMessage="User, @Request.iptUserHidden~, Successfully Edited"
 						showResponse="True"
 					/>
 				</Response>
@@ -161,7 +161,7 @@ WHERE USERNAME = @iptUsername"
 						<WaitPage/>
 					</Target>
 					<LinkParams
-						respMessage="User, @Request.iptUsername~, UNSUCCESSFULLY Edited"
+						respMessage="User, @Request.iptUserHidden~ UNSUCCESSFULLY Edited"
 						showResponse="True"
 					/>
 				</Response>
@@ -302,6 +302,7 @@ WHERE USERNAME = @iptUsername
 		actionType=""
 		iptEmail=""
 		iptPassword=""
+		iptUserHidden=""
 		iptUsername=""
 		rdTaskID=""
 	/>
