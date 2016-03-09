@@ -3,7 +3,7 @@
 	ID="_settings"
 	>
 	<Application
-		Caption="TMA Grain Dashboards"
+		Caption="TMA Grain Dashboard Portal"
 		DefaultReport="Home.Default"
 	/>
 	<Path
