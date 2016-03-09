@@ -23,9 +23,9 @@ USERNAME
 )
 VALUES 
 (
-@iptUsername
-,HASHBYTES(&apos;SHA1&apos;,N@iptPassword)
-,@iptEmail
+&apos;@Request.iptUsername~&apos;
+,HASHBYTES(&apos;SHA1&apos;,N&apos;@Request.iptPassword~&apos;)
+,@Request.iptEmail~
 ,1
 )
 "
