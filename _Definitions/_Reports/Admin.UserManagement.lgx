@@ -2,6 +2,7 @@
 <Report
 	Caption="User Management"
 	ID="Admin.UserManagement"
+	SecurityReportRightID="ADMIN"
 	>
 	<DefaultRequestParams
 		cacheExpirationNow="False"
@@ -409,6 +410,190 @@ From USERS"
 						HtmlDiv="True"
 						ID="panel-body"
 						>
+						<Division
+							HtmlDiv="True"
+							ID="div-edit-popup"
+							>
+							<Division
+								Class="panel panel-default"
+								Condition="&quot;@Request.actionType~&quot;==&quot;Add&quot; || &quot;@Request.actionType~&quot;==&quot;Edit&quot;"
+								HtmlDiv="True"
+								ID="div-edit-user-content"
+								>
+								<Division
+									Class="panel-heading"
+									HtmlDiv="True"
+									ID="panel-heading"
+									>
+									<Label
+										Caption="@Request.actionType~ User"
+										Class="fa fa-user"
+									/>
+								</Division>
+								<Division
+									Class="panel-body"
+									HtmlDiv="True"
+									ID="panel-body"
+									>
+									<Image
+										Caption="_theme_files.1x1.gif"
+										Class="ThemeHidden"
+										>
+										<Note
+											Note="*** deactivate username when editing ***"
+										/>
+										<EventHandler
+											DhtmlEvent="onload"
+											>
+											<Action
+												ID="actDisableUsernameInput"
+												Javascript="if(&apos;@Request.actionType~&apos;==&apos;Edit&apos;) $(&apos;#iptUsername&apos;).prop( &quot;disabled&quot;, true );"
+												Type="Javascript"
+											/>
+										</EventHandler>
+									</Image>
+									<InputGrid
+										GridWidth="400"
+										WidthScale="px"
+										>
+										<InputText
+											Caption="Username: "
+											DefaultValue="@Request.iptUsername~"
+											ID="iptUsername"
+											>
+											<Validation
+												ErrorMsg="Username is REQUIRED"
+												Type="Required"
+											/>
+											<EventHandler
+												DhtmlEvent="onchange"
+												>
+												<Action
+													ID="actDuplicateCheck"
+													Javascript="var ipt = $(&apos;#iptUsername&apos;).val();
+var existing = &apos;@Local.aggUsername~&apos;;
+if(ipt.indexOf(&apos;,&apos;) != -1)
+{
+	alert(&apos;Username must not contain commas&apos;);
+} else if(existing.indexOf(&apos;,&apos;+ipt+&apos;,&apos;) != -1) /* wrapped to check for ENTIRE username - not a portion */
+{
+	alert(&apos;Username must be Unique&apos;);
+	$(&apos;#iptUsername-Edit&apos;).val(&apos;&apos;);
+	$(&apos;#iptUsername-Edit&apos;).focus();	
+}"
+													Type="Javascript"
+												/>
+											</EventHandler>
+										</InputText>
+										<InputText
+											Caption="Password: "
+											DefaultValue="@Request.iptPassword~"
+											ID="iptPassword"
+											>
+											<Validation
+												ErrorMsg="Password is REQUIRED"
+												Type="Required"
+											/>
+										</InputText>
+										<InputText
+											Caption="Email: "
+											DefaultValue="@Request.iptEmail~"
+											ID="iptEmail"
+											>
+											<Validation
+												ErrorMsg="Email Address is REQUIRED"
+												Type="Required"
+											/>
+											<EventHandler
+												DhtmlEvent="onchange"
+												>
+												<Action
+													ID="actEmailValidation"
+													Javascript="var email = $(&apos;#iptEmail&apos;).val();
+if(!isEmail(email))
+{
+	alert(&apos;Invalid Email Address&apos;);
+	$(&apos;#iptEmail&apos;).focus();
+}
+
+function isEmail(email) {
+  var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  return regex.test(email);
+}"
+													Type="Javascript"
+												/>
+											</EventHandler>
+										</InputText>
+										<InputHidden
+											DefaultValue="@Request.iptUsername~"
+											ID="iptUserHidden"
+										/>
+									</InputGrid>
+									<Division
+										Condition="&quot;@Request.actionType~&quot;==&quot;Edit&quot;"
+										ID="div-edit-button"
+										>
+										<Label
+											Caption="Apply"
+											Class="btn btn-default pull-right"
+											>
+											<Action
+												ConfirmMessage="Are you sure you want to EDIT @Request.iptUsername~"
+												ID="actEditUser"
+												Process="Admin"
+												TaskID="tskManageUser"
+												Type="Process"
+												Validate="True"
+												>
+												<LinkParams
+													actionType="Edit"
+													iptUserHidden="@Request.iptUserHidden~"
+												/>
+												<WaitPage/>
+											</Action>
+										</Label>
+									</Division>
+									<Division
+										Condition="&quot;@Request.actionType~&quot;==&quot;Add&quot;"
+										ID="div-add-button"
+										>
+										<Label
+											Caption="Apply"
+											Class="btn btn-default pull-right"
+											>
+											<Action
+												ConfirmMessage="Are you sure you want to create this NEW user?"
+												ID="actAddUser"
+												Process="Admin"
+												TaskID="tskManageUser"
+												Type="Process"
+												Validate="True"
+												>
+												<LinkParams
+													actionType="Add"
+												/>
+												<WaitPage/>
+											</Action>
+										</Label>
+									</Division>
+									<Division
+										ID="div-cancel-button"
+										>
+										<Label
+											Caption="Cancel"
+											Class="btn btn-default pull-right"
+											>
+											<Action
+												Display="Toggle"
+												ElementID="div-edit-popup"
+												ID="actCancelPopup"
+												Type="ShowElement"
+											/>
+										</Label>
+									</Division>
+								</Division>
+							</Division>
+						</Division>
 						<DataTable
 							AccessibleHeaders="True"
 							AjaxPaging="True"
@@ -597,190 +782,6 @@ From USERS"
 								</Division>
 							</DataTableColumn>
 						</DataTable>
-						<Division
-							HtmlDiv="True"
-							ID="div-edit-popup"
-							>
-							<Division
-								Class="panel panel-default"
-								Condition="&quot;@Request.actionType~&quot;==&quot;Add&quot; || &quot;@Request.actionType~&quot;==&quot;Edit&quot;"
-								HtmlDiv="True"
-								ID="div-edit-user-content"
-								>
-								<Division
-									Class="panel-heading"
-									HtmlDiv="True"
-									ID="panel-heading"
-									>
-									<Label
-										Caption="@Request.actionType~ User"
-										Class="fa fa-user"
-									/>
-								</Division>
-								<Division
-									Class="panel-body"
-									HtmlDiv="True"
-									ID="panel-body"
-									>
-									<Image
-										Caption="_theme_files.1x1.gif"
-										Class="ThemeHidden"
-										>
-										<Note
-											Note="*** deactivate username when editing ***"
-										/>
-										<EventHandler
-											DhtmlEvent="onload"
-											>
-											<Action
-												ID="actDisableUsernameInput"
-												Javascript="if(&apos;@Request.actionType~&apos;==&apos;Edit&apos;) $(&apos;#iptUsername&apos;).prop( &quot;disabled&quot;, true );"
-												Type="Javascript"
-											/>
-										</EventHandler>
-									</Image>
-									<InputGrid
-										GridWidth="400"
-										WidthScale="px"
-										>
-										<InputText
-											Caption="Username: "
-											DefaultValue="@Request.iptUsername~"
-											ID="iptUsername"
-											>
-											<Validation
-												ErrorMsg="Username is REQUIRED"
-												Type="Required"
-											/>
-											<EventHandler
-												DhtmlEvent="onchange"
-												>
-												<Action
-													ID="actDuplicateCheck"
-													Javascript="var ipt = $(&apos;#iptUsername&apos;).val();
-var existing = &apos;@Local.aggUsername~&apos;;
-if(ipt.indexOf(&apos;,&apos;) != -1)
-{
-	alert(&apos;Username must not contain commas&apos;);
-} else if(existing.indexOf(&apos;,&apos;+ipt+&apos;,&apos;) != -1) /* wrapped to check for ENTIRE username - not a portion */
-{
-	alert(&apos;Username must be Unique&apos;);
-	$(&apos;#iptUsername-Edit&apos;).val(&apos;&apos;);
-	$(&apos;#iptUsername-Edit&apos;).focus();	
-}"
-													Type="Javascript"
-												/>
-											</EventHandler>
-										</InputText>
-										<InputText
-											Caption="Password: "
-											DefaultValue="@Request.iptPassword~"
-											ID="iptPassword"
-											>
-											<Validation
-												ErrorMsg="Password is REQUIRED"
-												Type="Required"
-											/>
-										</InputText>
-										<InputText
-											Caption="Email: "
-											DefaultValue="@Request.iptEmail~"
-											ID="iptEmail"
-											>
-											<Validation
-												ErrorMsg="Email Address is REQUIRED"
-												Type="Required"
-											/>
-											<EventHandler
-												DhtmlEvent="onchange"
-												>
-												<Action
-													ID="actEmailValidation"
-													Javascript="var email = $(&apos;#iptEmail&apos;).val();
-if(!isEmail(email))
-{
-	alert(&apos;Invalid Email Address&apos;);
-	$(&apos;#iptEmail&apos;).focus();
-}
-
-function isEmail(email) {
-  var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-  return regex.test(email);
-}"
-													Type="Javascript"
-												/>
-											</EventHandler>
-										</InputText>
-										<InputHidden
-											DefaultValue="@Request.iptUsername~"
-											ID="iptUserHidden"
-										/>
-									</InputGrid>
-									<Division
-										Condition="&quot;@Request.actionType~&quot;==&quot;Edit&quot;"
-										ID="div-edit-button"
-										>
-										<Label
-											Caption="Apply"
-											Class="btn btn-default pull-right"
-											>
-											<Action
-												ConfirmMessage="Are you sure you want to EDIT @Request.iptUsername~"
-												ID="actEditUser"
-												Process="Admin"
-												TaskID="tskManageUser"
-												Type="Process"
-												Validate="True"
-												>
-												<LinkParams
-													actionType="Edit"
-													iptUserHidden="@Request.iptUserHidden~"
-												/>
-												<WaitPage/>
-											</Action>
-										</Label>
-									</Division>
-									<Division
-										Condition="&quot;@Request.actionType~&quot;==&quot;Add&quot;"
-										ID="div-add-button"
-										>
-										<Label
-											Caption="Apply"
-											Class="btn btn-default pull-right"
-											>
-											<Action
-												ConfirmMessage="Are you sure you want to create this NEW user?"
-												ID="actAddUser"
-												Process="Admin"
-												TaskID="tskManageUser"
-												Type="Process"
-												Validate="True"
-												>
-												<LinkParams
-													actionType="Add"
-												/>
-												<WaitPage/>
-											</Action>
-										</Label>
-									</Division>
-									<Division
-										ID="div-cancel-button"
-										>
-										<Label
-											Caption="Cancel"
-											Class="btn btn-default pull-right"
-											>
-											<Action
-												Display="Toggle"
-												ElementID="div-edit-popup"
-												ID="actCancelPopup"
-												Type="ShowElement"
-											/>
-										</Label>
-									</Division>
-								</Division>
-							</Division>
-						</Division>
 					</Division>
 				</Division>
 			</ResponsiveColumn>
