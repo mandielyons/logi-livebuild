@@ -2,7 +2,6 @@
 <Report
 	Caption="User Management"
 	ID="Admin.UserManagement"
-	SecurityReportRightID="ADMIN"
 	>
 	<DefaultRequestParams
 		cacheExpirationNow="False"
@@ -712,6 +711,10 @@ function isEmail(email) {
 												/>
 											</EventHandler>
 										</InputText>
+										<InputHidden
+											DefaultValue="@Request.iptUsername~"
+											ID="iptUserHidden"
+										/>
 									</InputGrid>
 									<Division
 										Condition="&quot;@Request.actionType~&quot;==&quot;Edit&quot;"
@@ -731,6 +734,7 @@ function isEmail(email) {
 												>
 												<LinkParams
 													actionType="Edit"
+													iptUserHidden="@Request.iptUserHidden~"
 												/>
 												<WaitPage/>
 											</Action>
@@ -1199,6 +1203,7 @@ function isEmail(email) {
 		iptMemberOf=""
 		iptPassword=""
 		iptSearchUsername=""
+		iptUserHidden=""
 		iptUsername=""
 		iptUsername-ActiveDirectory=""
 		respMessage=""
