@@ -3235,7 +3235,7 @@
 																					ID="sdlCustTasks2"
 																					>
 																					<DataLayer
-																						CellRange="A31:J56"
+																						CellRange="A31:J57"
 																						ColumnNamesRow="1"
 																						ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																						ExcelWorksheet="Tasks"
@@ -3656,7 +3656,7 @@
 																					ID="sdlCustTasks3"
 																					>
 																					<DataLayer
-																						CellRange="A57:J67"
+																						CellRange="A58:J69"
 																						ColumnNamesRow="1"
 																						ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																						ExcelWorksheet="Tasks"
@@ -4076,7 +4076,7 @@
 																					ID="sdlCustTasks4"
 																					>
 																					<DataLayer
-																						CellRange="A69:J81"
+																						CellRange="A70:J83"
 																						ColumnNamesRow="1"
 																						ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																						ExcelWorksheet="Tasks"
@@ -4504,7 +4504,7 @@
 																					ID="sdlEmployeeTasks1"
 																					>
 																					<DataLayer
-																						CellRange="A82:J87"
+																						CellRange="A84:J89"
 																						ColumnNamesRow="1"
 																						ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																						ExcelWorksheet="Tasks"
@@ -4932,7 +4932,7 @@
 																					ID="sdlEmployeeTasks2"
 																					>
 																					<DataLayer
-																						CellRange="A88:J96"
+																						CellRange="A90:J93"
 																						ColumnNamesRow="1"
 																						ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																						ExcelWorksheet="Tasks"
@@ -5354,7 +5354,7 @@
 																					ID="sdlEmployeeTasks3"
 																					>
 																					<DataLayer
-																						CellRange="A97:J110"
+																						CellRange="A94:J107"
 																						ColumnNamesRow="1"
 																						ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																						ExcelWorksheet="Tasks"
@@ -5774,7 +5774,7 @@
 																					ID="sdlEmployeeTasks4"
 																					>
 																					<DataLayer
-																						CellRange="A111:J116"
+																						CellRange="A108:J113"
 																						ColumnNamesRow="1"
 																						ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																						ExcelWorksheet="Tasks"
@@ -6195,7 +6195,7 @@
 																					ID="sdlEmployeeTasks2"
 																					>
 																					<DataLayer
-																						CellRange="A117:J132"
+																						CellRange="A114:J129"
 																						ColumnNamesRow="1"
 																						ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																						ExcelWorksheet="Tasks"
@@ -6491,7 +6491,7 @@
 																		WidthScale="%"
 																		>
 																		<DataLayer
-																			CellRange="A51:I52"
+																			CellRange="A43:I44"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																			ExcelWorksheet="Actions"
@@ -6622,7 +6622,7 @@
 																					ID="sdlRenewalTasks1"
 																					>
 																					<DataLayer
-																						CellRange="A152:J157"
+																						CellRange="A130:J135"
 																						ColumnNamesRow="1"
 																						ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																						ExcelWorksheet="Tasks"
@@ -6919,7 +6919,7 @@
 																		WidthScale="%"
 																		>
 																		<DataLayer
-																			CellRange="A53:I54"
+																			CellRange="A45:I48"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																			ExcelWorksheet="Actions"
@@ -7050,7 +7050,7 @@
 																					ID="sdlRenewalTasks2"
 																					>
 																					<DataLayer
-																						CellRange="A158:J161"
+																						CellRange="A136:J141"
 																						ColumnNamesRow="1"
 																						ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																						ExcelWorksheet="Tasks"
@@ -7472,7 +7472,7 @@
 																					ID="sdlRenewalTasks3"
 																					>
 																					<DataLayer
-																						CellRange="A144:J146"
+																						CellRange="A142:J144"
 																						ColumnNamesRow="1"
 																						ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																						ExcelWorksheet="Tasks"
@@ -7901,7 +7901,7 @@
 																					ID="sdlRenewalTasks4"
 																					>
 																					<DataLayer
-																						CellRange="A147:J158"
+																						CellRange="A145:J156"
 																						ColumnNamesRow="1"
 																						ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																						ExcelWorksheet="Tasks"
@@ -8192,7 +8192,7 @@
 																		WidthScale="%"
 																		>
 																		<DataLayer
-																			CellRange="A56:I57"
+																			CellRange="A56:I59"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																			ExcelWorksheet="Actions"
@@ -8332,7 +8332,7 @@
 																					ID="sdlRenewalTasks5"
 																					>
 																					<DataLayer
-																						CellRange="A159:J160"
+																						CellRange="A157:J167"
 																						ColumnNamesRow="1"
 																						ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																						ExcelWorksheet="Tasks"
@@ -8621,7 +8621,7 @@
 																		WidthScale="%"
 																		>
 																		<DataLayer
-																			CellRange="A58:I59"
+																			CellRange="A60:I61"
 																			ColumnNamesRow="1"
 																			ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																			ExcelWorksheet="Actions"
@@ -8761,7 +8761,7 @@
 																					ID="sdlRenewalTasks6"
 																					>
 																					<DataLayer
-																						CellRange="A161:J162"
+																						CellRange="A168:J169"
 																						ColumnNamesRow="1"
 																						ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\Updated Scorecard Tables.xlsx"
 																						ExcelWorksheet="Tasks"
