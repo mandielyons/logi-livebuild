@@ -2,6 +2,7 @@
 <Report
 	Caption="TMA Contract Detail"
 	ID="Unknown.SubReports.TMAContractsNetDetail"
+	SecurityReportRightID="TMA Dashboard,MKC Dashboard"
 	>
 	<IncludeSharedElement
 		DefinitionFile="_Layout.Shared"

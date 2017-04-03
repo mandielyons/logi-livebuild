@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Caption="Dispatch" ID="Unknown.TMADispatch_Copy" SecurityReportRightID="TMA,MKC,OC">
+  <IncludeSharedElement DefinitionFile="_Layout.Shared" SharedElementID="shrHeader" />
+  <DefaultRequestParams Branch="0" />
+  <LocalData>
+    <DataLayer ColumnNamesRow="1" ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\TMACNTRTSHIPR.xlsx" ExcelWorksheet="TMACNTRTSHIPR" ID="Excel_TMAContractShipperExtra" Type="Excel">
+      <DataLayerLink ID="xlTmaCntrtShipr" />
+    </DataLayer>
+    <DataLayer ConnectionID="connProdGP" ID="sqlTMAContracts" Source="SELECT &#xD;&#xA; CASE FREIGHT WHEN 'Y' THEN 11 WHEN 'N' THEN 110 ELSE '' END AS SHPMTTYP_CODE&#xD;&#xA;,CASE FREIGHT WHEN 'Y' THEN 'Ship Type 11' WHEN 'N' THEN 'FOB Picked Up' ELSE '' END AS SHPMTTYP_DESC&#xD;&#xA;,CAST(CUSTOMER AS BIGINT) [jCUSTOMER]&#xD;&#xA;,CAST(CONTRACT_NUMBER AS FLOAT) [jCONTRACT_NUMBER]&#xD;&#xA;,CUSTOMER&#xD;&#xA;,CUSTOMER_DESC&#xD;&#xA;,LTRIM(RTRIM(CUSTOMER_DESC))+' - '+LTRIM(RTRIM(CUSTOMER)) [Account]&#xD;&#xA;,CONTRACT_NUMBER&#xD;&#xA;,THEIR_CONTRACT_NUMBER&#xD;&#xA;,COMMODITY_CODE&#xD;&#xA;,COMMODITY_DESC&#xD;&#xA;,LTRIM(RTRIM(COMMODITY_CODE))+'-'+LTRIM(RTRIM(COMMODITY_DESC)) [Commodity]&#xD;&#xA;,BRANCH_NUMBER&#xD;&#xA;,BRANCH_DESC&#xD;&#xA;,LTRIM(RTRIM(BRANCH_DESC))+' - '+LTRIM(RTRIM(BRANCH_NUMBER)) [Location]&#xD;&#xA;,DELIVERY_START_DATE&#xD;&#xA;,DELIVERY_END_DATE&#xD;&#xA;,REMAINING_BU&#xD;&#xA;FROM Agtrax_Staging..DM_OpenContracts&#xD;&#xA;WHERE CONTRACT_TYPE=2&#xD;&#xA;  AND (BRANCH_NUMBER IN(@Request.Branch~) OR '@Request.Branch~'='0')" Type="SQL">
+      <DataLayerLink ID="sqlTMAContracts" />
+    </DataLayer>
+  </LocalData>
+  <Body>
+    <Division ID="divBtnExportExcel">
+      <ResponsiveRow ID="rrExportToExcel">
+        <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1" />
+        <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1" />
+        <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1" />
+        <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1" />
+        <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1" />
+        <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1" />
+        <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1" />
+        <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1" />
+        <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1" />
+        <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1" />
+        <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1" />
+        <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1">
+          <Label Class="ThemeAlignRight, fa fa-file-excel-o fa-2x" HtmlTag="Div" Tooltip="Export to Excel">
+            <Action Type="NativeExcel">
+              <Target ExcelOutputFormat="Excel2007" FrameID="NewWindow" Report="CurrentReport" RequestForwarding="True" Type="NativeExcel" />
+            </Action>
+          </Label>
+        </ResponsiveColumn>
+      </ResponsiveRow>
+    </Division>
+    <Division ID="divInput">
+      <ResponsiveRow>
+        <ResponsiveColumn ColspanExtraSmallScreen="3" ColspanLargeScreen="3" ColspanMediumScreen="3" ColspanSmallScreen="3">
+          <Label Caption="Branch Locations: (Use CRTL+click to select multiple values)" Class="ThemeHeaderSmall, ThemeBold" />
+          <InputSelectList DefaultValue="@Request.Branch~" ID="Branch" IncludeBlank="True" IncludeBlankCaption="All Locations" IncludeBlankValue="0" InputRows="5" MultiSelect="True" OptionCaptionColumn="BRANCH_LIST" OptionValueColumn="BRANCH_NUMBER">
+            <DataLayer ConnectionID="connProdGP" ID="sqlBranchList" Source="SELECT DISTINCT CAST(BRANCH_NUMBER AS VARCHAR(20))+' - '+BRANCH_DESC BRANCH_LIST,BRANCH_NUMBER,BRANCH_DESC&#xD;&#xA;FROM Agtrax_Staging..DM_OpenContracts&#xD;&#xA;WHERE CONTRACT_TYPE=2&#xD;&#xA;ORDER BY BRANCH_DESC&#xD;&#xA;" Type="SQL" />
+          </InputSelectList>
+          <LineBreak LineCount="1" />
+          <Button Caption="Update Report" ID="buttonLocations">
+            <Action ElementID="divInput, divTable" ID="actRefresh" Type="RefreshElement" />
+          </Button>
+        </ResponsiveColumn>
+      </ResponsiveRow>
+    </Division>
+    <Division ID="divTable">
+      <LineBreak LineCount="1" />
+      <DataTable Caption="TMA Branch Dispatch Details" ID="TMAContracts" Layout="Fixed" RememberSort="True" SortArrows="True">
+        <InteractivePaging CaptionType="Image" Class="ThemeTextSmall" HideWhenOnePage="False" Location="Top" PageNrCaption="Page  " PageRowCount="12" ShowPageNumber="True" />
+        <DataLayer ID="dlsqlTMAContracts" LinkedDataLayerID="sqlTMAContracts" Type="Linked">
+          <Join ID="joinSqlToXl" JoinType="LeftOuterJoin" SortLeftSide="True" SortRightSide="True">
+            <MatchCondition DataType="Number" ID="joinCustomer" LeftDataColumn="jCUSTOMER" RightDataColumn="CUSTOMER" />
+            <MatchCondition DataType="Number" ID="joinContract" LeftDataColumn="jCONTRACT_NUMBER" RightDataColumn="CONTRACT_NUMBER" />
+            <DataLayer ID="dlxlTmaCntrtShipr" LinkedDataLayerID="xlTmaCntrtShipr" Type="Linked" />
+          </Join>
+        </DataLayer>
+        <DataTableColumn Header="Ship Type Code" ID="colSHPMTTYP_CODE">
+          <Label Caption="@Data.SHPMTTYP_CODE~" ID="lblSHPMTTYP_CODE" />
+          <DataColumnSort DataColumn="SHPMTTYP_CODE" DataType="Number" />
+        </DataTableColumn>
+        <DataTableColumn Header="Account" ID="colAccount">
+          <Label Caption="@Data.Account~" ID="lblAccount" />
+          <DataColumnSort DataColumn="SHPMTTYP_CODE" DataType="Number" />
+        </DataTableColumn>
+        <DataTableColumn Header="Contract" ID="colCONTRACT_NUMBER">
+          <Label Caption="@Data.CONTRACT_NUMBER~" ID="lblCONTRACT_NUMBER" />
+          <DataColumnSort DataColumn="CONTRACT_NUMBER" DataType="Number" />
+        </DataTableColumn>
+        <DataTableColumn Header="Account Contract" ID="colTHEIR_CONTRACT_NUMBER">
+          <Label Caption="@Data.THEIR_CONTRACT_NUMBER~" ID="lblTHEIR_CONTRACT_NUMBER" />
+          <DataColumnSort DataColumn="THEIR_CONTRACT_NUMBER" DataType="Text" />
+        </DataTableColumn>
+        <DataTableColumn Header="Commodity" ID="colCommodity">
+          <Label Caption="@Data.Commodity~" ID="lblCommodity" />
+          <DataColumnSort DataColumn="SHPMTTYP_CODE" DataType="Number" />
+        </DataTableColumn>
+        <DataTableColumn Header="Location" ID="colLocation">
+          <Label Caption="@Data.Location~" ID="lblLocation" />
+          <DataColumnSort DataColumn="SHPMTTYP_CODE" DataType="Number" />
+        </DataTableColumn>
+        <DataTableColumn Header="Delivery Start Date" ID="colDELIVERY_START_DATE">
+          <Label Caption="@Data.DELIVERY_START_DATE~" Format="Short Date" ID="lblDELIVERY_START_DATE" />
+          <DataColumnSort DataColumn="DELIVERY_START_DATE" DataType="Date" />
+        </DataTableColumn>
+        <DataTableColumn Header="Delivery End Date" ID="colDELIVERY_END_DATE">
+          <Label Caption="@Data.DELIVERY_END_DATE~" Format="Short Date" ID="lblDELIVERY_END_DATE" />
+          <DataColumnSort DataColumn="DELIVERY_END_DATE" DataType="Date" />
+        </DataTableColumn>
+        <DataTableColumn Class="ThemeMargin, ThemeAlignRight" ColumnHeaderClass="ThemeAlignCenter" Header="Remaining BU" ID="colREMAINING_BU">
+          <Label Caption="@Data.REMAINING_BU~" Format="###,###,##0.00" ID="lblREMAINING_BU" />
+          <DataColumnSort DataColumn="REMAINING_BU" DataType="Number" />
+          <DataColumnSummary DataColumn="REMAINING_BU" DataType="Number" Function="Sum" ID="dcsRemainingBU" />
+        </DataTableColumn>
+        <DataTableColumn Header="Dest Code" ID="colDEST_CODE">
+          <Label Caption="@Data.DEST_CODE~" ID="lblDEST_CODE" />
+          <DataColumnSort DataColumn="DEST_CODE" DataType="Number" />
+        </DataTableColumn>
+        <DataTableColumn Header="Shipper Desc" ID="colSHIPR_DESC">
+          <Label Caption="@Data.SHIPR_DESC~" ID="lblSHIPR_DESC" />
+          <DataColumnSort DataColumn="SHIPR_DESC" DataType="Text" />
+        </DataTableColumn>
+        <Remark>
+          <DataTableColumn Header="Shipper Number Trucks" ID="colSHIPR_NUMTRCS">
+            <Label Caption="@Data.SHIPR_NUMTRCS~" ID="lblSHIPR_NUMTRCS" />
+          </DataTableColumn>
+        </Remark>
+        <Remark>
+          <DataTableColumn Header="Shipper Load Description" ID="colSHIPR_LDDESC">
+            <Label Caption="@Data.SHIPR_LDDESC~" ID="lblSHIPR_LDDESC" />
+          </DataTableColumn>
+        </Remark>
+        <Remark>
+          <DataTableColumn Header="Rate" ID="colSHIPR_RATE">
+            <Label Caption="@Data.SHIPR_RATE~" ID="lblSHIPR_RATE" />
+          </DataTableColumn>
+        </Remark>
+        <Remark>
+          <DataTableColumn Header="PAR" ID="colSHIPR_PAR">
+            <Label Caption="@Data.SHIPR_PAR~" ID="lblSHIPR_PAR" />
+          </DataTableColumn>
+        </Remark>
+        <DataTableColumn Header="Notes" ID="colTMANOTES">
+          <Label Caption="@Data.TMANOTES~" ID="lblTMANOTES" />
+        </DataTableColumn>
+        <Remark>
+          <MoreInfoRow Class="ThemeHidden" ID="rowNotes">
+            <ConditionalClass />
+            <Rows>
+              <Row>
+                <Column Width="20" WidthScale="%">
+                  <Label Caption="Shipper Number Trucks" Class="ThemeBold" />
+                  <Spaces Size="5" />
+                </Column>
+                <Column Width="25" WidthScale="%">
+                  <Label Caption="Shipper Load Description" Class="ThemeBold" />
+                  <Spaces Size="5" />
+                </Column>
+                <Column Width="10" WidthScale="%">
+                  <Label Caption="Rate" Class="ThemeBold" />
+                  <Spaces Size="5" />
+                </Column>
+                <Column Width="10" WidthScale="%">
+                  <Label Caption="PAR" Class="ThemeBold" />
+                  <Spaces Size="5" />
+                </Column>
+                <Column Width="35" WidthScale="%">
+                  <Label Caption="Notes" Class="ThemeBold" />
+                  <Spaces />
+                </Column>
+              </Row>
+              <Row>
+                <Column>
+                  <Label Caption="@Data.SHIPR_NUMTRCS~" ID="lblSHIPR_NUMTRCS" />
+                </Column>
+                <Column>
+                  <Label Caption="@Data.SHIPR_LDDESC~" ID="lblSHIPR_LDDESC" />
+                </Column>
+                <Column>
+                  <Label Caption="@Data.SHIPR_RATE~" ID="lblSHIPR_RATE" />
+                </Column>
+                <Column>
+                  <Label Caption="@Data.SHIPR_PAR~" ID="lblSHIPR_PAR" />
+                </Column>
+                <Column>
+                  <Label Caption="@Data.TMANOTES~" ID="lblTMANOTES" />
+                </Column>
+              </Row>
+            </Rows>
+          </MoreInfoRow>
+        </Remark>
+        <SummaryRow Caption="Total: " ID="srSummary" LastPageOnly="False" />
+      </DataTable>
+    </Division>
+  </Body>
+  <IncludeSharedElement DefinitionFile="_Layout.Shared" SharedElementID="shrFooter" />
+  <ideTestParams Branch="0" />
+</Report>

@@ -2,6 +2,7 @@
 <Report
 	Caption="TMA Contract Overshipped"
 	ID="Unknown.SubReports.TMAContractsOvershipped"
+	SecurityReportRightID="TMA,MKC"
 	>
 	<IncludeSharedElement
 		DefinitionFile="_Layout.Shared"

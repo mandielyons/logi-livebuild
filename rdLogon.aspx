@@ -5,8 +5,11 @@ End If %>
 <html>
 	<head>
 		<META name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<title>TMA Grain Portal</title>
-		<style type="text/css">
+		<style type="text/css">			
 			BODY
 			{
 				font-family: Verdana, Arial, Helvetica, sans-serif;
@@ -14,18 +17,30 @@ End If %>
 				margin:50px 0px; padding:0px;
 				/*background-color: #F7F7F7;*/
 				background: url("_SupportFiles/Wheat.jpg");
-				background-size: 100%;			
+				-webkit-background-size: 100%; 
+			    -moz-background-size: 100%; 
+			    -o-background-size: 100%; 
+			    background-size: 100%; 
+			    -webkit-background-size: cover; 
+			    -moz-background-size: cover; 
+			    -o-background-size: cover; 
+			    background-size: cover;		
 			}	
 			
 			TABLE
 			{
 				font-family: Verdana, Arial, Helvetica, sans-serif;
-				font-size: 14px;
+				font-size: 12px;
+			}
+
+			#mobileHeader
+			{
+				display: none;
 			}
 			
 			#rdUserName, #rdPassword
 			{
-				width: 150px;
+				width: 15%px;
 			}
 			
 			#mainTable
@@ -33,7 +48,7 @@ End If %>
 				margin: 0px;
 				padding: 0px;
 				width: 100%;
-				height: 100%;
+				height: 90%;
 			}
 			
 			#mainCell
@@ -45,7 +60,7 @@ End If %>
 												
 			#logonPanel
 			{					
-				width: 300px;
+				width: 350px;
 				margin: auto;
 				background-color: #F7F7F7;
 				border: solid #d9bc4a 1px;
@@ -72,7 +87,7 @@ End If %>
 			
 			.LogonHeader
 			{
-				font-size: 150%;
+				font-size: 14pt;
 				font-weight: bold;
 				color: #FFFFFF;				
 			}
@@ -99,15 +114,23 @@ End If %>
 				vertical-align: bottom;
 				color: #ffffff;
 			}
+			@media only screen and (max-device-width: 480px) 
+			{
+				#mobileHeader
+				{
+					display: block;
+					padding: 20px 20px 5px 20px;
+				}
 
+			}
 			
 		</style>	
 	</head>
 	<body onkeypress="if (event.keyCode==13){frmLogon.submit()}" onload="document.getElementById('rdUsername').focus()" >
-		
+		<div id="mobileHeader"><img src="_SupportFiles\TMA_LogoHorWht.png" class="img-responsive" /></div>
 		<table id="mainTable" cellspacing="0" >
 			<tr>
-				<td id="mainCell" colspan="2" >
+				<td id="mainCell" colspan="2" >					
 					<div id="logonPanel" >
 						<table cellspacing="0" >
 							<tr>
@@ -136,7 +159,14 @@ End If %>
 											<tr>
 												<td id="errorCell" colSpan="2" >&nbsp;<%=Session("rdLogonFailMessage") %></td>
 											</tr>
-										</table>
+
+																																	<tr>
+												<td></td><td><a href="../Help/rdPage.aspx">Forgot Password?</a></td>
+											</tr>
+											<tr>
+												<td></td><td><a href="../Help/rdPage.aspx?rdReport=LoginRequest" >Request Dashboard Account</a></td>
+
+											</tr>																													</table>
 									</form>
 								</td>
 							</tr>
@@ -146,7 +176,7 @@ End If %>
 			</tr>
 			<tr>
 				<td id="footer" colspan="2">
-					<span>© Copyright 2016-2017 Team Marketing Alliance. All rights reserved.</span>
+					<span>© Copyright 2016-2017 Team Marketing Alliance.<br> All rights reserved.</span>
 				</td>
 			</tr>
 		</table>

@@ -1,445 +1,153 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report
-	Caption="Customer Fields"
-	ID="Maps.MapCustFields"
-	>
-	<LocalData
-		Condition="&quot;@Request.iptCustomer~&quot;.length &gt; 0"
-		ID="Local-MapData"
-		>
-		<Remark>
-			<DataLayer
-				CacheKey="dlcGmap-UserCustomerFields-@Request.iptCustomer~"
-				ExpirationNow="@Request.cacheExpirationNow~"
-				ExpirationTime="@Constant.cacheExpirationTime~"
-				ExpirationTimeSpan="@Constant.cacheExpirationTimeSpan~"
-				ID="dlcGmap-UserCustomerFields"
-				Type="Cached"
-				>
-				<DataLayer
-					ConnectionID="connProdGP"
-					HandleQuotesInTokens="True"
-					ID="dlGmap"
-					Source="SELECT * 
-FROM DynamicsGPWarehouse..CustomerFieldsAgWorks
-WHERE 
-CustID IN (@Request.iptCustomer~)"
-					Type="SQL"
-					>
-					<Note
-						Note="convert to long,lat,0 long,lat,0"
-					/>
-					<CalculatedColumn
-						Formula="Replace(&apos;@Data.latlongs~&apos;,&apos;POLYGON ((&apos;,&apos;&apos;)"
-						ID="cc1"
-					/>
-					<CalculatedColumn
-						Formula="Replace(&apos;@Data.cc1~&apos;, &apos;))&apos;, &apos;?&apos;)"
-						ID="cc2"
-					/>
-					<CalculatedColumn
-						Formula="Replace(&apos;@Data.cc2~&apos;, &apos;, &apos; , &apos;?&apos;)"
-						ID="cc3"
-					/>
-					<CalculatedColumn
-						Formula="Replace(&apos;@Data.cc3~&apos;, &apos; &apos;, &apos;,&apos;)"
-						ID="cc4"
-					/>
-					<CalculatedColumn
-						Formula="Replace(&apos;@Data.cc4~&apos;, &apos;?&apos; , &apos;,0 &apos;)"
-						ID="rdCoordinates"
-					/>
-					<ColorSpectrumColumn
-						DataColumn="Acres"
-						HighValueColor="BlueViolet"
-						ID="csc"
-						LowValueColor="Red"
-						MediumValueColor="Orange"
-					/>
-				</DataLayer>
-				<DataLayerLink
-					ID="linkGmap-UserCustomerFields"
-				/>
-			</DataLayer>
-		</Remark>
-		<DataLayer
-			ConnectionID="connProdGP"
-			HandleQuotesInTokens="True"
-			ID="dlGmap"
-			Source="SELECT * 
-FROM DynamicsGPWarehouse..CustomerFieldsAgWorks
-WHERE 
-CustID IN (@Request.iptCustomer~)"
-			Type="SQL"
-			>
-			<Note
-				Note="convert to long,lat,0 long,lat,0"
-			/>
-			<CalculatedColumn
-				Formula="Replace(&apos;@Data.latlongs~&apos;,&apos;POLYGON ((&apos;,&apos;&apos;)"
-				ID="cc1"
-			/>
-			<CalculatedColumn
-				Formula="Replace(&apos;@Data.cc1~&apos;, &apos;))&apos;, &apos;?&apos;)"
-				ID="cc2"
-			/>
-			<CalculatedColumn
-				Formula="Replace(&apos;@Data.cc2~&apos;, &apos;, &apos; , &apos;?&apos;)"
-				ID="cc3"
-			/>
-			<CalculatedColumn
-				Formula="Replace(&apos;@Data.cc3~&apos;, &apos; &apos;, &apos;,&apos;)"
-				ID="cc4"
-			/>
-			<CalculatedColumn
-				Formula="Replace(&apos;@Data.cc4~&apos;, &apos;?&apos; , &apos;,0 &apos;)"
-				ID="rdCoordinates"
-			/>
-			<Remark>
-				<ColorSpectrumColumn
-					DataColumn="Acres"
-					HighValueColor="BlueViolet"
-					ID="csc"
-					LowValueColor="Red"
-					MediumValueColor="Orange"
-				/>
-			</Remark>
-			<DataLayerLink
-				ID="linkGmap-UserCustomerFields"
-			/>
-		</DataLayer>
-	</LocalData>
-	<IncludeSharedElement
-		DefinitionFile="_Layout.Shared"
-		SharedElementID="shrHeader"
-	/>
-	<Body>
-		<ResponsiveRow
-			CollisionBehavior="Overlap"
-			>
-			<ResponsiveColumn>
-				<Division
-					Class="panel panel-default"
-					HtmlDiv="True"
-					ID="panel"
-					>
-					<Division
-						Class="panel-heading"
-						HtmlDiv="True"
-						ID="panel-heading"
-						>
-						<Label
-							Caption="Customer Field Information"
-						/>
-					</Division>
-					<Division
-						Class="panel-body"
-						ID="panel-body"
-						>
-						<Rows
-							Width="100"
-							WidthScale="%"
-							>
-							<Row>
-								<Column>
-									<Spaces
-										Size="5"
-									/>
-								</Column>
-								<Column>
-									<Label
-										Caption="Customer:"
-									/>
-								</Column>
-								<Column>
-									<InputSelectList
-										Class="chosen-select"
-										DefaultValue="@Request.iptCustomer~"
-										ID="iptCustomer"
-										MultiSelect="True"
-										OptionCaptionColumn="CustDesc"
-										OptionValueColumn="CustID"
-										>
-										<DataLayer
-											CacheKey="dlcCustomers-CustomerFields"
-											ExpirationNow="@Request.cacheExpireNow~"
-											ExpirationTime="@Constant.cacheExpirationTime~"
-											ExpirationTimeSpan="@Constant.cacheExpirationTimeSpan~"
-											ID="dlcCustomers-CustomerFields"
-											Type="Cached"
-											>
-											<DataLayer
-												ConnectionID="connProdGP"
-												HandleQuotesInTokens="True"
-												ID="dlCustomers"
-												Source="Select 
-Objects.Name CustDesc
-,  Objects.AccInterfaceID CustCd
-,  Objects.ObjectID CustID
-,  Farm.FarmID
-,  Farm.Name FarmDesc
-,  Fields.FieldID
-,  Fields.Name FieldDesc
-From AgOS_MKC_Live..Objects As Objects With(NoLock)  
-Inner Join AgOS_MKC_Live.dbo.Grower As Grower With(NoLock)    
-	On Objects.ObjectID = Grower.ObjectID  
-Inner Join AgOS_MKC_Live.dbo.Farm As Farm With(NoLock) 
-	On Grower.ObjectID =    Farm.ObjectID  
-Inner Join AgOS_MKC_Live.dbo.Fields As Fields With(NoLock)    
-	On Farm.FarmID = Fields.Farm  
-Inner Join AgOS_MKC_Live.dbo.Contours As Contours With(NoLock)    
-	On Fields.FieldID = Contours.FieldID
-Where 
-Objects.ObjCategoryID = 1 
-And Objects.Visible = 1"
-												Type="SQL"
-												>
-												<GroupFilter
-													DataType="Number"
-													GroupColumn="CustID"
-													ID="gCustID"
-													KeepGroupedRows="False"
-												/>
-												<SortFilter
-													DataType="Text"
-													ID="sCustDesc"
-													SortColumn="CustDesc"
-													SortSequence="Ascending"
-												/>
-											</DataLayer>
-										</DataLayer>
-									</InputSelectList>
-									<Image
-										Caption="_theme_files.1x1.gif"
-										Class="ThemeHidden"
-										>
-										<EventHandler
-											DhtmlEvent="onload"
-											>
-											<Action
-												ID="jsChosen"
-												Javascript="$( document ).ready(function() {
-  $(&quot;.chosen-select&quot;).chosen({
-    	search_contains:true,
-		display_selected_options:false
-  });
-});"
-												Type="Javascript"
-											/>
-										</EventHandler>
-									</Image>
-								</Column>
-								<Column>
-									<Spaces
-										Size="5"
-									/>
-								</Column>
-								<Column>
-									<Label
-										Caption="Apply"
-										Class="btn btn-default pull-right"
-										>
-										<EventHandler
-											DhtmlEvent="onclick"
-											>
-											<Action
-												ID="actRefreshReport"
-												Type="Report"
-												>
-												<Target
-													Type="Report"
-													>
-													<WaitPage/>
-												</Target>
-												<LinkParams
-													cacheExpirationNow="False"
-												/>
-											</Action>
-										</EventHandler>
-									</Label>
-								</Column>
-								<Column>
-									<Spaces
-										Size="5"
-									/>
-								</Column>
-							</Row>
-						</Rows>
-					</Division>
-				</Division>
-			</ResponsiveColumn>
-		</ResponsiveRow>
-		<ResponsiveRow
-			CollisionBehavior="Overlap"
-			>
-			<ResponsiveColumn>
-				<Division
-					Class="panel panel-default"
-					HtmlDiv="True"
-					ID="panel"
-					>
-					<Division
-						Class="panel-heading"
-						HtmlDiv="True"
-						ID="panel-heading"
-						>
-						<Label
-							Caption="Customer Field Locations"
-						/>
-						<Remark>
-							<Label
-								Caption=" "
-								Class="fa fa-refresh text-success fa-2x pull-right"
-								>
-								<Action
-									ConfirmMessage="Requery Active Directory and Refresh Report?"
-									ID="actRefreshReport"
-									Type="Report"
-									>
-									<LinkParams
-										cacheExpirationNow="True"
-									/>
-									<Target
-										Type="Report"
-										>
-										<WaitPage/>
-									</Target>
-								</Action>
-								<Note
-									Note="*** here if you use caching ***"
-								/>
-							</Label>
-						</Remark>
-					</Division>
-					<Division
-						Class="panel-body"
-						HtmlDiv="True"
-						ID="panel-body"
-						>
-						<Division
-							HtmlDiv="True"
-							ID="div-map"
-							>
-							<Division
-								Condition="&quot;@Request.iptCustomer~&quot;.length &gt; 0"
-								HtmlDiv="True"
-								ID="div-customer-selected"
-								>
-								<Division
-									Class="container-fluid"
-									ID="div-map-content"
-									>
-									<GoogleMap
-										GoogleMapTypes="Satellite,Map,Hybrid,Terrain"
-										GoogleMapZoomControl="Small"
-										Height="700"
-										ID="gMap-CustomerFieldLocations"
-										MapScale="False"
-										Width="900"
-										>
-										<GoogleMapPolygons
-											FillColor="@Data.csc~"
-											ID="gmpoly"
-											>
-											<DataLayer
-												ID="dllGmap-UserCustomerFields-Map"
-												LinkedDataLayerID="linkGmap-UserCustomerFields"
-												Type="Linked"
-												>
-												<ColorSpectrumColumn
-													DataColumn="Acres"
-													HighValueColor="BlueViolet"
-													ID="csc"
-													LowValueColor="Red"
-													MediumValueColor="Orange"
-												/>
-											</DataLayer>
-											<PolygonColorSpectrumLegend
-												Format="#.0 acres"
-												ID="pcsl"
-											/>
-											<Action
-												Type="MapMarkerInfo"
-												>
-												<MapMarkerInfo>
-													<Label
-														Caption="Customer: "
-														Class="ThemeBold"
-													/>
-													<Label
-														Caption="@Data.CustDesc~"
-													/>
-													<LineBreak/>
-													<Label
-														Caption="Farm: "
-														Class="ThemeBold"
-													/>
-													<Label
-														Caption="@Data.FarmDesc~"
-													/>
-													<LineBreak/>
-													<Label
-														Caption="Field: "
-														Class="ThemeBold"
-													/>
-													<Label
-														Caption="@Data.FieldDesc~"
-													/>
-													<LineBreak/>
-													<Label
-														Caption="@Data.Acres~"
-														Format="#.#0 Acres"
-													/>
-												</MapMarkerInfo>
-											</Action>
-										</GoogleMapPolygons>
-									</GoogleMap>
-								</Division>
-							</Division>
-							<Division
-								Condition="&quot;@Request.iptCustomer~&quot;.length == 0"
-								HtmlDiv="True"
-								ID="div-no-customer-selected"
-								>
-								<ResponsiveRow>
-									<ResponsiveColumn/>
-									<ResponsiveColumn
-										Class="text-center"
-										>
-										<Label
-											Class="fa fa-warning fa-4x"
-											HtmlTag="h1"
-											ID="icon-error"
-										/>
-										<LineBreak/>
-										<Label
-											Caption="Please select 1+ Customers"
-											Class="text-center"
-											HtmlTag="h4"
-										/>
-										<LineBreak/>
-										<Label
-											Caption="NOTE: Selecting more than a few customers may increase wait time."
-											Class="text-center"
-											HtmlTag="h5"
-										/>
-									</ResponsiveColumn>
-									<ResponsiveColumn/>
-								</ResponsiveRow>
-							</Division>
-						</Division>
-					</Division>
-				</Division>
-			</ResponsiveColumn>
-		</ResponsiveRow>
-	</Body>
-	<IncludeSharedElement
-		DefinitionFile="_Layout.Shared"
-		SharedElementID="shrFooter"
-	/>
-	<ideTestParams
-		cacheExpireNow=""
-		iptCustomer=""
-		rdDataID=""
-	/>
+<Report Caption="Customer Fields" ID="Maps.MapCustFields">
+  <LocalData Condition="&quot;@Request.iptCustomer~&quot;.length &gt; 0" ID="Local-MapData">
+    <Remark>
+      <DataLayer CacheKey="dlcGmap-UserCustomerFields-@Request.iptCustomer~" ExpirationNow="@Request.cacheExpirationNow~" ExpirationTime="@Constant.cacheExpirationTime~" ExpirationTimeSpan="@Constant.cacheExpirationTimeSpan~" ID="dlcGmap-UserCustomerFields" Type="Cached">
+        <DataLayer ConnectionID="connProdGP" HandleQuotesInTokens="True" ID="dlGmap" Source="SELECT * &#xD;&#xA;FROM DynamicsGPWarehouse..CustomerFieldsAgWorks&#xD;&#xA;WHERE &#xD;&#xA;CustID IN (@Request.iptCustomer~)" Type="SQL">
+          <Note Note="convert to long,lat,0 long,lat,0" />
+          <CalculatedColumn Formula="Replace('@Data.latlongs~','POLYGON ((','')" ID="cc1" />
+          <CalculatedColumn Formula="Replace('@Data.cc1~', '))', '?')" ID="cc2" />
+          <CalculatedColumn Formula="Replace('@Data.cc2~', ', ' , '?')" ID="cc3" />
+          <CalculatedColumn Formula="Replace('@Data.cc3~', ' ', ',')" ID="cc4" />
+          <CalculatedColumn Formula="Replace('@Data.cc4~', '?' , ',0 ')" ID="rdCoordinates" />
+          <ColorSpectrumColumn DataColumn="Acres" HighValueColor="BlueViolet" ID="csc" LowValueColor="Red" MediumValueColor="Orange" />
+        </DataLayer>
+        <DataLayerLink ID="linkGmap-UserCustomerFields" />
+      </DataLayer>
+    </Remark>
+    <DataLayer ConnectionID="connProdGP" HandleQuotesInTokens="True" ID="dlGmap" Source="SELECT * &#xD;&#xA;FROM DynamicsGPWarehouse..CustomerFieldsAgWorks&#xD;&#xA;WHERE &#xD;&#xA;CustID IN (@Request.iptCustomer~)" Type="SQL">
+      <Note Note="convert to long,lat,0 long,lat,0" />
+      <CalculatedColumn Formula="Replace('@Data.latlongs~','POLYGON ((','')" ID="cc1" />
+      <CalculatedColumn Formula="Replace('@Data.cc1~', '))', '?')" ID="cc2" />
+      <CalculatedColumn Formula="Replace('@Data.cc2~', ', ' , '?')" ID="cc3" />
+      <CalculatedColumn Formula="Replace('@Data.cc3~', ' ', ',')" ID="cc4" />
+      <CalculatedColumn Formula="Replace('@Data.cc4~', '?' , ',0 ')" ID="rdCoordinates" />
+      <Remark>
+        <ColorSpectrumColumn DataColumn="Acres" HighValueColor="BlueViolet" ID="csc" LowValueColor="Red" MediumValueColor="Orange" />
+      </Remark>
+      <DataLayerLink ID="linkGmap-UserCustomerFields" />
+    </DataLayer>
+  </LocalData>
+  <IncludeSharedElement DefinitionFile="_Layout.Shared" SharedElementID="shrHeader" />
+  <Body>
+    <ResponsiveRow CollisionBehavior="Overlap">
+      <ResponsiveColumn>
+        <Division Class="panel panel-default" HtmlDiv="True" ID="panel">
+          <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
+            <Label Caption="Customer Field Information" />
+          </Division>
+          <Division Class="panel-body" ID="panel-body">
+            <Rows Width="100" WidthScale="%">
+              <Row>
+                <Column>
+                  <Spaces Size="5" />
+                </Column>
+                <Column>
+                  <Label Caption="Customer:" />
+                </Column>
+                <Column>
+                  <InputSelectList Class="chosen-select" DefaultValue="@Request.iptCustomer~" ID="iptCustomer" MultiSelect="True" OptionCaptionColumn="CustDesc" OptionValueColumn="CustID">
+                    <DataLayer CacheKey="dlcCustomers-CustomerFields" ExpirationNow="@Request.cacheExpireNow~" ExpirationTime="@Constant.cacheExpirationTime~" ExpirationTimeSpan="@Constant.cacheExpirationTimeSpan~" ID="dlcCustomers-CustomerFields" Type="Cached">
+                      <DataLayer ConnectionID="connProdGP" HandleQuotesInTokens="True" ID="dlCustomers" Source="Select &#xD;&#xA;Objects.Name CustDesc&#xD;&#xA;,  Objects.AccInterfaceID CustCd&#xD;&#xA;,  Objects.ObjectID CustID&#xD;&#xA;,  Farm.FarmID&#xD;&#xA;,  Farm.Name FarmDesc&#xD;&#xA;,  Fields.FieldID&#xD;&#xA;,  Fields.Name FieldDesc&#xD;&#xA;From AgOS_MKC_Live..Objects As Objects With(NoLock)  &#xD;&#xA;Inner Join AgOS_MKC_Live.dbo.Grower As Grower With(NoLock)    &#xD;&#xA;	On Objects.ObjectID = Grower.ObjectID  &#xD;&#xA;Inner Join AgOS_MKC_Live.dbo.Farm As Farm With(NoLock) &#xD;&#xA;	On Grower.ObjectID =    Farm.ObjectID  &#xD;&#xA;Inner Join AgOS_MKC_Live.dbo.Fields As Fields With(NoLock)    &#xD;&#xA;	On Farm.FarmID = Fields.Farm  &#xD;&#xA;Inner Join AgOS_MKC_Live.dbo.Contours As Contours With(NoLock)    &#xD;&#xA;	On Fields.FieldID = Contours.FieldID&#xD;&#xA;Where &#xD;&#xA;Objects.ObjCategoryID = 1 &#xD;&#xA;And Objects.Visible = 1" Type="SQL">
+                        <GroupFilter DataType="Number" GroupColumn="CustID" ID="gCustID" KeepGroupedRows="False" />
+                        <SortFilter DataType="Text" ID="sCustDesc" SortColumn="CustDesc" SortSequence="Ascending" />
+                      </DataLayer>
+                    </DataLayer>
+                  </InputSelectList>
+                  <Image Caption="_theme_files.1x1.gif" Class="ThemeHidden">
+                    <EventHandler DhtmlEvent="onload">
+                      <Action ID="jsChosen" Javascript="$( document ).ready(function() {&#xD;&#xA;  $(&quot;.chosen-select&quot;).chosen({&#xD;&#xA;    	search_contains:true,&#xD;&#xA;		display_selected_options:false&#xD;&#xA;  });&#xD;&#xA;});" Type="Javascript" />
+                    </EventHandler>
+                  </Image>
+                </Column>
+                <Column>
+                  <Spaces Size="5" />
+                </Column>
+                <Column>
+                  <Label Caption="Apply" Class="btn btn-default pull-right">
+                    <EventHandler DhtmlEvent="onclick">
+                      <Action ID="actRefreshReport" Type="Report">
+                        <Target Type="Report">
+                          <WaitPage />
+                        </Target>
+                        <LinkParams cacheExpirationNow="False" />
+                      </Action>
+                    </EventHandler>
+                  </Label>
+                </Column>
+                <Column>
+                  <Spaces Size="5" />
+                </Column>
+              </Row>
+            </Rows>
+          </Division>
+        </Division>
+      </ResponsiveColumn>
+    </ResponsiveRow>
+    <ResponsiveRow CollisionBehavior="Overlap">
+      <ResponsiveColumn>
+        <Division Class="panel panel-default" HtmlDiv="True" ID="panel">
+          <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
+            <Label Caption="Customer Field Locations" />
+            <Remark>
+              <Label Caption=" " Class="fa fa-refresh text-success fa-2x pull-right">
+                <Action ConfirmMessage="Requery Active Directory and Refresh Report?" ID="actRefreshReport" Type="Report">
+                  <LinkParams cacheExpirationNow="True" />
+                  <Target Type="Report">
+                    <WaitPage />
+                  </Target>
+                </Action>
+                <Note Note="*** here if you use caching ***" />
+              </Label>
+            </Remark>
+          </Division>
+          <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
+            <Division HtmlDiv="True" ID="div-map">
+              <Division Condition="&quot;@Request.iptCustomer~&quot;.length &gt; 0" HtmlDiv="True" ID="div-customer-selected">
+                <Division Class="container-fluid" ID="div-map-content">
+                  <GoogleMap GoogleMapTypes="Satellite,Map,Hybrid,Terrain" GoogleMapZoomControl="Small" Height="700" ID="gMap-CustomerFieldLocations" MapScale="False" Width="900">
+                    <GoogleMapPolygons FillColor="@Data.csc~" ID="gmpoly">
+                      <DataLayer ID="dllGmap-UserCustomerFields-Map" LinkedDataLayerID="linkGmap-UserCustomerFields" Type="Linked">
+                        <ColorSpectrumColumn DataColumn="Acres" HighValueColor="BlueViolet" ID="csc" LowValueColor="Red" MediumValueColor="Orange" />
+                      </DataLayer>
+                      <PolygonColorSpectrumLegend Format="#.0 acres" ID="pcsl" />
+                      <Action Type="MapMarkerInfo">
+                        <MapMarkerInfo>
+                          <Label Caption="Customer: " Class="ThemeBold" />
+                          <Label Caption="@Data.CustDesc~" />
+                          <LineBreak />
+                          <Label Caption="Farm: " Class="ThemeBold" />
+                          <Label Caption="@Data.FarmDesc~" />
+                          <LineBreak />
+                          <Label Caption="Field: " Class="ThemeBold" />
+                          <Label Caption="@Data.FieldDesc~" />
+                          <LineBreak />
+                          <Label Caption="@Data.Acres~" Format="#.#0 Acres" />
+                        </MapMarkerInfo>
+                      </Action>
+                    </GoogleMapPolygons>
+                  </GoogleMap>
+                </Division>
+              </Division>
+              <Division Condition="&quot;@Request.iptCustomer~&quot;.length == 0" HtmlDiv="True" ID="div-no-customer-selected">
+                <ResponsiveRow>
+                  <ResponsiveColumn />
+                  <ResponsiveColumn Class="text-center">
+                    <Label Class="fa fa-warning fa-4x" HtmlTag="h1" ID="icon-error" />
+                    <LineBreak />
+                    <Label Caption="Please select 1+ Customers" Class="text-center" HtmlTag="h4" />
+                    <LineBreak />
+                    <Label Caption="NOTE: Selecting more than a few customers may increase wait time." Class="text-center" HtmlTag="h5" />
+                  </ResponsiveColumn>
+                  <ResponsiveColumn />
+                </ResponsiveRow>
+              </Division>
+            </Division>
+          </Division>
+        </Division>
+      </ResponsiveColumn>
+    </ResponsiveRow>
+  </Body>
+  <IncludeSharedElement DefinitionFile="_Layout.Shared" SharedElementID="shrFooter" />
+  <ideTestParams cacheExpireNow="" iptCustomer="" rdDataID="" />
 </Report>

@@ -31,19 +31,17 @@
 	<EventLogging
 		LogEvents="True"
 		>
-		<Remark>
-			<LogEvent
-				EventName="AuthenticateUser"
-				ID="eventAuthenticate"
-				>
-				<Action
-					ID="insertAuthenticationRow"
-					Process="LogTasks"
-					TaskID="insertAuthenticationRow"
-					Type="Process"
-				/>
-			</LogEvent>
-		</Remark>
+		<LogEvent
+			EventName="AuthenticateUser"
+			ID="eventAuthenticate"
+			>
+			<Action
+				ID="insertAuthenticationRow"
+				Process="LogTasks"
+				TaskID="insertAuthenticationRow"
+				Type="Process"
+			/>
+		</LogEvent>
 		<LogEvent
 			EventName="SessionStart"
 			ID="eventSession"
@@ -55,17 +53,19 @@
 				Type="Process"
 			/>
 		</LogEvent>
-		<LogEvent
-			EventName="BuildReport"
-			ID="eventBuildReport"
-			>
-			<Action
-				ID="insertBuildReport"
-				Process="LogTasks"
-				TaskID="insertBuildReport"
-				Type="Process"
-			/>
-		</LogEvent>
+		<Remark>
+			<LogEvent
+				EventName="RunSQL"
+				ID="eventSQL"
+				>
+				<Action
+					ID="insertSQLRow"
+					Process="LogTasks"
+					TaskID="insertSQLRow"
+					Type="Process"
+				/>
+			</LogEvent>
+		</Remark>
 	</EventLogging>
 	<Remark>
 		<Constants
@@ -145,7 +145,7 @@
 		/>
 		<Connection
 			ID="connLogiEvent"
-			SqlServer="SQLPROD1"
+			SqlServer="sqlsvr1"
 			SqlServerDatabase="DynamicsGPWarehouse"
 			SqlServerPassword="integr8!"
 			SqlServerPort=""
@@ -163,24 +163,6 @@
 				Type="SqlServer"
 			/>
 		</Remark>
-		<Connection
-			ID="connCRMTest"
-			SqlServer="SCSQLSVR\SCCM1"
-			SqlServerDatabase="mkctest_MSCRM"
-			SqlServerPassword="integr8!"
-			SqlServerPort=""
-			SqlServerUser="BIOperations"
-			Type="SqlServer"
-		/>
-		<Connection
-			ID="connCRM"
-			SqlServer="SCSQLSVR\SCCM1"
-			SqlServerDatabase="crm_MSCRM"
-			SqlServerPassword="integr8!"
-			SqlServerPort=""
-			SqlServerUser="BIOperations"
-			Type="SqlServer"
-		/>
 	</Connections>
 	<Security
 		AuthenticationSource="Standard"
@@ -260,11 +242,11 @@ AND PASSWORD = HASHBYTES(&apos;SHA1&apos;,N&apos;@Request.rdPassword~&apos;)
 				</SqlParameters>
 			</DataLayer>
 		</AuthenticationRule>
-		<UserRoles
-			ID="UserRoles"
-			RolesDataColumn="memberOf"
-			>
-			<Remark>
+		<Remark>
+			<UserRoles
+				ID="UserRoles"
+				RolesDataColumn="memberOf"
+				>
 				<DataLayer
 					ConnectionID="mkcLDAP"
 					ID="dlLdapRoles"
@@ -278,33 +260,34 @@ AND PASSWORD = HASHBYTES(&apos;SHA1&apos;,N&apos;@Request.rdPassword~&apos;)
 					<Join
 						ID="joinLogiDbRoles"
 						JoinType="Union"
-					/>
-				</DataLayer>
-			</Remark>
-			<DataLayer
-				ConnectionID="connLogiDB"
-				HandleQuotesInTokens="True"
-				ID="dlLogiDbRoles"
-				Source="SELECT USERNAME
+						>
+						<DataLayer
+							ConnectionID="connLogiDB"
+							HandleQuotesInTokens="True"
+							ID="dlLogiDbRoles"
+							Source="SELECT USERNAME
 FROM USERS
 WHERE 
 ACTIVE = 1
 AND USERNAME = @iptUsername"
-				Type="SQL"
-				>
-				<SqlParameters>
-					<SqlParameter
-						ID="iptUsername"
-						SqlParamType="dt-200"
-						Value="@Function.UserName~"
-					/>
-				</SqlParameters>
-				<CalculatedColumn
-					Formula="&quot;OC&quot;"
-					ID="memberOf"
-				/>
-			</DataLayer>
-		</UserRoles>
+							Type="SQL"
+							>
+							<SqlParameters>
+								<SqlParameter
+									ID="iptUsername"
+									SqlParamType="dt-200"
+									Value="@Function.UserName~"
+								/>
+							</SqlParameters>
+							<CalculatedColumn
+								Formula="&quot;OC&quot;"
+								ID="memberOf"
+							/>
+						</DataLayer>
+					</Join>
+				</DataLayer>
+			</UserRoles>
+		</Remark>
 		<Rights>
 			<RightsFromDataLayer
 				RightsDataColumn="cRight"
@@ -328,71 +311,38 @@ AND USERNAME = @iptUsername"
 					/>
 				</DataLayer>
 			</RightsFromDataLayer>
-			<RightsFromRoles/>
-			<Remark>
-				<RightFromRole
-					ID="OC"
-					RolesDataColumn="cRole"
-					>
-					<DataLayer
-						ConnectionID="connLogiDB"
-						HandleQuotesInTokens="True"
-						ID="dlLogiDbRoles"
-						Source="SELECT USERNAME
+			<RightFromRole
+				ID="OC"
+				RolesDataColumn="cRole"
+				>
+				<DataLayer
+					ConnectionID="connLogiDB"
+					HandleQuotesInTokens="True"
+					ID="dlLogiDbRoles"
+					Source="SELECT USERNAME
 FROM USERS
 WHERE 
 ACTIVE = 1
 AND USERNAME = @iptUsername"
-						Type="SQL"
-						>
-						<SqlParameters>
-							<SqlParameter
-								ID="iptUsername"
-								SqlParamType="dt-200"
-								Value="@Function.UserName~"
-							/>
-						</SqlParameters>
-						<CalculatedColumn
-							Formula="&quot;OC&quot;"
-							ID="cRight"
-						/>
-					</DataLayer>
-				</RightFromRole>
-			</Remark>
-			<Remark>
-				<RightFromRole
-					ID="OC"
-					RolesDataColumn="cRole"
+					Type="SQL"
 					>
-					<DataLayer
-						ConnectionID="connLogiDB"
-						HandleQuotesInTokens="True"
-						ID="dlLogiDbRoles"
-						Source="SELECT USERNAME
-FROM USERS
-WHERE 
-ACTIVE = 1
-AND USERNAME = @iptUsername"
-						Type="SQL"
-						>
-						<SqlParameters>
-							<SqlParameter
-								ID="iptUsername"
-								SqlParamType="dt-200"
-								Value="@Function.UserName~"
-							/>
-						</SqlParameters>
-						<CalculatedColumn
-							Formula="&quot;OC&quot;"
-							ID="cRight"
+					<SqlParameters>
+						<SqlParameter
+							ID="iptUsername"
+							SqlParamType="dt-200"
+							Value="@Function.UserName~"
 						/>
-					</DataLayer>
-				</RightFromRole>
-			</Remark>
+					</SqlParameters>
+					<CalculatedColumn
+						Formula="&quot;OC&quot;"
+						ID="cRole"
+					/>
+				</DataLayer>
+			</RightFromRole>
 			<Remark>
 				<RightFromRole
 					ID="MKC"
-					RolesDataColumn="cRight"
+					RolesDataColumn="cRole"
 					>
 					<DataLayer
 						ConnectionID="mkcLDAP"

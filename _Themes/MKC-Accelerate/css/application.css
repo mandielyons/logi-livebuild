@@ -1,7 +1,7 @@
 /* application.css - Logi Analytics, 2015
 ******************************************************************************************/
 	/* Google font: Lato */
-	@import url(http://fonts.googleapis.com/css?family=Lato:300,400,900);
+	@import url(https://fonts.googleapis.com/css?family=Lato:300,400,900);
 	html{
 		height: 100%;
 	}
@@ -45,7 +45,7 @@
 	}
 	
 	.pipe-spacer {
-		padding: 0 20px;
+		padding: 0 10px;
 		font-size: large;
 		font-weight: bold;
 	}
@@ -518,7 +518,7 @@
 	.panel .panel-heading{
 		color: #6F767F;
 		font-weight: bold;
-		font-size: 1.3em;
+		font-size: 1.125em;
 	}
 	
 	.panel .panel-heading.clean{
@@ -1246,4 +1246,24 @@
 }
 .color-black {
       color: #000000 !important;
+}
+
+/* Horizontal Collapse */
+
+#divFilters.in {
+    -webkit-transition: width 2s ease;
+    -moz-transition: width 2s ease;
+    -o-transition: width 2s ease;
+    transition: width 2s ease;
+    
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: middle;
+    line-height: 30px;
+    height: auto;
+    width: 0px;
+}
+#divFilters {
+	
 }

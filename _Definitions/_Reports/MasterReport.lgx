@@ -1,0 +1,811 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report
+	ID="MasterReport"
+	>
+	<Note
+		Note="&lt;!--Insert default request parms and cached data layers here--&gt;"
+	/>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrHeader"
+	/>
+	<Body>
+		<Label
+			Caption="&lt;!--These sections are for displaying the top section of the report. Choose from a standard table report layout, a visualization report layout, a tabbed report layout or a data entry layout. --&gt;"
+			Class="ThemeErrorText ThemeBold ThemeTextSmall"
+		/>
+		<Note
+			Note="&lt;!--Standard table report--&gt;"
+		/>
+		<ResponsiveRow>
+			<ResponsiveColumn>
+				<Division
+					Class="panel panel-default"
+					HtmlDiv="True"
+					ID="panel"
+					>
+					<Division
+						Class="panel-heading"
+						HtmlDiv="True"
+						ID="panel-header"
+						>
+						<Label
+							Caption="&lt;!--Insert Standard Report Title Here--&gt;"
+							Class="panel-title"
+						/>
+						<IncludeHtml
+							Html="&lt;span class=&quot;pull-right&quot;&gt;
+	&lt;a href=&quot;#panel-body&quot; data-toggle=&quot;collapse&quot; class=&quot;title&quot;&gt;&lt;i class=&quot;fa fa-chevron-down&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+&lt;/span&gt;"
+						/>
+					</Division>
+					<Division
+						Class="collapse in panel-body"
+						HtmlDiv="True"
+						ID="panel-body"
+						>
+						<ResponsiveRow>
+							<ResponsiveColumn/>
+							<Remark>
+								<ResponsiveColumn
+									Class="ThemeAlignRight"
+									>
+									<Note
+										Note="&lt;!--Remark in for Excel Export--&gt;"
+									/>
+									<IncludeSharedElement
+										DefinitionFile="_Layout.Shared"
+										SharedElementID="shrExcelExport"
+										>
+										<SharedElementParams
+											DataTableID=""
+											ReportName=""
+											Security=""
+										/>
+									</IncludeSharedElement>
+								</ResponsiveColumn>
+							</Remark>
+							<Remark>
+								<ResponsiveColumn
+									Class="ThemeAlignRight"
+									>
+									<Note
+										Note="&lt;!--Remark in for Help section--&gt;"
+									/>
+									<IncludeSharedElement
+										DefinitionFile="_Layout.Shared"
+										SharedElementID="shrHelp"
+										>
+										<SharedElementParams
+											ReportName=""
+										/>
+									</IncludeSharedElement>
+								</ResponsiveColumn>
+							</Remark>
+						</ResponsiveRow>
+						<ResponsiveRow>
+							<ResponsiveColumn
+								ColspanExtraSmallScreen="12"
+								ColspanLargeScreen="3"
+								ColspanMediumScreen="3"
+								ColspanSmallScreen="12"
+								>
+								<Division
+									Class="well"
+									HtmlDiv="True"
+									ID="filter"
+									>
+									<Note
+										Note="&lt;!--Insert filter here--&gt;"
+									/>
+								</Division>
+							</ResponsiveColumn>
+							<ResponsiveColumn
+								ColspanExtraSmallScreen="12"
+								ColspanLargeScreen="9"
+								ColspanMediumScreen="9"
+								ColspanSmallScreen="12"
+								>
+								<Division
+									ID="data"
+									>
+									<Note
+										Note="&lt;!--Insert visualization here--&gt;"
+									/>
+								</Division>
+							</ResponsiveColumn>
+						</ResponsiveRow>
+					</Division>
+				</Division>
+			</ResponsiveColumn>
+		</ResponsiveRow>
+		<Note
+			Note="&lt;!--Standard visualization centric report--&gt;"
+		/>
+		<ResponsiveRow>
+			<ResponsiveColumn>
+				<Division
+					Class="panel panel-default"
+					HtmlDiv="True"
+					ID="panel"
+					>
+					<Division
+						Class="panel-heading"
+						HtmlDiv="True"
+						ID="panel-header"
+						>
+						<Label
+							Caption="&lt;!--Insert Visualization Report Title Here--&gt;"
+							Class="panel-title"
+						/>
+						<IncludeHtml
+							Html="&lt;span class=&quot;pull-right&quot;&gt;
+	&lt;a href=&quot;#panel-body&quot; data-toggle=&quot;collapse&quot; class=&quot;title&quot;&gt;&lt;i class=&quot;fa fa-chevron-down&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+&lt;/span&gt;"
+						/>
+					</Division>
+					<Division
+						Class="collapse in panel-body"
+						HtmlDiv="True"
+						ID="panel-body"
+						>
+						<ResponsiveRow
+							Class="ThemeTextSmall"
+							CollisionBehavior="Wrap"
+							>
+							<ResponsiveColumn
+								Class="ThemeAlignCenter"
+								ColspanExtraSmallScreen="12"
+								ColspanLargeScreen="6"
+								ColspanMediumScreen="5"
+								ColspanSmallScreen="12"
+								>
+								<Division
+									Class="ThemeAlignCenter"
+									ID="panel-visualization1-title"
+									>
+									<Label
+										Caption="&lt;!--Insert visualization title here--&gt;"
+										Class="ThemeTextSmall,ThemeBold"
+									/>
+									<LineBreak/>
+								</Division>
+								<Division
+									Class="well"
+									HtmlDiv="True"
+									ID="panel-visualization1"
+									>
+									<Note
+										Note="&lt;!--Insert visualization here--&gt;"
+									/>
+								</Division>
+							</ResponsiveColumn>
+							<ResponsiveColumn
+								Class="ThemeAlignCenter"
+								ColspanExtraSmallScreen="12"
+								ColspanLargeScreen="6"
+								ColspanMediumScreen="6"
+								ColspanSmallScreen="12"
+								>
+								<Division
+									ID="panel-visualization2-title"
+									>
+									<Label
+										Caption="&lt;!--Insert visualization title here--&gt;"
+										Class="ThemeTextSmall,ThemeBold"
+									/>
+									<LineBreak/>
+								</Division>
+								<Division
+									Class="well"
+									HtmlDiv="True"
+									ID="panel-visualization2"
+									>
+									<Note
+										Note="&lt;!--Insert visualization here--&gt;"
+									/>
+								</Division>
+							</ResponsiveColumn>
+						</ResponsiveRow>
+					</Division>
+				</Division>
+			</ResponsiveColumn>
+		</ResponsiveRow>
+		<Note
+			Note="&lt;!--Standard Tabbed Report--&gt;"
+		/>
+		<ResponsiveRow>
+			<ResponsiveColumn>
+				<Division
+					Class="panel panel-default"
+					HtmlDiv="True"
+					ID="panel"
+					>
+					<Division
+						Class="panel-heading"
+						HtmlDiv="True"
+						ID="panel-header"
+						>
+						<Label
+							Caption="&lt;!--Insert Tabbed Report Title Here--&gt;"
+							Class="panel-title"
+						/>
+						<IncludeHtml
+							Html="&lt;span class=&quot;pull-right&quot;&gt;
+	&lt;a href=&quot;#panel-position-body&quot; data-toggle=&quot;collapse&quot; class=&quot;title&quot;&gt;&lt;i class=&quot;fa fa-chevron-down&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+&lt;/span&gt;"
+						/>
+					</Division>
+					<Division
+						Class="collapse in panel-body"
+						HtmlDiv="True"
+						ID="panel-body"
+						>
+						<ResponsiveRow
+							Class="ThemeTextSmall"
+							>
+							<ResponsiveColumn>
+								<Tabs
+									DefaultTab="tab1"
+									Height="100"
+									HeightScale="%"
+									ID="tabsReport"
+									Width="100"
+									WidthScale="%"
+									>
+									<TabPanel
+										Caption="Tab 1 Title"
+										Class="ThemeTextSmall"
+										ID="tab1"
+										>
+										<Division
+											Class="panel panel-default"
+											HtmlDiv="True"
+											ID="panel-tab1-default"
+											>
+											<Division
+												Class="panel-body"
+												HtmlDiv="True"
+												ID="panel-tab1-body"
+												>
+												<Division
+													Class="ThemeTextSmall"
+													ID="panel-tab1-data"
+													>
+													<ResponsiveRow>
+														<ResponsiveColumn
+															ColspanExtraSmallScreen="12"
+															ColspanLargeScreen="12"
+															ColspanMediumScreen="12"
+															ColspanSmallScreen="12"
+															>
+															<Note
+																Note="&lt;!--Insert data or visualization here--&gt;"
+															/>
+														</ResponsiveColumn>
+													</ResponsiveRow>
+												</Division>
+											</Division>
+										</Division>
+									</TabPanel>
+									<TabPanel
+										Caption="Tab 2 Title"
+										Class="ThemeTextSmall"
+										ID="tab2"
+										>
+										<Division
+											Class="panel panel-default"
+											HtmlDiv="True"
+											ID="panel-tab2-default"
+											>
+											<Division
+												Class="panel-body"
+												HtmlDiv="True"
+												ID="panel-tab2-body"
+												>
+												<Division
+													Class="ThemeTextSmall"
+													ID="panel-tab2-data"
+													>
+													<ResponsiveRow>
+														<ResponsiveColumn
+															ColspanExtraSmallScreen="12"
+															ColspanLargeScreen="12"
+															ColspanMediumScreen="12"
+															ColspanSmallScreen="12"
+															>
+															<Note
+																Note="&lt;!--Insert data or visualization here--&gt;"
+															/>
+														</ResponsiveColumn>
+													</ResponsiveRow>
+												</Division>
+											</Division>
+										</Division>
+									</TabPanel>
+									<TabPanel
+										Caption="Tab 3 Title"
+										Class="ThemeTextSmall"
+										ID="tab3"
+										>
+										<Division
+											Class="panel panel-default"
+											HtmlDiv="True"
+											ID="panel-tab3-default"
+											>
+											<Division
+												Class="panel-body"
+												HtmlDiv="True"
+												ID="panel-tab3-body"
+												>
+												<Division
+													Class="ThemeTextSmall"
+													ID="panel-tab3-data"
+													>
+													<ResponsiveRow>
+														<ResponsiveColumn
+															ColspanExtraSmallScreen="12"
+															ColspanLargeScreen="12"
+															ColspanMediumScreen="12"
+															ColspanSmallScreen="12"
+															>
+															<Note
+																Note="&lt;!--Insert data or visualization here--&gt;"
+															/>
+														</ResponsiveColumn>
+													</ResponsiveRow>
+												</Division>
+											</Division>
+										</Division>
+									</TabPanel>
+									<TabPanel
+										Caption="Tab 4 Title"
+										Class="ThemeTextSmall"
+										ID="tab4"
+										>
+										<Division
+											Class="panel panel-default"
+											HtmlDiv="True"
+											ID="panel-tab4-default"
+											>
+											<Division
+												Class="panel-body"
+												HtmlDiv="True"
+												ID="panel-tab4-body"
+												>
+												<Division
+													Class="ThemeTextSmall"
+													ID="panel-tab4-data"
+													>
+													<ResponsiveRow>
+														<ResponsiveColumn
+															ColspanExtraSmallScreen="12"
+															ColspanLargeScreen="12"
+															ColspanMediumScreen="12"
+															ColspanSmallScreen="12"
+															>
+															<Note
+																Note="&lt;!--Insert data or visualization here--&gt;"
+															/>
+														</ResponsiveColumn>
+													</ResponsiveRow>
+												</Division>
+											</Division>
+										</Division>
+									</TabPanel>
+								</Tabs>
+							</ResponsiveColumn>
+						</ResponsiveRow>
+					</Division>
+				</Division>
+			</ResponsiveColumn>
+		</ResponsiveRow>
+		<Note
+			Note="&lt;!--Standard data entry report--&gt;"
+		/>
+		<ResponsiveRow>
+			<ResponsiveColumn>
+				<Division
+					Class="panel panel-default"
+					HtmlDiv="True"
+					ID="panel"
+					>
+					<Division
+						Class="panel-heading"
+						HtmlDiv="True"
+						ID="panel-header"
+						>
+						<Label
+							Caption="&lt;!--Insert Data Entry Report Title Here--&gt;"
+							Class="panel-title"
+						/>
+					</Division>
+					<Division
+						Class="panel-body ThemeTextSmall"
+						HtmlDiv="True"
+						ID="panel-body"
+						>
+						<ResponsiveRow>
+							<ResponsiveColumn>
+								<Label
+									Caption="&lt;!--Show status message after save--&gt;"
+									ID="lblStatus"
+									>
+									<Note
+										Note="&lt;!--set conditions on showing a status message--&gt;"
+									/>
+									<ConditionalClass
+										Class="ThemeErrorText"
+										Condition="InStr(&quot;@Request.StatusMsg~&quot;,&quot;Error:&quot;) &gt; 0"
+									/>
+									<ConditionalClass
+										Class="ThemeTextNegative"
+										Condition="InStr(&quot;@Request.StatusMsg~&quot;,&quot;Success:&quot;) &gt; 0"
+									/>
+								</Label>
+								<LineBreak
+									LineCount="2"
+								/>
+							</ResponsiveColumn>
+						</ResponsiveRow>
+						<ResponsiveRow>
+							<ResponsiveColumn
+								Class="ThemeAlignLeft"
+								ColspanExtraSmallScreen="6"
+								ColspanLargeScreen="4"
+								ColspanMediumScreen="4"
+								ColspanSmallScreen="6"
+								>
+								<InputDate
+									CalendarCaptionFormat="MM/dd/yyyy"
+									Caption="Date:"
+									DefaultValue="@Local.DropOffDate~"
+									ID="dteEntry1"
+									Tooltip="Select the drop off date"
+									>
+									<InputDateCalendar
+										CalendarCaption="Date"
+										DropdownYearAndMonth="False"
+										ID="iptEntry1"
+										NumberOfMonths="Month"
+										Width="50"
+										WidthScale="%"
+									/>
+								</InputDate>
+								<LineBreak
+									LineCount="2"
+								/>
+							</ResponsiveColumn>
+							<ResponsiveColumn
+								ColspanExtraSmallScreen="6"
+								ColspanLargeScreen="4"
+								ColspanMediumScreen="4"
+								ColspanSmallScreen="6"
+								>
+								<InputSelectList
+									Caption="Select:"
+									ID="iptSelect"
+									IncludeBlank="True"
+									IncludeBlankCaption="Select a range"
+									OptionCaptionColumn="Option"
+									OptionTooltipColumn="Select a ticket range"
+									OptionValueColumn="Value"
+									>
+									<Note
+										Note="&lt;!--Get appropriate data for this select--&gt;"
+									/>
+									<DataLayer
+										ColumnNamesRow="1"
+										ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\DSRange.xlsx"
+										ExcelWorksheet="Sheet1"
+										ID="dlTicketRange"
+										Type="Excel"
+									/>
+								</InputSelectList>
+							</ResponsiveColumn>
+							<ResponsiveColumn/>
+						</ResponsiveRow>
+						<ResponsiveRow>
+							<ResponsiveColumn
+								ColspanExtraSmallScreen="12"
+								ColspanLargeScreen="8"
+								ColspanMediumScreen="8"
+								ColspanSmallScreen="12"
+								>
+								<InputTextArea
+									Caption="Text Area:"
+									ID="iptTextArea"
+									InputColumns="200"
+									InputRows="5"
+								/>
+								<LineBreak
+									LineCount="2"
+								/>
+							</ResponsiveColumn>
+						</ResponsiveRow>
+						<ResponsiveRow>
+							<ResponsiveColumn
+								Class="ThemeAlignLeft"
+								ColspanExtraSmallScreen="6"
+								ColspanLargeScreen="4"
+								ColspanMediumScreen="4"
+								ColspanSmallScreen="6"
+								>
+								<InputText
+									Caption="TextBox:"
+									ID="iptTextBox"
+								/>
+								<LineBreak
+									LineCount="2"
+								/>
+							</ResponsiveColumn>
+							<ResponsiveColumn
+								Class="ThemeAlignLeft"
+								ColspanExtraSmallScreen="4"
+								ColspanLargeScreen="2"
+								ColspanMediumScreen="2"
+								ColspanSmallScreen="2"
+							/>
+							<ResponsiveColumn/>
+						</ResponsiveRow>
+						<ResponsiveRow>
+							<ResponsiveColumn
+								Class="ThemeAlignLeft"
+								ColspanExtraSmallScreen="4"
+								ColspanLargeScreen="2"
+								ColspanMediumScreen="2"
+								ColspanSmallScreen="2"
+								>
+								<InputCheckbox
+									Caption="Checkbox:"
+									ID="chkBox"
+								/>
+								<LineBreak
+									LineCount="2"
+								/>
+							</ResponsiveColumn>
+							<ResponsiveColumn
+								Class="ThemeAlignLeft"
+								ColspanExtraSmallScreen="6"
+								ColspanLargeScreen="4"
+								ColspanMediumScreen="4"
+								ColspanSmallScreen="6"
+							/>
+							<ResponsiveColumn/>
+						</ResponsiveRow>
+						<ResponsiveRow>
+							<ResponsiveColumn
+								Class="ThemeAlignLeft"
+								ColspanExtraSmallScreen="12"
+								ColspanLargeScreen="12"
+								ColspanMediumScreen="12"
+								ColspanSmallScreen="12"
+								>
+								<Button
+									Caption="Save"
+									ID="btnAdd"
+									>
+									<Note
+										Note="&lt;!--Add Action.Process here--&gt;"
+									/>
+								</Button>
+								<Spaces
+									Size="15"
+								/>
+								<Button
+									Caption="Cancel"
+									ID="btnCancel"
+									>
+									<Note
+										Note="&lt;!--Clear all inputs here--&gt;"
+									/>
+								</Button>
+							</ResponsiveColumn>
+						</ResponsiveRow>
+					</Division>
+				</Division>
+			</ResponsiveColumn>
+		</ResponsiveRow>
+		<HR/>
+		<Label
+			Caption="&lt;!--These sections are for displaying detail (drill thru) data from the reports above. Choose from a tabbed drill thru layout or a panel drill thru layout.--&gt;"
+			Class="ThemeErrorText ThemeBold ThemeTextSmall"
+		/>
+		<Note
+			Note="&lt;!--Standard Drill Through Tabs--&gt;"
+		/>
+		<ResponsiveRow>
+			<Note
+				Note="&lt;!--Show drill thru tabs at bottom of page--&gt;"
+			/>
+			<ResponsiveColumn>
+				<Division
+					ID="panel-details1"
+					>
+					<Note
+						Note="&lt;!--set conditions for showing the drill thru--&gt;"
+					/>
+					<ConditionalClass
+						Condition=""
+					/>
+					<Tabs
+						DefaultTab="tbDetail"
+						ID="tabDrillThru1"
+						>
+						<TabPanel
+							Caption="Drill Thru Details"
+							Class="ThemeTextSmall"
+							ID="tbDetail1"
+							>
+							<Division
+								Class="panel panel-default"
+								HtmlDiv="True"
+								ID="panel-detail-default"
+								>
+								<Division
+									Class="panel-body"
+									HtmlDiv="True"
+									ID="panel-detail-body"
+									>
+									<Division
+										Class="ThemeTextSmall"
+										ID="panel-data"
+										>
+										<ResponsiveRow>
+											<ResponsiveColumn
+												ColspanExtraSmallScreen="12"
+												ColspanLargeScreen="12"
+												ColspanMediumScreen="12"
+												ColspanSmallScreen="12"
+												>
+												<Note
+													Note="&lt;!--Insert filtered drill thru data here--&gt;"
+												/>
+											</ResponsiveColumn>
+										</ResponsiveRow>
+									</Division>
+								</Division>
+							</Division>
+						</TabPanel>
+					</Tabs>
+				</Division>
+				<Division
+					ID="panel-details2"
+					>
+					<Note
+						Note="&lt;!--set conditions for showing the drill thru--&gt;"
+					/>
+					<ConditionalClass
+						Condition=""
+					/>
+					<Tabs
+						DefaultTab="tbDetail"
+						ID="tabDrillThru2"
+						>
+						<TabPanel
+							Caption="Drill Thru Details"
+							Class="ThemeTextSmall"
+							ID="tbDetail2"
+							>
+							<Division
+								Class="panel panel-default"
+								HtmlDiv="True"
+								ID="panel-detail2-default"
+								>
+								<Division
+									Class="panel-body"
+									HtmlDiv="True"
+									ID="panel-detail2-body"
+									>
+									<Division
+										Class="ThemeTextSmall"
+										ID="panel-data2"
+										>
+										<ResponsiveRow>
+											<ResponsiveColumn
+												ColspanExtraSmallScreen="12"
+												ColspanLargeScreen="12"
+												ColspanMediumScreen="12"
+												ColspanSmallScreen="12"
+												>
+												<Note
+													Note="&lt;!--Insert filtered drill thru data here--&gt;"
+												/>
+											</ResponsiveColumn>
+										</ResponsiveRow>
+									</Division>
+								</Division>
+							</Division>
+						</TabPanel>
+					</Tabs>
+				</Division>
+				<Note
+					Note="&lt;!--Insert more panels here if needed--&gt;"
+				/>
+			</ResponsiveColumn>
+		</ResponsiveRow>
+		<Note
+			Note="&lt;!--Standard Drill Through Panel--&gt;"
+		/>
+		<ResponsiveRow>
+			<Note
+				Note="&lt;!--Show drill thru panel at bottom of page--&gt;"
+			/>
+			<ResponsiveColumn>
+				<Division
+					ID="panel-details"
+					>
+					<Note
+						Note="&lt;!--set conditions for showing the drill thru--&gt;"
+					/>
+					<ConditionalClass
+						Condition=""
+					/>
+					<Division
+						Class="panel panel-default"
+						HtmlDiv="True"
+						ID="panel-detail-default"
+						>
+						<Division
+							Class="panel-heading"
+							HtmlDiv="True"
+							ID="panel-detail-header"
+							>
+							<Label
+								Caption="&lt;!--Insert the drill thru title here--&gt;"
+								Class="panel-title"
+							/>
+						</Division>
+						<Division
+							Class="panel-body"
+							HtmlDiv="True"
+							ID="panel-detail-body"
+							>
+							<Note
+								Note="&lt;!--Remark in for Excel Export--&gt;"
+							/>
+							<Remark>
+								<ResponsiveRow>
+									<ResponsiveColumn
+										Class="ThemeAlignRight"
+										>
+										<IncludeSharedElement
+											DefinitionFile="_Layout.Shared"
+											SharedElementID="shrExcelExport"
+											>
+											<SharedElementParams
+												DataTableID=""
+												ReportName=""
+												Security=""
+											/>
+										</IncludeSharedElement>
+									</ResponsiveColumn>
+								</ResponsiveRow>
+							</Remark>
+							<ResponsiveRow
+								Class="ThemeTextSmall"
+								>
+								<ResponsiveColumn>
+									<Division
+										ID="panel-data"
+										>
+										<Note
+											Note="&lt;!--Insert filtered drill thru data here--&gt;"
+										/>
+									</Division>
+								</ResponsiveColumn>
+							</ResponsiveRow>
+						</Division>
+					</Division>
+				</Division>
+			</ResponsiveColumn>
+		</ResponsiveRow>
+	</Body>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrFooter"
+	/>
+	<ideTestParams
+		StatusMsg=""
+	/>
+</Report>

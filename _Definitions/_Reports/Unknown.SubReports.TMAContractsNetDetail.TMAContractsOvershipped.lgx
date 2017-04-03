@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Caption="TMA Contract Overshipped" ID="Unknown.SubReports.TMAContractsNetDetail.TMAContractsOvershipped" SecurityReportRightID="TMA,MKC">
+  <IncludeSharedElement DefinitionFile="_Layout.Shared" SharedElementID="shrHeader" />
+  <LocalData>
+    <DataLayer ConnectionID="connProdGP" ID="sqlTMAContract" Source="SELECT OC.DATA_KEY [KEY]&#xD;&#xA;  , OC.CUSTOMER_DESC [CUSTDESC]&#xD;&#xA;  , LTRIM(RTRIM(OC.CUSTOMER)) [CUSTNMBR]&#xD;&#xA;  , LTRIM(RTRIM(CM.ADDRESS_LINE_1)) [CUSTADDR1]&#xD;&#xA;  , LTRIM(RTRIM(CM.CITY)) [CUSTCITY]&#xD;&#xA;  , LTRIM(RTRIM(CM.[STATE])) [CUSTSTATE]&#xD;&#xA;  , LTRIM(RTRIM(CM.ZIP_CODE)) [CUSTZIPCODE]&#xD;&#xA;  , OC.CONTRACT_MAIN [MAINCONTRACT]&#xD;&#xA;  , OC.CONTRACT_SUB [SUBCONTRACT]&#xD;&#xA;  , OC.CONTRACT_NUMBER [CONTRACTNMBR]&#xD;&#xA;  , OC.THEIR_CONTRACT_NUMBER [ACCOUNTCONTRACT]&#xD;&#xA;  , OC.ISSUED_DATE [CONTRACTDT]&#xD;&#xA;  , OC.DELIVERY_START_DATE [DELIVERY_START_DATE]&#xD;&#xA;  , OC.DELIVERY_END_DATE [DELIVERY_END_DATE]&#xD;&#xA;  , OC.DPR_POSITION [DPRPOSITION]&#xD;&#xA;  , OC.DPR_POSITION_GROUP [DPRDESC]&#xD;&#xA;  , OC.BRANCH_NUMBER [LOCNMBR]&#xD;&#xA;  , OC.BRANCH_DESC [LOCDESC]&#xD;&#xA;  , OC.COMMODITY_CODE [COMMODITYCD]&#xD;&#xA;  , OC.COMMODITY_DESC [COMMODITYDESC]&#xD;&#xA;  , OC.REMAINING_BU&#xD;&#xA;FROM AgTrax_Staging..DM_OpenContracts OC &#xD;&#xA;  INNER JOIN AgTrax_Staging..AR_CUSTOMER_MASTER_TMA CM ON OC.CUSTOMER=CM.CUSTOMER&#xD;&#xA;WHERE OC.DATA_KEY='@Request.paramContractKey~'&#xD;&#xA;ORDER BY CONTRACTNMBR" Type="SQL">
+      <AggregateColumn AggregateColumn="REMAINING_BU" AggregateFunction="Sum" DataType="Number" ID="SumRemainingBU" />
+      <DataLayerLink ID="lnkTMAContract" />
+    </DataLayer>
+  </LocalData>
+  <Body>
+    <Division ID="divBtnExportExcel">
+      <ResponsiveRow ID="rrExportToExcel">
+        <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1" />
+        <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1" />
+        <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1" />
+        <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1" />
+        <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1" />
+        <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1" />
+        <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1" />
+        <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1" />
+        <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1" />
+        <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1" />
+        <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1" />
+        <ResponsiveColumn ColspanExtraSmallScreen="1" ColspanLargeScreen="1" ColspanMediumScreen="1" ColspanSmallScreen="1">
+          <Label Class="ThemeAlignRight, fa fa-file-excel-o fa-2x" HtmlTag="Div" Tooltip="Export to Excel">
+            <Action Type="NativeExcel">
+              <Target ExcelOutputFormat="Excel2007" FrameID="NewWindow" Report="CurrentReport" RequestForwarding="True" Type="NativeExcel" />
+            </Action>
+          </Label>
+        </ResponsiveColumn>
+      </ResponsiveRow>
+    </Division>
+    <Division ID="divHeader">
+      <Label Caption="Contract:" Class="ThemeHeader" />
+      <Spaces Size="4" />
+      <Label Caption="@Local.MAINCONTRACT~" Class="ThemeHeader, ThemeBold" />
+      <LineBreak />
+      <Label Caption="Commodity:" Class="ThemeHeader" />
+      <Spaces Size="4" />
+      <Label Caption="@Local.COMMODITYDESC~" Class="ThemeHeader, ThemeBold" />
+      <LineBreak />
+      <Label Caption="Remaining BU:" Class="ThemeHeader" />
+      <Spaces Size="4" />
+      <Label Caption="@Local.SumRemainingBU~" Class="ThemeHeader, ThemeBold" Format="###,###,##0.00" />
+      <LineBreak />
+      <Label Caption="Shipment Period:" Class="ThemeHeader" Format="General Date" />
+      <Spaces Size="4" />
+      <Label Caption="@Local.DELIVERY_END_DATE~" Class="ThemeHeader, ThemeBold" Format="Short Date" />
+      <LineBreak />
+      <Label Caption="Account Name:" Class="ThemeHeader" />
+      <Spaces Size="4" />
+      <Label Caption="@Local.CUSTDESC~" Class="ThemeHeader, ThemeBold" />
+      <LineBreak />
+      <Label Caption="Account Number:" Class="ThemeHeader" />
+      <Spaces Size="4" />
+      <Label Caption="@Local.CUSTNMBR~" Class="ThemeHeader, ThemeBold" />
+      <LineBreak />
+    </Division>
+    <Division ID="divTable">
+      <DataTable AccessibleHeaders="True" AccessibleSummary="AnalysisGrid DataTable" Caption="TMA Overshipped Contracts" ID="dtTMAContracts" RememberSort="True" SortArrows="True" TableBorder="0" Width="100" WidthScale="%">
+        <DataLayer LinkedDataLayerID="lnkTMAContract" Type="Linked" />
+        <InteractivePaging CaptionType="Image" Class="ThemeTextSmall" Location="Top" PageRowCount="10" ShowPageNumber="True" />
+        <DataTableColumn Header="Contract" ID="colCONTRACTNMBR" Width="10" WidthScale="%">
+          <Label Caption="@Data.CONTRACTNMBR~" ID="colCONTRACTNMBR" />
+          <DataColumnSort DataColumn="CONTRACTNMBR" DataType="Text" />
+        </DataTableColumn>
+        <DataTableColumn Header="Account Contract" ID="colACCOUNTCONTRACT" Width="10" WidthScale="%">
+          <Label Caption="@Data.ACCOUNTCONTRACT~" ID="colACCOUNTCONTRACT" />
+          <DataColumnSort DataColumn="CONTRACTNMBR" DataType="Text" />
+        </DataTableColumn>
+        <DataTableColumn Header="Location Number" ID="colLOCNMBR" Width="10" WidthScale="%">
+          <Label Caption="@Data.LOCNMBR~" ID="colLOCNMBR" />
+          <DataColumnSort DataColumn="LOCNMBR" DataType="Text" />
+        </DataTableColumn>
+        <DataTableColumn Header="Location Description" ID="colLOCDESC" Width="10" WidthScale="%">
+          <Label Caption="@Data.LOCDESC~" ID="colLOCDESC" />
+          <DataColumnSort DataColumn="LOCDESC" DataType="Text" />
+        </DataTableColumn>
+        <DataTableColumn Class="ThemeAlignRight" ColumnHeaderClass="ThemeAlignCenter" Header="Remaining BU" ID="colREMAINING_BU" Width="5" WidthScale="%">
+          <Label Caption="@Data.REMAINING_BU~" Format="###,###,##0.00" ID="colREMAINING_BU" />
+          <DataColumnSort DataColumn="REMAINING_BU" DataType="Number" />
+          <DataColumnSummary DataColumn="REMAINING_BU" DataType="Number" Function="Sum" ID="dcsRemainingBU" />
+        </DataTableColumn>
+        <DataTableColumn Class="ThemeAlignCenter" ID="colKPI" Width="25" WidthScale="%">
+          <Label ID="KPI">
+            <Note Note="KPI Remaining Contract Balance Conditions: Green greater than 2500 BU; Yellow 0 to 2500; Red less than 0" />
+            <ConditionalClass Class="fa fa-arrow-up fa-2x text-success" Condition="@Data.REMAINING_BU~ &gt; 2500" ID="Condition-Green&gt;2500" />
+            <ConditionalClass Class="fa fa-minus fa-2x text-warning" Condition="(@Data.REMAINING_BU~ &gt;=0) And (@Data.REMAINING_BU~ &lt;= 2500)" ID="Condition-Yellow-0-2500" />
+            <ConditionalClass Class="fa fa-arrow-down fa-2x text-danger" Condition="@Data.REMAINING_BU~ &lt; 0" ID="Condition-Red&lt;0" />
+          </Label>
+        </DataTableColumn>
+        <SummaryRow Caption="Total: " ID="srTotal" LastPageOnly="False" />
+      </DataTable>
+    </Division>
+  </Body>
+  <IncludeSharedElement DefinitionFile="_Layout.Shared" SharedElementID="shrFooter" />
+  <ideTestParams paramContractKey="1_  40910_02_63977" />
+</Report>

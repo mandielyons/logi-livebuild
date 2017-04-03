@@ -1,0 +1,343 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report
+	ID="Unknown.SubReports.BranchFAQs"
+	>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrHeader"
+	/>
+	<Body>
+		<ResponsiveRow>
+			<ResponsiveColumn>
+				<Division
+					Class="panel panel-default"
+					HtmlDiv="True"
+					ID="panel"
+					>
+					<Division
+						Class="panel-heading"
+						HtmlDiv="True"
+						ID="panel-heading-perspectives"
+						>
+						<Label
+							Caption="Branch Dashboard Frequently Asked Questions (FAQs)"
+							Class="panel-title"
+						/>
+					</Division>
+					<Division
+						ID="panel-body-perspectives"
+						>
+						<ResponsiveRow
+							CollisionBehavior="Wrap"
+							>
+							<ResponsiveColumn
+								Class="ThemeTextSmall"
+								>
+								<Division
+									Class="panel-body"
+									HtmlDiv="True"
+									ID="panel-1"
+									>
+									<Label
+										Caption="What if I find a mistake on the branch dashboard?"
+										Class="ThemeBold"
+									/>
+									<LineBreak/>
+									<IncludeHtml
+										Html="If you find a mistake on the branch dashboard send Tricia Jantz at &lt;a href=&quot;mailto:tjantz@mkcoop.com&quot;&gt;tjantz@mkcoop.com&lt;/a&gt; an email detailing out the mistake.  Chris will research the issue and then get back to you.&lt;br /&gt;"
+									/>
+									<LineBreak/>
+									<Label
+										Caption="Who do I contact for help on the branch dashboard?"
+										Class="ThemeBold"
+									/>
+									<IncludeHtml
+										Html="&lt;br /&gt;
+***Read through all the FAQs first.&lt;br /&gt;
+If your question was not answered in the FAQs, then you may contact the following.&lt;br /&gt;
+&lt;ul&gt;
+&lt;li&gt;For questions on sales contact Emily Reece at &lt;a href=&quot;mailto:ereece@mkcoop.com&quot;&gt;ereece@mkcoop.com&lt;/a&gt; or at 620-345-4187.  &lt;/li&gt;
+&lt;li&gt;For questions on anything else pertaining to the home page, branch financials, additional branch reports or the financial plan please contact Tricia Jantz at &lt;a href=&quot;mailto:tjantz@mkcoop.com&quot;&gt;tjantz@mkcoop.com&lt;/a&gt; or at 620-345-4195. &lt;/li&gt;
+&lt;li&gt;When leaving emails or voice mail, please be detailed so the team can begin working on your question.  Please remember the team may be handling multiple questions and will get back to you as soon as possible. &lt;/li&gt;
+&lt;/ul&gt;
+"
+									/>
+									<LineBreak/>
+									<Label
+										Caption="When is information updated to the dashboard?"
+										Class="ThemeBold"
+									/>
+									<IncludeHtml
+										Html="&lt;br /&gt;With the exception of the inventory turns, information is posted to the dashboard daily, but you will need to keep in mind that doesn’t mean numbers are finalized daily.  There may be billing that’s not finished, journal entries to be completed or unposted items in GP.  The inventory turns are updated quarterly and the as of date is listed at the top of the report.
+&lt;br /&gt;"
+									/>
+									<LineBreak/>
+									<Label
+										Caption="Which tabs should I be using?"
+										Class="ThemeBold"
+									/>
+									<IncludeHtml
+										Html="&lt;ul&gt;&lt;li&gt;Volumes – to see units by branch for application, fertilizer and fuel&lt;/li&gt;
+&lt;li&gt;Totals – high level financial statement by branch with drill down capability&lt;/li&gt;
+&lt;li&gt;Sales – to see sales and margin detail &lt;/li&gt;
+&lt;li&gt;Other operating income – to see other operating income detail&lt;/li&gt;
+&lt;li&gt;Personnel expense – to see personnel expense detail&lt;/li&gt;
+&lt;li&gt;Fixed expense – to see fixed expense detail&lt;/li&gt;
+&lt;li&gt;Other operating expense – to see other operating expense detail&lt;/li&gt;
+&lt;/ul&gt;"
+									/>
+									<LineBreak/>
+									<Label
+										Caption="Where do I see my financial pod information?"
+										Class="ThemeBold"
+									/>
+									<IncludeHtml
+										Html="&lt;br /&gt;The dashboard can only display branches one at a time.  In order to see current financials for your pod you will need to manually add them together.
+&lt;br /&gt;"
+									/>
+									<LineBreak/>
+									<Label
+										Caption="How do I group branch financials together?"
+										Class="ThemeBold"
+									/>
+									<IncludeHtml
+										Html="&lt;br /&gt;The dashboard can only display branches one at a time.  To view another branch, change the filter at the top of the report page and click apply.
+&lt;br /&gt;"
+									/>
+									<LineBreak/>
+									<Label
+										Caption="How do I know what fiscal year to select?"
+										Class="ThemeBold"
+									/>
+									<IncludeHtml
+										Html="&lt;br /&gt;MKC’s fiscal year is different from the calendar year.  When you open the financial details or additional branch details, the default fiscal year will be the current fiscal year we are in.  MKC’s fiscal year is March 1st – the last day in February.  If, for example, you want to look at information from May 2015, you would choose fiscal year 2016 since May 2015 falls within the fiscal year March 1, 2015 – February 29, 2016.
+&lt;br /&gt;"
+									/>
+									<LineBreak/>
+									<Label
+										Caption="Why are the current month amounts way off?"
+										Class="ThemeBold"
+									/>
+									<IncludeHtml
+										Html="&lt;br /&gt;Current month financials and accruals may not be completed yet.
+&lt;br /&gt;"
+									/>
+									<LineBreak/>
+									<Label
+										Caption="How do I know when current month financials are finished?"
+										Class="ThemeBold"
+									/>
+									<IncludeHtml
+										Html="&lt;br /&gt;It takes many days after month end to complete accruals and tie out financials.  You will know the month is finalized when we email out the month end consolidated company financials.
+&lt;br /&gt;"
+									/>
+									<LineBreak/>
+									<Label
+										Caption="The plan (financial plan) or budget on the dashboard is blank.  Where do I find that information?
+"
+										Class="ThemeBold"
+									/>
+									<IncludeHtml
+										Html="&lt;br /&gt;The financial plan will be added to the dashboard at a later date.  Today you will access the financial plan by viewing the excel file emailed out.
+&lt;br /&gt;"
+									/>
+									<LineBreak/>
+									<Label
+										Caption="Where are my grain volumes?
+"
+										Class="ThemeBold"
+									/>
+									<IncludeHtml
+										Html="&lt;br /&gt;Grain volumes are not currently displayed on the dashboard and will be added at a later date.
+&lt;br /&gt;"
+									/>
+									<LineBreak/>
+									<Label
+										Caption="Where are local sales reported?"
+										Class="ThemeBold"
+									/>
+									<IncludeHtml
+										Html="&lt;br /&gt;Local sales are reported on the sales report as Sales – Milo, Sales – Corn, etc. and should not be confused as seed sales.  All seed that is sold to be planted is under the category Sales – Seed.
+&lt;br /&gt;"
+									/>
+									<LineBreak/>
+									<Label
+										Caption="The seed sales for my branch look incorrect."
+										Class="ThemeBold"
+									/>
+									<IncludeHtml
+										Html="&lt;br /&gt;Make sure you are not mixing seed sales with local sales.  All seed that is sold to be planted is under the category Sales – Seed.  Any items listed as Sales + a specific commodity (Sales – Wheat) are local sales.
+&lt;br /&gt;"
+									/>
+									<LineBreak/>
+									<Label
+										Caption="Why do I have a separate line labeled purchases on the sales report?
+"
+										Class="ThemeBold"
+									/>
+									<IncludeHtml
+										Html="&lt;br /&gt;When a location has zero sales for the month but has margin activity, you will see a separate line on the sales report labeled purchases and there will be a dollar amount (positive or negative) in the gross margin column.  The most common causes of this are inventory cost adjustments and other entries to inventory that will be sold in the future.  
+&lt;br /&gt;"
+									/>
+									<LineBreak/>
+									<Label
+										Caption="How do allocation accounts work?"
+										Class="ThemeBold"
+									/>
+									<IncludeHtml
+										Html="&lt;br /&gt;Several items on the financial statements are based off of allocation accounts.  The following are where you will find some of the allocation accounts and how they are calculated.
+&lt;ul&gt;&lt;li&gt;Sales&lt;/li&gt;
+&lt;ul&gt;
+&lt;li&gt;Chemical rebates – allocated on location chemical sales&lt;/li&gt;
+&lt;li&gt;Seed rebates – allocated on location seed sales&lt;/li&gt;
+&lt;/ul&gt;
+&lt;li&gt;Other operating income&lt;/li&gt;
+&lt;ul&gt;&lt;li&gt;TMA storage revenue – allocated by average grain stocks&lt;/li&gt;
+&lt;li&gt;TMA handling revenue – allocated on location grain receipts&lt;/li&gt;
+&lt;li&gt;TMA earnings – allocated by adjusted storage capacity&lt;/li&gt;
+&lt;/ul&gt;
+&lt;li&gt;Personnel expense&lt;/li&gt;
+&lt;ul&gt;&lt;li&gt;Retirement expense – allocated on location wages&lt;/li&gt;&lt;/ul&gt;
+&lt;li&gt;Fixed expenses&lt;/li&gt;
+&lt;ul&gt;&lt;li&gt;Property and liability Insurance expense – allocated by property values&lt;/li&gt;
+&lt;li&gt;Property tax – allocated by property values&lt;/li&gt;
+&lt;li&gt;Interest expense&lt;/li&gt;
+&lt;ul&gt;&lt;li&gt;Operating interest – allocated on location supply sales&lt;/li&gt;
+&lt;li&gt;Project interest – allocated to locations with financed projects&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/ul&gt;
+&lt;/ul&gt;
+&lt;br /&gt;"
+									/>
+									<LineBreak/>
+									<Label
+										Caption="How does depreciation expense work?"
+										Class="ThemeBold"
+									/>
+									<IncludeHtml
+										Html="&lt;br /&gt;Depreciation expense is based on the vehicle, buildings and equipment assigned to locations in Assetkeeper.  It’s important to make sure the assets assigned to your location are actually at your location.
+&lt;br /&gt;"
+									/>
+									<LineBreak/>
+									<Label
+										Caption="How do I see expense account detail?"
+										Class="ThemeBold"
+									/>
+									<IncludeHtml
+										Html="&lt;br /&gt;Look up smartlist in GP
+&lt;ul&gt;&lt;li&gt;GP &gt; Smartlist &gt; Financial &gt; Account Transactions &gt; Financial Dashboard Detail&lt;/li&gt;
+&lt;li&gt;Click on search button at top &gt; Type in branch # (3 digits) &gt; Type in main account # (4 digits) &gt; enter beg and end dates &gt; click OK&lt;/li&gt;
+&lt;li&gt;Wait for report to load&lt;/li&gt;
+&lt;/ul&gt;
+Export smartlist for easy filtering
+&lt;ul&gt;&lt;li&gt;Click excel at top of page&lt;/li&gt;
+&lt;li&gt;From cell A1 &gt; choose Data on top menu &gt; choose Filter&lt;/li&gt;
+&lt;li&gt;Click filter (drop down arrow) on the field you want to sort or filter&lt;/li&gt;
+&lt;/ul&gt;
+&lt;br /&gt;"
+									/>
+									<LineBreak/>
+									<Label
+										Caption="What are sub accounts and how do they work?"
+										Class="ThemeBold"
+									/>
+									<IncludeHtml
+										Html="&lt;br /&gt;MKC has main accounts that we break down into sub accounts for more detail.  Two examples are fertilizer equipment repairs (acct 8210) and repairs (acct 8220).  
+&lt;ul&gt;&lt;li&gt;The sub accounts for fertilizer equipment repair are:&lt;/li&gt;
+&lt;ul&gt;&lt;li&gt;Dry applicators (8210-06)&lt;/li&gt;
+&lt;li&gt;Dry plant (8210-10)&lt;/li&gt;
+&lt;li&gt;Dry tenders (8210-08)&lt;/li&gt;
+&lt;li&gt;Liquid applications (8210-00)&lt;/li&gt;
+&lt;li&gt;Liquid plant (8210-04)&lt;/li&gt;
+&lt;li&gt;Liquid tenders (8210-02)&lt;/li&gt;
+&lt;li&gt;NH3 plant (8210-14)&lt;/li&gt;
+&lt;li&gt;NH3 tanks (8210-12)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;li&gt;The sub accounts for repairs are:&lt;/li&gt;
+&lt;ul&gt;
+&lt;li&gt;Equipment (8220-06)&lt;/li&gt;
+&lt;li&gt;Facility (8220-04)&lt;/li&gt;
+&lt;li&gt;Mowing and snow removal (8220-02)&lt;/li&gt;
+&lt;li&gt;Radio (8220-10)&lt;/li&gt;
+&lt;li&gt;Regulatory (8220-08)&lt;/li&gt;
+&lt;li&gt;Scale (8220-12)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/ul&gt;
+&lt;br /&gt;"
+									/>
+									<LineBreak/>
+									<Label
+										Caption="What should I focus on when I look at the branch dashboard?"
+										Class="ThemeBold"
+									/>
+									<IncludeHtml
+										Html="&lt;br /&gt;Focus on the items you can impact.  
+&lt;ul&gt;&lt;li&gt;Wages – are the allocations correct and reviewed timely?  If you have employees that work at multiple branches are their wages being allocated in part to that branch.&lt;/li&gt;
+&lt;li&gt;Depreciation expense – do you possess the asset?  Are all the assets at your branch recorded to your branch?  If you obtain new assets or transfer assets did you turn the change into the administrative office?&lt;/li&gt;
+&lt;li&gt;Utilities – are we utilizing utilities in the most effective or efficient manner?&lt;/li&gt;
+&lt;li&gt;Repairs – are we managing the cost of repairs?&lt;/li&gt;
+&lt;li&gt;Overtime – are we managing overtime costs in the most efficient manner?&lt;/li&gt;
+&lt;li&gt;Inventory controls – are all transactions being properly recorded?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;br /&gt;"
+									/>
+									<LineBreak/>
+									<Label
+										Caption="Where does the information come from for the application by rig report?"
+										Class="ThemeBold"
+									/>
+									<IncludeHtml
+										Html="&lt;br /&gt;The information comes from the location listed on the work order in AgWorks.
+&lt;br /&gt;"
+									/>
+									<LineBreak/>
+									<Label
+										Caption="Why do I see rigs from other locations on my branch report?"
+										Class="ThemeBold"
+									/>
+									<IncludeHtml
+										Html="&lt;br /&gt;Rigs can move between locations to help complete orders which is why you might see rigs stationed at one location on another location’s report.
+&lt;br /&gt;"
+									/>
+									<LineBreak/>
+									<Label
+										Caption="Where does the information come from for the application by employee report?"
+										Class="ThemeBold"
+									/>
+									<IncludeHtml
+										Html="&lt;br /&gt;The information comes from the applicator listed on the work order in AgWorks. 
+&lt;br /&gt;"
+									/>
+									<LineBreak/>
+									<Label
+										Caption="How does the inventory turns chart work and how often is it updated?"
+										Class="ThemeBold"
+									/>
+									<IncludeHtml
+										Html="&lt;br /&gt;The inventory turns chart can be filtered by product class located right above the graph and will include all locations regardless of how the location is filtered at the top of the page.  The inventory turns report is updated after each fiscal quarter.  The as of date displays on the report. 
+&lt;br /&gt;"
+									/>
+									<LineBreak/>
+									<Label
+										Caption="What are avoidable discounts?"
+										Class="ThemeBold"
+									/>
+									<IncludeHtml
+										Html="&lt;br /&gt;Avoidable discounts are the quality discounts you have control of.  It’s the discounts charged when grain is not kept in condition – musty, sour, IDK, etc. 
+&lt;br /&gt;"
+									/>
+									<LineBreak/>
+								</Division>
+							</ResponsiveColumn>
+						</ResponsiveRow>
+					</Division>
+				</Division>
+			</ResponsiveColumn>
+		</ResponsiveRow>
+	</Body>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrFooter"
+	/>
+	<ideTestParams/>
+</Report>

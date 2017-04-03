@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report
+	Caption="Audit Log"
+	ID="Admin.EventLog"
+	SecurityReportRightID="LogiUserAdmin"
+	>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrHeader"
+	/>
+	<Body>
+		<Division
+			Class="panel panel-default"
+			HtmlDiv="True"
+			ID="panel-event"
+			>
+			<Division
+				Class="panel-heading"
+				HtmlDiv="True"
+				ID="panel-event-header"
+				>
+				<Label
+					Caption="Audit Log"
+					Class="panel-title"
+				/>
+			</Division>
+			<Division
+				Class="panel-body"
+				HtmlDiv="True"
+				ID="panel-event-report"
+				>
+				<ResponsiveRow>
+					<ResponsiveColumn>
+						<DataTable
+							AccessibleHeaders="True"
+							AccessibleSummary="AnalysisGrid DataTable"
+							Class="ThemeTextSmall"
+							ID="dtEventLog"
+							KeepScrollPosition="True"
+							RememberSort="True"
+							ResizableColumns="True"
+							SortArrows="True"
+							TableBorder="0"
+							Width="95"
+							WidthScale="%"
+							>
+							<DataLayer
+								ConnectionID="connLogiEvent"
+								ID="dlEventLog"
+								Source="DECLARE @StartDate DATETIME 
+DECLARE @EndDate DATETIME 
+
+SET @StartDate = Getdate() - 7 /* Seven Days Earlier */
+SET @EndDate = Getdate() /* Now */
+
+Select LogiEventLog.EventID,
+  LogiEventLog.EventDateTime,
+  LogiEventLog.EventName,
+  LogiEventLog.UserID,
+  LogiEventLog.EventDetail
+From LogiEventLog
+WHERE  LogiEventLog.EventDateTime BETWEEN @StartDate AND @Enddate"
+								Type="SQL"
+								>
+								<ConditionFilter
+									Condition="&quot;@Data.EventName~&quot; &lt;&gt; &quot;RunSQL&quot;"
+								/>
+							</DataLayer>
+							<Remark>
+								<InteractivePaging
+									CaptionType="Image"
+									HideShowPrevNextCaptions="False"
+									HideWhenOnePage="True"
+									IDnotSupportedHere="pagingTableNumbered"
+									Location="Top"
+									PageRowCount="20"
+									ShowPageNumber="Numbered"
+								/>
+							</Remark>
+							<Remark>
+								<AutoColumns/>
+							</Remark>
+							<DataTableColumn
+								Header="Event ID"
+								ID="colEventID"
+								>
+								<Label
+									Caption="@Data.EventID~"
+								/>
+							</DataTableColumn>
+							<DataTableColumn
+								Header="Event Timestamp"
+								ID="colEventDate"
+								>
+								<Label
+									Caption="@Data.EventDateTime~"
+								/>
+							</DataTableColumn>
+							<DataTableColumn
+								Header="Event Name"
+								ID="colEventName"
+								>
+								<Label
+									Caption="@Data.EventName~"
+								/>
+							</DataTableColumn>
+							<DataTableColumn
+								Header="Event User ID"
+								ID="colUserID"
+								>
+								<Label
+									Caption="@Data.UserID~"
+								/>
+							</DataTableColumn>
+							<DataTableColumn
+								Header="Event Details"
+								ID="colEventDetail"
+								>
+								<Label
+									Caption="@Data.EventDetail~"
+								/>
+							</DataTableColumn>
+						</DataTable>
+					</ResponsiveColumn>
+				</ResponsiveRow>
+			</Division>
+		</Division>
+	</Body>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrFooter"
+	/>
+	<ideTestParams/>
+</Report>

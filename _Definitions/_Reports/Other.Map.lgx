@@ -1,91 +1,259 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report Caption="Location Map" ID="Other.Map">
-  <IncludeSharedElement DefinitionFile="_Layout.Shared" SharedElementID="shrHeader" />
-  <Body>
-    <ResponsiveRow>
-      <ResponsiveColumn>
-        <Division Class="panel panel-default" HtmlDiv="True" ID="panel">
-          <Division Class="panel-heading" HtmlDiv="True" ID="panel-heading">
-            <Label Caption="MKC Locations" />
-          </Division>
-          <Division Class="panel-body" HtmlDiv="True" ID="panel-body">
-            <Remark>
-              <GoogleMap ConnectionID="GoogleMap" GoogleMapPanControl="True" GoogleMapShowTraffic="False" GoogleMapStreetView="False" GoogleMapTypeControl="Buttons" GoogleMapTypes="Hybrid" GoogleMapZoomControl="Small" Height="700" ID="googlemap" MapScale="True" Width="1000">
-                <GoogleMapMarkers ID="MapMarkers" Latitude="@Data.latitude~" Longitude="@Data.longitude~">
-                  <DataLayer ConnectionID="connMKC" ID="SQLDataLayer1" Source="Select MapMKCLocations.LOCNCODE As LOCNCODE,&#xD;&#xA;  MapMKCLocations.ZIPCODE As ZIPCODE,&#xD;&#xA;  MapMKCLocations.AttrType As AttrType,&#xD;&#xA;  MapMKCLocations.AttrValue As AttrValue,&#xD;&#xA;  zipcode.latitude As latitude,&#xD;&#xA;  zipcode.longitude As longitude&#xD;&#xA;From MapMKCLocations&#xD;&#xA;  Inner Join zipcode On MapMKCLocations.ZIPCODE = zipcode.zip" Type="SQL" />
-                  <Action ID="ActMapMarkerInfo" Type="MapMarkerInfo">
-                    <MapMarkerInfo>
-                      <IncludeFrame Height="400" ID="subReport" Scrolling="True" SubReportMode="IncludeFrame" Width="400">
-                        <Target ID="targetSubReport" Report="SubReports.SubReport_DataTable" Type="IncludeFrameReport" />
-                        <LinkParams paramLocation="@Data.LOCNCODE~" />
-                      </IncludeFrame>
-                    </MapMarkerInfo>
-                  </Action>
-                </GoogleMapMarkers>
-              </GoogleMap>
-            </Remark>
-            <GoogleMap GoogleMapPanControl="True" GoogleMapShowTraffic="False" GoogleMapStreetView="True" GoogleMapZoomControl="Small" Height="500" ID="LocationMap" MapScale="False" Width="750">
-              <GoogleMapMarkers ID="LocationMarker">
-                <DataLayer ConnectionID="connMKC" ID="SQLDataLocations" Source="Select DISTINCT MapMKCLocations.LOCNCODE As LOCNCODE,&#xD;&#xA;  LTRIM(RTRIM(MapMKCLocations.ADDRESS1)) + ' ' + LTRIM(RTRIM(MapMKCLocations.CITY)) + ' ' + LTRIM(RTRIM(MapMKCLocations.STATEABBR)) + ' ' + LTRIM(RTRIM(MapMKCLocations.ZIPCODE)) AS GeoPlace,&#xD;&#xA;  LTRIM(RTRIM(MapMKCLocations.CITY)) + ' ' + LTRIM(RTRIM(MapMKCLocations.STATEABBR)) as GeoCity,&#xD;&#xA;  LTRIM(RTRIM(MapMKCLocations.STATEABBR)) AS GeoStateProvince,&#xD;&#xA;  LTRIM(RTRIM(MapMKCLocations.ZIPCODE)) AS GeoZipCode&#xD;&#xA;From MapMKCLocations&#xD;&#xA;" Type="SQL">
-                  <GeocodeColumns CityDataColumn="GeoCity" ID="MapPlaceData" PlaceDataColumn="GeoPlace" PostalCodeDataColumn="GeoZipCode" StateProvinceDataColumn="GeoStateProvince" />
-                </DataLayer>
-                <Action ElementID="tblLocationInfo" ID="refLocationInfoTable" Type="RefreshElement">
-                  <LinkParams paramLocCd="@Data.LOCNCODE~" />
-                </Action>
-                <Remark>
-                  <Action ElementID="divLocDetail" ID="showLocDetail" Type="ShowElement" />
-                </Remark>
-                <Remark>
-                  <MapMarkerImage>
-                    <Remark>
-                      <Image Caption="elevator.gif" Height="42" ID="imgElevator" Width="42" />
-                    </Remark>
-                  </MapMarkerImage>
-                </Remark>
-                <Remark>
-                  <Action ID="ActMapMarkerInfo" Type="MapMarkerInfo">
-                    <MapMarkerInfo>
-                      <Label Caption="Location: " Class="ThemeBold" />
-                      <Label Caption="@Data.LOCNCODE~" />
-                      <LineBreak />
-                      <Label Caption="Info Type: " Class="ThemeBold" />
-                      <Label Caption="@Data.AttrValue~" />
-                    </MapMarkerInfo>
-                  </Action>
-                </Remark>
-                <Remark>
-                  <Action CrawlerFriendly="True" ID="ActionMapMarkerToReport" Type="Report">
-                    <Target FrameID="NewWindow" Paging="Interactive" Report="SubReports.SubReport_DataTable" Type="Report" />
-                    <LinkParams paramLocation="@Data.LOCNCODE~" />
-                  </Action>
-                </Remark>
-              </GoogleMapMarkers>
-            </GoogleMap>
-          </Division>
-        </Division>
-      </ResponsiveColumn>
-      <ResponsiveColumn ColspanMediumScreen="3">
-        <Division ID="divLocDetail">
-          <Label Caption="Location: " Class="ThemeBold" HtmlTag="H4" />
-          <Remark>
-            <LineBreak />
-          </Remark>
-          <Remark>
-            <Label Caption="Info Type: " Class="ThemeBold" HtmlTag="H4" />
-          </Remark>
-          <Remark>
-            <Label Caption="@Data.AttrValue~" />
-          </Remark>
-          <DataTable ID="tblLocationInfo">
-            <DataLayer ConnectionID="connMKC" ID="sqlLocInfo" Source="SELECT DISTINCT 1 AS ID, LOCNDSCR AS AttrValue FROM MAPMKCLOCATIONS WHERE LOCNCODE='@Request.paramLocCd~'&#xD;&#xA;union &#xD;&#xA;SELECT DISTINCT 2 AS ID, LTRIM(RTRIM(ADDRESS1)) + ' ' + LTRIM(RTRIM(CITY)) + ' ' + LTRIM(RTRIM(STATEABBR)) + ' ' + LTRIM(RTRIM(ZIPCODE)) AS LOCNADDR FROM MAPMKCLOCATIONS WHERE LOCNCODE='@Request.paramLocCd~'&#xD;&#xA;union &#xD;&#xA;SELECT 3 AS ID, AttrValue FROM MAPMKCLOCATIONS WHERE AttrType='Employees' and LOCNCODE='@Request.paramLocCd~'&#xD;&#xA;union&#xD;&#xA;SELECT 4 AS ID, AttrValue FROM MAPMKCLOCATIONS WHERE AttrType&lt;&gt;'Employees' and LOCNCODE='@Request.paramLocCd~'&#xD;&#xA;ORDER BY ID" Type="SQL" />
-            <DataTableColumn ID="colAttributes">
-              <Label Caption="@Data.AttrValue~" />
-            </DataTableColumn>
-          </DataTable>
-        </Division>
-      </ResponsiveColumn>
-    </ResponsiveRow>
-  </Body>
-  <IncludeSharedElement DefinitionFile="_Layout.Shared" SharedElementID="shrFooter" />
-  <ideTestParams paramLocCd="ABILENE" />
+<Report
+	Caption="Location Map"
+	ID="Other.Map"
+	SecurityReportRightID="LogiUserAdmin"
+	>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrHeader"
+	/>
+	<Body>
+		<ResponsiveRow>
+			<ResponsiveColumn>
+				<Division
+					Class="panel panel-default"
+					HtmlDiv="True"
+					ID="panel"
+					>
+					<Division
+						Class="panel-heading"
+						HtmlDiv="True"
+						ID="panel-heading"
+						>
+						<Label
+							Caption="MKC Locations"
+						/>
+					</Division>
+					<Division
+						Class="panel-body"
+						HtmlDiv="True"
+						ID="panel-body"
+						>
+						<Remark>
+							<GoogleMap
+								ConnectionID="GoogleMap"
+								GoogleMapPanControl="True"
+								GoogleMapShowTraffic="False"
+								GoogleMapStreetView="False"
+								GoogleMapTypeControl="Buttons"
+								GoogleMapTypes="Hybrid"
+								GoogleMapZoomControl="Small"
+								Height="700"
+								ID="googlemap"
+								MapScale="True"
+								Width="1000"
+								>
+								<GoogleMapMarkers
+									ID="MapMarkers"
+									Latitude="@Data.latitude~"
+									Longitude="@Data.longitude~"
+									>
+									<DataLayer
+										ConnectionID="connMKC"
+										ID="SQLDataLayer1"
+										Source="Select MapMKCLocations.LOCNCODE As LOCNCODE,
+  MapMKCLocations.ZIPCODE As ZIPCODE,
+  MapMKCLocations.AttrType As AttrType,
+  MapMKCLocations.AttrValue As AttrValue,
+  zipcode.latitude As latitude,
+  zipcode.longitude As longitude
+From MapMKCLocations
+  Inner Join zipcode On MapMKCLocations.ZIPCODE = zipcode.zip"
+										Type="SQL"
+									/>
+									<Action
+										ID="ActMapMarkerInfo"
+										Type="MapMarkerInfo"
+										>
+										<MapMarkerInfo>
+											<IncludeFrame
+												Height="400"
+												ID="subReport"
+												Scrolling="True"
+												SubReportMode="IncludeFrame"
+												Width="400"
+												>
+												<Target
+													ID="targetSubReport"
+													Report="SubReports.SubReport_DataTable"
+													Type="IncludeFrameReport"
+												/>
+												<LinkParams
+													paramLocation="@Data.LOCNCODE~"
+												/>
+											</IncludeFrame>
+										</MapMarkerInfo>
+									</Action>
+								</GoogleMapMarkers>
+							</GoogleMap>
+						</Remark>
+						<GoogleMap
+							GoogleMapPanControl="True"
+							GoogleMapShowTraffic="False"
+							GoogleMapStreetView="True"
+							GoogleMapZoomControl="Small"
+							Height="500"
+							ID="LocationMap"
+							MapScale="False"
+							Width="750"
+							>
+							<GoogleMapMarkers
+								ID="LocationMarker"
+								>
+								<DataLayer
+									ConnectionID="connMKC"
+									ID="SQLDataLocations"
+									Source="Select DISTINCT MapMKCLocations.LOCNCODE As LOCNCODE,
+  LTRIM(RTRIM(MapMKCLocations.ADDRESS1)) + &apos; &apos; + LTRIM(RTRIM(MapMKCLocations.CITY)) + &apos; &apos; + LTRIM(RTRIM(MapMKCLocations.STATEABBR)) + &apos; &apos; + LTRIM(RTRIM(MapMKCLocations.ZIPCODE)) AS GeoPlace,
+  LTRIM(RTRIM(MapMKCLocations.CITY)) + &apos; &apos; + LTRIM(RTRIM(MapMKCLocations.STATEABBR)) as GeoCity,
+  LTRIM(RTRIM(MapMKCLocations.STATEABBR)) AS GeoStateProvince,
+  LTRIM(RTRIM(MapMKCLocations.ZIPCODE)) AS GeoZipCode
+From MapMKCLocations
+"
+									Type="SQL"
+									>
+									<GeocodeColumns
+										CityDataColumn="GeoCity"
+										ID="MapPlaceData"
+										PlaceDataColumn="GeoPlace"
+										PostalCodeDataColumn="GeoZipCode"
+										StateProvinceDataColumn="GeoStateProvince"
+									/>
+								</DataLayer>
+								<Action
+									ElementID="tblLocationInfo"
+									ID="refLocationInfoTable"
+									Type="RefreshElement"
+									>
+									<LinkParams
+										paramLocCd="@Data.LOCNCODE~"
+									/>
+								</Action>
+								<Remark>
+									<Action
+										ElementID="divLocDetail"
+										ID="showLocDetail"
+										Type="ShowElement"
+									/>
+								</Remark>
+								<Remark>
+									<MapMarkerImage>
+										<Remark>
+											<Image
+												Caption="elevator.gif"
+												Height="42"
+												ID="imgElevator"
+												Width="42"
+											/>
+										</Remark>
+									</MapMarkerImage>
+								</Remark>
+								<Remark>
+									<Action
+										ID="ActMapMarkerInfo"
+										Type="MapMarkerInfo"
+										>
+										<MapMarkerInfo>
+											<Label
+												Caption="Location: "
+												Class="ThemeBold"
+											/>
+											<Label
+												Caption="@Data.LOCNCODE~"
+											/>
+											<LineBreak/>
+											<Label
+												Caption="Info Type: "
+												Class="ThemeBold"
+											/>
+											<Label
+												Caption="@Data.AttrValue~"
+											/>
+										</MapMarkerInfo>
+									</Action>
+								</Remark>
+								<Remark>
+									<Action
+										CrawlerFriendly="True"
+										ID="ActionMapMarkerToReport"
+										Type="Report"
+										>
+										<Target
+											FrameID="NewWindow"
+											Paging="Interactive"
+											Report="SubReports.SubReport_DataTable"
+											Type="Report"
+										/>
+										<LinkParams
+											paramLocation="@Data.LOCNCODE~"
+										/>
+									</Action>
+								</Remark>
+							</GoogleMapMarkers>
+						</GoogleMap>
+					</Division>
+				</Division>
+			</ResponsiveColumn>
+			<ResponsiveColumn
+				ColspanMediumScreen="3"
+				>
+				<Division
+					ID="divLocDetail"
+					>
+					<Label
+						Caption="Location: "
+						Class="ThemeBold"
+						HtmlTag="H4"
+					/>
+					<Remark>
+						<LineBreak/>
+					</Remark>
+					<Remark>
+						<Label
+							Caption="Info Type: "
+							Class="ThemeBold"
+							HtmlTag="H4"
+						/>
+					</Remark>
+					<Remark>
+						<Label
+							Caption="@Data.AttrValue~"
+						/>
+					</Remark>
+					<DataTable
+						ID="tblLocationInfo"
+						>
+						<DataLayer
+							ConnectionID="connMKC"
+							ID="sqlLocInfo"
+							Source="SELECT DISTINCT 1 AS ID, LOCNDSCR AS AttrValue FROM MAPMKCLOCATIONS WHERE LOCNCODE=&apos;@Request.paramLocCd~&apos;
+union 
+SELECT DISTINCT 2 AS ID, LTRIM(RTRIM(ADDRESS1)) + &apos; &apos; + LTRIM(RTRIM(CITY)) + &apos; &apos; + LTRIM(RTRIM(STATEABBR)) + &apos; &apos; + LTRIM(RTRIM(ZIPCODE)) AS LOCNADDR FROM MAPMKCLOCATIONS WHERE LOCNCODE=&apos;@Request.paramLocCd~&apos;
+union 
+SELECT 3 AS ID, AttrValue FROM MAPMKCLOCATIONS WHERE AttrType=&apos;Employees&apos; and LOCNCODE=&apos;@Request.paramLocCd~&apos;
+union
+SELECT 4 AS ID, AttrValue FROM MAPMKCLOCATIONS WHERE AttrType&lt;&gt;&apos;Employees&apos; and LOCNCODE=&apos;@Request.paramLocCd~&apos;
+ORDER BY ID"
+							Type="SQL"
+						/>
+						<DataTableColumn
+							ID="colAttributes"
+							>
+							<Label
+								Caption="@Data.AttrValue~"
+							/>
+						</DataTableColumn>
+					</DataTable>
+				</Division>
+			</ResponsiveColumn>
+		</ResponsiveRow>
+	</Body>
+	<IncludeSharedElement
+		DefinitionFile="_Layout.Shared"
+		SharedElementID="shrFooter"
+	/>
+	<ideTestParams
+		paramLocCd="ABILENE"
+	/>
 </Report>

@@ -146,7 +146,7 @@ tr.ThemeAlternatingRow:hover>td {
 }
 
 .rdThemeDataTableSummaryRow td {
-  background-color: #52C3FF; /* 72C8C1 */
+  background-color: #50C5B7 !important; /* 72C8C1 */
   color: #fff;
 }
 
@@ -287,7 +287,7 @@ padding: 0;
   background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #454d59), color-stop(1, #363b42) );
   background:-moz-linear-gradient( center top, #454d59 5%, #363b42 100% );
   filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#454d59', endColorstr='#363b42');
-  background-color:#454d59;
+  background-color:#D3D3D3;
 }
 .rdAgDisabledTab {
 }
@@ -948,7 +948,7 @@ color:#fff;
   border: none !important;
 }
 .yui-navset .yui-nav li {
-  background-color: #363b42;
+  background-color: #D3D3D3;
   padding: 6px 18px;
   border-radius: 2px 2px 0 0;
 }
@@ -956,7 +956,7 @@ color:#fff;
 .yui-navset .yui-nav li.selected:hover {
     background-color: #EFEFF1;
     border-radius: 2px;
-    border-top: 4px solid #777;
+    border-top: 4px solid #50C5B7;
 }
 .yui-navset .yui-nav li a {
   color: #fff;
@@ -968,7 +968,10 @@ color:#fff;
 	transition: color 0.20s ease-in-out 0s;
 }
 .yui-navset .yui-nav li:hover {
-  background-color: #454d59;
+  background-color: #FBEC59;
+  -webkit-transition: color 0.20s ease-in-out 0s;
+  -moz-transition: color 0.20s ease-in-out 0s;
+  transition: color 0.20s ease-in-out 0s;
 }
 
 .yui-navset div.yui-content {
@@ -1350,7 +1353,7 @@ input#txtEditBookmarkDescription {
 	color:#fff;
 }
 .first-of-type:hover {
-	background-color: #454d59;
+	background-color: #D3D3D3;
 }
 
 /* calendar */
@@ -1750,7 +1753,7 @@ table #dtBookmarkSharedWith td:first-of-type > span{
 	}
 
 	.ThemeContainerShaded {
-		background-color: #dcd440;
+		background-color: #F0F465 !important;
 		padding: 6px;
 	}
 

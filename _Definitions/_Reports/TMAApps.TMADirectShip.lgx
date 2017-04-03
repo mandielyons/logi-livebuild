@@ -2,7 +2,7 @@
 <Report
 	Caption="Direct Ship App"
 	ID="TMAApps.TMADirectShip"
-	SecurityReportRightID="TMA,MKC"
+	SecurityReportRightID="TMA Dashboard,MKC Dashboard"
 	>
 	<IncludeSharedElement
 		DefinitionFile="_Layout.Shared"
@@ -24,66 +24,47 @@
 				>
 				<Label
 					Caption="TMA Direct Ship Management"
+					Class="panel-title"
 				/>
 			</Division>
 			<Division
-				Class="panel-body"
+				Class="panel-body "
 				HtmlDiv="True"
 				ID="panel-ds-report"
 				>
 				<ResponsiveRow
-					Class="ThemeAlignRight"
+					Class="ThemeTextSmall"
 					>
 					<ResponsiveColumn>
-						<Label
-							Class="fa fa-plus fa-2x"
-							HtmlTag="Div"
-							Tooltip="Add a ticket"
+						<Spaces
+							Size="2"
+						/>
+						<InputCheckbox
+							Caption="Toggle View All/Incomplete"
+							CaptionClass="ThemeBold"
+							CheckedValue="true"
+							DefaultValue="@Request.chkAll~"
+							ID="chkAll"
+							UncheckedValue="false"
 							>
-							<Action
-								Type="Report"
+							<EventHandler
+								DhtmlEvent="onchange"
 								>
-								<Target
-									FrameID="Self"
-									ID="lnkEntry"
-									Report="Unknown.SubReports.SubReport_TMADirectShipEntry"
-									Type="Report"
+								<Action
+									ElementID="dtTicketTracking"
+									ID="refreshData"
+									Type="RefreshElement"
 									>
 									<WaitPage/>
-								</Target>
-							</Action>
-						</Label>
-						<Spaces
-							Size="15"
-						/>
-						<Label
-							Class="fa fa-file-excel-o fa-2x "
-							HtmlTag="Div"
-							Tooltip="Export to Excel"
-							>
-							<Action
-								Type="NativeExcel"
-								>
-								<Target
-									ExcelOutputFormat="Excel2007"
-									ExportDataTableID="dtTicketTracking"
-									FrameID="NewWindow"
-									Report="TMAReports.TMADirectShip"
-									RequestForwarding="True"
-									Type="NativeExcel"
-								/>
-							</Action>
-						</Label>
-						<Spaces
-							Size="18"
-						/>
+									<LinkParams/>
+								</Action>
+							</EventHandler>
+						</InputCheckbox>
 					</ResponsiveColumn>
-				</ResponsiveRow>
-				<ResponsiveRow>
 					<ResponsiveColumn>
-						<LineBreak/>
 						<Label
 							Caption="@Request.StatusMsg~"
+							Class="ThemeHidden"
 							ID="lblStatus"
 							>
 							<ConditionalClass
@@ -91,22 +72,58 @@
 								Condition="InStr(&quot;@Request.StatusMsg~&quot;,&quot;Error:&quot;) &gt; 0"
 							/>
 							<ConditionalClass
-								Class="ThemeTextNegative"
+								Class="ThemeTextPositive"
 								Condition="InStr(&quot;@Request.StatusMsg~&quot;,&quot;Success:&quot;) &gt; 0"
 							/>
 						</Label>
-						<LineBreak/>
-						<LineBreak/>
+					</ResponsiveColumn>
+					<ResponsiveColumn>
+						<Division
+							Class="pull-right"
+							HtmlDiv="True"
+							ID="divActionItems"
+							>
+							<Label
+								Class="fa fa-plus fa-2x"
+								HtmlTag="Div"
+								Tooltip="Add a ticket"
+								>
+								<Action
+									Type="Report"
+									>
+									<Target
+										FrameID="Self"
+										Report="Unknown.SubReports.SubReport_TMADirectShipEntry"
+										Type="Report"
+									/>
+								</Action>
+							</Label>
+							<Spaces
+								Size="10"
+							/>
+							<IncludeSharedElement
+								DefinitionFile="_Layout.Shared"
+								SharedElementID="shrExcelExport"
+								>
+								<SharedElementParams
+									DataTableID="dtTicketTracking"
+									ReportName="Direct Ship Management"
+									Security=""
+								/>
+							</IncludeSharedElement>
+						</Division>
 					</ResponsiveColumn>
 				</ResponsiveRow>
-				<ResponsiveRow>
+				<ResponsiveRow
+					Class="ThemeTextSmall"
+					>
 					<ResponsiveColumn>
 						<DataTable
 							AccessibleHeaders="True"
 							AccessibleSummary="AnalysisGrid DataTable"
 							ID="dtTicketTracking"
 							KeepScrollPosition="True"
-							RememberSort="True"
+							RememberSort="False"
 							ResizableColumns="True"
 							SortArrows="True"
 							TableBorder="0"
@@ -124,16 +141,26 @@
   DM_DSTicketTracking.CompletedDate,
   IV_BRANCH_MASTER.BRANCH_NAME,
   AR_CUSTOMER_MASTER_TMA.NAME,
-  DM_DSTicketTracking.ElectronicTicket
+  DM_DSTicketTracking.ElectronicTicket,
+  DM_DSTicketTracking.COMMODITY_CODE,
+  CA_COMMODITY_MASTER.DESCRIPTION COMMODITY_DESC,
+  DM_DSTicketTracking.COMMENTS,
+  DateDiff(day, DM_DSTicketTracking.DropOffDate, GetDate()) As DaysOld
 From DM_DSTicketTracking
   Inner Join IV_BRANCH_MASTER On DM_DSTicketTracking.BRANCH_NUMBER =
     IV_BRANCH_MASTER.BRANCH_NUMBER
   Inner Join AR_CUSTOMER_MASTER_TMA On DM_DSTicketTracking.CUSTOMER =
     AR_CUSTOMER_MASTER_TMA.CUSTOMER
-Order By DM_DSTicketTracking.DropOffDate ASC
-"
+  Left Outer Join CA_COMMODITY_MASTER On DM_DSTicketTracking.COMMODITY_CODE =
+    CA_COMMODITY_MASTER.COMMODITY_CODE
+Order By DM_DSTicketTracking.DropOffDate"
 								Type="SQL"
-							/>
+								>
+								<ConditionFilter
+									Condition="InStr(&quot;@Data.CompletedDate~&quot;, &quot;1900-01-01&quot;) &gt; 0"
+									IncludeCondition="&quot;@Request.chkAll~&quot; &lt;&gt; &quot;true&quot;"
+								/>
+							</DataLayer>
 							<InteractivePaging
 								CaptionType="Image"
 								HideShowPrevNextCaptions="False"
@@ -159,17 +186,34 @@ Order By DM_DSTicketTracking.DropOffDate ASC
 								</DataTableColumn>
 							</Remark>
 							<DataTableColumn
+								ID="colOverdue"
+								>
+								<Label
+									Class="ThemeHidden"
+									ID="colWarning"
+									>
+									<ConditionalClass
+										Class="text-danger fa fa-warning"
+										Condition="InStr(&quot;@Data.CompletedDate~&quot;, &quot;1900-01-01&quot;) &gt; 0 And @Data.DaysOld~ &gt; 10"
+									/>
+								</Label>
+							</DataTableColumn>
+							<DataTableColumn
 								Header="Tickets Received"
 								ID="colDropOffDate"
 								>
 								<Label
-									Caption="@Data.DropOffDate~"
+									Caption="@Data.DropOffDate~ "
 									Format="Short Date"
 									ID="colDropOffDate"
 								/>
 								<DataColumnSort
 									DataColumn="DropOffDate"
 									DataType="Date"
+								/>
+								<ConditionalClass
+									Class="text-danger"
+									Condition="InStr(&quot;@Data.CompletedDate~&quot;, &quot;1900-01-01&quot;) &gt; 0 And @Data.DaysOld~ &gt; 10"
 								/>
 							</DataTableColumn>
 							<DataTableColumn
@@ -184,6 +228,10 @@ Order By DM_DSTicketTracking.DropOffDate ASC
 									DataColumn="CUSTOMER"
 									DataType="Text"
 								/>
+								<ConditionalClass
+									Class="text-danger"
+									Condition="InStr(&quot;@Data.CompletedDate~&quot;, &quot;1900-01-01&quot;) &gt; 0 And @Data.DaysOld~ &gt; 10"
+								/>
 							</DataTableColumn>
 							<DataTableColumn
 								Header="Branch "
@@ -196,6 +244,31 @@ Order By DM_DSTicketTracking.DropOffDate ASC
 								<DataColumnSort
 									DataColumn="BRANCH_NUMBER"
 									DataType="Number"
+								/>
+								<ConditionalClass
+									Class="text-danger"
+									Condition="InStr(&quot;@Data.CompletedDate~&quot;, &quot;1900-01-01&quot;) &gt; 0 And @Data.DaysOld~ &gt; 10"
+								/>
+							</DataTableColumn>
+							<DataTableColumn
+								Header="Commodity"
+								ID="colCommodity"
+								>
+								<Label
+									Caption="@Data.COMMODITY_CODE~ - @Data.COMMODITY_DESC~"
+									Class="ThemeHidden"
+									ID="colCommodity"
+									>
+									<ConditionalClass
+										Condition="&quot;@Data.COMMODITY_CODE~&quot; &lt;&gt; &quot;&quot;"
+									/>
+								</Label>
+								<ConditionalClass
+									Class="text-danger"
+									Condition="InStr(&quot;@Data.CompletedDate~&quot;, &quot;1900-01-01&quot;) &gt; 0 And @Data.DaysOld~ &gt; 10"
+								/>
+								<DataColumnSort
+									DataColumn="COMMODITY_CODE"
 								/>
 							</DataTableColumn>
 							<DataTableColumn
@@ -260,6 +333,10 @@ Order By DM_DSTicketTracking.DropOffDate ASC
 									DataColumn="TotalTickets"
 									DataType="Text"
 								/>
+								<ConditionalClass
+									Class="text-danger"
+									Condition="InStr(&quot;@Data.CompletedDate~&quot;, &quot;1900-01-01&quot;) &gt; 0 And @Data.DaysOld~ &gt; 10"
+								/>
 							</DataTableColumn>
 							<DataTableColumn
 								Header="AgTrax Entered Date"
@@ -279,6 +356,10 @@ Order By DM_DSTicketTracking.DropOffDate ASC
 									DataColumn="EnteredDate"
 									DataType="Date"
 								/>
+								<ConditionalClass
+									Class="text-danger"
+									Condition="InStr(&quot;@Data.CompletedDate~&quot;, &quot;1900-01-01&quot;) &gt; 0 And @Data.DaysOld~ &gt; 10"
+								/>
 							</DataTableColumn>
 							<DataTableColumn
 								Header="Entered By"
@@ -292,6 +373,10 @@ Order By DM_DSTicketTracking.DropOffDate ASC
 									DataColumn="UserID"
 									DataType="Text"
 								/>
+								<ConditionalClass
+									Class="text-danger"
+									Condition="InStr(&quot;@Data.CompletedDate~&quot;, &quot;1900-01-01&quot;) &gt; 0 And @Data.DaysOld~ &gt; 10"
+								/>
 							</DataTableColumn>
 							<DataTableColumn
 								Header="Completed"
@@ -299,6 +384,7 @@ Order By DM_DSTicketTracking.DropOffDate ASC
 								>
 								<Label
 									Class="fa fa-check"
+									Format="Short Date"
 									>
 									<ConditionalClass
 										Class="ThemeHidden"
@@ -319,6 +405,10 @@ Order By DM_DSTicketTracking.DropOffDate ASC
 									DataColumn="CompletedDate"
 									DataType="Date"
 								/>
+								<ConditionalClass
+									Class="text-danger"
+									Condition="InStr(&quot;@Data.CompletedDate~&quot;, &quot;1900-01-01&quot;) &gt; 0 And @Data.DaysOld~ &gt; 10"
+								/>
 							</DataTableColumn>
 							<DataTableColumn
 								ColumnHeaderClass=" "
@@ -337,6 +427,10 @@ Order By DM_DSTicketTracking.DropOffDate ASC
 								<DataColumnSort
 									DataColumn="ElectronicTicket"
 									DataType="Number"
+								/>
+								<ConditionalClass
+									Class="text-danger"
+									Condition="InStr(&quot;@Data.CompletedDate~&quot;, &quot;1900-01-01&quot;) &gt; 0 And @Data.DaysOld~ &gt; 10"
 								/>
 							</DataTableColumn>
 							<DataTableColumn>
@@ -371,6 +465,7 @@ Order By DM_DSTicketTracking.DropOffDate ASC
 		SharedElementID="shrFooter"
 	/>
 	<ideTestParams
+		chkAll=""
 		StatusMsg=""
 	/>
 </Report>

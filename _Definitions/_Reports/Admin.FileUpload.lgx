@@ -2,7 +2,7 @@
 <Report
 	Caption="File Upload"
 	ID="Admin.FileUpload"
-	SecurityReportRightID="MKC,TMA"
+	SecurityReportRightID="MKC Dashboard,TMA Dashboard"
 	>
 	<DefaultRequestParams
 		StatusMsg=""
@@ -12,8 +12,9 @@
 		SharedElementID="shrHeader"
 	/>
 	<Body>
-		<ResponsiveRow/>
-		<ResponsiveRow>
+		<ResponsiveRow
+			Class="ThemeTextSmall"
+			>
 			<ResponsiveColumn>
 				<Division
 					Class="panel panel-default"
@@ -27,6 +28,7 @@
 						>
 						<Label
 							Caption="Data File Upload"
+							Class="panel-title"
 						/>
 					</Division>
 					<Division
@@ -36,7 +38,6 @@
 						>
 						<ResponsiveRow>
 							<ResponsiveColumn>
-								<LineBreak/>
 								<Label
 									Caption="@Request.StatusMsg~"
 									ID="lblStatus"
@@ -61,7 +62,6 @@
 										Type="Required"
 									/>
 								</InputFileUpload>
-								<LineBreak/>
 								<LineBreak/>
 								<Button
 									Caption="Save"

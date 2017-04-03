@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Process
 	ID="SQLTasks"
-	SecurityRightID="TMA,MKC"
+	SecurityRightID="TMA Dashboard,MKC Dashboard,OC"
 	>
 	<DefaultRequestParams/>
 	<Task
@@ -10,7 +10,7 @@
 		<Procedure
 			ConnectionID="connProdGP"
 			ID="procUpdateRow"
-			SqlCommand="UPDATE AGTRAX_STAGING.dbo.DM_DSTicketTracking SET DM_DSTicketTracking.DropOffDate = &apos;@Request.dteDropOff~&apos;, DM_DSTicketTracking.CUSTOMER = &apos;@Request.iptCustomer~&apos;, DM_DSTicketTracking.BRANCH_NUMBER = &apos;@Request.iptBranch~&apos;, DM_DSTicketTracking.TotalTickets = &apos;@Request.iptTickets~&apos;, DM_DSTicketTracking.EnteredDate = &apos;@Request.dteEntered~&apos;, DM_DSTicketTracking.ElectronicTicket = &apos;@Request.iptElectronic~&apos;, DM_DSTicketTracking.CompletedDate = &apos;@Request.iptCompleteDate~&apos;
+			SqlCommand="UPDATE AGTRAX_STAGING.dbo.DM_DSTicketTracking SET DM_DSTicketTracking.DropOffDate = &apos;@Request.dteDropOff~&apos;, DM_DSTicketTracking.CUSTOMER = &apos;@Request.iptCustomer~&apos;, DM_DSTicketTracking.BRANCH_NUMBER = &apos;@Request.iptBranch~&apos;, DM_DSTicketTracking.TotalTickets = &apos;@Request.iptTickets~&apos;, DM_DSTicketTracking.EnteredDate = &apos;@Request.dteEntered~&apos;, DM_DSTicketTracking.ElectronicTicket = &apos;@Request.iptElectronic~&apos;, DM_DSTicketTracking.CompletedDate = &apos;@Request.iptCompleteDate~&apos;, DM_DSTicketTracking.COMMENTS = &apos;@Request.iptComments~&apos;, DM_DSTicketTracking.COMMODITY_CODE = &apos;@Request.iptCommodity~&apos;
 WHERE DM_DSTicketTracking.EntryID = &apos;@Request.iptEntryId~&apos;"
 			Type="SQL"
 			>
@@ -60,7 +60,29 @@ Completed by: @Function.UserID~"
 				ID="sendUpdateEmail"
 				ToEmailAddress="@Request.iptUserID~@tmagrain.com"
 				Type="SendMail"
-			/>
+				>
+				<IfError>
+					<Procedure
+						Expression="Len(&quot;@Procedure.sendUpdateEmail.ErrorMessage~&quot;) &gt; 0"
+						ID="procSendUpdateEmailError"
+						Type="If"
+						>
+						<Response
+							Type="Report"
+							>
+							<Target
+								Report="TMAApps.TMADirectShip"
+								Type="Report"
+								>
+								<WaitPage/>
+							</Target>
+							<LinkParams
+								StatusMsg="&quot;@Procedure.sendUpdateEmail.ErrorMessage~&quot;"
+							/>
+						</Response>
+					</Procedure>
+				</IfError>
+			</Procedure>
 		</Procedure>
 		<Response
 			Type="Report"
@@ -83,8 +105,8 @@ Completed by: @Function.UserID~"
 		<Procedure
 			ConnectionID="connProdGP"
 			ID="procInsertRow"
-			SqlCommand="INSERT INTO AGTRAX_STAGING.dbo.DM_DSTicketTracking (DM_DSTicketTracking.DropOffDate,DM_DSTicketTracking.CUSTOMER,DM_DSTicketTracking.BRANCH_NUMBER,DM_DSTicketTracking.TotalTickets,DM_DSTicketTracking.EnteredDate,DM_DSTicketTracking.UserID,DM_DSTicketTracking.ElectronicTicket)
-VALUES (&apos;@Request.dteDropOff~&apos;,&apos;@Request.iptCustomer~&apos;,&apos;@Request.iptBranch~&apos;,&apos;@Request.iptTickets~&apos;,&apos;@Request.dteEntered~&apos;,&apos;@Function.UserID~&apos;,&apos;@Request.iptElectronic~&apos;)
+			SqlCommand="INSERT INTO AGTRAX_STAGING.dbo.DM_DSTicketTracking (DM_DSTicketTracking.DropOffDate,DM_DSTicketTracking.CUSTOMER,DM_DSTicketTracking.BRANCH_NUMBER,DM_DSTicketTracking.TotalTickets,DM_DSTicketTracking.EnteredDate,DM_DSTicketTracking.UserID,DM_DSTicketTracking.ElectronicTicket,DM_DSTicketTracking.COMMENTS,DM_DSTicketTracking.COMMODITY_CODE)
+VALUES (&apos;@Request.dteDropOff~&apos;,&apos;@Request.iptCustomer~&apos;,&apos;@Request.iptBranch~&apos;,&apos;@Request.iptTickets~&apos;,&apos;@Request.dteEntered~&apos;,&apos;@Function.UserID~&apos;,&apos;@Request.iptElectronic~&apos;,&apos;@Request.iptComments~&apos;,&apos;@Request.iptCommodity~&apos;)
 "
 			SqlReturnType="RowsAffected"
 			Type="SQL"
@@ -134,7 +156,29 @@ AgTrax Entered: @Request.dteEntered~"
 				ID="sendInsertEmail"
 				ToEmailAddress="@Function.UserID~@tmagrain.com"
 				Type="SendMail"
-			/>
+				>
+				<IfError>
+					<Procedure
+						Expression="Len(&quot;@Procedure.sendInsertEmail.ErrorMessage~&quot;) &gt; 0"
+						ID="procSendInsertEmailError"
+						Type="If"
+						>
+						<Response
+							Type="Report"
+							>
+							<Target
+								Report="TMAApps.TMADirectShip"
+								Type="Report"
+								>
+								<WaitPage/>
+							</Target>
+							<LinkParams
+								StatusMsg="&quot;@Procedure.sendInsertEmail.ErrorMessage~&quot;"
+							/>
+						</Response>
+					</Procedure>
+				</IfError>
+			</Procedure>
 		</Procedure>
 		<Procedure
 			Expression="&quot;@Request.iptCompleteDate~&quot; &lt;&gt; &quot;&quot; And InStr(&quot;@Request.iptCompleteDate~&quot;,&quot;1900-01-01&quot;) = 0"
@@ -158,7 +202,29 @@ Completed by: @Function.UserID~"
 				ID="sendInsertCompleteEmail"
 				ToEmailAddress="@Function.UserID~@tmagrain.com"
 				Type="SendMail"
-			/>
+				>
+				<IfError>
+					<Procedure
+						Expression="Len(&quot;@Procedure.sendInsertCompleteEmail.ErrorMessage~&quot;) &gt; 0"
+						ID="procSendInsertCompleteEmailError"
+						Type="If"
+						>
+						<Response
+							Type="Report"
+							>
+							<Target
+								Report="TMAApps.TMADirectShip"
+								Type="Report"
+								>
+								<WaitPage/>
+							</Target>
+							<LinkParams
+								StatusMsg="&quot;@Procedure.sendInsertCompleteEmail.ErrorMessage~&quot;"
+							/>
+						</Response>
+					</Procedure>
+				</IfError>
+			</Procedure>
 		</Procedure>
 		<Response
 			Type="Report"
@@ -175,17 +241,283 @@ Completed by: @Function.UserID~"
 			/>
 		</Response>
 	</Task>
+	<Task
+		ID="resetPassword"
+		>
+		<Procedure
+			Expression="InStr(&quot;@Request.iptEmail~&quot;,&quot;tmagrain&quot;) &gt; 0"
+			ID="ifTMAGrain"
+			Type="If"
+			>
+			<Response
+				Type="Report"
+				>
+				<Target
+					Report="Admin.PasswordReset"
+					Type="Report"
+					>
+					<WaitPage/>
+				</Target>
+				<LinkParams
+					Email="@Request.iptEmail~"
+					StatusMsg="TMA"
+				/>
+			</Response>
+		</Procedure>
+		<Procedure
+			Expression="InStr(&quot;@Request.iptEmail~&quot;,&quot;mkcoop&quot;) &gt; 0"
+			ID="ifMKCoop"
+			Type="If"
+			>
+			<Response
+				Type="Report"
+				>
+				<Target
+					Report="Admin.PasswordReset"
+					Type="Report"
+					>
+					<WaitPage/>
+				</Target>
+				<LinkParams
+					Email="@Request.iptEmail~"
+					StatusMsg="MKC"
+				/>
+			</Response>
+		</Procedure>
+		<Procedure
+			Expression="InStr(&quot;@Request.iptEmail~&quot;,&quot;@Local.Email~&quot;) &gt; 0"
+			ID="ifOC"
+			Type="If"
+			>
+			<Procedure
+				ConnectionID="connLogiDB"
+				HandleQuotesInTokens="True"
+				ID="procSelectUserSQL"
+				SqlCommand="Select * From USERS Where USERNAME = &apos;@Request.iptEmail~&apos; And PASSWORD = HASHBYTES(&apos;SHA1&apos;,N&apos;@Request.iptOldPwd~&apos;) 
+"
+				SqlReturnType="FirstRow"
+				Type="SQL"
+			/>
+			<Procedure
+				Expression="&quot;@Procedure.procSelectUserSQL.USERNAME~&quot; &lt;&gt;&quot;&quot;"
+				ID="ifResults"
+				Type="If"
+				>
+				<Procedure
+					ConnectionID="connLogiDB"
+					HandleQuotesInTokens="True"
+					ID="procEditUserSQL"
+					SqlCommand="UPDATE USERS SET PASSWORD = HASHBYTES(&apos;SHA1&apos;,N&apos;@Request.iptNewPwd~&apos;)
+WHERE EMAIL = &apos;@Request.iptEmail~&apos;"
+					SqlReturnType="RowsAffected"
+					Type="SQL"
+				/>
+				<Procedure
+					Expression="@Procedure.procEditUserSQL.RowsAffected~ &gt; 0"
+					ID="exit-success"
+					Type="If"
+					>
+					<Procedure
+						BccEmailAddress="mlyons@mkcoop.com"
+						ConnectionID="connSMTP"
+						EmailBody="Your password reset has been processed.  If you did not reset your password, please contact &lt;a href=&quot;mailto:support@tmagrain.com&quot;&gt;TMA Support&lt;/a&gt; immediately.
+&lt;br&gt;
+&lt;br&gt;
+Thank you!&lt;br&gt;
+&lt;a href=&quot;http://info.tmagrain.com&quot;&gt;info.tmagrain.com&lt;/a&gt;
+"
+						EmailBodyType="HTML"
+						EmailSubject="TMA Dashboard Password Reset"
+						FromEmailAddress="noreply-support@tmagrain.com"
+						ID="sendResetEmail"
+						ToEmailAddress="@Request.iptEmail~"
+						Type="SendMail"
+						>
+						<IfError>
+							<Procedure
+								Expression="Len(&quot;@Procedure.sendResetEmail.ErrorMessage~&quot;) &gt; 0"
+								ID="procSendResetError"
+								Type="If"
+								>
+								<Response
+									Type="Report"
+									>
+									<Target
+										Report="Other.PasswordReset"
+										Type="Report"
+										>
+										<WaitPage/>
+									</Target>
+									<LinkParams
+										StatusMsg="&quot;@Procedure.sendResetEmail.ErrorMessage~&quot;"
+									/>
+								</Response>
+							</Procedure>
+						</IfError>
+					</Procedure>
+					<Response
+						Type="Report"
+						>
+						<Target
+							Report="Other.PasswordReset"
+							Type="Report"
+							>
+							<WaitPage/>
+						</Target>
+						<LinkParams
+							StatusMsg="OC"
+						/>
+					</Response>
+				</Procedure>
+				<Procedure
+					Expression="@Procedure.procEditUserSQL.RowsAffected~ &lt;= 0"
+					ID="exit-failure"
+					Type="If"
+					>
+					<Response
+						Type="Report"
+						>
+						<Target
+							Report="Other.PasswordReset"
+							Type="Report"
+							>
+							<WaitPage/>
+						</Target>
+						<LinkParams
+							StatusMsg="Error: Reset Unsuccessful"
+						/>
+					</Response>
+				</Procedure>
+			</Procedure>
+			<Response
+				Type="Report"
+				>
+				<Target
+					Report="Other.PasswordReset"
+					Type="Report"
+					>
+					<WaitPage/>
+				</Target>
+				<LinkParams
+					Email="@Request.iptEmail~"
+					StatusMsg="Error: Old password is incorrect.  Please try again."
+				/>
+			</Response>
+		</Procedure>
+	</Task>
+	<Task
+		ID="WishEmail"
+		>
+		<Procedure
+			ConnectionID="connSMTP"
+			EmailBody="Sent from Report: @Request.Report~
+&lt;br&gt;
+From User: @Request.User~
+&lt;br&gt;
+I wish this page would:
+@Request.iptWish~
+&lt;br&gt;
+Processed: @Function.DateTime~"
+			EmailBodyType="HTML"
+			EmailSubject="Dashboard Wish"
+			FromEmailAddress="noreply-support@tmagrain.com"
+			ID="sendWishEmail"
+			ToEmailAddress="mlyons@mkcoop.com"
+			Type="SendMail"
+			>
+			<IfError>
+				<Procedure
+					Expression="Len(&quot;@Procedure.sendWishEmail.ErrorMessage~&quot;) &gt; 0"
+					ID="procSendWishError"
+					Type="If"
+					>
+					<Procedure
+						Expression="&quot;@Request.Report~&quot; = &quot;&quot;"
+						ID="reportEmptyError"
+						Type="If"
+						>
+						<Response
+							Type="Report"
+							>
+							<Target
+								Report="Home.Default"
+								Type="Report"
+								>
+								<WaitPage/>
+							</Target>
+							<LinkParams
+								StatusMsg="&quot;@Procedure.sendWishEmail.ErrorMessage~&quot;"
+							/>
+						</Response>
+					</Procedure>
+					<Response
+						Type="Report"
+						>
+						<Target
+							Report="@Request.Report~"
+							Type="Report"
+							>
+							<WaitPage/>
+						</Target>
+						<LinkParams
+							StatusMsg="&quot;@Procedure.sendWishEmail.ErrorMessage~&quot;"
+						/>
+					</Response>
+				</Procedure>
+			</IfError>
+		</Procedure>
+		<Procedure
+			Expression="&quot;@Request.Report~&quot; = &quot;&quot;"
+			ID="reportEmptySuccess"
+			Type="If"
+			>
+			<Response
+				Type="Report"
+				>
+				<Target
+					Report="Home.Default"
+					Type="Report"
+					>
+					<WaitPage/>
+				</Target>
+				<LinkParams
+					StatusMsg="alert"
+				/>
+			</Response>
+		</Procedure>
+		<Response
+			Type="Report"
+			>
+			<Target
+				Report="@Request.Report~"
+				Type="Report"
+				>
+				<WaitPage/>
+			</Target>
+			<LinkParams
+				StatusMsg="alert"
+			/>
+		</Response>
+	</Task>
 	<ideTestParams
 		dteDropOff=""
 		dteEntered=""
 		iptAccount=""
 		iptBranch=""
+		iptComments=""
+		iptCommodity=""
 		iptCompleteDate=""
 		iptCustomer=""
 		iptElectronic=""
+		iptEmail=""
 		iptEntryId=""
+		iptNewPwd=""
+		iptOldPwd=""
 		iptTickets=""
 		iptUserID=""
+		iptWish=""
 		rdTaskID=""
+		Report=""
+		User=""
 	/>
 </Process>

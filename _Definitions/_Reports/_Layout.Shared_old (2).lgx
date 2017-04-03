@@ -393,12 +393,12 @@ else {
 			ShowModes="rdBrowser"
 			>
 			<InputHidden
-				DefaultValue="@Request.rdReport~"
-				ID="iptReport"
-			/>
-			<InputHidden
 				DefaultValue="@Request.StatusMsg~"
 				ID="iptStatus"
+			/>
+			<InputHidden
+				DefaultValue="@Request.rdReport~"
+				ID="iptReport"
 			/>
 			<InputHidden
 				ID="iptShowNotifications"
@@ -610,7 +610,7 @@ else {
 												<PopupOption
 													Caption="Scorecard"
 													ID="optScorecard"
-													SecurityRightID="Dashboard Stategic Planning,Dashboard Stategic Planning TMA,LogiUserAdmin,Dashboard Sr Mgmt"
+													SecurityRightID="Dashboard Stategic Planning,LogiUserAdmin,Dashboard Sr Mgmt"
 													>
 													<Action
 														ID="tarScorecard"
@@ -1087,94 +1087,6 @@ else {
 												</Division>
 												<Remark>
 													<Division
-														ID="maps-container"
-														SecurityRightID="LogiUserAdmin"
-														>
-														<Division
-															Class="dropdown"
-															HtmlDiv="True"
-															ID="maps"
-															>
-															<Label
-																Caption="Maps"
-																>
-																<Action
-																	ID="actBlank"
-																	Javascript="void(0)"
-																	Type="Javascript"
-																/>
-																<ConditionalClass
-																	Class="selected-menu"
-																	Condition="&quot;@Request.rdReport~&quot;.indexOf(&quot;Maps&quot;)&lt;&gt;&quot;-1&quot;"
-																/>
-															</Label>
-															<Label
-																Class="caret"
-																>
-																<Action
-																	ID="actBlank"
-																	Javascript="void(0)"
-																	Type="Javascript"
-																/>
-																<ConditionalClass
-																	Class="caret selected-menu"
-																	Condition="&quot;@Request.rdReport~&quot;.indexOf(&quot;Maps&quot;)&lt;&gt;&quot;-1&quot;"
-																/>
-															</Label>
-															<Division
-																Class="submenu"
-																HtmlDiv="True"
-																ID="submenu-maps"
-																>
-																<DataList
-																	ID="lstMaps"
-																	>
-																	<DataLayer
-																		ID="dlNav-Maps"
-																		Type="DefinitionList"
-																		>
-																		<CompareFilter
-																			CaseSensitive="True"
-																			CompareType="="
-																			CompareValue="Maps"
-																			DataColumn="Folder1"
-																			DataType="Text"
-																			ID="fMaps"
-																		/>
-																	</DataLayer>
-																	<ListItem>
-																		<Label
-																			Caption="@Data.Caption~"
-																			>
-																			<Action
-																				ID="actReport"
-																				Type="Report"
-																				>
-																				<Target
-																					Report="@Data.ID~"
-																					Type="Report"
-																					>
-																					<WaitPage/>
-																				</Target>
-																			</Action>
-																			<ConditionalClass
-																				Class="selected-menu"
-																				Condition="&quot;@Request.rdReport~&quot;==&quot;@Data.ID~&quot;"
-																			/>
-																		</Label>
-																	</ListItem>
-																</DataList>
-															</Division>
-														</Division>
-														<Label
-															Caption="|"
-															Class="pipe-spacer"
-															ID="pipe-spacer"
-														/>
-													</Division>
-												</Remark>
-												<Remark>
-													<Division
 														ID="sales-container"
 														SecurityRightID="MKC Dashboard"
 														>
@@ -1259,6 +1171,92 @@ else {
 															Class="pipe-spacer"
 															ID="pipe-spacer"
 														/>
+														<Division
+															ID="maps-container"
+															SecurityRightID="LogiUserAdmin"
+															>
+															<Division
+																Class="dropdown"
+																HtmlDiv="True"
+																ID="maps"
+																>
+																<Label
+																	Caption="Maps"
+																	>
+																	<Action
+																		ID="actBlank"
+																		Javascript="void(0)"
+																		Type="Javascript"
+																	/>
+																	<ConditionalClass
+																		Class="selected-menu"
+																		Condition="&quot;@Request.rdReport~&quot;.indexOf(&quot;Maps&quot;)&lt;&gt;&quot;-1&quot;"
+																	/>
+																</Label>
+																<Label
+																	Class="caret"
+																	>
+																	<Action
+																		ID="actBlank"
+																		Javascript="void(0)"
+																		Type="Javascript"
+																	/>
+																	<ConditionalClass
+																		Class="caret selected-menu"
+																		Condition="&quot;@Request.rdReport~&quot;.indexOf(&quot;Maps&quot;)&lt;&gt;&quot;-1&quot;"
+																	/>
+																</Label>
+																<Division
+																	Class="submenu"
+																	HtmlDiv="True"
+																	ID="submenu-maps"
+																	>
+																	<DataList
+																		ID="lstMaps"
+																		>
+																		<DataLayer
+																			ID="dlNav-Maps"
+																			Type="DefinitionList"
+																			>
+																			<CompareFilter
+																				CaseSensitive="True"
+																				CompareType="="
+																				CompareValue="Maps"
+																				DataColumn="Folder1"
+																				DataType="Text"
+																				ID="fMaps"
+																			/>
+																		</DataLayer>
+																		<ListItem>
+																			<Label
+																				Caption="@Data.Caption~"
+																				>
+																				<Action
+																					ID="actReport"
+																					Type="Report"
+																					>
+																					<Target
+																						Report="@Data.ID~"
+																						Type="Report"
+																						>
+																						<WaitPage/>
+																					</Target>
+																				</Action>
+																				<ConditionalClass
+																					Class="selected-menu"
+																					Condition="&quot;@Request.rdReport~&quot;==&quot;@Data.ID~&quot;"
+																				/>
+																			</Label>
+																		</ListItem>
+																	</DataList>
+																</Division>
+															</Division>
+															<Label
+																Caption="|"
+																Class="pipe-spacer"
+																ID="pipe-spacer"
+															/>
+														</Division>
 													</Division>
 												</Remark>
 												<Division
@@ -1353,7 +1351,7 @@ else {
 													>
 													<Division
 														ID="scorecard-container"
-														SecurityRightID="Dashboard Stategic Planning,Dashboard Strategic Planning TMA,LogiUserAdmin,Dashboard Sr Mgmt"
+														SecurityRightID="Dashboard Stategic Planning,LogiUserAdmin,Dashboard Sr Mgmt,Dashboard Strategic Planning TMA"
 														>
 														<Division
 															Class="dropdown"
@@ -1758,87 +1756,6 @@ ORDER BY BRANCH_NAME"
 		</InputSelectList>
 	</SharedElement>
 	<SharedElement
-		ID="shrCRMBranchSelect"
-		>
-		<Note
-			Note="**Pass in BranchElementToRefresh in the Shared Element Params.**"
-		/>
-		<Label
-			Caption="Use CTRL+click to select multiple values"
-			Class="ThemeTextSmaller"
-		/>
-		<LineBreak/>
-		<Note
-			Note="**All branches are shown here. Security is set for TMA Dashboard and MKC Dashboard.**"
-		/>
-		<InputSelectList
-			Caption="Locations:"
-			CaptionClass="ThemeTextSmall ThemeBold"
-			Class="ThemeTextSmaller"
-			DefaultValue="@Request.Branch~"
-			GroupCaptionColumn="REGION"
-			ID="Branch"
-			InputRows="12"
-			MultiSelect="True"
-			OptionCaptionColumn="BRANCH_NAME"
-			OptionValueColumn="BRANCH_NUMBER"
-			>
-			<DataLayer
-				ConnectionID="connCRM"
-				ID="sqlCRMLocations"
-				Source="Select Distinct ag_location.ag_locationId,
-  ag_location.ag_DataSourceKey
-From ag_location"
-				Type="SQL"
-				>
-				<Join
-					ID="joinSqlToExcelBranch"
-					JoinType="InnerJoin"
-					SortLeftSide="True"
-					SortRightSide="True"
-					>
-					<DataLayer
-						ColumnNamesRow="1"
-						ExcelFile="C:\inetpub\wwwroot\MKCoop\UploadedFiles\LocationData.xlsx"
-						ExcelWorksheet="TMALocations"
-						ID="excelTMALocations"
-						Type="Excel"
-					/>
-					<MatchCondition
-						DataType="Number"
-						ID="matchBRANCH_NUMBER"
-						LeftDataColumn="ag_DataSourceKey"
-						RightDataColumn="BRANCH_NUMBER"
-					/>
-				</Join>
-				<SortFilter
-					DataType="Text"
-					ID="sortREGION,BRANCH"
-					SortColumn="REGION, BRANCH_NAME"
-				/>
-				<GroupFilter
-					DataType="Text"
-					GroupColumn="REGION"
-					Hierarchical="True"
-					ID="groupREGION"
-					KeepGroupedRows="True"
-				/>
-			</DataLayer>
-			<EventHandler
-				DhtmlEvent="onchange"
-				ID="evtOnChangeBranch"
-				>
-				<Action
-					ElementID="@Shared.BranchElementToRefresh~"
-					ID="actRefreshReport"
-					Type="RefreshElement"
-					>
-					<WaitPage/>
-				</Action>
-			</EventHandler>
-		</InputSelectList>
-	</SharedElement>
-	<SharedElement
 		ID="shrCommoditySelect"
 		>
 		<Note
@@ -1960,34 +1877,18 @@ From ag_location"
 		/>
 		<Division
 			ID="divExcelExport"
-			SecurityRightID="MKC Dashboard, TMA Dashboard, OC"
+			SecurityRightID="@Shared.Security~"
 			>
 			<Label
 				Class="fa fa-file-excel-o fa-2x "
 				HtmlTag="Span"
 				ID="lnkExcel"
-				SecurityRightID="MKC Dashboard, TMA Dashboard, OC"
 				Tooltip="Export to Excel"
 				>
-				<Remark>
-					<Action
-						Javascript="tableToExcel(&quot;@Shared.DataTableID~&quot;,&quot;@Shared.ReportName~&quot;);"
-						Type="Javascript"
-					/>
-				</Remark>
 				<Action
-					ID="actExportExcel"
-					Type="NativeExcel"
-					>
-					<Target
-						ExcelOutputFormat="Excel2007"
-						ExportDataTableID="@Shared.DataTableID~"
-						ExportFilename="@Shared.ReportName~_@Function.GUID~"
-						FrameID="Top"
-						ShowGridlines="True"
-						Type="NativeExcel"
-					/>
-				</Action>
+					Javascript="tableToExcel(&quot;@Shared.DataTableID~&quot;,&quot;@Shared.ReportName~&quot;);"
+					Type="Javascript"
+				/>
 			</Label>
 			<LineBreak
 				LineCount="2"
@@ -2072,7 +1973,7 @@ From ag_location"
 								SecurityRightID="TMA Dashboard,OC"
 							/>
 							<Label
-								Caption="V2.2.03.14.2017"
+								Caption="V2.1.01.24.2017"
 								Class="ThemeTextSmaller"
 								Format="HTML"
 								SecurityRightID="MKC Dashboard,TMA Dashboard,OC"
